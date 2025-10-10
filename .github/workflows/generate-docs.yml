@@ -28,9 +28,8 @@ jobs:
       - name: Set up Maven
         uses: hb0730/maven-action@v1.0.2
         with:
-          maven-version: 3.9.11   # La versión que quieres usar
-          maven-file: ${{ runner.temp }}/apache-maven-3.9.11-bin.tar.gz
-          url: https://downloads.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
+          maven-version: 3.9.11
+          distribution: https://downloads.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
 
       # 4. Generar Javadoc HTML
       - name: Build Javadoc HTML
