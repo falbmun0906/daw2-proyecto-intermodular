@@ -25,10 +25,12 @@ jobs:
           java-version: '21'
 
       # 3. Instalar Maven
-      - name: Install Maven
-        uses: apache/maven@v3
+      - name: Set up Maven
+        uses: hb0730/maven-action@latest
         with:
-          version: '3.9.11'
+          maven-version: 3.9.11   # La versión que quieres usar
+          maven-file: ${{ runner.temp }}/apache-maven-3.9.11-bin.tar.gz
+          url: https://downloads.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
 
       # 4. Generar Javadoc HTML
       - name: Build Javadoc HTML
@@ -47,14 +49,15 @@ jobs:
           pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
 
       # 7. Subir HTML a GitHub Pages
-      - name: Publish HTML to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
+      - name: Deploy to GitHub Pages
+        uses: Cecilapp/GitHub-Pages-deploy@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: backend/target/reports/apidocs
-          destination_branch: gh-pages
-          user_name: 'falbmun0906'
-          user_email: 'falbmun0906@g.educaand.es'
+          email: falbmun0906@g.educaand.es 
+          build_dir: backend/target/reports/apidocs
+          branch: gh-pages
+          commit_message: "Deploy Javadoc HTML"
 
       # 8. Subir PDF como artefacto
       - name: Upload PDF docs
