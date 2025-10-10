@@ -1,5 +1,8 @@
 name: Generate and Publish Docs
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -48,6 +51,9 @@ jobs:
           mkdir -p target/reports/pdf
           pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
 
+      - name: List PDF folder
+        run: ls -l target/reports/pdf
+
       # 7. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
@@ -55,7 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           email: falbmun0906@g.educaand.es 
-          build_dir: backend/target/reports/apidocs
+          build_dir: target/reports/apidocs
           branch: gh-pages
           commit_message: "Deploy Javadoc HTML"
 
