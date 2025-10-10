@@ -61,7 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           email: falbmun0906@g.educaand.es 
-          build_dir: target/reports/apidocs
+          build_dir: /home/runner/work/daw2-proyecto-intermodular/daw2-proyecto-intermodular/backend/target/reports/apidocs
           branch: gh-pages
           commit_message: "Deploy Javadoc HTML"
 
