@@ -1,0 +1,64 @@
+name: Generate and Publish Docs
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      # 1. Clonar repo
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Configurar JDK 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
+      # 3. Instalar Maven
+      - name: Install Maven
+        uses: apache/maven@v4
+        with:
+          version: '3.9.11'
+
+      # 4. Generar Javadoc HTML
+      - name: Build Javadoc HTML
+        run: mvn clean javadoc:javadoc
+
+      # 5. Instalar LaTeX y Pandoc para PDF
+      - name: Install LaTeX and Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive texlive-latex-extra texlive-fonts-recommended pandoc
+
+      # 6. Convertir HTML a PDF
+      - name: Convert HTML to PDF
+        run: |
+          mkdir -p target/reports/pdf
+          pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
+
+      # 7. Subir HTML a GitHub Pages
+      - name: Publish HTML to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v7
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: backend/target/reports/apidocs
+          destination_branch: gh-pages
+          user_name: 'falbmun0906'
+          user_email: 'falbmun0906@g.educaand.es'
+
+      # 8. Subir PDF como artefacto
+      - name: Upload PDF docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: javadoc-pdf
+          path: backend/target/reports/pdf/documentation.pdf

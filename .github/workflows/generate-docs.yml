@@ -1,0 +1,53 @@
+name: Generate Docs
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend  # Aplica a todos los pasos 'run'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
+      - name: Install Maven
+        uses: apache/maven@v4
+        with:
+          version: '3.9.11'
+
+      - name: Build Javadoc HTML
+        run: mvn clean javadoc:javadoc
+
+      - name: Install LaTeX and Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive texlive-latex-extra texlive-fonts-recommended pandoc
+
+      - name: Convert HTML to PDF
+        run: |
+          mkdir -p target/reports/pdf
+          pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
+
+      - name: Upload HTML docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: javadoc-html
+          path: target/reports/apidocs
+
+      - name: Upload PDF docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: javadoc-pdf
+          path: target/reports/pdf/documentation.pdf
