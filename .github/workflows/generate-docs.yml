@@ -61,7 +61,13 @@ jobs:
       - name: Generate full PDF from .book
         run: |
           mkdir -p target/reports/pdf
-          weasyprint $(cat target/reports/pdf/javadoc.book) target/reports/pdf/javadoc-full.pdf
+          tmpfile=$(mktemp /tmp/javadoc-XXXX.html)
+          # Concatenar todos los HTML listados en .book en un único archivo
+          while read html; do
+            cat "$html" >> "$tmpfile"
+          done < target/reports/pdf/javadoc.book
+          # Generar PDF
+          weasyprint "$tmpfile" target/reports/pdf/javadoc-full.pdf
 
       # 10. Subir PDF completo como artefacto
       - name: Upload PDF
