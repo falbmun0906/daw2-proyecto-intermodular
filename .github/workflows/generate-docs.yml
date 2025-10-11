@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: javadoc-pdfs
-          path: target/reports/pdf/*.pdf
+          path: backend/target/reports/pdf/*.pdf
 
       # 8. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
