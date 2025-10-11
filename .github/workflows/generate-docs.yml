@@ -68,9 +68,16 @@ jobs:
           branch: gh-pages
           commit_message: "Deploy Javadoc HTML"
 
-      # 9. Subir PDF como artefacto
-      - name: Upload PDF docs
+      # 9. Subir PDF generado con pandoc
+      - name: Upload Pandoc PDF
         uses: actions/upload-artifact@v4
         with:
-          name: javadoc-pdf
+          name: javadoc-pdf-pandoc
           path: backend/target/reports/pdf/documentation.pdf
+
+      # 10. Subir PDF generado con wkhtmltopdf
+      - name: Upload WKHTML PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: javadoc-pdf-wkhtml
+          path: backend/target/reports/pdf/documentation-wkhtml.pdf
