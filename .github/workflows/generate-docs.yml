@@ -1,4 +1,4 @@
-name: Generate and Publish Docs
+name: Generate and Publish Javadoc PDFs
 
 permissions:
   contents: write
@@ -25,64 +25,46 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
-          distribution: temurin   # Eclipse Temurin
+          distribution: temurin
           java-version: '21'
 
-      # 3. Instalar Maven
+      # 3. Configurar Maven
       - name: Set up Maven
         uses: hb0730/maven-action@v1.0.2
         with:
           maven-version: 3.9.11
-          url: https://downloads.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
 
       # 4. Generar Javadoc HTML
       - name: Build Javadoc HTML
         run: mvn clean javadoc:javadoc
 
-      # 6. Ejecutar script para generar .book
-      - name: Generate Javadoc .book
-        run: |
-          chmod +x scripts/generate-javadoc-book.sh
-          ./scripts/generate-javadoc-book.sh
+      # 5. Instalar wkhtmltopdf
+      - name: Install wkhtmltopdf
+        run: sudo apt-get update && sudo apt-get install -y wkhtmltopdf
 
-      # 7a. Instalar dependencias del sistema para WeasyPrint
-      - name: Install WeasyPrint system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libpango-1.0-0 libcairo2 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info
-
-      # 7b. Instalar WeasyPrint vía pip
-      - name: Install WeasyPrint Python package
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install weasyprint
-
-      # 7c. Generar PDF completo desde .book
-      - name: Generate full PDF from .book
+      # 6. Generar PDFs individuales
+      - name: Convert HTMLs to PDFs
         run: |
           mkdir -p target/reports/pdf
-          tmpfile=$(mktemp /tmp/javadoc-XXXX.html)
-          # Concatenar todos los HTML listados en .book en un único archivo
-          while read html; do
-            cat "$html" >> "$tmpfile"
-          done < target/reports/pdf/javadoc.book
-          # Generar PDF
-          weasyprint "$tmpfile" target/reports/pdf/javadoc-full.pdf
+          for html in target/reports/apidocs/**/*.html; do
+            pdf="target/reports/pdf/$(basename "${html%.html}.pdf")"
+            wkhtmltopdf --enable-local-file-access "$html" "$pdf"
+          done
 
-      # 10. Subir PDF completo como artefacto
-      - name: Upload PDF
+      # 7. Subir PDFs como artefactos
+      - name: Upload PDFs
         uses: actions/upload-artifact@v4
         with:
-          name: javadoc-full-pdf
-          path: target/reports/pdf/javadoc-full.pdf
+          name: javadoc-pdfs
+          path: target/reports/pdf/*.pdf
 
-      # 9. Subir HTML a GitHub Pages
+      # 8. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           email: falbmun0906@g.educaand.es 
-          build_dir: /home/runner/work/daw2-proyecto-intermodular/daw2-proyecto-intermodular/backend/target/reports/apidocs
+          build_dir: backend/target/reports/apidocs
           branch: gh-pages
           commit_message: "Deploy Javadoc HTML"
