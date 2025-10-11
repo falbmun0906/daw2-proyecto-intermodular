@@ -39,18 +39,18 @@ jobs:
       - name: Build Javadoc HTML
         run: mvn clean javadoc:javadoc
 
-      # 5. Instalar LaTeX y Pandoc para PDF
-      - name: Install LaTeX and Pandoc
+      # 5. Instalar herramientas para PDF
+      - name: Install PDF tools (Pandoc + LaTeX + wkhtmltopdf)
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive texlive-latex-extra texlive-fonts-recommended pandoc
+          sudo apt-get install -y texlive texlive-latex-extra texlive-fonts-recommended pandoc wkhtmltopdf
 
       # 6. Convertir HTML a PDF
       - name: Convert HTML to PDF
         run: |
           mkdir -p target/reports/pdf
           pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
-          
+
       # 7. Convertir index.html con wkhtmltopdf
       - name: Convert HTML to PDF (wkhtmltopdf)
         run: |
