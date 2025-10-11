@@ -51,11 +51,11 @@ jobs:
           mkdir -p target/reports/pdf
           pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
 
-      # 7. Convertir index.html con wkhtmltopdf
-      - name: Convert HTML to PDF (wkhtmltopdf)
+      # 7. Convertir HTML a PDF con wkhtmltopdf (sitio completo)
+      - name: Generate full Javadoc PDF (wkhtmltopdf)
         run: |
           mkdir -p target/reports/pdf
-          wkhtmltopdf --enable-local-file-access target/reports/apidocs/index.html target/reports/pdf/documentation-wkhtml.pdf
+          find target/reports/apidocs -type f -name '*.html' | sort | xargs wkhtmltopdf --enable-local-file-access target/reports/pdf/javadoc-full.pdf
 
       # 8. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
@@ -76,8 +76,8 @@ jobs:
           path: backend/target/reports/pdf/documentation.pdf
 
       # 10. Subir PDF generado con wkhtmltopdf
-      - name: Upload WKHTML PDF
+      - name: Upload Javadoc PDF
         uses: actions/upload-artifact@v4
         with:
-          name: javadoc-pdf-wkhtml
-          path: backend/target/reports/pdf/documentation-wkhtml.pdf
+          name: javadoc-pdf
+          path: backend/target/reports/pdf/javadoc-full.pdf
