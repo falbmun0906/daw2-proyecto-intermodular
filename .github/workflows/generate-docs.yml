@@ -39,25 +39,26 @@ jobs:
       - name: Build Javadoc HTML
         run: mvn clean javadoc:javadoc
 
-      # 5. Instalar herramientas para PDF
-      - name: Install PDF tools (Pandoc + LaTeX + wkhtmltopdf)
+      # 5. Instalar HTMLDOC
+      - name: Install HTMLDOC
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive texlive-latex-extra texlive-fonts-recommended pandoc wkhtmltopdf
+          sudo apt-get install -y htmldoc
 
-      # 6. Convertir HTML a PDF
-      - name: Convert HTML to PDF
+      # 6. Ejecutar script para generar .book
+      - name: Generate Javadoc .book
         run: |
-          mkdir -p target/reports/pdf
-          pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
+          chmod +x scripts/generate-javadoc-book.sh
+          ./scripts/generate-javadoc-book.sh
 
-      # 7. Convertir HTML a PDF con wkhtmltopdf (sitio completo)
-      - name: Generate full Javadoc PDF (wkhtmltopdf)
+      # 7. Generar PDF completo usando HTMLDOC
+      - name: Generate full PDF from .book
         run: |
-          mkdir -p target/reports/pdf
-          find target/reports/apidocs -type f -name '*.html' | sort | xargs wkhtmltopdf --enable-local-file-access target/reports/pdf/javadoc-full.pdf
+          sudo apt-get update
+          sudo apt-get install -y htmldoc
+          htmldoc --webpage -f target/reports/pdf/javadoc-htmldoc.pdf target/reports/pdf/javadoc.book
 
-      # 8. Subir HTML a GitHub Pages
+      # 9. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
@@ -68,16 +69,9 @@ jobs:
           branch: gh-pages
           commit_message: "Deploy Javadoc HTML"
 
-      # 9. Subir PDF generado con pandoc
-      - name: Upload Pandoc PDF
+      # 10. Subir PDF completo como artefacto
+      - name: Upload HTMLDOC PDF
         uses: actions/upload-artifact@v4
         with:
-          name: javadoc-pdf-pandoc
-          path: backend/target/reports/pdf/documentation.pdf
-
-      # 10. Subir PDF generado con wkhtmltopdf
-      - name: Upload Javadoc PDF
-        uses: actions/upload-artifact@v4
-        with:
-          name: javadoc-pdf
-          path: backend/target/reports/pdf/javadoc-full.pdf
+          name: javadoc-full-pdf
+          path: target/reports/pdf/javadoc-htmldoc.pdf
