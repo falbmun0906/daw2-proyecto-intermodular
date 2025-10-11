@@ -46,9 +46,10 @@ jobs:
       - name: Convert HTMLs to PDFs
         run: |
           mkdir -p target/reports/pdf
-          for html in target/reports/apidocs/**/*.html; do
+          # Buscar todos los HTML en apidocs
+          find target/reports/apidocs -name "*.html" | while read html; do
             pdf="target/reports/pdf/$(basename "${html%.html}.pdf")"
-            wkhtmltopdf --enable-local-file-access "$html" "$pdf"
+            wkhtmltopdf --enable-local-file-access "file://$(pwd)/$html" "$pdf"
           done
 
       # 7. Subir PDFs como artefactos
