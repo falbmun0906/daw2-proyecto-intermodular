@@ -55,7 +55,7 @@ jobs:
       - name: Convert HTML to PDF (wkhtmltopdf)
         run: |
           mkdir -p target/reports/pdf
-          wkhtmltopdf target/reports/apidocs/index.html target/reports/pdf/documentation-wkhtml.pdf
+          wkhtmltopdf --enable-local-file-access target/reports/apidocs/index.html target/reports/pdf/documentation-wkhtml.pdf
 
       # 8. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
