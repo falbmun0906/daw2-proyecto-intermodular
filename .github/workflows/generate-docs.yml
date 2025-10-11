@@ -39,24 +39,19 @@ jobs:
       - name: Build Javadoc HTML
         run: mvn clean javadoc:javadoc
 
-      # 5. Instalar HTMLDOC
-      - name: Install HTMLDOC
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y htmldoc
-
       # 6. Ejecutar script para generar .book
       - name: Generate Javadoc .book
         run: |
           chmod +x scripts/generate-javadoc-book.sh
           ./scripts/generate-javadoc-book.sh
 
-      # 7. Generar PDF completo usando HTMLDOC
+      # 7. Generar PDF completo usando wkhtmltopdf y .book
       - name: Generate full PDF from .book
         run: |
           sudo apt-get update
-          sudo apt-get install -y htmldoc
-          htmldoc --webpage --outfile target/reports/pdf/javadoc-htmldoc.pdf target/reports/pdf/javadoc.book
+          sudo apt-get install -y wkhtmltopdf pandoc texlive texlive-latex-extra texlive-fonts-recommended
+          mkdir -p target/reports/pdf
+          wkhtmltopdf --enable-local-file-access $(cat target/reports/pdf/javadoc.book) target/reports/pdf/javadoc-full.pdf
 
 
       # 9. Subir HTML a GitHub Pages
@@ -71,8 +66,8 @@ jobs:
           commit_message: "Deploy Javadoc HTML"
 
       # 10. Subir PDF completo como artefacto
-      - name: Upload HTMLDOC PDF
+      - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
           name: javadoc-full-pdf
-          path: target/reports/pdf/javadoc-htmldoc.pdf
+          path: target/reports/pdf/javadoc-full.pdf
