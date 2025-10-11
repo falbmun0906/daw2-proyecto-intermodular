@@ -63,7 +63,16 @@ jobs:
           name: javadoc-pdfs
           path: backend/target/reports/pdf/*.pdf
 
-      # 8. Subir HTML a GitHub Pages
+      # 8. Copiar HTML y PDF a /docs
+      - name: Refresh /docs with new Javadoc and PDFs
+        run: |
+          rm -rf ../docs/*
+          mkdir -p ../docs/pdf
+          cp -r target/reports/apidocs/* ../docs/
+          cp -r target/reports/pdf/* ../docs/pdf/
+        working-directory: backend
+
+      # 9. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
