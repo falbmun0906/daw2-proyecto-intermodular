@@ -50,11 +50,14 @@ jobs:
         run: |
           mkdir -p target/reports/pdf
           pandoc target/reports/apidocs/index.html -o target/reports/pdf/documentation.pdf
+          
+      # 7. Convertir index.html con wkhtmltopdf
+      - name: Convert HTML to PDF (wkhtmltopdf)
+        run: |
+          mkdir -p target/reports/pdf
+          wkhtmltopdf target/reports/apidocs/index.html target/reports/pdf/documentation-wkhtml.pdf
 
-      - name: List PDF folder
-        run: ls -l target/reports/pdf
-
-      # 7. Subir HTML a GitHub Pages
+      # 8. Subir HTML a GitHub Pages
       - name: Deploy to GitHub Pages
         uses: Cecilapp/GitHub-Pages-deploy@v3
         env:
@@ -65,7 +68,7 @@ jobs:
           branch: gh-pages
           commit_message: "Deploy Javadoc HTML"
 
-      # 8. Subir PDF como artefacto
+      # 9. Subir PDF como artefacto
       - name: Upload PDF docs
         uses: actions/upload-artifact@v4
         with:
