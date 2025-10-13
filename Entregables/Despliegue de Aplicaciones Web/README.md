@@ -96,10 +96,14 @@ El workflow `Generate and Publish Javadoc PDFs` se dispara automáticamente al h
 7. **Actualizar la carpeta /docs en el repositorio con los HTML y PDF generados**: Copiar los archivos generados al directorio versionado /docs asegura que la documentación se mantenga en el repositorio y pueda ser consultada o referenciada públicamente.
 
 
-8. **Hacer commit y push de los cambios con mensajes claros**: Fundamental: sin este commit, todos los archivos generados desaparecerían al terminar la VM. Al hacer commit y push, se guardan permanentemente en el repositorio, permitiendo que otros puedan verlos, descargarlos o servirlos vía GitHub Pages.
+8. **Hacer commit y push de los cambios con mensajes claros**: Como se mencionó en clase, sin este commit todos los archivos generados desaparecerían al terminar la VM. Al hacer commit y push, se guardan permanentemente en el repositorio, permitiendo que otros puedan verlos, descargarlos o servirlos vía GitHub Pages.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/430b7154-889c-4423-bfae-d551f91b74b2" width="512" height="384" alt="APUNTES CLASE 09_10" />
+</p>
 
 
-9. **Desplegar la documentación HTML en la rama gh-pages**: Permite que la documentación HTML sea accesible públicamente como un sitio web. Se aprovecha el token de GitHub para que la acción haga push automáticamente a la rama gh-pages.
+10. **Desplegar la documentación HTML en la rama gh-pages**: Permite que la documentación HTML sea accesible públicamente como un sitio web. Se aprovecha el token de GitHub para que la acción haga push automáticamente a la rama gh-pages.
 
 ---
 ### e) Mensajes de commit que evidencien la mejora: claros, descriptivos, en imperativo.
