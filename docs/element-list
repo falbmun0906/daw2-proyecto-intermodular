@@ -1,0 +1,5 @@
+com.example.backend
+com.example.backend.controller
+com.example.backend.model
+com.example.backend.repository
+com.example.backend.service
