@@ -254,3 +254,8 @@ Esta información se encuentra en:
 El workflow se considera un ejemplo de Integración Continua (CI) porque cada vez que se hacen cambios en la rama ``main``, **GitHub Actions** genera automáticamente la documentación actualizada, tanto en HTML como en PDF. Esto asegura que la documentación siempre refleja el estado real del proyecto y evita que se quede desactualizada. Además, se puede ejecutar manualmente con ``workflow_dispatch`` si se quiere regenerar la documentación en cualquier momento.
 
 No se trata de **Entrega Continua (CD)** porque el workflow no despliega automáticamente un producto listo para producción más allá de actualizar **GitHub Pages**: su objetivo principal es mantener la documentación actualizada, no entregar ni instalar la aplicación en un entorno de producción.
+
+---
+## Fase 3
+
+> Esta entrega incluye la 'Fase 3' (ver rama [gh-pages](https://github.com/falbmun0906/daw2-proyecto-intermodular/tree/gh-pages) y despliegue en [GitHub Pages](https://falbmun0906.github.io/daw2-proyecto-intermodular/)).
