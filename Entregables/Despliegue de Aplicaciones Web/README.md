@@ -1,7 +1,5 @@
 # Práctica 1.1: GH Action para documentación
 
-
-
 - **Lenguaje utilizado**: ``Java``. La práctica se ha realizado sobre el directorio backend del repositorio raíz del proyecto (Spring Boot)
 - **Herramienta de documentación**: ``Javadoc``
 - **Formato principal de salida**: ``HTML`` (con ``CSS`` y ``JS``)
@@ -24,13 +22,13 @@
     ```
 - **Wkhtmltopdf** → Conversión de los archivos ``HTML`` de Javadoc a formato ``PDF``.
 
-    > Instalado en Ubuntu con:
+    Instalado en Ubuntu con:
     
     ```bash
         sudo apt-get update && sudo apt-get install -y wkhtmltopdf
     ```
     
-    > Este fragmento recorre todos los archivos HTML generados por el Javadoc y los convierte en PDF manteniendo la misma estructura de carpetas. Para cada archivo, obtiene su ruta relativa, crea las carpetas necesarias en la carpeta de destino (target/reports/pdf) y utiliza la herramienta wkhtmltopdf para generar el PDF correspondiente. Así, se obtiene una copia en PDF de toda la documentación HTML del proyecto.  
+    Este fragmento recorre todos los archivos HTML generados por el Javadoc y los convierte en PDF manteniendo la misma estructura de carpetas. Para cada archivo, obtiene su ruta relativa, crea las carpetas necesarias en la carpeta de destino (target/reports/pdf) y utiliza la herramienta wkhtmltopdf para generar el PDF correspondiente. Así, se obtiene una copia en PDF de toda la documentación HTML del proyecto.  
     
     ```bash
         for html in $(find target/reports/apidocs -type f -name "*.html"); do
@@ -143,3 +141,116 @@ Para la documentación en PDF, es necesario usar el workflow en **GitHub**, ya q
 - Los PDF resultantes se subirán como artefactos del workflow y también se copiarán a ``/docs/pdf`` en el repositorio.
 
 De este modo, no es necesario instalar ``wkhtmltopdf`` localmente, y cualquier usuario puede obtener los PDF ejecutando el workflow en **GitHub**.
+
+---
+## RESPUESTAS AL CUESTIONARIO
+
+### a) ¿Qué herramienta o generador (p. ej., Sphinx, pdoc, Javadoc, Doxygen, Dokka) utilizaste en el workflow para crear la documentación en /docs?
+En este proyecto utilicé Javadoc para generar la documentación de Java en HTML. Esto se hace ejecutando ``mvn clean javadoc:javadoc`` (ejecuta Maven sobre el proyecto, limpia compilaciones previas (clean) y genera la documentación Javadoc en target/reports/apidocs).
+
+### b) Muestra un fragmento del código con comentarios/docstrings estructurados (p. ej., :param, :return: o etiquetas equivalentes) que haya sido procesado por la herramienta. Comenta que estilo de documentación has utlicado: (p. ej., reStructuredText, Google Style, KDoc)
+
+https://github.com/falbmun0906/daw2-proyecto-intermodular/blob/4ba06a3f99725d1d0bad99705d3f1264dbb1aa6f/backend/src/main/java/com/example/backend/service/UsuarioService.java#L9-L47
+
+**Estilo usado:** ``JavaDoc``, que utiliza etiquetas como ``@param``, ``@return`` y referencias a otras clases (``{@link Clase}``) para generar documentación estructurada.
+
+**Procesamiento:** Maven con javadoc:javadoc toma estos comentarios y genera la documentación HTML automáticamente en ``target/reports/apidocs``.
+
+En [este enlace](https://falbmun0906.github.io/daw2-proyecto-intermodular/com/example/backend/service/UsuarioService.html) se muestra el resultado obtenido (HTML, CSS y JS).
+
+### c) ¿Qué segundo formato (además de HTML) generaste? Explica la configuración o comandos del workflow y herramientas que lo producen.
+
+Además de la documentación en HTML, se generó un formato PDF que incluye todos los archivos .html generados por JavaDoc, manteniendo la estructura de carpetas original.
+
+Esta parte me resultó más complicada, ya que inicialmente intenté:
+
+- Usar Pandoc + LaTeX para crear un .book uniendo los .html más relevantes en un solo PDF.
+
+- Crear un script en Python personalizado para combinar los HTML y exportarlos a PDF.
+
+Ninguna de estas opciones funcionó correctamente, por lo que finalmente recurrí a wkhtmltopdf, que convierte directamente los HTML a PDF respetando los enlaces relativos y la estructura de carpetas.
+
+```bash
+# 4. Generar Javadoc HTML
+- name: Build Javadoc HTML
+  run: mvn clean javadoc:javadoc
+
+# 5. Instalar wkhtmltopdf
+- name: Install wkhtmltopdf
+  run: sudo apt-get update && sudo apt-get install -y wkhtmltopdf
+
+# 6. Generar PDFs individuales
+- name: Convert HTMLs to PDFs
+  run: |
+    mkdir -p target/reports/pdf
+    for html in $(find target/reports/apidocs -type f -name "*.html"); do
+      relative_path=$(realpath --relative-to=target/reports/apidocs "$html")
+      pdf_path="target/reports/pdf/${relative_path%.html}.pdf"
+      mkdir -p "$(dirname "$pdf_path")"
+      echo "Generando $pdf_path..."
+      wkhtmltopdf --enable-local-file-access "file://$(pwd)/$html" "$pdf_path"
+    done
+
+    echo "Archivos PDF generados:"
+    find target/reports/pdf -type f -name "*.pdf"
+```
+
+Cada HTML se convierte en un PDF individual, y la estructura de carpetas se preserva gracias a ``realpath`` y ``mkdir -p``. Los PDF generados se almacenan en ``target/reports/pdf/``.
+
+> ``Nota importante``: para generar los PDF es necesario ejecutar el workflow en GitHub, ya que ``wkhtmltopdf`` necesita estar instalado en el entorno Ubuntu de la Action y la configuración local puede no tenerlo disponible.
+
+### d) Explica cómo GitHub facilita mantener la documentación (actualizaciones del README.md y de /docs) cuando colaboran varias personas (PRs, reviews, checks de CI, protección de ramas).
+
+GitHub facilita el mantenimiento de la documentación de forma colaborativa y controlada gracias a su integración con GitHub Actions y las herramientas de colaboración:
+
+- **Pull Requests (PR)**: permiten que los colaboradores propongan cambios sin modificar directamente la rama principal (main). Cada PR puede incluir actualizaciones en el código, el README.md o la carpeta /docs, manteniendo el control de versiones.
+
+- **Reviews**: otros miembros del equipo pueden revisar y aprobar los cambios antes de fusionarlos, asegurando la calidad del contenido y evitando conflictos.
+
+- **Checks de CI**: el workflow definido se ejecuta automáticamente en cada PR o push, regenerando la documentación y comprobando que todo compila correctamente antes de aceptar los cambios.
+
+- **Protección de ramas**: se pueden aplicar reglas para impedir pushes directos a main, obligando a pasar por revisiones o por la ejecución correcta de los workflows. Esto garantiza que la documentación en /docs y el README.md siempre estén actualizados.
+
+### e) Muestra mensajes de commit que evidencien el nuevo workflow. ¿Son claros y descriptivos? Justifícalo. Ademas de un conjunto de mensajes de tus commits.
+
+Durante la creación y ajuste del workflow de documentación se realizaron varios commits descriptivos, tanto manuales como automáticos (desde GitHub Actions).
+
+Si bien se ha cometido el error de mezclar mensajes en español e inglés, se ha seguido una convención de mensajes en modo imperativo (como "Fix...", "Update...", “Actualizar...” o "Corregir...") que indican acciones concretas y mantienen un historial claro y coherente.
+
+(añadir captura)
+
+Los commits generados automáticamente por el bot (``github-actions[bot]``) también usan mensajes descriptivos como:
+
+(añadir captura)
+
+Este formato con ``[skip ci]`` evita que el propio commit del workflow dispare una nueva ejecución de la acción, previniendo bucles infinitos.
+
+### f) ¿Qué medidas/configuración del repositorio garantizan que solo personal autorizado accede al código y la documentación? (p. ej., repositorio privado, equipos, roles, claves/secretos, branch protection).
+
+En este proyecto, el repositorio se ha configurado como público para facilitar la revisión por parte de los profesores, permitiendo un acceso rápido y sin necesidad de gestionar permisos.
+
+En mi caso, utilizo autenticación mediante clave SSH, lo que evita tener que introducir credenciales manualmente y proporciona una conexión cifrada entre el equipo local y GitHub.
+
+Los workflows de GitHub Actions usan el token automático ``${{ secrets.GITHUB_TOKEN }}`` para autenticarse y desplegar la documentación de forma segura, sin exponer credenciales en el código.
+
+Ejemplo:
+
+```bash
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Durante el desarrollo de la aplicación, si fuera necesario colaborar con otros compañeros de clase, se implementarán medidas adicionales como protección de ramas, revisiones obligatorias de pull requests y escaneo automático de vulnerabilidades en las dependencias, siguiendo las buenas prácticas de control de versiones en entornos colaborativos.
+
+### g) Indica dónde en el README.md explicas el funcionamiento del workflow y dónde detallas las herramientas y comandos de documentación.
+
+Esta información se encuentra en:
+
+- [Herramientas y comandos](#a-herramientas-usadas-y-comandos-ejecutados)
+- [Explicación del workflow](#d-explicación-breve-del-workflow-pasos-del-job-eventos-que-lo-disparan)
+
+### h) Justifica por qué el workflow utilizado es CI. ¿Qué evento dispara automáticamente la generación/actualización de la documentación (p. ej., push, pull_request, workflow_dispatch)?
+
+El workflow se considera un ejemplo de Integración Continua (CI) porque cada vez que se hacen cambios en la rama ``main``, **GitHub Actions** genera automáticamente la documentación actualizada, tanto en HTML como en PDF. Esto asegura que la documentación siempre refleja el estado real del proyecto y evita que se quede desactualizada. Además, se puede ejecutar manualmente con ``workflow_dispatch`` si se quiere regenerar la documentación en cualquier momento.
+
+No se trata de **Entrega Continua (CD)** porque el workflow no despliega automáticamente un producto listo para producción más allá de actualizar **GitHub Pages**: su objetivo principal es mantener la documentación actualizada, no entregar ni instalar la aplicación en un entorno de producción.
