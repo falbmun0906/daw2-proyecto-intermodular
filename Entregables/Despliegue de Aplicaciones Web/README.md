@@ -75,15 +75,31 @@ Se han generado salidas en formato HTML (con su respectivo CSS y JS para el desp
 
 El workflow `Generate and Publish Javadoc PDFs` se dispara automáticamente al hacer `push` en la rama `main` o manualmente mediante `workflow_dispatch`. Los pasos que realiza son: 
 
-1. Clonar el repositorio.
-2. Configurar Java 21 y Maven.
-3. Generar la documentación Javadoc en HTML.
-4. Instalar `wkhtmltopdf`.
-5. Convertir cada archivo HTML en PDF preservando la estructura de carpetas usando `wkhtmltopdf`.
-6. Sube los PDF como artefactos del job.
-7. Actualiza la carpeta `/docs` en el repositorio con los HTML y PDF generados.
-8. Hace commit y push de los cambios con mensajes claros.
-9. Finalmente, despliega la documentación HTML en la rama `gh-pages` de GitHub Pages.
+1. **Clonar el repositorio**: Cada workflow en GitHub Actions se ejecuta en una VM nueva (Ubuntu en este caso). Por ello, es necesario clonar el repositorio para disponer de todo el código fuente y la estructura de carpetas desde la que se generará la documentación.
+
+
+2. **Configurar Java 21 y Maven**: La VM de GitHub no trae por defecto Java ni Maven. Para compilar el proyecto y generar Javadoc, se instalan y configuran estas herramientas en la sesión del job. Cada job empieza limpio, por eso hay que reinstalarlas siempre.
+
+
+3. **Generar la documentación Javadoc en HTML**: Maven ejecuta javadoc:javadoc para producir los archivos HTML. Esto puede hacerse localmente o en el workflow. En el workflow, permite que los archivos se generen en la VM, listos para procesarse y versionarse.
+
+
+4. **Instalar wkhtmltopdf**: La VM Ubuntu tampoco incluye esta herramienta. wkhtmltopdf se necesita para convertir HTML a PDF dentro del workflow. Sin esta instalación, no se podrían generar PDFs de manera automática en GitHub.
+
+
+5. **Convertir cada archivo HTML en PDF preservando la estructura de carpetas**:  Se usa wkhtmltopdf sobre cada HTML generado, creando PDFs que mantienen la jerarquía original de carpetas. Esto garantiza que los PDFs sean fáciles de relacionar con el código fuente.
+
+
+6. **Subir los PDF como artefactos del job**:  Las Actions de GitHub eliminan todos los archivos generados al finalizar el job. Subirlos como artefactos permite descargarlos desde la pestaña Actions sin necesidad de comprometerlos al repositorio.
+
+
+7. **Actualizar la carpeta /docs en el repositorio con los HTML y PDF generados**: Copiar los archivos generados al directorio versionado /docs asegura que la documentación se mantenga en el repositorio y pueda ser consultada o referenciada públicamente.
+
+
+8. **Hacer commit y push de los cambios con mensajes claros**: Fundamental: sin este commit, todos los archivos generados desaparecerían al terminar la VM. Al hacer commit y push, se guardan permanentemente en el repositorio, permitiendo que otros puedan verlos, descargarlos o servirlos vía GitHub Pages.
+
+
+9. **Desplegar la documentación HTML en la rama gh-pages**: Permite que la documentación HTML sea accesible públicamente como un sitio web. Se aprovecha el token de GitHub para que la acción haga push automáticamente a la rama gh-pages.
 
 ---
 ### e) Mensajes de commit que evidencien la mejora: claros, descriptivos, en imperativo.
