@@ -49,55 +49,7 @@
 
 **Clase**: ``UsuarioService.java``
 
-```java
-package com.example.backend.service;
-
-import com.example.backend.model.Usuario;
-import com.example.backend.repository.UsuarioRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-/**
- * Servicio para manejar la lógica de negocio relacionada con los {@link Usuario}.
- * Proporciona métodos para obtener todos los usuarios y guardar nuevos usuarios.
- */
-@Service
-public class UsuarioService {
-    /**
-     * Repositorio para acceder a los datos de {@link Usuario}.
-     */
-    private final UsuarioRepository repository;
-
-    /**
-     * Constructor que inyecta el repositorio de usuarios.
-     *
-     * @param repository el repositorio de usuarios a utilizar
-     */
-    public UsuarioService(UsuarioRepository repository) {
-        this.repository = repository;
-    }
-
-    /**
-     * Obtiene todos los usuarios registrados en la base de datos.
-     *
-     * @return lista de todos los {@link Usuario} existentes
-     */
-    public List<Usuario> getAll() {
-        return repository.findAll();
-    }
-
-    /**
-     * Guarda un usuario en la base de datos.
-     *
-     * @param usuario el {@link Usuario} a guardar
-     * @return el {@link Usuario} guardado con su ID generado
-     */
-    public Usuario save (Usuario usuario) {
-        return repository.save(usuario);
-    }
-}
-```
+https://github.com/falbmun0906/daw2-proyecto-intermodular/blob/4ba06a3f99725d1d0bad99705d3f1264dbb1aa6f/backend/src/main/java/com/example/backend/service/UsuarioService.java#L9-L47
 
 **Etiquetas usadas**:
 
@@ -138,14 +90,14 @@ El workflow `Generate and Publish Javadoc PDFs` se dispara automáticamente al h
 
 Ejemplos de commits realizados:
 
-(Subir captura)
+<img width="1570" height="501" alt="despliegue-commits" src="https://github.com/user-attachments/assets/a6f61005-4e42-47a2-8b2b-ef647867b1a8" />
 
 ---
 ### f) Evidencia de configuración SSH para GitHub (clave pública añadida, prueba ssh -T git@github.com).
 
-Evidencia de configuración:
+Evidencia de configuración de clave SSH:
 
-(Subir captura)
+<img width="1127" height="491" alt="despliegue-evidencia-ssh" src="https://github.com/user-attachments/assets/d648ea00-f26a-4607-9ab6-ac06dd07478d" />
 
 ---
 ### g) Cómo clonar/usar el repositorio para reproducir la generación de documentación.
