@@ -215,13 +215,13 @@ GitHub facilita el mantenimiento de la documentación de forma colaborativa y co
 
 Durante la creación y ajuste del workflow de documentación se realizaron varios commits descriptivos, tanto manuales como automáticos (desde GitHub Actions).
 
-Si bien se ha cometido el error de mezclar mensajes en español e inglés, se ha seguido una convención de mensajes en modo imperativo (como "Fix...", "Update...", “Actualizar...” o "Corregir...") que indican acciones concretas y mantienen un historial claro y coherente.
+Si bien he cometido el error de mezclar mensajes en español e inglés, se ha seguido una convención de mensajes en modo imperativo (como "Fix...", "Update...", “Actualizar...” o "Corregir...") que indican acciones concretas y mantienen un historial claro y coherente.
 
-(añadir captura)
+<img width="1570" height="501" alt="despliegue-commits" src="https://github.com/user-attachments/assets/3c22d3cd-aaad-4b24-af48-b6c4c836e3db" />
 
 Los commits generados automáticamente por el bot (``github-actions[bot]``) también usan mensajes descriptivos como:
 
-(añadir captura)
+<img width="1585" height="262" alt="despliegue-bot-ci" src="https://github.com/user-attachments/assets/fd22f9e3-181d-42e2-9be3-913d990e4f2d" />
 
 Este formato con ``[skip ci]`` evita que el propio commit del workflow dispare una nueva ejecución de la acción, previniendo bucles infinitos.
 
