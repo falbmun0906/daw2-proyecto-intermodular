@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356284d8-ee6d-4821-9534-083ad9c4bc69" name="Changes" comment="Initialize Angular frontend project with basic structure and configuration">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="356284d8-ee6d-4821-9534-083ad9c4bc69" name="Changes" comment="Initialize Angular frontend project with basic structure and configuration" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,12 +19,12 @@
     &quot;assignee&quot;: &quot;falbmun0906&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:falbmun0906/daw2-proyecto-intermodular.git&quot;,
-    &quot;accountId&quot;: &quot;01c68714-b521-4025-a70e-ec67811d77fc&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/falbmun0906/daw2-proyecto-intermodular.git",
+    "accountId": "2a412c45-33a9-4e1e-8057-f578885f77bb"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -45,7 +43,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/UsuarioM/Documents/ReposGit/ProyectoIntermodularGrupal",
+    "last_opened_file_path": "C:/Users/UsuarioM/Documents/ReposGit/daw2-proyecto-intermodular",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,8 +56,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-84258761d1cc-intellij.indexing.shared.core-IU-243.28141.18" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.28141.18" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-WS-252.26199.162" />
       </set>
     </attachedChunks>
   </component>
@@ -77,6 +74,7 @@
       <workItem from="1762156644424" duration="861000" />
       <workItem from="1762157530007" duration="12000" />
       <workItem from="1762158717093" duration="3280000" />
+      <workItem from="1764672176925" duration="19000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Actualizar README.md hasta apartado g&quot;">
       <option name="closed" value="true" />

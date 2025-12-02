@@ -1,0 +1,15 @@
+/*
+Variables de color: Define tu paleta completa. Necesitas colores primarios (el color principal de tu marca), secundarios (color de apoyo), neutrales (grises del 50 al 900 para textos y fondos), y semánticos (success verde, error rojo, warning naranja, info azul).
+
+Escala tipográfica: Define las fuentes que usarás y los tamaños. La escala debe ser coherente (usa una escala modular, por ejemplo con ratio 1.25). Necesitas definir familias (font-primary para texto, font-secondary si usas otra para títulos), tamaños desde xs hasta 5xl, pesos (light, regular, medium, semibold, bold), y line-heights (tight para títulos, normal para párrafos, relaxed para textos largos).
+
+Sistema de espaciado: Crea una escala basada en 4px u 8px. Define spacing-1 (0.25rem), spacing-2 (0.5rem), spacing-3 (0.75rem), spacing-4 (1rem), spacing-5 (1.25rem), y así hasta spacing-24 (6rem). Esto te permite mantener consistencia en márgenes y paddings.
+
+Breakpoints genéricos: Define los puntos de quiebre para responsive. Usa al menos: sm (640px para móvil grande), md (768px para tablet), lg (1024px para desktop), xl (1280px para desktop grande).
+
+Elevaciones (sombras): Define sombras de diferentes intensidades: shadow-sm (sombra sutil), shadow-md (sombra media), shadow-lg (sombra grande), shadow-xl (sombra muy grande). Usa rgba con transparencia para que funcionen en cualquier fondo.
+
+Bordes y radios: Define grosores de borde (thin 1px, medium 2px, thick 4px) y radios de borde (desde sm 2px hasta full 9999px para círculos).
+
+Transiciones: Define duraciones estándar: fast (150ms para cambios rápidos), base (300ms para la mayoría), slow (500ms para transiciones complejas). Usa ease-in-out para transiciones suaves.
+*/
