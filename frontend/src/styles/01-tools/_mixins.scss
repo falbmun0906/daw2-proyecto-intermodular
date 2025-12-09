@@ -1,4 +1,74 @@
-/*
-Crear al menos 3 mixins reutilizables.
-*/
+/* =========================
+   * Mixins Reutilizables
+   * ========================= */
 
+/* Breakpoints responsive */
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px
+);
+
+@mixin respond-to($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+/* Flexbox utility */
+
+@mixin flex-layout(
+  $direction: row,
+  $justify: flex-start,
+  $align: center,
+  $gap: 0
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+/* ======== Ejemplos de uso ========
+
+-- Alineado a la izquierda
+
+.container-left {
+  @include flex-layout(row, flex-start, center, var(--spacing-8));
+}
+
+-- Centrado
+
+.container-center {
+  @include flex-layout(row, center, center, var(--spacing-8));
+}
+
+================================= */
+
+/* Focus Ring */
+
+@mixin focus-ring($color: var(--color-info-dark), $size: 2px) {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 $size $color;
+  }
+}
+
+/* Button Base Style */
+
+@mixin button-base($bg, $color: var(--color-text-main)) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: var(--radius-md);
+  border: none;
+  background-color: $bg;
+  color: $color;
+  cursor: pointer;
+  transition: background-color var(--transition-base) var(--transition-easing),
+  box-shadow var(--transition-base) var(--transition-easing);
+}

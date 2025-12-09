@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356284d8-ee6d-4821-9534-083ad9c4bc69" name="Changes" comment="Initialize Angular frontend project with basic structure and configuration" />
+    <list default="true" id="356284d8-ee6d-4821-9534-083ad9c4bc69" name="Changes" comment="Initialize Angular frontend project with basic structure and configuration">
+      <change afterPath="$PROJECT_DIR$/frontend/src/styles/03-elements/_elements.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/docs/design/DOCUMENTACION.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/docs/design/DOCUMENTACION.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/00-settings/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/00-settings/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/01-tools/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/01-tools/_mixins.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/02-generic/_reset.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/02-generic/_reset.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles/04-layout/_layout.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/04-layout/_layout.scss" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,12 +27,12 @@
     &quot;assignee&quot;: &quot;falbmun0906&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/falbmun0906/daw2-proyecto-intermodular.git",
-    "accountId": "2a412c45-33a9-4e1e-8057-f578885f77bb"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/falbmun0906/daw2-proyecto-intermodular.git&quot;,
+    &quot;accountId&quot;: &quot;2a412c45-33a9-4e1e-8057-f578885f77bb&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -34,25 +42,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/UsuarioM/Documents/ReposGit/daw2-proyecto-intermodular",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/UsuarioM/Documents/ReposGit/daw2-proyecto-intermodular&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -75,6 +83,8 @@
       <workItem from="1762157530007" duration="12000" />
       <workItem from="1762158717093" duration="3280000" />
       <workItem from="1764672176925" duration="19000" />
+      <workItem from="1764852006945" duration="237000" />
+      <workItem from="1765271951158" duration="11309000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Actualizar README.md hasta apartado g&quot;">
       <option name="closed" value="true" />
