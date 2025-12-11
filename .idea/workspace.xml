@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="356284d8-ee6d-4821-9534-083ad9c4bc69" name="Changes" comment="Initialize Angular frontend project with basic structure and configuration">
-      <change afterPath="$PROJECT_DIR$/frontend/src/styles/03-elements/_elements.scss" afterDir="false" />
+    <list default="true" id="356284d8-ee6d-4821-9534-083ad9c4bc69" name="Changes" comment="Fix formatting issue in DOCUMENTACION.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/docs/design/DOCUMENTACION.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/docs/design/DOCUMENTACION.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/00-settings/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/00-settings/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/01-tools/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/01-tools/_mixins.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/02-generic/_reset.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/02-generic/_reset.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles/04-layout/_layout.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles/04-layout/_layout.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +79,7 @@
       <workItem from="1764672176925" duration="19000" />
       <workItem from="1764852006945" duration="237000" />
       <workItem from="1765271951158" duration="11309000" />
+      <workItem from="1765451013002" duration="1332000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;Actualizar README.md hasta apartado g&quot;">
       <option name="closed" value="true" />
@@ -110,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762159459989</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fix formatting issue in DOCUMENTACION.md">
+      <option name="closed" value="true" />
+      <created>1765451292661</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765451292661</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,6 +123,7 @@
     <MESSAGE value="&quot;Actualizar README.md hasta apartado g&quot;" />
     <MESSAGE value="&quot;Corregir README.md hasta apartado g&quot;" />
     <MESSAGE value="Initialize Angular frontend project with basic structure and configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initialize Angular frontend project with basic structure and configuration" />
+    <MESSAGE value="Fix formatting issue in DOCUMENTACION.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix formatting issue in DOCUMENTACION.md" />
   </component>
 </project>
