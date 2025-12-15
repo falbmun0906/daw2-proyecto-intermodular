@@ -4,17 +4,17 @@ Aplicación backend desarrollada con **Spring Boot + JPA/Hibernate + MySQL** par
 
 ---
 
-## 📑 Índice
+## Índice
 
 ### **Entrega 1: Modelo de Datos**
-
-1. [1.1 Modelo de Datos - Diagrama E/R](#11-modelo-de-datos---diagrama-er)
+1. [1.1 Diagrama E/R](#11-modelo-de-datos---diagrama-er)
 2. [1.2 Entidades JPA](#12-entidades-jpa)
 3. [1.3 DTOs Iniciales](#13-dtos-iniciales)
 4. [1.4 Repositorios](#14-repositorios)
 
 ### **Entrega 2: Controladores y Servicios**
-*(Por documentar)*
+1. [2.1 Servicios](#21-servicios)
+2. [2.2 Controladores](#22-controladores-rest)
 
 ### **Entrega Seguridad: Autenticación y Autorización**
 *(Por documentar)*
@@ -220,18 +220,42 @@ Las entidades JPA se encuentran en el paquete `com.example.backend.model` siguie
 - **Relaciones**: Principalmente **unidireccionales** para evitar ciclos; `FetchType.LAZY` por defecto
 - **Exclusiones Lombok**: `@ToString.Exclude` y `@EqualsAndHashCode.Exclude` en colecciones para evitar problemas con proxies de Hibernate
 
-### Entidades Creadas (10 total)
+### Entidades Creadas
 
-1. **Usuario** - Centro del sistema (email, password, rol, fechaRegistro)
-2. **Receta** - Catálogo de recetas (nombre, instrucciones, tiempoPreparacion, porciones)
-3. **Ingrediente** - Catálogo de ingredientes (nombre, categoría, unidadDefecto, calorías)
-4. **RecetaIngrediente** - N:M Receta ↔ Ingrediente (cantidad, unidad, opcional)
-5. **RecetaUsuario** - N:M Usuario ↔ Receta (tipo: FAVORITA|PROPIA)
-6. **DespensaItem** - Items en despensa (cantidadActual, fechaCaducidad, ubicación, estado)
-7. **PlanificacionSemana** - Agrupa planificación semanal (fechaInicio, etiqueta)
-8. **PlanificacionDia** - Comida planificada (fecha, tipoComida, receta)
-9. **ListaCompra** - Listas de compra (origen, estado, textoWhatsapp)
-10. **ListaItem** - Items de compra (cantidad, unidad, comprado)
+#### 1. **Usuario**
+Centro del sistema. Autenticación (email, password) y autorización (rol).
+- Relaciones 1:N: DespensaItem, RecetaUsuario, PlanificacionSemana, ListaCompra
+
+#### 2. **Receta**
+Catálogo de recetas con ingredientes, instrucciones y tiempo de preparación.
+- Relaciones 1:N: RecetaIngrediente, RecetaUsuario, PlanificacionDia
+
+#### 3. **Ingrediente**
+Catálogo de ingredientes usado por recetas, despensa y listas de compra.
+- Relaciones 1:N: RecetaIngrediente, DespensaItem, ListaItem
+
+#### 4. **RecetaIngrediente**
+Tabla intermedia N:M (Receta ↔ Ingrediente). Almacena cantidad, unidad y si es opcional.
+
+#### 5. **RecetaUsuario**
+Tabla intermedia N:M (Usuario ↔ Receta). Permite guardar recetas favoritas o propias.
+
+#### 6. **DespensaItem**
+Items almacenados en la despensa del usuario con caducidad, ubicación y estado.
+
+#### 7. **PlanificacionSemana**
+Agrupa la planificación de comidas de una semana completa por usuario.
+- Relaciones 1:N: PlanificacionDia
+
+#### 8. **PlanificacionDia**
+Una comida planificada (desayuno, comida, cena) asignada a un día de la semana.
+
+#### 9. **ListaCompra**
+Listas de compra generadas automáticamente a partir de la planificación.
+- Relaciones 1:N: ListaItem
+
+#### 10. **ListaItem**
+Items dentro de una lista de compra con cantidad y estado de compra.
 
 ### Tipos Enumerados
 
@@ -258,20 +282,75 @@ Los DTOs (Data Transfer Objects) se encuentran en el paquete `com.example.backen
 - **Composición**: Response DTOs anidan otras Response para relaciones (evitando ciclos)
 - **Proyección**: Los DTOs seleccionan qué campos exponer (seguridad: no incluir passwords)
 
-### DTOs por Entidad (26 total)
+### DTOs por Entidad
 
-| Entidad | DTOs | Propósito |
-|---------|------|-----------|
-| Usuario | UsuarioCreateRequest, UsuarioResponse | Registro y obtener datos |
-| Receta | RecetaCreateRequest, RecetaResponse, RecetaDetailedResponse | Crear, obtener básico y con ingredientes |
-| Ingrediente | IngredienteCreateRequest, IngredienteResponse | Crear e información |
-| RecetaIngrediente | RecetaIngredienteCreateRequest, RecetaIngredienteResponse | Agregar a receta e información |
-| RecetaUsuario | RecetaUsuarioCreateRequest, RecetaUsuarioResponse | Guardar receta e información |
-| DespensaItem | DespensaItemCreateRequest, DespensaItemUpdateRequest, DespensaItemResponse | Operaciones CRUD |
-| PlanificacionSemana | PlanificacionSemanaCreateRequest, PlanificacionSemanaResponse | Crear y obtener con días |
-| PlanificacionDia | PlanificacionDiaCreateRequest, PlanificacionDiaResponse | Crear y obtener |
-| ListaCompra | ListaCompraCreateRequest, ListaCompraResponse | Crear y obtener con items |
-| ListaItem | ListaItemCreateRequest, ListaItemResponse | Agregar a lista e información |
+#### **Usuario**
+| DTO | Propósito |
+|-----|-----------|
+| `UsuarioCreateRequest` | Registro: email, password |
+| `UsuarioResponse` | Devuelve: id, email, rol, fechaRegistro (sin password) |
+
+#### **Receta**
+| DTO | Propósito |
+|-----|-----------|
+| `RecetaCreateRequest` | Crear receta: nombre, descripción, instrucciones, tiempoPreparacion, porciones |
+| `RecetaResponse` | Datos básicos de receta |
+| `RecetaDetailedResponse` | Receta con lista de ingredientes (usado en GET /recetas/{id}) |
+
+#### **Ingrediente**
+| DTO | Propósito |
+|-----|-----------|
+| `IngredienteCreateRequest` | Crear ingrediente: nombre, categoría, unidadDefecto, calorías |
+| `IngredienteResponse` | Datos del ingrediente |
+
+#### **RecetaIngrediente**
+| DTO | Propósito |
+|-----|-----------|
+| `RecetaIngredienteCreateRequest` | Agregar ingrediente a receta: ingredienteId, cantidad, unidad, opcional |
+| `RecetaIngredienteResponse` | Datos del ingrediente en la receta (con IngredienteResponse anidado) |
+
+#### **RecetaUsuario**
+| DTO | Propósito |
+|-----|-----------|
+| `RecetaUsuarioCreateRequest` | Guardar receta: tipo (FAVORITA\|PROPIA), visibilidad |
+| `RecetaUsuarioResponse` | Receta guardada (con RecetaResponse anidado) |
+
+#### **DespensaItem**
+| DTO | Propósito |
+|-----|-----------|
+| `DespensaItemCreateRequest` | Agregar a despensa: ingredienteId, cantidadActual, unidad, fechaCaducidad, ubicación |
+| `DespensaItemUpdateRequest` | Actualizar: cantidad, caducidad, ubicación, estado (todos opcionales) |
+| `DespensaItemResponse` | Datos del item (con IngredienteResponse anidado) |
+
+#### **PlanificacionSemana**
+| DTO | Propósito |
+|-----|-----------|
+| `PlanificacionSemanaCreateRequest` | Crear planificación: fechaInicio, etiqueta |
+| `PlanificacionSemanaResponse` | Datos de la semana con lista de PlanificacionDiaResponse anidadas |
+
+#### **PlanificacionDia**
+| DTO | Propósito |
+|-----|-----------|
+| `PlanificacionDiaCreateRequest` | Crear comida planificada: fecha, tipoComida, recetaId (opcional), notas |
+| `PlanificacionDiaResponse` | Datos del día (con RecetaResponse anidado) |
+
+#### **ListaCompra**
+| DTO | Propósito |
+|-----|-----------|
+| `ListaCompraCreateRequest` | Crear lista: origen, textoWhatsapp |
+| `ListaCompraResponse` | Datos de la lista con items (lista de ListaItemResponse) |
+
+#### **ListaItem**
+| DTO | Propósito |
+|-----|-----------|
+| `ListaItemCreateRequest` | Agregar item: ingredienteId, cantidadNecesaria, unidad |
+| `ListaItemResponse` | Datos del item (con IngredienteResponse anidado) |
+
+### Resumen de DTOs Creados
+
+**Total: 26 DTOs**
+- 14 Request DTOs (Create/Update)
+- 12 Response DTOs
 
 ---
 
@@ -287,13 +366,13 @@ Los repositorios JPA se encuentran en el paquete `com.example.backend.repository
 - Paginación y ordenación
 - Agregaciones y conteos
 
-### Repositorios Creados (10 total)
+### Repositorios Creados
 
 #### 1. **UsuarioRepository**
 Consultas personalizadas:
 - `findByEmail(email)` - Búsqueda por email (autenticación)
 - `existsByEmail(email)` - Verificación de unicidad
-- `findByRol(rol)` - Listar usuarios por rol
+- `findByRol(rol)` - Listar usuarios por rol (ROLE_USER, ROLE_ADMIN)
 
 ---
 
@@ -322,38 +401,39 @@ Consultas personalizadas:
 Consultas personalizadas:
 - `findByRecetaId(recetaId)` - Ingredientes de una receta
 - `countByRecetaId(recetaId)` - Número de ingredientes
-- `findIngredientesOpcionalesByRecetaId(recetaId)` - Solo opcionales
-- `findByIngredienteId(ingredienteId)` - Recetas que contienen ingrediente
+- `findIngredientesOpcionalesByRecetaId(recetaId)` - Solo ingredientes opcionales
+- `findByIngredienteId(ingredienteId)` - Recetas que contienen un ingrediente
 - `countRecetasByIngredienteId(ingredienteId)` - Número de recetas
-- `existsByRecetaIdAndIngredienteId(recetaId, ingredienteId)` - Verificación
+- `existsByRecetaIdAndIngredienteId(recetaId, ingredienteId)` - Verificación de duplicados
 
 ---
 
 #### 5. **RecetaUsuarioRepository**
 Consultas personalizadas:
 - `findByUsuarioId(usuarioId)` - Recetas guardadas por usuario
-- `findFavoritasByUsuarioId(usuarioId)` - Solo favoritas
-- `findPropiasByUsuarioId(usuarioId)` - Solo propias
+- `findFavoritasByUsuarioId(usuarioId)` - Solo recetas favoritas
+- `findPropiasByUsuarioId(usuarioId)` - Solo recetas propias
 - `findByUsuarioIdAndRecetaId(usuarioId, recetaId)` - Búsqueda específica
 - `existsByUsuarioIdAndRecetaId(usuarioId, recetaId)` - Verificación
-- `countByUsuarioId(usuarioId)` - Total guardadas
-- `countFavoritasByUsuarioId(usuarioId)` - Total favoritas
-- `countUsuariosByRecetaId(recetaId)` - Popularidad de receta
+- `countByUsuarioId(usuarioId)` - Total de recetas guardadas
+- `countFavoritasByUsuarioId(usuarioId)` - Total de favoritas
+- `countUsuariosByRecetaId(recetaId)` - Popularidad de receta (cuántos la guardan)
 
 ---
 
 #### 6. **DespensaItemRepository**
 Consultas personalizadas:
-- `findByUsuarioId(usuarioId)` - Items de la despensa
+- `findByUsuarioId(usuarioId)` - Todos los items de la despensa
 - `findByUsuarioId(usuarioId, Pageable)` - Con paginación
 - `findByUsuarioIdAndIngredienteId(usuarioId, ingredienteId)` - Item específico
 - `findCaducadosByUsuarioId(usuarioId)` - Productos caducados
 - `findProximoCaducarByUsuarioId(usuarioId)` - Próximos a caducar
 - `findOkByUsuarioId(usuarioId)` - Productos en buen estado
-- `findByUsuarioIdAndUbicacion(usuarioId, ubicacion)` - Por ubicación
-- `findCaducadosAntesDeFecha(usuarioId, fecha)` - Caducados antes de fecha
+- `findByUsuarioIdAndUbicacion(usuarioId, ubicacion)` - Por ubicación (NEVERA, CONGELADOR, etc.)
+- `findCaducadosAntesDeFecha(usuarioId, fecha)` - Caducados antes de una fecha
 - `findByUsuarioIdAndIngredienteNombre(usuarioId, nombre)` - Búsqueda por nombre
 - `countByUsuarioId(usuarioId)` - Total de items
+- `existsByUsuarioIdAndIngredienteId(usuarioId, ingredienteId)` - Verificación
 
 ---
 
@@ -361,67 +441,240 @@ Consultas personalizadas:
 Consultas personalizadas:
 - `findByUsuarioId(usuarioId)` - Planificaciones del usuario
 - `findByUsuarioId(usuarioId, Pageable)` - Con paginación
-- `findMostRecentByUsuarioId(usuarioId)` - Más reciente
-- `findByUsuarioIdAndFechaInicio(usuarioId, fechaInicio)` - Por fecha
+- `findMostRecentByUsuarioId(usuarioId)` - Planificación más reciente
+- `findByUsuarioIdAndFechaInicio(usuarioId, fechaInicio)` - Búsqueda por fecha
 - `findByUsuarioIdAndFechaRange(usuarioId, fechaInicio, fechaFin)` - Rango de fechas
 - `countByUsuarioId(usuarioId)` - Total de planificaciones
-- `findByUsuarioIdAndEtiqueta(usuarioId, etiqueta)` - Por etiqueta
+- `findByUsuarioIdAndEtiqueta(usuarioId, etiqueta)` - Búsqueda por etiqueta
 
 ---
 
 #### 8. **PlanificacionDiaRepository**
 Consultas personalizadas:
-- `findByPlanificacionSemanaId(planificacionSemanaId)` - Días de una semana
+- `findByPlanificacionSemanaId(planificacionSemanaId)` - Todos los días de una semana
 - `findByPlanificacionSemanaIdAndFechaAndTipoComida(...)` - Día específico
-- `findByPlanificacionSemanaIdAndFecha(...)` - Comidas de un día
+- `findByPlanificacionSemanaIdAndFecha(...)` - Todas las comidas de un día
 - `findByPlanificacionSemanaIdAndTipoComida(...)` - Comidas de un tipo
-- `findWithRecetaByPlanificacionSemanaId(...)` - Solo con receta
-- `findWithoutRecetaByPlanificacionSemanaId(...)` - Solo sin receta
-- `countWithReceta(planificacionSemanaId)` - Número con receta
-- `findDistinctRecetasByPlanificacionSemanaId(...)` - Recetas únicas
+- `findWithRecetaByPlanificacionSemanaId(...)` - Solo días con receta
+- `findWithoutRecetaByPlanificacionSemanaId(...)` - Solo días sin receta
+- `countWithReceta(planificacionSemanaId)` - Número de días planificados
+- `findDistinctRecetasByPlanificacionSemanaId(...)` - Recetas únicas de la semana
 
 ---
 
 #### 9. **ListaCompraRepository**
 Consultas personalizadas:
-- `findByUsuarioId(usuarioId)` - Listas del usuario
+- `findByUsuarioId(usuarioId)` - Todas las listas del usuario
 - `findByUsuarioId(usuarioId, Pageable)` - Con paginación
 - `findPendientesByUsuarioId(usuarioId)` - Listas pendientes
 - `findCompradasByUsuarioId(usuarioId)` - Listas compradas
-- `findMostRecentByUsuarioId(usuarioId)` - Más reciente
-- `findMostRecentPendienteByUsuarioId(usuarioId)` - Última pendiente
-- `findByUsuarioIdAndOrigen(usuarioId, origen)` - Por origen
+- `findMostRecentByUsuarioId(usuarioId)` - Lista más reciente
+- `findMostRecentPendienteByUsuarioId(usuarioId)` - Última lista pendiente
+- `findByUsuarioIdAndOrigen(usuarioId, origen)` - Por origen (PLANIFICACION, MANUAL)
 - `findByUsuarioIdAndFechaRange(usuarioId, fechaInicio, fechaFin)` - Rango de fechas
+- `countPendientesByUsuarioId(usuarioId)` - Total de listas pendientes
+- `countByUsuarioId(usuarioId)` - Total de listas
 
 ---
 
 #### 10. **ListaItemRepository**
 Consultas personalizadas:
 - `findByListaCompraId(listaCompraId)` - Items de una lista
-- `findNotCompradosByListaCompraId(listaCompraId)` - Sin comprar
-- `findCompradosByListaCompraId(listaCompraId)` - Comprados
+- `findNotCompradosByListaCompraId(listaCompraId)` - Items sin comprar
+- `findCompradosByListaCompraId(listaCompraId)` - Items comprados
 - `findByListaCompraIdAndIngredienteId(...)` - Item específico
 - `countByListaCompraId(listaCompraId)` - Total de items
-- `countNotCompradosByListaCompraId(listaCompraId)` - Sin comprar
-- `countCompradosByListaCompraId(listaCompraId)` - Comprados
-- `existsByListaCompraIdAndIngredienteId(...)` - Verificación
-- `getPorcentajeComprado(listaCompraId)` - Porcentaje comprado (SQL nativa)
+- `countNotCompradosByListaCompraId(listaCompraId)` - Items sin comprar
+- `countCompradosByListaCompraId(listaCompraId)` - Items comprados
+- `existsByListaCompraIdAndIngredienteId(...)` - Verificación de duplicados
+- `getPorcentajeComprado(listaCompraId)` - Porcentaje de items comprados (SQL nativa)
 
 ---
 
-## Resumen de Entrega 1
+### Resumen de Repositorios
 
-**Diagrama E/R** - Mermaid con 10 entidades y relaciones  
-**Entidades JPA** - 10 clases con Lombok y validación  
-**DTOs Iniciales** - 26 DTOs (Request/Response)  
-**Repositorios** - 10 repositorios con 80+ consultas personalizadas  
-
-**Próximo paso**: Entrega 2 - Controladores y Servicios
+**Total: 10 Repositorios JPA**
+- **Consultas personalizadas**: 80+ métodos con lógica de negocio
+- **Estrategias de consulta**: Combinación de JPQL, derived queries y SQL nativo
+- **Características**:
+  - Filtros y búsquedas avanzadas
+  - Ordenación y paginación
+  - Conteos y agregaciones
+  - Verificaciones de existencia
+  - Estadísticas (ej: porcentaje, popularidad)
 
 ---
 
-## Entrega 2: Controladores y Servicios
-*(Por documentar)*
+## 2.1 Servicios
+
+### Arquitectura de Servicios
+
+Los servicios se encuentran en `com.example.backend.service` y encapsulan la **lógica de negocio**:
+
+- **`@Service` + `@Transactional`**: Gestión automática de transacciones
+- **Inyección de dependencias**: `@RequiredArgsConstructor` de Lombok
+- **Validaciones**: Verificaciones en tiempo de ejecución
+- **Seguridad de datos**: Validaciones de pertenencia (usuario-recurso)
+- **Mapeo de DTOs**: Conversión entidades → DTOs
+
+### Servicios Creados (9 total)
+
+| Servicio | Métodos Clave | Responsabilidad |
+|----------|---------------|-----------------|
+| **UsuarioService** | registrar, obtenerPorId, obtenerPorEmail, verificarCredenciales | Autenticación y gestión de usuarios |
+| **RecetaService** | crear, obtenerPorIdDetallado, buscarPorNombre, obtenerRecetasRapidas | CRUD de recetas y búsquedas |
+| **IngredienteService** | crear, obtenerPorNombre, obtenerPorCategoria, obtenerCategorias | Gestión de catálogo de ingredientes |
+| **RecetaIngredienteService** | agregarIngrediente, obtenerIngredientesPorReceta, eliminarIngrediente | Relación N:M recetas-ingredientes |
+| **RecetaUsuarioService** | guardarReceta, obtenerFavoritas, obtenerPropias, obtenerPopularidad | Recetas guardadas por usuario |
+| **DespensaItemService** | agregarADespensa, obtenerDespensa, obtenerCaducados, actualizar | Gestión de despensa con caducidad |
+| **PlanificacionSemanaService** | crear, obtenerDelUsuario, obtenerMasReciente | Planificaciones semanales |
+| **PlanificacionDiaService** | crear, obtenerDelaSemana, obtenerDelDia, actualizar | Comidas planificadas diariamente |
+| **ListaCompraService** | crear, obtenerPendientes, marcarComoComprada | Generación y estado de listas |
+| **ListaItemService** | agregarItem, marcarComoComprado, obtenerPorcentajeComprado | Gestión de items en listas |
+
+### Funcionalidades Especiales
+
+**DespensaItemService**:
+- Cálculo automático de estado según caducidad
+- Alerta de próxima caducidad (3 días antes)
+- Filtrado por ubicación (NEVERA, CONGELADOR, etc.)
+
+**RecetaUsuarioService**:
+- Seguimiento de recetas favoritas vs propias
+- Cálculo de popularidad de receta
+
+**ListaItemService**:
+- Cálculo de porcentaje de compra completada
+- Tracking de items comprados vs pendientes
+
+---
+
+## 2.2 Controladores REST
+
+### Arquitectura de Controladores
+
+Los controladores se encuentran en `com.example.backend.controller` y manejan:
+
+- **Rutas RESTful**: `/api/recurso` en plural
+- **Verbos HTTP**: GET, POST, PUT/PATCH, DELETE
+- **Códigos HTTP**: 200, 201, 204, 400, 401, 403, 404, 422, 500
+- **Inyección de servicios**: Delegan lógica en servicios
+- **DTOs**: Reciben Request, devuelven Response
+
+### Controladores Creados (10 total)
+
+#### UsuarioController
+**Rutas**:
+- `POST /api/usuarios/registro` - Registrar usuario
+- `GET /api/usuarios/{id}` - Obtener usuario por ID
+- `GET /api/usuarios/email/{email}` - Obtener por email
+- `GET /api/usuarios` - Listar todos (ADMIN)
+
+**Códigos HTTP**:
+- 201 Created - Registro exitoso
+- 200 OK - Usuario encontrado
+- 400 Bad Request - Email duplicado
+- 404 Not Found - Usuario no existe
+
+#### RecetaController
+**Rutas**:
+- `POST /api/recetas` - Crear receta
+- `GET /api/recetas/{id}` - Obtener receta (con ingredientes)
+- `GET /api/recetas` - Listar recetas (paginado)
+- `GET /api/recetas/buscar?nombre=X` - Búsqueda por nombre
+- `GET /api/recetas/rapidas?minutos=30` - Recetas rápidas
+- `PUT /api/recetas/{id}` - Actualizar receta
+- `DELETE /api/recetas/{id}` - Eliminar receta
+
+**Códigos HTTP**:
+- 201 Created - Receta creada
+- 200 OK - Receta obtenida/listada
+- 400 Bad Request - Validación fallida
+- 404 Not Found - Receta no existe
+- 204 No Content - Eliminado
+
+#### IngredienteController
+**Rutas**:
+- `POST /api/ingredientes` - Crear ingrediente
+- `GET /api/ingredientes/{id}` - Obtener ingrediente
+- `GET /api/ingredientes` - Listar (paginado)
+- `GET /api/ingredientes/buscar?nombre=X` - Búsqueda
+- `GET /api/ingredientes/categoria/{categoria}` - Por categoría
+- `GET /api/ingredientes/categorias` - Listar categorías únicas
+
+#### RecetaIngredienteController (anidado)
+**Rutas**:
+- `POST /api/recetas/{recetaId}/ingredientes` - Agregar ingrediente
+- `GET /api/recetas/{recetaId}/ingredientes` - Listar ingredientes
+- `GET /api/recetas/{recetaId}/ingredientes/opcionales` - Solo opcionales
+- `DELETE /api/recetas/{recetaId}/ingredientes/{ingredienteId}` - Eliminar
+
+#### RecetaUsuarioController (anidado)
+**Rutas**:
+- `POST /api/usuarios/{usuarioId}/recetas/{recetaId}` - Guardar receta
+- `GET /api/usuarios/{usuarioId}/recetas` - Recetas guardadas
+- `GET /api/usuarios/{usuarioId}/recetas/favoritas` - Solo favoritas
+- `GET /api/usuarios/{usuarioId}/recetas/propias` - Solo propias
+- `DELETE /api/usuarios/{usuarioId}/recetas/{recetaId}` - Desguardar
+
+#### DespensaItemController (anidado)
+**Rutas**:
+- `POST /api/usuarios/{usuarioId}/despensa` - Agregar producto
+- `GET /api/usuarios/{usuarioId}/despensa` - Listar despensa (paginado)
+- `GET /api/usuarios/{usuarioId}/despensa/caducados` - Caducados
+- `GET /api/usuarios/{usuarioId}/despensa/proximo-caducar` - Próximos a caducar
+- `GET /api/usuarios/{usuarioId}/despensa/ubicacion/{ubicacion}` - Por ubicación
+- `PUT /api/usuarios/{usuarioId}/despensa/{itemId}` - Actualizar item
+- `DELETE /api/usuarios/{usuarioId}/despensa/{itemId}` - Eliminar item
+
+#### PlanificacionSemanaController (anidado)
+**Rutas**:
+- `POST /api/usuarios/{usuarioId}/planificaciones` - Crear planificación
+- `GET /api/usuarios/{usuarioId}/planificaciones` - Listar (paginado)
+- `GET /api/usuarios/{usuarioId}/planificaciones/{planificacionId}` - Obtener
+- `GET /api/usuarios/{usuarioId}/planificaciones/reciente` - Más reciente
+
+#### PlanificacionDiaController (anidado)
+**Rutas**:
+- `POST /api/usuarios/{usuarioId}/planificaciones/{planificacionId}/dias` - Crear día
+- `GET /api/usuarios/{usuarioId}/planificaciones/{planificacionId}/dias` - Listar días
+- `GET /api/usuarios/{usuarioId}/planificaciones/{planificacionId}/dias/{diaId}` - Obtener día
+- `PUT /api/usuarios/{usuarioId}/planificaciones/{planificacionId}/dias/{diaId}` - Actualizar
+- `DELETE /api/usuarios/{usuarioId}/planificaciones/{planificacionId}/dias/{diaId}` - Eliminar
+
+#### ListaCompraController (anidado)
+**Rutas**:
+- `POST /api/usuarios/{usuarioId}/listas` - Crear lista
+- `GET /api/usuarios/{usuarioId}/listas` - Listar listas (paginado)
+- `GET /api/usuarios/{usuarioId}/listas/pendientes` - Solo pendientes
+- `PUT /api/usuarios/{usuarioId}/listas/{listaId}/comprada` - Marcar comprada
+
+#### ListaItemController (anidado)
+**Rutas**:
+- `POST /api/usuarios/{usuarioId}/listas/{listaId}/items` - Agregar item
+- `GET /api/usuarios/{usuarioId}/listas/{listaId}/items` - Listar items
+- `PUT /api/usuarios/{usuarioId}/listas/{listaId}/items/{itemId}/comprado` - Marcar comprado
+- `DELETE /api/usuarios/{usuarioId}/listas/{listaId}/items/{itemId}` - Eliminar item
+
+---
+
+### Manejo de Errores Centralizado
+
+**@ControllerAdvice** con @ExceptionHandler:
+- `IllegalArgumentException` → 400 Bad Request o 404 Not Found
+- `ValidationException` → 422 Unprocessable Entity
+- `Exception` → 500 Internal Server Error
+
+---
+
+### Seguridad en Controladores
+
+- **@PreAuthorize**: Protección por roles
+- **Usuario autenticado**: Requerido para operaciones CRUD
+- **Validación de pertenencia**: Usuario solo accede sus datos
+- **CORS**: Configurado para frontend Angular
+
+---
 
 ## Entrega Seguridad: Autenticación y Autorización
 *(Por documentar)*
