@@ -99,6 +99,12 @@ public class SecurityConfig {
 
                         // Rutas de admin (solo ROLE_ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
+                        // Permitir GET de recursos de usuario solo a usuarios autenticados (USER o ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/*/despensa/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/*/recetas/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/*/planificaciones/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/*/listas/**").hasAnyRole("USER", "ADMIN")
+                        // El resto de GET sobre /api/usuarios/** solo para admin
                         .requestMatchers(HttpMethod.GET, "/api/usuarios/**").hasRole("ADMIN")
 
                         // Recetas públicas para lectura, protegidas para crear/modificar
@@ -135,4 +141,3 @@ public class SecurityConfig {
         return source;
     }
 }
-

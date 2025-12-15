@@ -136,7 +136,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"test@despienza.com\",\n  \"password\": \"password123\"\n}"
+              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",
@@ -507,7 +507,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidad\": 200,\n  \"unidad\": \"g\",\n  \"opcional\": false\n}"
+              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidad\": 200.0,\n  \"unidad\": \"g\",\n  \"opcional\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/recetas/{{receta_id}}/ingredientes",
@@ -898,7 +898,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidadNecesaria\": 2,\n  \"unidad\": \"kg\"\n}"
+              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidadNecesaria\": 2.0,\n  \"unidad\": \"kg\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/listas/{{lista_id}}/items",
@@ -996,7 +996,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"test@despienza.com\",\n  \"password\": \"wrongpassword\"\n}"
+              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"wrongpassword\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",

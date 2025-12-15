@@ -48,6 +48,7 @@ public class ListaCompra {
     @OneToMany(mappedBy = "listaCompra", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private List<ListaItem> items = new ArrayList<>();
 
     /**
