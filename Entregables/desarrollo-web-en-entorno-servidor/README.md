@@ -653,7 +653,11 @@ Los controladores se encuentran en `com.example.backend.controller` y manejan:
 **Rutas**:
 - `POST /api/usuarios/{usuarioId}/listas/{listaId}/items` - Agregar item
 - `GET /api/usuarios/{usuarioId}/listas/{listaId}/items` - Listar items
-- `PUT /api/usuarios/{usuarioId}/listas/{listaId}/items/{itemId}/comprado` - Marcar comprado
+- `GET /api/usuarios/{usuarioId}/listas/{listaId}/items/sin-comprar` - Items sin comprar
+- `GET /api/usuarios/{usuarioId}/listas/{listaId}/items/comprados` - Items comprados
+- `GET /api/usuarios/{usuarioId}/listas/{listaId}/items/porcentaje` - Porcentaje comprado
+- `PUT /api/usuarios/{usuarioId}/listas/{listaId}/items/{itemId}/comprado` - Marcar como comprado
+- `PUT /api/usuarios/{usuarioId}/listas/{listaId}/items/{itemId}/no-comprado` - Desmarcar como comprado
 - `DELETE /api/usuarios/{usuarioId}/listas/{listaId}/items/{itemId}` - Eliminar item
 
 ---
