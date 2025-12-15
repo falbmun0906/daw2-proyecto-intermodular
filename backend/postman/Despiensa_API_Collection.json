@@ -1,0 +1,708 @@
+{
+  "info": {
+    "name": "Despiensa API - Collection Completa",
+    "description": "Colección completa para probar la API REST de Despiensa con autenticación JWT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "despiensa-api-v1",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "usuario_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "receta_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ingrediente_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Autenticación",
+      "item": [
+        {
+          "name": "Registro de Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
+                  "    pm.collectionVariables.set('usuario_id', jsonData.id);",
+                  "    pm.test('Token JWT recibido', function () {",
+                  "        pm.expect(jsonData.token).to.be.a('string');",
+                  "    });",
+                  "    pm.test('Rol asignado correctamente', function () {",
+                  "        pm.expect(jsonData.rol).to.eql('ROLE_USER');",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/registro",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "registro"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
+                  "    pm.collectionVariables.set('usuario_id', jsonData.id);",
+                  "    pm.test('Login exitoso', function () {",
+                  "        pm.response.to.have.status(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Ingredientes",
+      "item": [
+        {
+          "name": "Crear Ingrediente - Tomate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('ingrediente_id', jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Tomate\",\n  \"categoria\": \"Verduras\",\n  \"unidadDefecto\": \"kg\",\n  \"caloriasPorUnidad\": 18.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ingredientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ingredientes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Ingrediente - Pasta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pasta\",\n  \"categoria\": \"Cereales\",\n  \"unidadDefecto\": \"g\",\n  \"caloriasPorUnidad\": 350.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ingredientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ingredientes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Ingredientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ingredientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ingredientes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Ingrediente por Nombre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ingredientes/buscar?nombre=tomate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ingredientes", "buscar"],
+              "query": [
+                {
+                  "key": "nombre",
+                  "value": "tomate"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Categorías",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ingredientes/categorias",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ingredientes", "categorias"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Recetas",
+      "item": [
+        {
+          "name": "Crear Receta - Pasta con Tomate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('receta_id', jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pasta con Tomate\",\n  \"descripcion\": \"Receta clásica italiana\",\n  \"instrucciones\": \"1. Hervir pasta. 2. Preparar salsa de tomate. 3. Mezclar.\",\n  \"tiempoPreparacion\": 25,\n  \"porciones\": 4\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Recetas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas?page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Receta por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas/{{receta_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas", "{{receta_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Recetas Rápidas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas/rapidas?minutos=30",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas", "rapidas"],
+              "query": [
+                {
+                  "key": "minutos",
+                  "value": "30"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Contar Recetas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas/count",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas", "count"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Receta Ingredientes",
+      "item": [
+        {
+          "name": "Agregar Ingrediente a Receta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidad\": 200,\n  \"unidad\": \"g\",\n  \"opcional\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas/{{receta_id}}/ingredientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas", "{{receta_id}}", "ingredientes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Ingredientes de Receta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recetas/{{receta_id}}/ingredientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "recetas", "{{receta_id}}", "ingredientes"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Despensa",
+      "item": [
+        {
+          "name": "Agregar Item a Despensa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidadActual\": 1.5,\n  \"unidad\": \"kg\",\n  \"fechaCaducidad\": \"2025-12-31\",\n  \"ubicacion\": \"NEVERA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/despensa",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "despensa"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Despensa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/despensa",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "despensa"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Items Caducados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/despensa/caducados",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "despensa", "caducados"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Items OK",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/despensa/ok",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "despensa", "ok"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Recetas de Usuario",
+      "item": [
+        {
+          "name": "Guardar Receta como Favorita",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"FAVORITA\",\n  \"visibilidad\": \"PRIVADA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/recetas/{{receta_id}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "recetas", "{{receta_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Recetas Favoritas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/recetas/favoritas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "recetas", "favoritas"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Planificación Semanal",
+      "item": [
+        {
+          "name": "Crear Planificación Semanal",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('planificacion_id', jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInicio\": \"2025-12-16\",\n  \"etiqueta\": \"Semana de Navidad\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/planificaciones",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "planificaciones"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Planificaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/planificaciones",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "planificaciones"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Planificación Reciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/planificaciones/reciente",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "planificaciones", "reciente"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "8. Lista de Compra",
+      "item": [
+        {
+          "name": "Crear Lista de Compra",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('lista_id', jsonData.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origen\": \"MANUAL\",\n  \"textoWhatsappGenerado\": \"Lista semanal\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/listas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "listas"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Agregar Item a Lista",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ingredienteId\": {{ingrediente_id}},\n  \"cantidadNecesaria\": 2,\n  \"unidad\": \"kg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/listas/{{lista_id}}/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "listas", "{{lista_id}}", "items"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Items de Lista",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/listas/{{lista_id}}/items",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "listas", "{{lista_id}}", "items"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Listas Pendientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/listas/pendientes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "listas", "pendientes"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "9. Tests de Seguridad",
+      "item": [
+        {
+          "name": "❌ Acceso sin token (debe fallar 401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/{{usuario_id}}/despensa",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "{{usuario_id}}", "despensa"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "❌ Login con credenciales incorrectas (debe fallar 401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"wrongpassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
+

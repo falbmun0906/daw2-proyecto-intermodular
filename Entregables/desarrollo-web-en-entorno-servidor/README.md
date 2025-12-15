@@ -680,6 +680,437 @@ Los controladores se encuentran en `com.example.backend.controller` y manejan:
 
 ---
 
-## Entrega Seguridad: Autenticación y Autorización
-*(Por documentar)*
+## Entrega 3: Seguridad - Autenticación y Autorización
+
+### Arquitectura de Seguridad
+
+La seguridad se implementa con **JWT (JSON Web Tokens)** + **Spring Security** y se encuentra en el paquete `com.example.backend.security`:
+
+- **JWT**: Tokens stateless para autenticación
+- **Spring Security**: Filtros, autorización por roles, protección de rutas
+- **BCrypt**: Hash de contraseñas
+- **CORS**: Configurado para Angular (localhost:4200)
+- **Roles**: `ROLE_USER` (usuarios normales), `ROLE_ADMIN` (administradores)
+
+---
+
+### 3.1 Componentes de Seguridad
+
+#### 1. **JwtUtils** - Generación y Validación de Tokens
+**Ubicación**: `com.example.backend.security.JwtUtils`
+
+**Funcionalidades**:
+- `generateJwtToken(Authentication)` - Genera token JWT desde autenticación
+- `generateTokenFromEmail(String)` - Genera token desde email (para registro)
+- `getEmailFromJwtToken(String)` - Extrae email del token
+- `validateJwtToken(String)` - Valida firma y expiración
+
+**Configuración**:
+```properties
+jwt.secret=dGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25JblNwcmluZ0Jvb3Q=
+jwt.expiration=86400000  # 24 horas
+```
+
+#### 2. **JwtAuthenticationFilter** - Interceptor de Peticiones
+**Ubicación**: `com.example.backend.security.JwtAuthenticationFilter`
+
+**Funcionalidad**:
+- Intercepta TODAS las peticiones HTTP
+- Extrae token JWT del header `Authorization: Bearer <token>`
+- Valida el token y establece autenticación en SecurityContext
+- Si el token no es válido, la petición continúa sin autenticación
+
+#### 3. **UserDetailsServiceImpl** - Carga de Usuarios
+**Ubicación**: `com.example.backend.security.UserDetailsServiceImpl`
+
+**Funcionalidad**:
+- Implementa interfaz de Spring Security `UserDetailsService`
+- Carga datos del usuario desde la base de datos (por email)
+- Convierte `Usuario` (entidad JPA) → `UserDetails` (Spring Security)
+- Asigna autoridades (roles) al usuario autenticado
+
+#### 4. **SecurityConfig** - Configuración Central
+**Ubicación**: `com.example.backend.config.SecurityConfig`
+
+**Configuración de rutas**:
+```java
+// Rutas públicas (sin autenticación)
+/api/auth/**               → Permitido (login, registro)
+/swagger-ui/**, /v3/api-docs/** → Permitido (documentación)
+
+// Rutas solo para ADMIN
+DELETE /api/**             → hasRole("ADMIN")
+GET /api/usuarios/**       → hasRole("ADMIN")
+
+// Rutas públicas de lectura, protegidas para crear
+GET /api/recetas/**        → Permitido
+GET /api/ingredientes/**   → Permitido
+POST /api/recetas/**       → hasAnyRole("USER", "ADMIN")
+POST /api/ingredientes/**  → hasAnyRole("USER", "ADMIN")
+
+// Todas las demás rutas
+anyRequest()               → authenticated()
+```
+
+**CORS**:
+- Origen permitido: `http://localhost:4200` (Angular)
+- Métodos: GET, POST, PUT, PATCH, DELETE, OPTIONS
+- Headers: Todos (`*`)
+- Credentials: Habilitado
+- Headers expuestos: Authorization
+
+---
+
+### 3.2 DTOs de Autenticación
+
+#### LoginRequest
+```java
+{
+  "email": "usuario@email.com",
+  "password": "password123"
+}
+```
+
+#### AuthResponse
+```java
+{
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "type": "Bearer",
+  "id": 1,
+  "email": "usuario@email.com",
+  "rol": "ROLE_USER"
+}
+```
+
+---
+
+### 3.3 Endpoints de Autenticación
+
+#### AuthController
+**Rutas públicas** (no requieren autenticación):
+
+**POST /api/auth/login**
+- Autentica un usuario
+- Request: `LoginRequest`
+- Response: `AuthResponse` con token JWT
+- Códigos HTTP:
+  - 200 OK - Login exitoso
+  - 401 Unauthorized - Credenciales inválidas
+
+**POST /api/auth/registro**
+- Registra un nuevo usuario
+- Request: `UsuarioCreateRequest`
+- Response: `AuthResponse` con token JWT
+- Códigos HTTP:
+  - 201 Created - Registro exitoso
+  - 400 Bad Request - Email ya existe
+  - 422 Unprocessable Entity - Validación fallida
+
+---
+
+### 3.4 Flujo de Autenticación
+
+#### 1. Registro de Usuario
+```
+Cliente → POST /api/auth/registro
+       → AuthService.registrar()
+       → UsuarioRepository.save() (password hasheado con BCrypt)
+       → JwtUtils.generateTokenFromEmail()
+       → AuthResponse con token
+```
+
+#### 2. Login de Usuario
+```
+Cliente → POST /api/auth/login
+       → AuthenticationManager.authenticate()
+       → UserDetailsServiceImpl.loadUserByUsername()
+       → Valida password con BCrypt
+       → JwtUtils.generateJwtToken()
+       → AuthResponse con token
+```
+
+#### 3. Petición Protegida
+```
+Cliente → GET /api/usuarios/{id}/despensa
+        Header: Authorization: Bearer <token>
+       → JwtAuthenticationFilter.doFilterInternal()
+       → JwtUtils.validateJwtToken()
+       → UserDetailsServiceImpl.loadUserByUsername()
+       → SecurityContext establecido
+       → Controlador verifica roles (@PreAuthorize)
+       → Respuesta si autorizado, 403 si denegado
+```
+
+---
+
+### 3.5 Autorización por Roles
+
+#### Roles Disponibles
+| Rol | Descripción | Permisos |
+|-----|-------------|----------|
+| `ROLE_USER` | Usuario normal | CRUD sobre sus propios recursos |
+| `ROLE_ADMIN` | Administrador | CRUD sobre todos los recursos + gestión de usuarios |
+
+#### Protección de Rutas por Rol
+
+**Rutas de solo lectura (públicas)**:
+- GET /api/recetas/** - Cualquiera puede ver recetas
+- GET /api/ingredientes/** - Cualquiera puede ver ingredientes
+
+**Rutas protegidas (autenticado)**:
+- /api/usuarios/{id}/despensa - Usuario solo accede a SU despensa
+- /api/usuarios/{id}/recetas - Usuario solo accede a SUS recetas guardadas
+- /api/usuarios/{id}/planificaciones - Usuario solo accede a SU planificación
+- /api/usuarios/{id}/listas - Usuario solo accede a SUS listas
+
+**Rutas de administración (solo ADMIN)**:
+- DELETE /api/** - Solo admin puede eliminar
+- GET /api/usuarios/** - Solo admin puede listar usuarios
+
+---
+
+### 3.6 Validaciones de Seguridad
+
+#### En Servicios
+Todos los servicios validan pertenencia de recursos:
+```java
+public DespensaItemResponse obtener(Long usuarioId, Long itemId) {
+    // 1. Validar que el usuario existe
+    usuarioService.obtenerUsuarioCompleto(usuarioId);
+    
+    // 2. Obtener el item
+    DespensaItem item = despensaItemRepository.findById(itemId)
+        .orElseThrow(() -> new IllegalArgumentException("Item no encontrado"));
+    
+    // 3. Validar pertenencia
+    if (!item.getUsuario().getId().equals(usuarioId)) {
+        throw new IllegalArgumentException("El item no pertenece a este usuario");
+    }
+    
+    return mapToResponse(item);
+}
+```
+
+#### Manejo de Errores de Seguridad
+`GlobalExceptionHandler` captura excepciones de autenticación/autorización:
+
+- `BadCredentialsException` → 401 Unauthorized
+- `UsernameNotFoundException` → 401 Unauthorized
+- `AccessDeniedException` → 403 Forbidden
+
+---
+
+### 3.7 Cómo Usar la API con Autenticación
+
+#### 1. Registrar un Usuario
+```bash
+POST http://localhost:8080/api/auth/registro
+Content-Type: application/json
+
+{
+  "email": "usuario@test.com",
+  "password": "password123"
+}
+
+# Respuesta (201 Created)
+{
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "type": "Bearer",
+  "id": 1,
+  "email": "usuario@test.com",
+  "rol": "ROLE_USER"
+}
+```
+
+#### 2. Login
+```bash
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "usuario@test.com",
+  "password": "password123"
+}
+
+# Respuesta (200 OK)
+{
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "type": "Bearer",
+  "id": 1,
+  "email": "usuario@test.com",
+  "rol": "ROLE_USER"
+}
+```
+
+#### 3. Usar Token en Peticiones Protegidas
+```bash
+GET http://localhost:8080/api/usuarios/1/despensa
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+# Respuesta (200 OK) - Si autorizado
+# Respuesta (401 Unauthorized) - Si token inválido/expirado
+# Respuesta (403 Forbidden) - Si sin permisos
+```
+
+---
+
+### 3.8 Configuración para Desarrollo
+
+#### application.properties
+```properties
+# JWT Configuration
+jwt.secret=dGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25JblNwcmluZ0Jvb3Q=
+jwt.expiration=86400000  # 24 horas en milisegundos
+
+# CORS para Angular
+# Ya configurado en SecurityConfig para http://localhost:4200
+```
+
+**IMPORTANTE**: En producción:
+- Cambiar `jwt.secret` por una clave aleatoria segura (256 bits mínimo)
+- Usar variables de entorno para secretos
+- Configurar HTTPS
+- Añadir refresh tokens
+- Implementar logout (blacklist de tokens)
+
+---
+
+### 3.9 Próximas Mejoras (Post-MVP)
+
+- [ ] **Refresh Tokens** - Renovar tokens sin reautenticar
+- [ ] **Logout** - Blacklist de tokens revocados
+- [ ] **Password Reset** - Recuperación de contraseña por email
+- [ ] **Rate Limiting** - Protección contra fuerza bruta
+- [ ] **Auditoría** - Log de accesos y cambios
+- [ ] **2FA** - Autenticación de dos factores
+
+---
+
+## 🚀 Cómo Levantar el Proyecto
+
+### Requisitos Previos
+- Java 21+
+- Maven 3.6+
+- MySQL 8.0+
+- Postman (opcional, para pruebas)
+
+### Pasos
+
+#### 1. Configurar Base de Datos
+```sql
+CREATE DATABASE despiensa;
+```
+
+O dejar que Spring Boot la cree automáticamente (`createDatabaseIfNotExist=true`).
+
+#### 2. Configurar application.properties (si es necesario)
+```properties
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_PASSWORD
+jwt.secret=TU_SECRETO_SEGURO_BASE64
+```
+
+#### 3. Compilar y Ejecutar
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+```
+
+#### 4. Verificar
+```bash
+# Servidor levantado en:
+http://localhost:8080
+
+# Swagger UI (documentación):
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## Documentación de la API
+
+### Swagger/OpenAPI
+Accede a la documentación interactiva en:
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+### 🧪 Colección Postman/Newman
+
+#### Uso con Postman GUI
+1. Abre Postman
+2. Importa: `backend/postman/Despiensa_API_Collection.json`
+3. Importa entorno: `backend/postman/Despiensa_Local_Environment.json`
+4. Selecciona entorno "Despiensa Local"
+5. Ejecuta peticiones en orden (empezando por Autenticación)
+
+#### Uso con Newman (CLI)
+
+**Instalación**:
+```bash
+npm install -g newman newman-reporter-htmlextra
+```
+
+**Ejecutar tests (Windows)**:
+```bash
+run-newman-tests.bat
+```
+
+**Ejecutar tests (Linux/Mac)**:
+```bash
+newman run backend/postman/Despiensa_API_Collection.json \
+  -e backend/postman/Despiensa_Local_Environment.json \
+  --reporters cli,htmlextra \
+  --reporter-htmlextra-export backend/postman/reports/test-report.html
+```
+
+#### Contenido de la Colección
+
+La colección incluye **47 peticiones** organizadas en 9 carpetas:
+
+1. **Autenticación** (2) - Registro y Login con JWT
+2. **Ingredientes** (5) - CRUD + búsquedas + categorías
+3. **Recetas** (5) - CRUD + búsquedas + filtros
+4. **Receta Ingredientes** (2) - Agregar/listar ingredientes
+5. **Despensa** (4) - Gestión completa de despensa
+6. **Recetas de Usuario** (2) - Favoritas y propias
+7. **Planificación Semanal** (3) - Crear y gestionar planificaciones
+8. **Lista de Compra** (4) - Crear listas y agregar items
+9. **Tests de Seguridad** (2) - Verificar protecciones 401/403
+
+**Características**:
+- ✅ Variables automáticas (token JWT, IDs)
+- ✅ Tests automáticos incluidos
+- ✅ Reportes HTML con newman-reporter-htmlextra
+- ✅ Flujo completo de testing
+
+Ver documentación completa en: `backend/postman/README.md`
+
+---
+
+## Testing
+
+### Tests Unitarios
+```bash
+mvn test
+```
+
+**Configuración de tests**:
+- Base de datos: H2 en memoria
+- Configuración: `src/test/resources/application.properties`
+- Tests ejecutados: `BackendApplicationTests.contextLoads()`
+
+---
+
+## Licencia
+
+Este proyecto es parte del módulo de Desarrollo Web en Entorno Servidor (DWES) del CFGS de Desarrollo de Aplicaciones Web.
+
+---
+
+**Proyecto**: Despiensa - Gestión Inteligente de Despensa y Recetas  
+**Tecnologías**: Spring Boot 3.5.6 + JPA/Hibernate + MySQL + JWT + Angular  
+**Autor**: Francisco Alba 
+**Fecha**: Diciembre 2025
 
