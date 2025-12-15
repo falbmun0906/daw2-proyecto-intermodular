@@ -1,30 +1,75 @@
 package com.example.backend.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
- * Representa un usuario en la aplicación.
- * Esta entidad se almacena en la base de datos mediante JPA.
+ * Entidad USUARIO.
+ * Centro del sistema: cada usuario tiene su propia despensa, recetas y planificación.
+ * Incluye autenticación (email, password) y autorización (rol).
  */
 @Entity
-@Getter
-@Setter
+@Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Usuario {
 
-    /** Identificador único del usuario, generado automáticamente */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Nombre completo del usuario */
-    private String nombre;
-
-    /** Correo electrónico del usuario */
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "El formato del email no es válido")
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
+    @Column(nullable = false)
+    private String password;
+
+    @NotNull(message = "El rol es obligatorio")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Rol rol;
+
+    @Column(nullable = false)
+    private LocalDateTime fechaRegistro;
+
+    // ==================== RELACIONES ====================
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<DespensaItem> despensaItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<RecetaUsuario> recetasGuardadas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<PlanificacionSemana> planificaciones = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<ListaCompra> listasCompra = new ArrayList<>();
+
+    /**
+     * Enumeración de roles disponibles.
+     */
+    public enum Rol {
+        ROLE_USER,
+        ROLE_ADMIN
+    }
 }
+
