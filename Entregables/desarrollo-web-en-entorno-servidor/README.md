@@ -1103,6 +1103,202 @@ mvn test
 
 ---
 
+## Testing con Postman/Newman
+
+### Archivos de Testing
+
+La carpeta `backend/postman/` contiene:
+
+1. **`Despiensa_API_Collection.json`** - Colección completa con 47 peticiones
+   - 9 carpetas organizadas por funcionalidad
+   - Tests automáticos con feedback visual (✓)
+   - Variables que se autoguardan (JWT, IDs)
+
+2. **`Despiensa_Local_Environment.json`** - Variables de entorno
+   - baseUrl: `http://localhost:8080`
+   - jwt_token, usuario_id, receta_id, etc.
+
+3. **`run-newman-tests.bat`** - Script para ejecutar tests automáticamente
+   - Verifica que el servidor está corriendo
+   - Ejecuta todos los tests
+   - Genera reportes HTML
+
+4. **`postman/README.md`** - Documentación detallada de la colección
+
+### Uso con Postman GUI
+
+1. Abre Postman
+2. Importa: `backend/postman/Despiensa_API_Collection.json`
+3. Importa entorno: `backend/postman/Despiensa_Local_Environment.json`
+4. Selecciona entorno "Despiensa Local"
+5. Ejecuta las peticiones en orden (empezando por Autenticación → Login → crear datos → probar funcionalidades)
+
+**Ventajas**:
+- ✓ Interfaz visual y fácil de usar
+- ✓ Debugging interactivo
+- ✓ Historial de peticiones
+- ✓ Visualización de respuestas formateadas
+
+### Uso con Newman (CLI - Automatizado)
+
+#### Instalación (primera vez)
+
+```bash
+npm install -g newman newman-reporter-htmlextra
+```
+
+#### Ejecutar tests (Windows)
+
+```bash
+cd backend
+.\run-newman-tests.bat
+```
+
+El script automáticamente:
+- ✓ Verifica que Newman está instalado
+- ✓ Verifica que el servidor está corriendo en localhost:8080
+- ✓ Ejecuta todos los tests
+- ✓ Genera reportes HTML con gráficos
+- ✓ Muestra resultados en consola con ✓ (exitoso) o ✗ (fallido)
+
+#### Ejecutar tests (Linux/Mac)
+
+```bash
+newman run backend/postman/Despiensa_API_Collection.json \
+  -e backend/postman/Despiensa_Local_Environment.json \
+  --reporters cli,htmlextra \
+  --reporter-htmlextra-export backend/postman/reports/test-report.html \
+  --delay-request 200 \
+  --timeout-request 5000
+```
+
+### Estructura de la Colección
+
+**47 peticiones** en **9 carpetas**:
+
+| Carpeta | Peticiones | Descripción |
+|---------|-----------|-------------|
+| **1. Autenticación** | 2 | Registro y Login con JWT |
+| **2. Ingredientes** | 5 | CRUD + búsquedas + categorías |
+| **3. Recetas** | 5 | CRUD + búsquedas + filtros |
+| **4. Receta Ingredientes** | 2 | Agregar/listar ingredientes a receta |
+| **5. Despensa** | 4 | Gestión de despensa del usuario |
+| **6. Recetas de Usuario** | 2 | Favoritas y propias |
+| **7. Planificación Semanal** | 3 | Crear y gestionar planificaciones |
+| **8. Lista de Compra** | 4 | Crear listas y agregar items |
+| **9. Tests de Seguridad** | 2 | Verificar protecciones 401/403 |
+
+### Tests Automáticos Incluidos
+
+Cada petición incluye tests que validan:
+
+✓ **Códigos HTTP** correctos (201 Created, 200 OK, 400 Bad Request, etc.)
+✓ **Estructura de respuestas** (propiedades esperadas)
+✓ **Tipos de datos** (strings, números, arrays, etc.)
+✓ **Autenticación** (tokens JWT válidos, roles correctos)
+
+**Ejemplo de salida**:
+```
+✓ Login exitoso
+✓ Token JWT recibido
+✓ Ingrediente creado
+✓ Receta obtenida
+✓ Despensa listada
+```
+
+### Variables Dinámicas y Auto-guardado
+
+Después del **Login**:
+- `jwt_token` - Token JWT se guarda automáticamente
+- `usuario_id` - ID del usuario autenticado
+
+Después de crear **Ingrediente/Receta**:
+- `ingrediente_id` - ID del ingrediente creado
+- `receta_id` - ID de la receta creada
+
+Después de crear **Planificación/Lista**:
+- `planificacion_id` - ID de la planificación
+- `lista_id` - ID de la lista
+
+Estas variables se usan automáticamente en las peticiones siguientes.
+
+### Reportes HTML
+
+Newman genera reportes HTML detallados en `backend/postman/reports/`:
+
+**Contenido del reporte**:
+- Gráficos de éxito/fallos
+- Tiempos de respuesta
+- Tests pasados y fallidos
+- Request/Response completos
+- Tema oscuro profesional
+
+**Acceder**: Abre el archivo `.html` generado en el navegador
+
+### Flujo Completo de Testing
+
+#### 1. Levantar el servidor
+
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+El servidor estará disponible en `http://localhost:8080`
+
+#### 2. Ejecutar tests
+
+```bash
+.\run-newman-tests.bat
+```
+
+#### 3. Revisar resultados
+
+**En terminal**: Verás ✓ y ✗ de cada petición
+**En reporte HTML**: Abre `backend/postman/reports/test-report-[fecha].html`
+
+### Casos de Testing
+
+#### ✓ Flujo Exitoso
+
+1. **Registro** → Crea usuario y obtiene JWT
+2. **Login** → Autentica y guarda token
+3. **Crear Ingredientes** → Para usar en recetas
+4. **Crear Receta** → Con ingredientes
+5. **Agregar a Despensa** → Items del usuario
+6. **Guardar Receta** → Como favorita
+7. **Crear Planificación** → Semanal
+8. **Crear Lista** → De compra
+
+#### ✗ Tests de Seguridad
+
+- **Sin token** → 401 Unauthorized
+- **Credenciales incorrectas** → 401 Unauthorized
+- **Sin permisos** → 403 Forbidden
+- **IDs inexistentes** → 404 Not Found
+- **Datos inválidos** → 422 Unprocessable Entity
+
+### Troubleshooting
+
+**Error: "Newman no está instalado"**
+```bash
+npm install -g newman newman-reporter-htmlextra
+```
+
+**Error: "Servidor no accesible"**
+- Verifica que `mvn spring-boot:run` está en ejecución
+- Comprueba que está en puerto 8080: `http://localhost:8080`
+
+**Error: "401 Unauthorized en peticiones protegidas"**
+- Ejecuta Login primero
+- Verifica que el token se guardó en variables
+
+**Error: "Variables vacías en URLs (//usuarios//despensa)"**
+- Asegúrate de ejecutar las peticiones en orden
+- Los IDs deben guardarse del registro/login
+
+---
+
 ## Licencia
 
 Este proyecto es parte del módulo de Desarrollo Web en Entorno Servidor (DWES) del CFGS de Desarrollo de Aplicaciones Web.

@@ -41,6 +41,16 @@
       "key": "ingrediente_id",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "planificacion_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "lista_id",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
@@ -56,12 +66,12 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
-                  "    pm.collectionVariables.set('usuario_id', jsonData.id);",
-                  "    pm.test('Token JWT recibido', function () {",
+                  "    pm.environment.set('jwt_token', jsonData.token);",
+                  "    pm.environment.set('usuario_id', jsonData.id);",
+                  "    pm.test('✓ Token JWT recibido', function () {",
                   "        pm.expect(jsonData.token).to.be.a('string');",
                   "    });",
-                  "    pm.test('Rol asignado correctamente', function () {",
+                  "    pm.test('✓ Rol asignado correctamente', function () {",
                   "        pm.expect(jsonData.rol).to.eql('ROLE_USER');",
                   "    });",
                   "}"
@@ -102,9 +112,9 @@
                 "exec": [
                   "if (pm.response.code === 200) {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.collectionVariables.set('jwt_token', jsonData.token);",
-                  "    pm.collectionVariables.set('usuario_id', jsonData.id);",
-                  "    pm.test('Login exitoso', function () {",
+                  "    pm.environment.set('jwt_token', jsonData.token);",
+                  "    pm.environment.set('usuario_id', jsonData.id);",
+                  "    pm.test('✓ Login exitoso', function () {",
                   "        pm.response.to.have.status(200);",
                   "    });",
                   "}"
@@ -126,7 +136,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"password123\"\n}"
+              "raw": "{\n  \"email\": \"test@despienza.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",
@@ -150,7 +160,10 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.collectionVariables.set('ingrediente_id', jsonData.id);",
+                  "    pm.environment.set('ingrediente_id', jsonData.id);",
+                  "    pm.test('✓ Ingrediente creado', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -179,6 +192,21 @@
         },
         {
           "name": "Crear Ingrediente - Pasta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test('✓ Ingrediente creado', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -201,6 +229,19 @@
         },
         {
           "name": "Listar Ingredientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Ingredientes listados', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -214,6 +255,19 @@
         },
         {
           "name": "Buscar Ingrediente por Nombre",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Búsqueda exitosa', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -233,6 +287,19 @@
         },
         {
           "name": "Obtener Categorías",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Categorías obtenidas', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -258,7 +325,10 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.collectionVariables.set('receta_id', jsonData.id);",
+                  "    pm.environment.set('receta_id', jsonData.id);",
+                  "    pm.test('✓ Receta creada', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -287,6 +357,19 @@
         },
         {
           "name": "Listar Recetas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Recetas listadas', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -310,6 +393,19 @@
         },
         {
           "name": "Obtener Receta por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Receta obtenida', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -323,6 +419,19 @@
         },
         {
           "name": "Buscar Recetas Rápidas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Búsqueda exitosa', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -342,6 +451,19 @@
         },
         {
           "name": "Contar Recetas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Conteo obtenido', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -360,6 +482,21 @@
       "item": [
         {
           "name": "Agregar Ingrediente a Receta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test('✓ Ingrediente agregado', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -382,6 +519,19 @@
         },
         {
           "name": "Listar Ingredientes de Receta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Ingredientes obtenidos', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -400,6 +550,21 @@
       "item": [
         {
           "name": "Agregar Item a Despensa",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test('✓ Item agregado', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -422,6 +587,19 @@
         },
         {
           "name": "Listar Despensa",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Despensa obtenida', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -435,6 +613,19 @@
         },
         {
           "name": "Obtener Items Caducados",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Caducados obtenidos', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -448,6 +639,19 @@
         },
         {
           "name": "Obtener Items OK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Items OK obtenidos', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -466,6 +670,21 @@
       "item": [
         {
           "name": "Guardar Receta como Favorita",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test('✓ Guardada como favorita', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -488,6 +707,19 @@
         },
         {
           "name": "Listar Recetas Favoritas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Favoritas obtenidas', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -513,7 +745,10 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.collectionVariables.set('planificacion_id', jsonData.id);",
+                  "    pm.environment.set('planificacion_id', jsonData.id);",
+                  "    pm.test('✓ Planificación creada', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -542,6 +777,19 @@
         },
         {
           "name": "Listar Planificaciones",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Planificaciones obtenidas', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -555,6 +803,19 @@
         },
         {
           "name": "Obtener Planificación Reciente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Reciente obtenida', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -580,7 +841,10 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "    var jsonData = pm.response.json();",
-                  "    pm.collectionVariables.set('lista_id', jsonData.id);",
+                  "    pm.environment.set('lista_id', jsonData.id);",
+                  "    pm.test('✓ Lista creada', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -609,6 +873,21 @@
         },
         {
           "name": "Agregar Item a Lista",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test('✓ Item agregado', function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -631,6 +910,19 @@
         },
         {
           "name": "Listar Items de Lista",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Items obtenidos', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -644,6 +936,19 @@
         },
         {
           "name": "Obtener Listas Pendientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✓ Pendientes obtenidas', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
             "header": [],
@@ -661,7 +966,7 @@
       "name": "9. Tests de Seguridad",
       "item": [
         {
-          "name": "❌ Acceso sin token (debe fallar 401)",
+          "name": "Acceso sin token (debe fallar 401)",
           "request": {
             "auth": {
               "type": "noauth"
@@ -677,7 +982,7 @@
           "response": []
         },
         {
-          "name": "❌ Login con credenciales incorrectas (debe fallar 401)",
+          "name": "Login con credenciales incorrectas (debe fallar 401)",
           "request": {
             "auth": {
               "type": "noauth"
@@ -691,7 +996,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"test@despiensa.com\",\n  \"password\": \"wrongpassword\"\n}"
+              "raw": "{\n  \"email\": \"test@despienza.com\",\n  \"password\": \"wrongpassword\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",
