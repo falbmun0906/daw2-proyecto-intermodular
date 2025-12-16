@@ -31,10 +31,9 @@ export class Modal implements OnInit, OnDestroy {
     this.close();
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  handleEscapeKey(event: KeyboardEvent): void {
+  @HostListener('document:keydown.escape')
+  handleEscapeKey(): void {
     if (this.closeOnEscape && this.isOpen) {
-      event.preventDefault();
       this.close();
     }
   }

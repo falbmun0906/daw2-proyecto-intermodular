@@ -30,7 +30,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/styles.scss"
             ]
           },
           "configurations": {
@@ -59,6 +59,10 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4200,
+            "open": false
+          },
           "configurations": {
             "production": {
               "buildTarget": "frontend:build:production"
@@ -93,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

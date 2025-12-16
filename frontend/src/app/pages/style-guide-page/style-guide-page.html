@@ -1,0 +1,645 @@
+<div class="style-guide">
+  <!-- Hero Section -->
+  <section class="style-guide__hero">
+    <div class="container">
+      <h1 class="style-guide__title">Style Guide</h1>
+      <p class="style-guide__subtitle">
+        Sistema de diseño y biblioteca de componentes de Desp[i]lensa
+      </p>
+      <app-breadcrumbs [items]="breadcrumbItems"></app-breadcrumbs>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Navegación interna -->
+    <nav class="style-guide__nav">
+      <ul class="style-guide__nav-list">
+        <li><a href="#colores">Colores</a></li>
+        <li><a href="#tipografia">Tipografía</a></li>
+        <li><a href="#botones">Botones</a></li>
+        <li><a href="#cards">Cards</a></li>
+        <li><a href="#formularios">Formularios</a></li>
+        <li><a href="#navegacion">Navegación</a></li>
+        <li><a href="#feedback">Feedback</a></li>
+        <li><a href="#utilidades">Utilidades</a></li>
+      </ul>
+    </nav>
+
+    <!-- SECCIÓN: COLORES -->
+    <section id="colores" class="style-guide__section">
+      <h2 class="style-guide__section-title">Paleta de Colores</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Colores Primarios</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-primary-light);"></div>
+            <p class="color-card__name">Primary Light</p>
+            <code class="color-card__code">--color-primary-light</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-primary);"></div>
+            <p class="color-card__name">Primary</p>
+            <code class="color-card__code">--color-primary</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-primary-dark);"></div>
+            <p class="color-card__name">Primary Dark</p>
+            <code class="color-card__code">--color-primary-dark</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Colores Secundarios</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-secondary-light);"></div>
+            <p class="color-card__name">Secondary Light</p>
+            <code class="color-card__code">--color-secondary-light</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-secondary);"></div>
+            <p class="color-card__name">Secondary</p>
+            <code class="color-card__code">--color-secondary</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-secondary-dark);"></div>
+            <p class="color-card__name">Secondary Dark</p>
+            <code class="color-card__code">--color-secondary-dark</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Colores Semánticos</h3>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-success-dark);"></div>
+            <p class="color-card__name">Success</p>
+            <code class="color-card__code">--color-success-dark</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-error-dark);"></div>
+            <p class="color-card__name">Error</p>
+            <code class="color-card__code">--color-error-dark</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-warning-dark);"></div>
+            <p class="color-card__name">Warning</p>
+            <code class="color-card__code">--color-warning-dark</code>
+          </div>
+          <div class="color-card">
+            <div class="color-card__swatch" style="background-color: var(--color-info-dark);"></div>
+            <p class="color-card__name">Info</p>
+            <code class="color-card__code">--color-info-dark</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: TIPOGRAFÍA -->
+    <section id="tipografia" class="style-guide__section">
+      <h2 class="style-guide__section-title">Tipografía</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Jerarquía de Títulos</h3>
+        <div class="typography-demo">
+          <h1>Heading 1 - Glass Antiqua 60px</h1>
+          <h2>Heading 2 - Poppins Bold 48px</h2>
+          <h3>Heading 3 - Poppins Bold 36px</h3>
+          <h4>Heading 4 - Poppins Semibold 30px</h4>
+          <p class="body-text">Body Text - Poppins Regular 16px - Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p class="body-text small">Small Text - Poppins Regular 14px - Texto más pequeño para información secundaria.</p>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Pesos Tipográficos</h3>
+        <div class="typography-demo">
+          <p style="font-weight: 300;">Light (300) - Poppins Light</p>
+          <p style="font-weight: 400;">Regular (400) - Poppins Regular</p>
+          <p style="font-weight: 500;">Medium (500) - Poppins Medium</p>
+          <p style="font-weight: 600;">Semibold (600) - Poppins Semibold</p>
+          <p style="font-weight: 700;">Bold (700) - Poppins Bold</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: BOTONES -->
+    <section id="botones" class="style-guide__section">
+      <h2 class="style-guide__section-title">Botones</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Variantes</h3>
+        <div class="component-demo">
+          <app-button
+            variant="primary"
+            (buttonClick)="onButtonClick('primary')">
+            Botón Primary
+          </app-button>
+          <app-button
+            variant="secondary"
+            (buttonClick)="onButtonClick('secondary')">
+            Botón Secondary
+          </app-button>
+          <app-button
+            variant="ghost"
+            (buttonClick)="onButtonClick('ghost')">
+            Botón Ghost
+          </app-button>
+          <app-button
+            variant="danger"
+            (buttonClick)="onButtonClick('danger')">
+            Botón Danger
+          </app-button>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tamaños</h3>
+        <div class="component-demo">
+          <app-button size="sm">Pequeño</app-button>
+          <app-button size="md">Mediano</app-button>
+          <app-button size="lg">Grande</app-button>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Estados</h3>
+        <div class="component-demo">
+          <app-button>Normal</app-button>
+          <app-button [disabled]="true">Deshabilitado</app-button>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Con Iconos</h3>
+        <div class="component-demo">
+          <app-button icon="🔍" iconPosition="left">Buscar</app-button>
+          <app-button icon="➔" iconPosition="right">Siguiente</app-button>
+          <app-button variant="secondary" icon="❤️">Me gusta</app-button>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Ancho Completo</h3>
+        <div class="component-demo">
+          <app-button [fullWidth]="true">Botón Ancho Completo</app-button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: CARDS -->
+    <section id="cards" class="style-guide__section">
+      <h2 class="style-guide__section-title">Cards</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Card Vertical</h3>
+        <div class="card-grid">
+          <app-card
+            variant="vertical"
+            imageUrl="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400"
+            imageAlt="Pizza"
+            title="Pizza Margarita"
+            description="Pizza italiana clásica con tomate, mozzarella y albahaca fresca"
+            [rating]="4.5"
+            time="30 min"
+            difficulty="Fácil"
+            category="Italiana"
+            (cardClick)="onCardClick()">
+          </app-card>
+
+          <app-card
+            variant="vertical"
+            imageUrl="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+            imageAlt="Ensalada"
+            title="Ensalada César"
+            description="Ensalada fresca con pollo, queso parmesano y salsa césar"
+            [rating]="4"
+            time="15 min"
+            difficulty="Fácil"
+            category="Ensaladas"
+            (cardClick)="onCardClick()">
+          </app-card>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Card Horizontal</h3>
+        <app-card
+          variant="horizontal"
+          imageUrl="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400"
+          imageAlt="Hamburguesa"
+          title="Hamburguesa Clásica"
+          description="Jugosa hamburguesa con carne de res, queso cheddar, lechuga, tomate y cebolla"
+          [rating]="4.8"
+          time="25 min"
+          difficulty="Media"
+          category="Americana"
+          (cardClick)="onCardClick()">
+        </app-card>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Card Featured</h3>
+        <app-card
+          variant="featured"
+          imageUrl="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600"
+          imageAlt="Pancakes"
+          title="Pancakes con Arándanos"
+          description="Esponjosos pancakes servidos con miel, mantequilla y arándanos frescos"
+          [rating]="5"
+          time="20 min"
+          difficulty="Fácil"
+          category="Desayunos"
+          (cardClick)="onCardClick()">
+        </app-card>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: FORMULARIOS -->
+    <section id="formularios" class="style-guide__section">
+      <h2 class="style-guide__section-title">Formularios</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Inputs de Texto</h3>
+        <div class="form-demo">
+          <app-form-input
+            label="Nombre"
+            name="nombre"
+            placeholder="Ingresa tu nombre"
+            [(ngModel)]="emailValue">
+          </app-form-input>
+
+          <app-form-input
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="ejemplo@correo.com"
+            icon="📧"
+            helpText="Ingresa un correo válido"
+            [(ngModel)]="emailValue"
+            (blur)="validateEmail()">
+          </app-form-input>
+
+          <app-form-input
+            label="Contraseña"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            icon="🔒"
+            [required]="true"
+            [(ngModel)]="passwordValue">
+          </app-form-input>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Estados de Validación</h3>
+        <div class="form-demo">
+          <app-form-input
+            label="Email con Error"
+            type="email"
+            name="email-error"
+            placeholder="ejemplo@correo.com"
+            [hasError]="true"
+            errorMessage="El formato del email no es válido">
+          </app-form-input>
+
+          <app-form-input
+            label="Email Válido"
+            type="email"
+            name="email-success"
+            value="correcto@email.com"
+            [hasSuccess]="true"
+            successMessage="Email válido">
+          </app-form-input>
+
+          <app-form-input
+            label="Campo Deshabilitado"
+            name="disabled"
+            value="No editable"
+            [disabled]="true">
+          </app-form-input>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Textarea</h3>
+        <div class="form-demo">
+          <app-form-textarea
+            label="Descripción"
+            name="descripcion"
+            placeholder="Escribe una descripción detallada..."
+            [rows]="4"
+            [maxLength]="500"
+            [showCharCount]="true"
+            helpText="Máximo 500 caracteres"
+            [(ngModel)]="textareaValue">
+          </app-form-textarea>
+
+          <app-form-textarea
+            label="Instrucciones"
+            name="instrucciones"
+            placeholder="Pasos de la receta..."
+            [rows]="6"
+            [(ngModel)]="textareaValue">
+          </app-form-textarea>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Checkbox</h3>
+        <div class="form-demo">
+          <app-form-checkbox
+            label="Acepto los términos y condiciones"
+            name="terminos"
+            [(ngModel)]="checkboxValue">
+          </app-form-checkbox>
+
+          <app-form-checkbox
+            label="Suscribirse al newsletter"
+            name="newsletter"
+            helpText="Recibirás novedades y recetas semanales">
+          </app-form-checkbox>
+
+          <app-form-checkbox
+            label="Campo con error"
+            name="error-checkbox"
+            [hasError]="true"
+            errorMessage="Debes aceptar para continuar">
+          </app-form-checkbox>
+
+          <app-form-checkbox
+            label="Checkbox deshabilitado"
+            name="disabled-checkbox"
+            [disabled]="true">
+          </app-form-checkbox>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Radio Buttons</h3>
+        <div class="form-demo">
+          <app-form-radio-group
+            label="Nivel de dificultad"
+            name="dificultad"
+            [options]="radioOptions"
+            [(ngModel)]="radioValue">
+          </app-form-radio-group>
+
+          <app-form-radio-group
+            label="Nivel de dificultad (inline)"
+            name="dificultad-inline"
+            [options]="radioOptions"
+            [inline]="true"
+            [(ngModel)]="radioValue">
+          </app-form-radio-group>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Select / Dropdown</h3>
+        <div class="form-demo">
+          <app-form-select
+            label="Categoría de receta"
+            name="categoria"
+            [options]="selectOptions"
+            helpText="Selecciona la categoría principal"
+            [(ngModel)]="selectValue">
+          </app-form-select>
+
+          <app-form-select
+            label="Select con error"
+            name="categoria-error"
+            [options]="selectOptions"
+            [hasError]="true"
+            errorMessage="Debes seleccionar una categoría">
+          </app-form-select>
+
+          <app-form-select
+            label="Select deshabilitado"
+            name="categoria-disabled"
+            [options]="selectOptions"
+            [disabled]="true">
+          </app-form-select>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: NAVEGACIÓN -->
+    <section id="navegacion" class="style-guide__section">
+      <h2 class="style-guide__section-title">Navegación</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Breadcrumbs</h3>
+        <div class="component-demo">
+          <app-breadcrumbs [items]="[
+            { label: 'Inicio', url: '/' }
+          ]"></app-breadcrumbs>
+
+          <app-breadcrumbs [items]="[
+            { label: 'Inicio', url: '/' },
+            { label: 'Recetas', url: '/recetas', isActive: true }
+          ]"></app-breadcrumbs>
+
+          <app-breadcrumbs [items]="breadcrumbItems"></app-breadcrumbs>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tabs</h3>
+        <div class="component-demo">
+          <app-tabs
+            [tabs]="tabs"
+            [activeTabId]="activeTab"
+            (tabChanged)="onTabChanged($event)">
+          </app-tabs>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Paginación</h3>
+        <div class="component-demo">
+          <app-pagination
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            [totalItems]="totalItems"
+            [itemsPerPage]="10"
+            (pageChanged)="onPageChanged($event)">
+          </app-pagination>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: FEEDBACK -->
+    <section id="feedback" class="style-guide__section">
+      <h2 class="style-guide__section-title">Componentes de Feedback</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Alertas</h3>
+        <div class="component-demo component-demo--vertical">
+          <app-alert
+            type="success"
+            title="Éxito"
+            message="La receta se guardó correctamente"
+            [dismissible]="true">
+          </app-alert>
+
+          <app-alert
+            type="error"
+            title="Error"
+            message="No se pudo completar la operación"
+            [dismissible]="true">
+          </app-alert>
+
+          <app-alert
+            type="warning"
+            title="Advertencia"
+            message="Algunos campos requieren tu atención"
+            [dismissible]="true">
+          </app-alert>
+
+          <app-alert
+            type="info"
+            title="Información"
+            message="Hay 5 nuevas recetas disponibles"
+            [dismissible]="true">
+          </app-alert>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Badges</h3>
+        <div class="component-demo">
+          <app-badge variant="primary" label="Primary"></app-badge>
+          <app-badge variant="secondary" label="Secondary"></app-badge>
+          <app-badge variant="success" label="Success"></app-badge>
+          <app-badge variant="error" label="Error"></app-badge>
+          <app-badge variant="warning" label="Warning"></app-badge>
+          <app-badge variant="info" label="Info"></app-badge>
+          <app-badge variant="neutral" label="Neutral"></app-badge>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Badges - Tamaños</h3>
+        <div class="component-demo">
+          <app-badge size="sm" label="Pequeño"></app-badge>
+          <app-badge size="md" label="Mediano"></app-badge>
+          <app-badge size="lg" label="Grande"></app-badge>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Badges - Con Contador</h3>
+        <div class="component-demo">
+          <app-badge variant="primary" [count]="5" [rounded]="true"></app-badge>
+          <app-badge variant="error" [count]="99" [rounded]="true"></app-badge>
+          <app-badge variant="success" [dot]="true"></app-badge>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Modal</h3>
+        <div class="component-demo">
+          <app-button (buttonClick)="openModal()">Abrir Modal</app-button>
+          <app-button variant="secondary" (buttonClick)="openModalLarge()">Modal Grande</app-button>
+        </div>
+
+        <app-modal
+          [isOpen]="showModal"
+          title="Título del Modal"
+          size="md"
+          (closed)="closeModal()">
+          <div class="modal-content-demo">
+            <p>Este es el contenido del modal. Puedes colocar cualquier elemento aquí.</p>
+            <app-form-input
+              label="Campo de ejemplo"
+              placeholder="Escribe algo...">
+            </app-form-input>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+              <app-button (buttonClick)="closeModal()">Cancelar</app-button>
+              <app-button variant="secondary">Aceptar</app-button>
+            </div>
+          </div>
+        </app-modal>
+
+        <app-modal
+          [isOpen]="showModalLarge"
+          title="Modal Grande"
+          size="lg"
+          (closed)="closeModalLarge()">
+          <div class="modal-content-demo">
+            <h3>Contenido extenso</h3>
+            <p>Este modal es más grande y puede contener más información.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <app-button (buttonClick)="closeModalLarge()">Cerrar</app-button>
+          </div>
+        </app-modal>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Notificaciones</h3>
+        <div class="component-demo">
+          <app-button (buttonClick)="showNotification('success')">Success</app-button>
+          <app-button variant="danger" (buttonClick)="showNotification('error')">Error</app-button>
+          <app-button (buttonClick)="showNotification('warning')">Warning</app-button>
+          <app-button variant="secondary" (buttonClick)="showNotification('info')">Info</app-button>
+        </div>
+
+        <div class="notifications-container">
+          @for (notification of notifications; track notification.id) {
+            @if (notification.visible) {
+              <app-notification
+                [type]="notification.type"
+                [title]="notification.title"
+                [message]="notification.message"
+                position="top-right"
+                [duration]="5000"
+                (dismissed)="removeNotification(notification.id)">
+              </app-notification>
+            }
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: UTILIDADES -->
+    <section id="utilidades" class="style-guide__section">
+      <h2 class="style-guide__section-title">Utilidades</h2>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Espaciado</h3>
+        <div class="spacing-demo">
+          <div class="spacing-box" style="padding: var(--spacing-2);">spacing-2 (8px)</div>
+          <div class="spacing-box" style="padding: var(--spacing-4);">spacing-4 (16px)</div>
+          <div class="spacing-box" style="padding: var(--spacing-6);">spacing-6 (24px)</div>
+          <div class="spacing-box" style="padding: var(--spacing-8);">spacing-8 (32px)</div>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Sombras</h3>
+        <div class="shadow-demo">
+          <div class="shadow-box" style="box-shadow: var(--shadow-sm);">shadow-sm</div>
+          <div class="shadow-box" style="box-shadow: var(--shadow-md);">shadow-md</div>
+          <div class="shadow-box" style="box-shadow: var(--shadow-lg);">shadow-lg</div>
+          <div class="shadow-box" style="box-shadow: var(--shadow-xl);">shadow-xl</div>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Radios de Borde</h3>
+        <div class="radius-demo">
+          <div class="radius-box" style="border-radius: var(--radius-sm);">radius-sm</div>
+          <div class="radius-box" style="border-radius: var(--radius-md);">radius-md</div>
+          <div class="radius-box" style="border-radius: var(--radius-lg);">radius-lg</div>
+          <div class="radius-box" style="border-radius: var(--radius-xl);">radius-xl</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
