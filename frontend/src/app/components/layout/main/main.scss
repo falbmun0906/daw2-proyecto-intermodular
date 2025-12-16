@@ -1,0 +1,36 @@
+/* =========================
+ * Main Component (site-main)
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins' as *;
+
+.site-main {
+  min-height: calc(100vh - 200px); /* Ajustar según altura de header + footer */
+  padding: var(--spacing-8);
+  background-color: var(--color-primary-light);
+
+  @include respond-to(md) {
+    padding: var(--spacing-12) var(--spacing-16);
+  }
+
+  @include respond-to(lg) {
+    padding: var(--spacing-16) var(--spacing-20);
+  }
+}
+
+/* Contenedor de ancho limitado para contenido centrado */
+.site-main__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Modificador para full-width sin max-width */
+.site-main--full-width {
+  max-width: none;
+
+  .site-main__container {
+    max-width: none;
+  }
+}
+

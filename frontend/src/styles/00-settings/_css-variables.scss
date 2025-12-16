@@ -1,0 +1,135 @@
+/* =========================
+ * CSS Custom Properties para Temas
+ * =========================
+ *
+ * Este archivo convierte las variables SCSS en CSS Custom Properties
+ * que pueden cambiar dinámicamente para implementar temas (claro/oscuro).
+ *
+ * Las CSS Custom Properties atraviesan Shadow DOM y pueden ser modificadas
+ * en tiempo de ejecución con JavaScript.
+ */
+
+@use 'variables' as v;
+
+:root {
+  /* =========================
+   * Colores de Fondo
+   * ========================= */
+
+  --bg-primary: var(--color-primary-light);
+  --bg-secondary: var(--color-neutral-white);
+  --bg-tertiary: var(--color-tertiary-light);
+  --bg-dark: var(--color-primary-dark);
+  --bg-body: var(--color-primary-light);
+
+  /* =========================
+   * Colores de Texto
+   * ========================= */
+
+  --text-primary: var(--color-text-main);
+  --text-secondary: var(--color-neutral-gray);
+  --text-inverse: var(--color-neutral-white);
+  --text-link: var(--color-secondary);
+  --text-link-hover: var(--color-secondary-hover);
+
+  /* =========================
+   * Colores de Borde
+   * ========================= */
+
+  --border-color-primary: var(--color-neutral-gray);
+  --border-color-secondary: var(--color-primary);
+  --border-color-focus: var(--color-info-dark);
+  --border-color-error: var(--color-error-dark);
+  --border-color-success: var(--color-success-dark);
+
+  /* =========================
+   * Colores de Botones
+   * ========================= */
+
+  --btn-primary-bg: var(--color-secondary);
+  --btn-primary-text: var(--color-text-main);
+  --btn-primary-hover: var(--color-secondary-hover);
+
+  --btn-secondary-bg: var(--color-primary);
+  --btn-secondary-text: var(--color-text-main);
+  --btn-secondary-hover: var(--color-primary-hover);
+
+  --btn-ghost-bg: transparent;
+  --btn-ghost-text: var(--color-text-main);
+  --btn-ghost-hover: var(--color-primary-light-hover);
+
+  /* =========================
+   * Superficie y Elevación
+   * ========================= */
+
+  --surface-base: var(--color-neutral-white);
+  --surface-raised: var(--color-neutral-white);
+  --surface-overlay: rgba(0, 0, 0, 0.5);
+}
+
+/* =========================
+ * Tema Oscuro (Dark Mode)
+ * =========================
+ *
+ * Se activa cuando el usuario tiene preferencia de tema oscuro
+ * o cuando se añade la clase 'dark-theme' al body/html
+ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: var(--color-primary-darker);
+    --bg-secondary: var(--color-text-main);
+    --bg-tertiary: var(--color-tertiary-darker);
+    --bg-dark: var(--color-text-main);
+    --bg-body: var(--color-primary-darker);
+
+    --text-primary: var(--color-neutral-white);
+    --text-secondary: var(--color-primary-light);
+    --text-inverse: var(--color-text-main);
+
+    --border-color-primary: var(--color-primary);
+    --border-color-secondary: var(--color-primary-light);
+
+    --surface-base: var(--color-text-main);
+    --surface-raised: var(--color-primary-dark);
+  }
+}
+
+/* Clase para forzar tema oscuro */
+.dark-theme {
+  --bg-primary: var(--color-primary-darker);
+  --bg-secondary: var(--color-text-main);
+  --bg-tertiary: var(--color-tertiary-darker);
+  --bg-dark: var(--color-text-main);
+  --bg-body: var(--color-primary-darker);
+
+  --text-primary: var(--color-neutral-white);
+  --text-secondary: var(--color-primary-light);
+  --text-inverse: var(--color-text-main);
+
+  --border-color-primary: var(--color-primary);
+  --border-color-secondary: var(--color-primary-light);
+
+  --surface-base: var(--color-text-main);
+  --surface-raised: var(--color-primary-dark);
+}
+
+/* Clase para forzar tema claro */
+.light-theme {
+  --bg-primary: var(--color-primary-light);
+  --bg-secondary: var(--color-neutral-white);
+  --bg-tertiary: var(--color-tertiary-light);
+  --bg-dark: var(--color-primary-dark);
+  --bg-body: var(--color-primary-light);
+
+  --text-primary: var(--color-text-main);
+  --text-secondary: var(--color-neutral-gray);
+  --text-inverse: var(--color-neutral-white);
+
+  --border-color-primary: var(--color-neutral-gray);
+  --border-color-secondary: var(--color-primary);
+
+  --surface-base: var(--color-neutral-white);
+  --surface-raised: var(--color-neutral-white);
+}
+

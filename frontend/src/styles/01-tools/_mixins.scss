@@ -2,6 +2,9 @@
    * Mixins Reutilizables
    * ========================= */
 
+/* Importar módulo de mapas de Sass */
+@use "sass:map";
+
 /* Breakpoints responsive */
 
 $breakpoints: (
@@ -12,7 +15,7 @@ $breakpoints: (
 );
 
 @mixin respond-to($breakpoint) {
-  @media (min-width: map-get($breakpoints, $breakpoint)) {
+  @media (min-width: map.get($breakpoints, $breakpoint)) {
     @content;
   }
 }

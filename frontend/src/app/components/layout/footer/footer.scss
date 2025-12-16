@@ -1,0 +1,179 @@
+/* =========================
+ * Footer Component (site-footer)
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins' as *;
+
+.site-footer {
+  background-color: var(--color-primary-dark);
+  color: var(--color-neutral-white);
+  padding: var(--spacing-12) var(--spacing-8);
+
+  @include respond-to(md) {
+    padding: var(--spacing-16) var(--spacing-16);
+  }
+}
+
+/* Sección de redes sociales */
+.site-footer__social {
+  margin-bottom: var(--spacing-12);
+  padding-bottom: var(--spacing-8);
+  border-bottom: var(--border-width-thin) solid rgba(255, 255, 255, 0.2);
+}
+
+.site-footer__social-list {
+  @include flex-layout(row, center, center, var(--spacing-6));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+
+  @include respond-to(md) {
+    gap: var(--spacing-8);
+  }
+}
+
+.site-footer__social-item {
+  margin: 0;
+}
+
+.site-footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: var(--spacing-3);
+  background-color: var(--color-neutral-white);
+  color: var(--color-text-main);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-medium);
+  transition: background-color var(--transition-base) var(--transition-easing),
+              transform var(--transition-fast) var(--transition-easing);
+
+  &:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @include focus-ring(var(--color-secondary));
+}
+
+/* Sección central: enlaces + stores */
+.site-footer__middle {
+  @include flex-layout(column, center, center, var(--spacing-12));
+  margin-bottom: var(--spacing-12);
+
+  @include respond-to(lg) {
+    @include flex-layout(row, space-between, flex-start, var(--spacing-16));
+  }
+}
+
+/* Enlaces informativos */
+.site-footer__links {
+  @include flex-layout(column, flex-start, flex-start, var(--spacing-8));
+  width: 100%;
+
+  @include respond-to(md) {
+    @include flex-layout(row, center, flex-start, var(--spacing-16));
+  }
+
+  @include respond-to(lg) {
+    flex: 1;
+  }
+}
+
+.site-footer__links-column {
+  @include flex-layout(column, flex-start, flex-start, var(--spacing-4));
+  width: 100%;
+
+  @include respond-to(md) {
+    width: auto;
+  }
+}
+
+.site-footer__link {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-neutral-white);
+  text-decoration: none;
+  padding: var(--spacing-2) 0;
+  transition: color var(--transition-base) var(--transition-easing);
+
+  &:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+  }
+
+  @include focus-ring(var(--color-secondary));
+}
+
+/* Stores / badges de descarga */
+.site-footer__stores {
+  @include flex-layout(column, center, center, var(--spacing-4));
+  width: 100%;
+
+  @include respond-to(md) {
+    @include flex-layout(row, center, center, var(--spacing-4));
+  }
+
+  @include respond-to(lg) {
+    flex-shrink: 0;
+    width: auto;
+  }
+}
+
+.site-footer__store-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4) var(--spacing-8);
+  min-width: 150px;
+  background-color: var(--color-text-main);
+  color: var(--color-neutral-white);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-semibold);
+  transition: background-color var(--transition-base) var(--transition-easing),
+              transform var(--transition-fast) var(--transition-easing);
+
+  &:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-text-main);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+
+  @include focus-ring(var(--color-secondary));
+
+  @include respond-to(md) {
+    min-width: 180px;
+  }
+}
+
+/* Copyright */
+.site-footer__bottom {
+  padding-top: var(--spacing-8);
+  border-top: var(--border-width-thin) solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.site-footer__copyright {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-neutral-white);
+  margin: 0;
+}
+

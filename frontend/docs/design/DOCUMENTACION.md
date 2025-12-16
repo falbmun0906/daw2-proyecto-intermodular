@@ -165,3 +165,414 @@ Cada mixin está documentado con su propósito y se acompaña de ejemplos de uso
 En este proyecto se utiliza un enfoque **ITCSS + BEM** puro, con estilos globales gestionados desde styles.scss y sin encapsulación adicional de Angular (`ViewEncapsulation.None`).
 
 Al tratarse de un proyecto educativo y de un único desarrollador, he optado por esta opción, ya que encaja con las recomendaciones de los materiales de referencia: permite un CSS más ligero, con especificidad controlada y una arquitectura más fácil de entender y documentar dentro del módulo de Diseño de Interfaces Web. La encapsulación se gestiona mediante la propia metodología BEM y la estructura ITCSS (`settings`, `tools`, `generic`, `elements`, `layout`, `components`, `utilities`), evitando colisiones de estilos a través de convenciones claras de nombres en lugar de mecanismos automáticos de aislamiento.
+
+---
+
+# Sección 2: HTML semántico y estructura
+
+## 2.1 Elementos semánticos utilizados
+
+En este proyecto se utilizan elementos semánticos HTML5 de forma sistemática para estructurar el contenido de manera clara y accesible. A continuación se detallan los principales elementos y su uso:
+
+### `<header>` - Cabecera principal
+
+El elemento `<header>` se utiliza para la cabecera principal del sitio, conteniendo el logo, navegación principal y elementos de utilidad.
+
+**Ejemplo del código:**
+
+```html
+<header class="site-header" aria-label="Cabecera principal">
+  <section class="site-header__branding">
+    <a class="site-header__logo" routerLink="/" aria-label="Ir a la página de inicio de Desp[i]lensa">
+      <span class="site-header__logo-text">Desp[i]lensa</span>
+    </a>
+  </section>
+
+  <nav class="site-header__nav" aria-label="Navegación principal">
+    <ul class="site-header__nav-list">
+      <li class="site-header__nav-item">
+        <a class="site-header__nav-link" routerLink="/inicio">Inicio</a>
+      </li>
+      <li class="site-header__nav-item">
+        <a class="site-header__nav-link" routerLink="/recetas">Recetas</a>
+      </li>
+      <li class="site-header__nav-item">
+        <a class="site-header__nav-link" routerLink="/despensa">Mi despensa</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="site-header__theme-toggle" aria-label="Selector de tema">
+    <button class="site-header__theme-button" type="button">
+      <span class="visually-hidden">Cambiar tema</span>
+    </button>
+  </section>
+</header>
+```
+
+**Cuándo se usa:** Una vez por página, al inicio del documento, conteniendo elementos de navegación global y branding.
+
+### `<nav>` - Navegación
+
+El elemento `<nav>` se utiliza para contener bloques de navegación principales. En este proyecto aparece dentro del `<header>` para la navegación principal y dentro del `<aside>` (sidebar) para navegación secundaria.
+
+**Cuándo se usa:** Para bloques de navegación significativos que permiten moverse entre secciones o páginas de la aplicación.
+
+### `<main>` - Contenido principal
+
+El elemento `<main>` marca el contenido principal de la página, excluyendo header, footer y barras laterales.
+
+**Ejemplo del código:**
+
+```html
+<main class="site-main" role="main">
+  <div class="site-main__container">
+    <ng-content></ng-content>
+  </div>
+</main>
+```
+
+**Cuándo se usa:** Una vez por página, conteniendo el contenido único y principal de cada vista. Utiliza `<ng-content>` para proyectar el contenido dinámico de cada página.
+
+### `<aside>` - Contenido secundario (Sidebar)
+
+El elemento `<aside>` se utiliza para contenido tangencialmente relacionado con el contenido principal, como navegación secundaria o filtros.
+
+**Ejemplo del código:**
+
+```html
+<aside class="app-sidebar" [class.app-sidebar--open]="isOpen" aria-label="Navegación secundaria">
+  <h2 class="app-sidebar__title">Mi cocina</h2>
+
+  <nav class="app-sidebar__nav" aria-label="Menú de Mi cocina">
+    <ul class="app-sidebar__nav-list">
+      <li class="app-sidebar__nav-item">
+        <a class="app-sidebar__nav-link" routerLink="/mi-cocina/resumen">
+          <span class="app-sidebar__nav-icon" aria-hidden="true">📊</span>
+          Resumen
+        </a>
+      </li>
+      <li class="app-sidebar__nav-item">
+        <a class="app-sidebar__nav-link" routerLink="/mi-cocina/despensa">
+          <span class="app-sidebar__nav-icon" aria-hidden="true">🏪</span>
+          Despensa
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+```
+
+**Cuándo se usa:** Para navegación secundaria, filtros, o widgets relacionados con el contenido principal pero que no son parte central de la página.
+
+### `<footer>` - Pie de página
+
+El elemento `<footer>` contiene información de cierre como enlaces legales, redes sociales y copyright.
+
+**Ejemplo del código:**
+
+```html
+<footer class="site-footer" aria-label="Pie de página">
+  <section class="site-footer__social" aria-label="Redes sociales">
+    <ul class="site-footer__social-list">
+      <li class="site-footer__social-item">
+        <a class="site-footer__social-link" href="#" aria-label="YouTube">YouTube</a>
+      </li>
+      <!-- más redes sociales... -->
+    </ul>
+  </section>
+
+  <section class="site-footer__middle">
+    <section class="site-footer__links" aria-label="Enlaces informativos">
+      <a class="site-footer__link" routerLink="/acerca">Acerca de nosotros</a>
+      <a class="site-footer__link" routerLink="/terminos">Términos y condiciones</a>
+      <a class="site-footer__link" routerLink="/privacidad">Política de privacidad</a>
+    </section>
+  </section>
+
+  <section class="site-footer__bottom">
+    <p class="site-footer__copyright">© 2025 - 2025 Desp[i]lensa</p>
+  </section>
+</footer>
+```
+
+**Cuándo se usa:** Una vez por página, al final del documento, conteniendo información complementaria, enlaces legales y redes sociales.
+
+### `<article>` y `<section>` - Agrupación de contenido
+
+Aunque no están implementados en los componentes de layout actuales, estos elementos se utilizarán en las páginas de contenido:
+
+- **`<article>`**: Para contenido autónomo e independiente que podría distribuirse por separado (ej: una tarjeta de receta, un post del blog).
+- **`<section>`**: Para agrupar contenido temático relacionado dentro de una página (ej: sección de ingredientes, sección de pasos de preparación).
+
+### Atributos de accesibilidad
+
+Todos los elementos semánticos incluyen atributos ARIA apropiados:
+- `aria-label`: Para describir regiones y elementos interactivos
+- `aria-hidden="true"`: Para ocultar iconos decorativos de lectores de pantalla
+- `role="main"`, `role="alert"`, `role="status"`: Para reforzar la semántica en contextos específicos
+
+---
+
+## 2.2 Jerarquía de headings
+
+La jerarquía de encabezados sigue estrictamente las mejores prácticas de HTML5 y accesibilidad:
+
+### Reglas aplicadas:
+
+1. **Un único `<h1>` por página**: Cada vista tiene un solo `<h1>` que representa el título principal de la página.
+2. **Orden secuencial**: Los niveles nunca se saltan (no se pasa de `<h2>` a `<h4>` sin un `<h3>` intermedio).
+3. **Jerarquía lógica**: Los encabezados crean una estructura de documento clara y navegable.
+
+### Diagrama de jerarquía por tipo de página:
+
+#### **Página de Login/Registro:**
+
+```
+h1: "Iniciar sesión" / "Registro"
+  └─ (formulario sin headings adicionales, usa fieldset/legend)
+```
+
+**Ejemplo de código:**
+
+```html
+<form class="login-form">
+  <h1 class="login-form__title">Iniciar sesión</h1>
+  
+  <fieldset class="login-form__fieldset">
+    <legend class="visually-hidden">Credenciales de acceso</legend>
+    <!-- campos del formulario -->
+  </fieldset>
+</form>
+```
+
+#### **Página de inicio (Home):**
+
+```
+h1: "Desp[i]lensa - Tu compañero de cocina inteligente"
+  h2: "Tendencias de esta semana"
+  h2: "Recetas populares"
+  h2: "Inspírate según tu despensa"
+```
+
+#### **Página de listado de recetas:**
+
+```
+h1: "Recetas"
+  h2: "Filtros"
+    h3: "Dificultad"
+    h3: "Tiempo de preparación"
+    h3: "Restricciones o dietas"
+  h2: "Resultados"
+    h3: (título de cada tarjeta de receta)
+```
+
+#### **Página de detalle de receta:**
+
+```
+h1: "Pizza Margarita" (nombre de la receta)
+  h2: "Ingredientes"
+  h2: "Pasos de preparación"
+    h3: "Paso 1: Preparar la masa"
+    h3: "Paso 2: Preparar la salsa"
+    h3: "Paso 3: Hornear"
+  h2: "Información nutricional"
+  h2: "Recetas relacionadas"
+```
+
+#### **Sidebar (navegación secundaria):**
+
+```
+h2: "Mi cocina"
+  └─ (lista de navegación sin headings adicionales)
+```
+
+### Tipografía asociada a cada nivel:
+
+Los estilos tipográficos están definidos en las variables SCSS:
+
+- **H1**: `font-family: Glass-Antiqua` (secundaria), `font-size: clamp(2rem, 5vw, 3rem)`, `font-weight: 700`
+- **H2**: `font-family: Poppins` (primaria), `font-size: 1.75rem`, `font-weight: 600`
+- **H3**: `font-family: Poppins`, `font-size: 1.5rem`, `font-weight: 600`
+- **H4**: `font-family: Poppins`, `font-size: 1.25rem`, `font-weight: 500`
+
+Esta jerarquía visual refuerza la estructura semántica, facilitando el escaneo y la comprensión del contenido.
+
+---
+
+## 2.3 Estructura de formularios
+
+Los formularios en este proyecto siguen las mejores prácticas de HTML semántico y accesibilidad, utilizando `<fieldset>`, `<legend>` y asociación correcta entre `<label>` e `<input>`.
+
+### Componente `form-input` reutilizable
+
+El componente `app-form-input` es la base de todos los formularios y garantiza la accesibilidad y usabilidad:
+
+**Código del componente:**
+
+```html
+<div class="form-input" [class.form-input--error]="hasError">
+  <!-- Label asociado al input -->
+  <label class="form-input__label" [for]="inputId">
+    {{ label }}
+    @if (required) {
+      <span class="form-input__required" aria-label="Campo requerido">*</span>
+    }
+  </label>
+
+  <!-- Wrapper del input con icono opcional -->
+  <div class="form-input__wrapper">
+    @if (icon) {
+      <span class="form-input__icon" aria-hidden="true">{{ icon }}</span>
+    }
+
+    <input
+      class="form-input__field"
+      [class.form-input__field--with-icon]="icon"
+      [id]="inputId"
+      [type]="type"
+      [name]="name"
+      [placeholder]="placeholder"
+      [required]="required"
+      [disabled]="disabled"
+      [attr.aria-describedby]="ariaDescribedBy"
+      [attr.aria-invalid]="hasError"
+      [(ngModel)]="value"
+      (blur)="onBlur()"
+      (input)="onInput($event)"
+    />
+  </div>
+
+  <!-- Texto de ayuda -->
+  @if (helpText && !hasError) {
+    <p class="form-input__help-text" [id]="inputId + '-help'">
+      {{ helpText }}
+    </p>
+  }
+
+  <!-- Mensaje de error -->
+  @if (hasError && errorMessage) {
+    <p class="form-input__error-message" [id]="inputId + '-error'" role="alert">
+      <span class="form-input__message-icon" aria-hidden="true">⚠️</span>
+      {{ errorMessage }}
+    </p>
+  }
+</div>
+```
+
+### Características clave:
+
+1. **Asociación label-input**: El atributo `for` del `<label>` coincide con el `id` del `<input>`, generado de forma única en el componente TypeScript:
+
+```typescript
+private static idCounter = 0;
+inputId: string = `form-input-${++FormInput.idCounter}`;
+```
+
+2. **Indicador visual de campo requerido**: Un asterisco (`*`) visible con texto alternativo para lectores de pantalla.
+
+3. **Mensajes de error descriptivos**: Vinculados al input mediante `aria-describedby` y marcados con `role="alert"` para notificación inmediata.
+
+4. **Texto de ayuda opcional**: Información adicional vinculada al input mediante `aria-describedby`.
+
+5. **Estados visuales**: Clases BEM modificadoras para estados de error, éxito y deshabilitado.
+
+### Formulario completo con fieldset y legend
+
+**Ejemplo: Formulario de login**
+
+```html
+<form class="login-form" (ngSubmit)="onSubmit()" #loginFormRef="ngForm">
+  <h1 class="login-form__title">Iniciar sesión</h1>
+
+  <!-- Fieldset agrupa campos relacionados -->
+  <fieldset class="login-form__fieldset">
+    <!-- Legend describe el propósito del grupo -->
+    <legend class="visually-hidden">Credenciales de acceso</legend>
+
+    <!-- Componentes form-input reutilizables -->
+    <app-form-input
+      label="Email"
+      type="email"
+      name="email"
+      placeholder="Email"
+      icon="✉"
+      [required]="true"
+      [hasError]="emailError"
+      [errorMessage]="emailErrorMessage"
+      [(ngModel)]="formData.email"
+      (blur)="validateEmail()"
+    ></app-form-input>
+
+    <app-form-input
+      label="Contraseña"
+      type="password"
+      name="password"
+      placeholder="Contraseña"
+      icon="***"
+      [required]="true"
+      [hasError]="passwordError"
+      [errorMessage]="passwordErrorMessage"
+      [(ngModel)]="formData.password"
+      (blur)="validatePassword()"
+    ></app-form-input>
+  </fieldset>
+
+  <!-- Opciones adicionales -->
+  <div class="login-form__options">
+    <label class="login-form__checkbox-label">
+      <input type="checkbox" name="rememberMe" class="login-form__checkbox" 
+             [(ngModel)]="formData.rememberMe" />
+      <span>Recuérdame</span>
+    </label>
+  </div>
+
+  <!-- Mensaje de error general -->
+  @if (generalError) {
+    <div class="login-form__error" role="alert">
+      <span aria-hidden="true">⚠️</span>
+      {{ generalErrorMessage }}
+    </div>
+  }
+
+  <!-- Botón de envío con texto descriptivo -->
+  <div class="login-form__actions">
+    <button type="submit" class="login-form__button" 
+            [disabled]="!loginFormRef.valid || isSubmitting">
+      @if (isSubmitting) {
+        <span>Iniciando sesión...</span>
+      } @else {
+        <span>Iniciar sesión</span>
+      }
+    </button>
+  </div>
+</form>
+```
+
+### Uso de `<fieldset>` y `<legend>`:
+
+- **`<fieldset>`**: Agrupa campos relacionados temáticamente (ej: credenciales de acceso, datos personales).
+- **`<legend>`**: Describe el propósito del grupo. Se puede ocultar visualmente con la clase `.visually-hidden` manteniendo la accesibilidad.
+- **Sin bordes visuales**: Los estilos BEM eliminan el borde por defecto de fieldset (`border: none`).
+
+### Validación y feedback:
+
+1. **Validación en tiempo real**: Los eventos `(blur)` activan la validación de cada campo.
+2. **Estados visuales**: Bordes y colores cambian según el estado (error, éxito, enfocado).
+3. **Mensajes descriptivos**: Cada error se asocia al input específico mediante `aria-describedby`.
+4. **Botón de envío inteligente**: Se deshabilita si el formulario no es válido o está en proceso de envío.
+
+### Accesibilidad garantizada:
+
+- Todos los inputs tienen labels asociados
+- Campos requeridos marcados visual y semánticamente
+- Mensajes de error vinculados a los inputs
+- Estados de error notificados con `role="alert"`
+- Iconos decorativos ocultos con `aria-hidden="true"`
+- Botones con texto descriptivo del estado actual
+- Navegación por teclado completamente funcional
+- Compatibilidad con lectores de pantalla
+
+---
+
+Esta estructura de formularios garantiza una experiencia de usuario accesible, usable y profesional, cumpliendo con los estándares WCAG 2.1 AA.

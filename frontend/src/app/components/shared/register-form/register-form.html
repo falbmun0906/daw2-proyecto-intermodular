@@ -1,0 +1,123 @@
+<form class="register-form" (ngSubmit)="onSubmit()" #registerFormRef="ngForm">
+  <h1 class="register-form__title">Registro</h1>
+
+  <!-- Fieldset: Datos personales -->
+  <fieldset class="register-form__fieldset">
+    <legend class="visually-hidden">Datos personales</legend>
+
+    <!-- Nombre -->
+    <app-form-input
+      label="Nombre"
+      type="text"
+      name="nombre"
+      placeholder="Nombre"
+      icon="👤"
+      [required]="true"
+      [hasError]="nombreError"
+      [errorMessage]="nombreErrorMessage"
+      [(ngModel)]="formData.nombre"
+      (blur)="validateNombre()"
+    ></app-form-input>
+
+    <!-- Apellido -->
+    <app-form-input
+      label="Apellido"
+      type="text"
+      name="apellido"
+      placeholder="Apellido"
+      icon="abc"
+      [required]="true"
+      [hasError]="apellidoError"
+      [errorMessage]="apellidoErrorMessage"
+      [(ngModel)]="formData.apellido"
+      (blur)="validateApellido()"
+    ></app-form-input>
+
+    <!-- Email -->
+    <app-form-input
+      label="Email"
+      type="email"
+      name="email"
+      placeholder="Email"
+      icon="✉"
+      [required]="true"
+      [hasError]="emailError"
+      [errorMessage]="emailErrorMessage"
+      [(ngModel)]="formData.email"
+      (blur)="validateEmail()"
+    ></app-form-input>
+
+    <!-- Contraseña -->
+    <app-form-input
+      label="Contraseña"
+      type="password"
+      name="password"
+      placeholder="Contraseña"
+      icon="***"
+      [required]="true"
+      [hasError]="passwordError"
+      [errorMessage]="passwordErrorMessage"
+      [(ngModel)]="formData.password"
+      (blur)="validatePassword()"
+    ></app-form-input>
+
+    <!-- Confirmar contraseña -->
+    <app-form-input
+      label="Confirmar contraseña"
+      type="password"
+      name="confirmPassword"
+      placeholder="Confirmar contraseña"
+      icon="***"
+      [required]="true"
+      [hasError]="confirmPasswordError"
+      [errorMessage]="confirmPasswordErrorMessage"
+      [(ngModel)]="formData.confirmPassword"
+      (blur)="validateConfirmPassword()"
+    ></app-form-input>
+  </fieldset>
+
+  <!-- Checkbox newsletter -->
+  <div class="register-form__options">
+    <label class="register-form__checkbox-label">
+      <input
+        type="checkbox"
+        name="newsletter"
+        class="register-form__checkbox"
+        [(ngModel)]="formData.newsletter"
+      />
+      <span>Me gustaría recibir información sobre novedades por e-mail</span>
+    </label>
+  </div>
+
+  <!-- Mensaje de error general -->
+  @if (generalError) {
+    <div class="register-form__error" role="alert">
+      <span aria-hidden="true">⚠️</span>
+      {{ generalErrorMessage }}
+    </div>
+  }
+
+  <!-- Botón de registro -->
+  <div class="register-form__actions">
+    <button
+      type="submit"
+      class="register-form__button"
+      [disabled]="!registerFormRef.valid || isSubmitting"
+    >
+      @if (isSubmitting) {
+        <span>Registrando...</span>
+      } @else {
+        <span>Registrarse</span>
+      }
+    </button>
+  </div>
+
+  <!-- Login -->
+  <p class="register-form__login">
+    ¿Ya estás registrado?
+    <a class="register-form__link" routerLink="/login">
+      Inicia sesión
+    </a>
+  </p>
+</form>
+

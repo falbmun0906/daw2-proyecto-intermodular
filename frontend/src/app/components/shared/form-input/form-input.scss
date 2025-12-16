@@ -1,0 +1,192 @@
+/* =========================
+ * Form Input Component (form-input)
+ * ========================= */
+
+@use '../../../../styles/00-settings/variables' as *;
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  margin-bottom: 0;
+  width: 100%;
+
+  /* Label del input */
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-sm-size);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-main);
+    /* Ocultamos el label visualmente pero lo mantenemos para accesibilidad */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Asterisco de requerido */
+  &__required {
+    color: var(--color-error-dark);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Wrapper del input + icono */
+  &__wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Icono del input (en el lado izquierdo) */
+  &__icon {
+    position: absolute;
+    left: var(--spacing-4);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-h4-size);
+    color: var(--color-text-main);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* Input base */
+  &__field {
+    width: 100%;
+    padding: var(--spacing-4) var(--spacing-5);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-body-size);
+    color: var(--color-text-main);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    transition: border-color var(--transition-base) var(--transition-easing),
+                background-color var(--transition-base) var(--transition-easing);
+
+    &::placeholder {
+      color: var(--color-neutral-gray);
+      opacity: 0.5;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+      border-bottom-color: rgba(0, 0, 0, 0.2);
+    }
+
+    &:focus {
+      outline: none;
+      background-color: rgba(255, 255, 255, 1);
+      border-bottom-color: var(--color-secondary);
+    }
+
+    /* Estado con icono */
+    &--with-icon {
+      padding-left: var(--spacing-12);
+    }
+
+    /* Textarea */
+    &--textarea {
+      min-height: 120px;
+      resize: vertical;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-4);
+
+      &:focus {
+        border-color: var(--color-secondary);
+      }
+    }
+  }
+
+  /* Estados de validación */
+
+  /* Error state */
+  &--error {
+    .form-input__field {
+      border-bottom-color: var(--color-error-dark);
+      background-color: rgba(224, 160, 160, 0.1);
+
+      &:focus {
+        border-bottom-color: var(--color-error-dark);
+      }
+    }
+
+    .form-input__icon {
+      color: var(--color-error-dark);
+      opacity: 1;
+    }
+  }
+
+  /* Success state */
+  &--success {
+    .form-input__field {
+      border-bottom-color: var(--color-success-dark);
+      background-color: rgba(193, 230, 178, 0.1);
+
+      &:focus {
+        border-bottom-color: var(--color-success-dark);
+      }
+    }
+
+    .form-input__icon {
+      color: var(--color-success-dark);
+      opacity: 1;
+    }
+  }
+
+  /* Disabled state */
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+
+    .form-input__field {
+      background-color: var(--color-primary-light);
+      cursor: not-allowed;
+    }
+  }
+
+  /* Mensajes de ayuda y error */
+  &__help-text {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-xs-size);
+    color: var(--color-neutral-gray);
+    margin-top: var(--spacing-1);
+  }
+
+  &__error-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-xs-size);
+    color: var(--color-error-dark);
+    margin-top: var(--spacing-1);
+  }
+
+  &__success-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-xs-size);
+    color: var(--color-success-dark);
+    margin-top: var(--spacing-1);
+  }
+
+  /* Iconos de estado en mensajes */
+  &__message-icon {
+    flex-shrink: 0;
+  }
+}
