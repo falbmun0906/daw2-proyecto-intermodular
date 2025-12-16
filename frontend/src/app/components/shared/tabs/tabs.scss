@@ -1,0 +1,162 @@
+/* =========================
+ * Tabs Component
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins.scss' as *;
+
+.tabs {
+  width: 100%;
+}
+
+/* Lista de pestañas */
+.tabs__list {
+  @include flex-layout(row, flex-start, center, 0);
+  border-bottom: var(--border-width-thin) solid var(--border-color-primary);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  position: relative;
+
+  /* Ocultar scrollbar en webkit */
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color-primary);
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* Botón de pestaña */
+.tabs__button {
+  @include flex-layout(row, center, center, var(--spacing-2));
+  padding: var(--spacing-4) var(--spacing-5);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color var(--transition-base) var(--transition-easing),
+              border-color var(--transition-base) var(--transition-easing),
+              background-color var(--transition-base) var(--transition-easing);
+
+  &:hover:not(.tabs__button--disabled) {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+  }
+
+  @include focus-ring(var(--border-color-focus));
+
+  @include respond-to(md) {
+    padding: var(--spacing-4) var(--spacing-6);
+    font-size: var(--font-body-size);
+  }
+}
+
+/* Pestaña activa */
+.tabs__button--active {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  border-bottom-color: var(--color-secondary);
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+/* Pestaña deshabilitada */
+.tabs__button--disabled {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  cursor: not-allowed;
+
+  &:hover {
+    color: var(--text-secondary);
+    background-color: transparent;
+  }
+}
+
+/* Icono de pestaña */
+.tabs__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-h4-size);
+  line-height: 1;
+}
+
+/* Label de pestaña */
+.tabs__label {
+  display: inline-block;
+}
+
+/* Badge de pestaña */
+.tabs__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 var(--spacing-2);
+  background-color: var(--color-secondary);
+  color: var(--color-text-main);
+  font-size: var(--font-xs-size);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+
+/* Indicador de pestaña activa */
+.tabs__indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  background-color: var(--color-secondary);
+  transition: transform var(--transition-base) var(--transition-easing),
+              width var(--transition-base) var(--transition-easing);
+  pointer-events: none;
+}
+
+/* Contenido de las pestañas */
+.tabs__content {
+  padding: var(--spacing-6) 0;
+
+  @include respond-to(md) {
+    padding: var(--spacing-8) 0;
+  }
+}
+
+/* Responsive: tabs verticales en mobile (opcional) */
+@media (max-width: 640px) {
+  .tabs--vertical {
+    .tabs__list {
+      flex-direction: column;
+      border-bottom: none;
+      border-right: var(--border-width-thin) solid var(--border-color-primary);
+    }
+
+    .tabs__button {
+      width: 100%;
+      justify-content: flex-start;
+      border-bottom: none;
+      border-right: 2px solid transparent;
+    }
+
+    .tabs__button--active {
+      border-right-color: var(--color-secondary);
+    }
+  }
+}
+

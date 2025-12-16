@@ -1,0 +1,81 @@
+<div class="data-table" [class.data-table--responsive]="responsive">
+  <!-- Estado de carga -->
+  @if (loading) {
+    <div class="data-table__loading" role="status">
+      <p>Cargando datos...</p>
+    </div>
+  }
+
+  <!-- Tabla (vista desktop) -->
+  @if (!loading && data.length > 0) {
+    <div class="data-table__wrapper">
+      <table class="data-table__table" [class.data-table__table--striped]="striped" [class.data-table__table--hoverable]="hoverable">
+        <!-- Header -->
+        <thead class="data-table__head">
+          <tr class="data-table__row data-table__row--header">
+            @for (column of columns; track column.key) {
+              <th
+                class="data-table__cell data-table__cell--header"
+                [class.data-table__cell--sortable]="column.sortable"
+                [style.width]="column.width"
+                [attr.aria-sort]="sortColumn === column.key ? (sortDirection === 'asc' ? 'ascending' : 'descending') : null"
+                (click)="onSort(column)"
+              >
+                <div class="data-table__header-content">
+                  <span>{{ column.label }}</span>
+                  @if (column.sortable) {
+                    <span class="data-table__sort-icon" aria-hidden="true">
+                      {{ getSortIcon(column) }}
+                    </span>
+                  }
+                </div>
+              </th>
+            }
+          </tr>
+        </thead>
+
+        <!-- Body -->
+        <tbody class="data-table__body">
+          @for (row of data; track $index) {
+            <tr
+              class="data-table__row data-table__row--data"
+              (click)="onRowClick(row)"
+            >
+              @for (column of columns; track column.key) {
+                <td
+                  class="data-table__cell data-table__cell--data"
+                  [attr.data-label]="column.label"
+                >
+                  {{ row[column.key] }}
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Vista de cards (mobile responsive) -->
+    <div class="data-table__cards">
+      @for (row of data; track $index) {
+        <div class="data-table__card" (click)="onRowClick(row)">
+          @for (column of columns; track column.key) {
+            <div class="data-table__card-row">
+              <span class="data-table__card-label">{{ column.label }}:</span>
+              <span class="data-table__card-value">{{ row[column.key] }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Estado vacío -->
+  @if (!loading && data.length === 0) {
+    <div class="data-table__empty" role="status">
+      <p>{{ emptyMessage }}</p>
+    </div>
+  }
+</div>
+
+

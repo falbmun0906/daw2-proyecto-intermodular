@@ -1,0 +1,40 @@
+<div class="tabs" role="tablist">
+  <div class="tabs__list">
+    @for (tab of tabs; track tab.id) {
+      <button
+        class="tabs__button"
+        [class.tabs__button--active]="isActive(tab.id)"
+        [class.tabs__button--disabled]="tab.disabled"
+        type="button"
+        role="tab"
+        [attr.aria-selected]="isActive(tab.id)"
+        [attr.aria-controls]="'tabpanel-' + tab.id"
+        [attr.id]="'tab-' + tab.id"
+        [disabled]="tab.disabled"
+        (click)="selectTab(tab.id, tab.disabled)"
+      >
+        @if (tab.icon) {
+          <span class="tabs__icon" aria-hidden="true">{{ tab.icon }}</span>
+        }
+
+        <span class="tabs__label">{{ tab.label }}</span>
+
+        @if (tab.badge) {
+          <span class="tabs__badge" aria-label="{{ tab.badge }} notificaciones">
+            {{ tab.badge }}
+          </span>
+        }
+      </button>
+    }
+  </div>
+
+  <!-- Indicador de pestaña activa (línea inferior) -->
+  <div class="tabs__indicator"></div>
+
+  <!-- Contenido de las pestañas (proyección) -->
+  <div class="tabs__content">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+

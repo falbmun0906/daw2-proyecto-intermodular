@@ -1,0 +1,53 @@
+@if (isVisible) {
+  <div
+    class="modal"
+    [class.modal--visible]="isAnimatingIn"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="title ? 'modal-title' : null"
+    (click)="onOverlayClick($event)"
+  >
+    <!-- Overlay oscuro -->
+    <div class="modal__overlay"></div>
+
+    <!-- Contenedor del modal -->
+    <div
+      class="modal__container"
+      [class.modal__container--sm]="size === 'sm'"
+      [class.modal__container--md]="size === 'md'"
+      [class.modal__container--lg]="size === 'lg'"
+      [class.modal__container--xl]="size === 'xl'"
+      [class.modal__container--full]="size === 'full'"
+    >
+      <!-- Header del modal -->
+      <header class="modal__header">
+        @if (title) {
+          <h2 class="modal__title" id="modal-title">{{ title }}</h2>
+        }
+
+        @if (showCloseButton) {
+          <button
+            class="modal__close"
+            type="button"
+            (click)="close()"
+            aria-label="Cerrar modal"
+          >
+            <span class="modal__close-icon" aria-hidden="true">✕</span>
+          </button>
+        }
+      </header>
+
+      <!-- Body del modal (contenido proyectado) -->
+      <div class="modal__body">
+        <ng-content></ng-content>
+      </div>
+
+      <!-- Footer del modal (opcional, proyectado) -->
+      <footer class="modal__footer">
+        <ng-content select="[modal-footer]"></ng-content>
+      </footer>
+    </div>
+  </div>
+}
+
+

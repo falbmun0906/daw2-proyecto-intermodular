@@ -1,0 +1,153 @@
+/* =========================
+ * Pagination Component
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins.scss' as *;
+
+.pagination {
+  @include flex-layout(column, center, center, var(--spacing-4));
+  width: 100%;
+
+  @include respond-to(md) {
+    @include flex-layout(row, space-between, center, var(--spacing-6));
+  }
+}
+
+/* Información de resultados */
+.pagination__info {
+  order: 2;
+
+  @include respond-to(md) {
+    order: 1;
+  }
+}
+
+.pagination__text {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
+  margin: 0;
+
+  strong {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+  }
+
+  @include respond-to(md) {
+    font-size: var(--font-body-size);
+  }
+}
+
+/* Lista de botones de paginación */
+.pagination__list {
+  @include flex-layout(row, center, center, var(--spacing-2));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  order: 1;
+
+  @include respond-to(md) {
+    order: 2;
+  }
+}
+
+.pagination__item {
+  margin: 0;
+}
+
+/* Botón de paginación */
+.pagination__button {
+  @include flex-layout(row, center, center, 0);
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: var(--surface-base);
+  border: var(--border-width-thin) solid var(--border-color-primary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color var(--transition-base) var(--transition-easing),
+              border-color var(--transition-base) var(--transition-easing),
+              color var(--transition-base) var(--transition-easing),
+              transform var(--transition-fast) var(--transition-easing);
+
+  &:hover:not(:disabled) {
+    background-color: var(--bg-primary);
+    border-color: var(--border-color-secondary);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--bg-secondary);
+  }
+
+  @include focus-ring(var(--border-color-focus));
+
+  @include respond-to(md) {
+    min-width: 2.75rem;
+    height: 2.75rem;
+    font-size: var(--font-body-size);
+  }
+}
+
+/* Página activa */
+.pagination__button--active {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-text-main);
+  font-weight: var(--font-weight-semibold);
+
+  &:hover {
+    background-color: var(--color-secondary-hover);
+    border-color: var(--color-secondary-hover);
+  }
+}
+
+/* Botones de navegación (primera, última, anterior, siguiente) */
+.pagination__button--first,
+.pagination__button--last,
+.pagination__button--prev,
+.pagination__button--next {
+  font-size: var(--font-h4-size);
+
+  @include respond-to(md) {
+    font-size: var(--font-h3-size);
+  }
+}
+
+/* Responsive: tamaños más pequeños en mobile */
+@media (max-width: 640px) {
+  .pagination__list {
+    gap: var(--spacing-1);
+  }
+
+  .pagination__button {
+    min-width: 2rem;
+    height: 2rem;
+    padding: var(--spacing-1) var(--spacing-2);
+    font-size: var(--font-xs-size);
+  }
+
+  .pagination__button--first,
+  .pagination__button--last,
+  .pagination__button--prev,
+  .pagination__button--next {
+    font-size: var(--font-h4-size);
+  }
+
+  /* Ocultar botones Primera/Última en mobile muy pequeño */
+  .pagination__button--first,
+  .pagination__button--last {
+    display: none;
+  }
+}
+

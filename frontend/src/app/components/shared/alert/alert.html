@@ -1,0 +1,44 @@
+@if (isVisible) {
+  <div
+    class="alert"
+    [class.alert--success]="type === 'success'"
+    [class.alert--error]="type === 'error'"
+    [class.alert--warning]="type === 'warning'"
+    [class.alert--info]="type === 'info'"
+    [attr.role]="ariaRole"
+    [attr.aria-live]="type === 'error' ? 'assertive' : 'polite'"
+  >
+    <!-- Icono del alert -->
+    <div class="alert__icon" aria-hidden="true">
+      <span class="alert__icon-symbol">{{ alertIcon }}</span>
+    </div>
+
+    <!-- Contenido del alert -->
+    <div class="alert__content">
+      @if (title) {
+        <h3 class="alert__title">{{ title }}</h3>
+      }
+
+      @if (message) {
+        <p class="alert__message">{{ message }}</p>
+      }
+
+      <!-- Proyección de contenido adicional -->
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Botón de cierre (opcional) -->
+    @if (dismissible) {
+      <button
+        class="alert__close"
+        type="button"
+        (click)="onDismiss()"
+        aria-label="Cerrar alerta"
+      >
+        <span class="alert__close-icon" aria-hidden="true">✕</span>
+      </button>
+    }
+  </div>
+}
+
+

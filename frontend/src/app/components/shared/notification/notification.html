@@ -1,0 +1,57 @@
+<div
+  class="notification"
+  [class.notification--visible]="isVisible"
+  [class.notification--hidden]="isAnimatingOut"
+  [class.notification--success]="type === 'success'"
+  [class.notification--error]="type === 'error'"
+  [class.notification--warning]="type === 'warning'"
+  [class.notification--info]="type === 'info'"
+  [class.notification--top-right]="position === 'top-right'"
+  [class.notification--top-left]="position === 'top-left'"
+  [class.notification--bottom-right]="position === 'bottom-right'"
+  [class.notification--bottom-left]="position === 'bottom-left'"
+  [class.notification--top-center]="position === 'top-center'"
+  [class.notification--bottom-center]="position === 'bottom-center'"
+  [attr.role]="ariaRole"
+  [attr.aria-live]="type === 'error' ? 'assertive' : 'polite'"
+>
+  <!-- Barra de progreso (opcional para auto-cierre) -->
+  @if (duration > 0) {
+    <div class="notification__progress" [style.animation-duration.ms]="duration"></div>
+  }
+
+  <div class="notification__container">
+    <!-- Icono del notification -->
+    <div class="notification__icon" aria-hidden="true">
+      <span class="notification__icon-symbol">{{ notificationIcon }}</span>
+    </div>
+
+    <!-- Contenido del notification -->
+    <div class="notification__content">
+      @if (title) {
+        <h3 class="notification__title">{{ title }}</h3>
+      }
+
+      @if (message) {
+        <p class="notification__message">{{ message }}</p>
+      }
+
+      <!-- Proyección de contenido adicional -->
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Botón de cierre (opcional) -->
+    @if (dismissible) {
+      <button
+        class="notification__close"
+        type="button"
+        (click)="onDismiss()"
+        aria-label="Cerrar notificación"
+      >
+        <span class="notification__close-icon" aria-hidden="true">✕</span>
+      </button>
+    }
+  </div>
+</div>
+
+

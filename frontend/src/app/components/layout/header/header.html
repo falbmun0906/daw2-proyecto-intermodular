@@ -4,21 +4,56 @@
       class="site-header__logo"
       routerLink="/"
       aria-label="Ir a la página de inicio de Desp[i]lensa"
+      (click)="closeMenu()"
     >
       <span class="site-header__logo-text">Desp[i]lensa</span>
     </a>
   </section>
 
-  <nav class="site-header__nav" aria-label="Navegación principal">
+  <!-- Botón hamburguesa (visible solo en mobile) -->
+  <button
+    class="site-header__hamburger"
+    [class.site-header__hamburger--open]="isMenuOpen"
+    type="button"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="isMenuOpen"
+    aria-label="Menú de navegación"
+  >
+    <span class="site-header__hamburger-line"></span>
+    <span class="site-header__hamburger-line"></span>
+    <span class="site-header__hamburger-line"></span>
+  </button>
+
+  <nav
+    class="site-header__nav"
+    [class.site-header__nav--open]="isMenuOpen"
+    aria-label="Navegación principal"
+  >
     <ul class="site-header__nav-list">
       <li class="site-header__nav-item">
-        <a class="site-header__nav-link" routerLink="/inicio">Inicio</a>
+        <a
+          class="site-header__nav-link"
+          routerLink="/inicio"
+          (click)="closeMenu()"
+        >
+          Inicio
+        </a>
       </li>
       <li class="site-header__nav-item">
-        <a class="site-header__nav-link" routerLink="/recetas">Recetas</a>
+        <a
+          class="site-header__nav-link"
+          routerLink="/recetas"
+          (click)="closeMenu()"
+        >
+          Recetas
+        </a>
       </li>
       <li class="site-header__nav-item">
-        <a class="site-header__nav-link" routerLink="/despensa">
+        <a
+          class="site-header__nav-link"
+          routerLink="/despensa"
+          (click)="closeMenu()"
+        >
           Mi despensa
         </a>
       </li>
