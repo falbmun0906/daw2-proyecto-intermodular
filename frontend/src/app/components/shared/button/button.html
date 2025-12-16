@@ -1,0 +1,28 @@
+<button
+  [class]="buttonClasses"
+  [type]="type"
+  [disabled]="disabled"
+  (click)="onClick($event)"
+  [attr.aria-disabled]="disabled"
+>
+  <!-- Icono izquierda -->
+  @if (icon && iconPosition === 'left') {
+    <span class="button__icon button__icon--left" aria-hidden="true">
+      {{ icon }}
+    </span>
+  }
+
+  <!-- Contenido del botón -->
+  <span class="button__content">
+    <ng-content></ng-content>
+  </span>
+
+  <!-- Icono derecha -->
+  @if (icon && iconPosition === 'right') {
+    <span class="button__icon button__icon--right" aria-hidden="true">
+      {{ icon }}
+    </span>
+  }
+</button>
+
+

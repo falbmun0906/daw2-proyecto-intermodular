@@ -576,3 +576,467 @@ inputId: string = `form-input-${++FormInput.idCounter}`;
 ---
 
 Esta estructura de formularios garantiza una experiencia de usuario accesible, usable y profesional, cumpliendo con los estándares WCAG 2.1 AA.
+
+---
+
+# Sección 3: Sistema de componentes UI
+
+## 3.1 Componentes implementados
+
+### Button (app-button)
+
+**Propósito:**
+Componente de botón reutilizable que cubre todas las necesidades de acciones interactivas en la aplicación. Soporta múltiples variantes visuales, tamaños y estados para mantener la jerarquía visual y guiar al usuario en sus acciones.
+
+**Variantes disponibles:**
+- **primary** (`.button--primary`): Botón de acción principal con color secundario del sistema (amarillo). Se utiliza para la acción más importante de cada pantalla (ej: "Iniciar sesión", "Guardar receta", "Buscar").
+- **secondary** (`.button--secondary`): Botón de acción secundaria con color primario del sistema (verde). Para acciones importantes pero no prioritarias (ej: "Ver más", "Filtrar").
+- **ghost** (`.button--ghost`): Botón sin fondo, solo con borde y texto. Para acciones terciarias o enlaces de baja prioridad (ej: "Cancelar", "Volver").
+- **danger** (`.button--danger`): Botón destructivo con color rojo. Para acciones irreversibles o peligrosas (ej: "Eliminar receta", "Borrar cuenta").
+
+**Tamaños disponibles:**
+- **sm** (`.button--sm`): Pequeño (32px altura, padding reducido). Para acciones compactas en tarjetas o listas.
+- **md** (`.button--md`): Mediano (40px altura). Tamaño por defecto para la mayoría de acciones.
+- **lg** (`.button--lg`): Grande (48px altura desktop, 56px tablet+). Para CTAs principales y acciones destacadas.
+
+**Estados que maneja:**
+- **:hover**: Cambio de color, elevación de sombra y movimiento sutil hacia arriba (translateY -2px).
+- **:focus**: Outline visible con color de info (azul) para navegación por teclado, aplicado mediante mixin `focus-ring`.
+- **:active**: Escala reducida (scale 0.98) para feedback táctil.
+- **:disabled / .button--disabled**: Opacidad reducida (0.5), cursor not-allowed, sin interacciones.
+
+**Modificadores adicionales:**
+- **--full-width**: Ancho completo (100%) para botones en formularios o layouts estrechos.
+- **--with-icon**: Ajusta el espaciado interno cuando el botón incluye un icono.
+
+**Características de accesibilidad:**
+- Atributo `[type]` configurable (button, submit, reset)
+- Estado deshabilitado comunicado con `aria-disabled`
+- Focus ring visible para navegación por teclado
+- Iconos opcionales marcados con `aria-hidden="true"`
+- Proyección de contenido con `<ng-content>` para flexibilidad
+
+**Ejemplo de uso:**
+
+```html
+<!-- Botón primary por defecto -->
+<app-button (buttonClick)="onSave()">
+  Guardar cambios
+</app-button>
+
+<!-- Botón secundario mediano con icono izquierda -->
+<app-button 
+  variant="secondary" 
+  size="md" 
+  icon="🔍"
+  iconPosition="left"
+  (buttonClick)="onSearch()">
+  Buscar recetas
+</app-button>
+
+<!-- Botón ghost pequeño -->
+<app-button 
+  variant="ghost" 
+  size="sm"
+  (buttonClick)="onCancel()">
+  Cancelar
+</app-button>
+
+<!-- Botón danger grande, ancho completo, deshabilitado -->
+<app-button 
+  variant="danger"
+  size="lg"
+  [fullWidth]="true"
+  [disabled]="isProcessing"
+  type="submit"
+  (buttonClick)="onDelete()">
+  Eliminar receta
+</app-button>
+
+<!-- Botón primary con icono a la derecha -->
+<app-button 
+  icon="→"
+  iconPosition="right"
+  (buttonClick)="onNext()">
+  Siguiente paso
+</app-button>
+```
+
+**Código TypeScript del componente:**
+
+```typescript
+@Input() variant: 'primary' | 'secondary' | 'ghost' | 'danger' = 'primary';
+@Input() size: 'sm' | 'md' | 'lg' = 'md';
+@Input() type: 'button' | 'submit' | 'reset' = 'button';
+@Input() disabled: boolean = false;
+@Input() fullWidth: boolean = false;
+@Input() icon: string = '';
+@Input() iconPosition: 'left' | 'right' = 'left';
+@Output() buttonClick = new EventEmitter<MouseEvent>();
+```
+
+---
+
+### Card (app-card)
+
+**Propósito:**
+Componente de tarjeta reutilizable diseñado específicamente para mostrar recetas de forma visual y atractiva. Combina imagen de fondo, SVG decorativo, información estructurada y acción principal en un contenedor elegante y responsive.
+
+**Variantes disponibles:**
+- **vertical** (`.card--vertical`): Tarjeta vertical compacta (por defecto). Imagen arriba (180px), contenido sobre SVG decorativo en la parte inferior. max-width 280px. Ideal para grids compactos de recetas en home.
+- **carousel** (`.card--carousel`): Tarjeta vertical para carruseles. Ligeramente más grande que vertical (200px de imagen). max-width 320px. Pensada para secciones destacadas con scroll horizontal.
+- **horizontal** (`.card--horizontal`): Tarjeta horizontal con imagen a la izquierda (35%) y contenido a la derecha (65%) sobre fondo blanco. Sin SVG decorativo. Para listados o páginas de búsqueda. min-height 180px, ancho completo.
+- **featured** (`.card--featured`): Tarjeta destacada más grande con borde amarillo (2px) y efectos hover más pronunciados. Para recetas principales o promociones especiales. max-width 400px, min-height 380px.
+
+**Tamaños y dimensiones (respetando relación de aspecto):**
+- **Vertical (default)**: 337px × 406px (relación aspecto 0.83) - Para grids compactos
+- **Carousel**: 575px × 533px (relación aspecto 1.08) - Para carruseles/secciones destacadas
+- **Horizontal (listado)**: 813px × 493px (relación aspecto 1.65) - Para listados de búsqueda
+- **Featured**: 575px × 533px (como carousel, pero con borde especial) - Para promociones
+
+**Estructura interna:**
+La tarjeta es un contenedor donde **la imagen de fondo ocupa TODA la tarjeta** (100% width y height) con el contenido superpuesto encima:
+
+1. **Imagen de fondo (ocupa 100%)**: Se aplica como `background-image` con `background-size: cover` y `background-position: center`, permitiendo zoom smooth en hover (scale 1.05)
+2. **SVG decorativo (card-form)**: Forma orgánica gris oscura (rgba(65,65,65,0.90)) superpuesta en la parte inferior, creando un área visual para el contenido (no aparece en variante horizontal)
+3. **Contenido superpuesto** (position: absolute, bottom: 0, con gradiente de fondo oscuro):
+   - Categoría/Etiqueta (opcional): Badge amarillo con texto en mayúsculas
+   - Título (h3): Fuente Poppins, bold, texto blanco, máximo 2 líneas con ellipsis
+   - Descripción (opcional): Texto blanco, máximo 2 líneas con ellipsis
+   - Metadatos:
+     - Valoración: Estrellas (★/☆) de 0 a 5
+     - Tiempo de preparación: Icono ⏱ + texto
+     - Dificultad: Icono + texto
+   - Botones de acción (en la parte inferior del contenido):
+     - **Variantes vertical/carousel/featured**: Un botón "Ver receta" (primary, amarillo, ancho completo)
+     - **Variante horizontal**: Dos botones flex (flex: 1 cada uno) - "Guardar" (secondary, gris semitransparente) y "Ver receta" (primary, amarillo)
+
+**Estados que maneja:**
+- **:hover**: Elevación de sombra (shadow-md → shadow-xl), translateY(-8px) y zoom de imagen (scale 1.05)
+- **:hover (featured)**: Elevación mayor (translateY -12px + scale 1.02) con sombra amarilla
+- **:focus**: Focus ring visible para cards clickeables (role="button")
+- **:active**: Reducción del translateY a -4px para feedback táctil
+- **clickeable**: Cursor pointer cuando se proporciona evento `(cardClick)`
+
+**Propiedades Input:**
+- `variant`: 'vertical' | 'carousel' | 'horizontal' | 'featured' (por defecto: 'vertical')
+- `imageUrl`: URL de la imagen de fondo
+- `imageAlt`: Texto alternativo para la imagen
+- `title`: Título de la receta
+- `description`: Descripción breve
+- `rating`: Valoración de 0 a 5
+- `time`: Tiempo de preparación (ej: "30 min")
+- `difficulty`: Nivel de dificultad (ej: "Fácil")
+- `category`: Categoría o etiqueta
+- `actionText`: Texto del botón de acción (por defecto: "Ver receta")
+- `showAction`: Mostrar u ocultar el botón (por defecto: true)
+- `showDecorative`: Mostrar u ocultar el SVG decorativo (por defecto: true, no aplica a horizontal)
+
+**Eventos Output:**
+- `(cardClick)`: Emitido al hacer click en cualquier parte de la card
+- `(actionClick)`: Emitido al hacer click en el botón de acción "Ver receta" (con stopPropagation)
+- `(saveClick)`: Emitido al hacer click en el botón "Guardar" (solo en variante horizontal)
+
+**Características de accesibilidad:**
+- Uso semántico de `<article>` para cada card
+- Atributo `role="button"` cuando la card es clickeable
+- `tabindex="0"` para navegación por teclado en cards clickeables
+- `aria-label` para valoración con estrellas legible por lectores de pantalla
+- Iconos decorativos marcados con `aria-hidden="true"`
+- `loading="lazy"` en imágenes para optimización de rendimiento
+- Focus ring visible para navegación por teclado
+
+**Ejemplo de uso:**
+
+```html
+<!-- Card VERTICAL (337x406, para grids compactos en home) -->
+<app-card
+  variant="vertical"
+  imageUrl="/assets/images/pizza-margherita.jpg"
+  imageAlt="Pizza Margherita recién horneada"
+  title="Pizza Margherita"
+  description="Clásica pizza italiana con tomate, mozzarella"
+  [rating]="4.5"
+  time="45 min"
+  difficulty="Media"
+  category="Italiana"
+  (actionClick)="verReceta(1)"
+></app-card>
+
+<!-- Card CAROUSEL (575x533, para secciones destacadas con scroll horizontal) -->
+<app-card
+  variant="carousel"
+  imageUrl="/assets/images/paella-valenciana.jpg"
+  imageAlt="Paella Valenciana tradicional"
+  title="Paella Valenciana Auténtica"
+  description="Arroz, pollo, conejo, judías verdes y garrofón"
+  [rating]="5"
+  time="90 min"
+  difficulty="Difícil"
+  category="Destacada"
+  (actionClick)="verReceta(2)"
+></app-card>
+
+<!-- Card HORIZONTAL (813x493, para listados de búsqueda con dos botones) -->
+<app-card
+  variant="horizontal"
+  imageUrl="/assets/images/ensalada-cesar.jpg"
+  imageAlt="Ensalada César"
+  title="Ensalada César"
+  description="Lechuga romana, pollo, parmesano y salsa César casera"
+  [rating]="4"
+  time="20 min"
+  difficulty="Fácil"
+  category="Ensaladas"
+  actionText="Ver receta"
+  (cardClick)="verDetalleReceta(3)"
+  (actionClick)="verRecetaCompleta(3)"
+  (saveClick)="agregarAFavoritos(3)"
+></app-card>
+
+<!-- Card FEATURED (575x533, para promociones especiales con borde amarillo) -->
+<app-card
+  variant="featured"
+  imageUrl="/assets/images/tarta-chocolate.jpg"
+  imageAlt="Tarta de Chocolate belga"
+  title="Tarta de Chocolate Belga Premium"
+  description="Chocolate 72%, nata, frambuesas y coulis de maracuyá"
+  [rating]="4.8"
+  time="60 min"
+  difficulty="Media"
+  category="Postres"
+  actionText="Ver receta completa"
+  (actionClick)="verRecetaDestacada(4)"
+></app-card>
+```
+
+**Código TypeScript del componente:**
+
+```typescript
+@Input() variant: 'vertical' | 'carousel' | 'horizontal' | 'featured' = 'vertical';
+@Input() imageUrl: string = '';
+@Input() imageAlt: string = '';
+@Input() title: string = '';
+@Input() description: string = '';
+@Input() rating: number = 0;
+@Input() time: string = '';
+@Input() difficulty: string = '';
+@Input() category: string = '';
+@Input() actionText: string = 'Ver receta';
+@Input() showAction: boolean = true;
+@Input() showDecorative: boolean = true;
+@Output() cardClick = new EventEmitter<void>();
+@Output() actionClick = new EventEmitter<void>();
+@Output() saveClick = new EventEmitter<void>();
+```
+
+**Implementación del SVG decorativo (card-form):**
+
+El SVG decorativo utiliza una curva Bézier cuadrática (path con comando Q) para crear una forma orgánica y suave que se adapta al ancho de la card:
+
+```svg
+<svg viewBox="0 0 300 200" preserveAspectRatio="none">
+  <path
+    d="M0,120 Q50,100 100,110 T200,120 L300,130 L300,200 L0,200 Z"
+    fill="rgba(41, 44, 44, 0.85)"
+  />
+</svg>
+```
+
+- `preserveAspectRatio="none"`: Permite que el SVG se estire para llenar el contenedor
+- `fill="rgba(41, 44, 44, 0.85)"`: Color oscuro semitransparente que permite ver la imagen de fondo
+- La curva crea una forma ondulada natural que aporta dinamismo visual
+
+---
+
+## 3.2 Nomenclatura y metodología
+
+Este proyecto utiliza **BEM (Block Element Modifier)** de forma estricta para garantizar componentes predecibles, escalables y fáciles de mantener.
+
+### Estructura BEM aplicada:
+
+**Block (Bloque):**
+Representa un componente independiente y reutilizable.
+- Ejemplo: `.button`, `.card`, `.form-input`, `.site-header`
+
+**Element (Elemento):**
+Parte interna del bloque que no tiene sentido fuera de su contexto.
+- Se conecta con doble guion bajo: `__`
+- Ejemplo: `.button__icon`, `.button__content`, `.card__title`, `.form-input__label`
+
+**Modifier (Modificador):**
+Variación del bloque o elemento que cambia su apariencia o comportamiento.
+- Se conecta con doble guion: `--`
+- Ejemplo: `.button--primary`, `.button--lg`, `.card--featured`, `.form-input--error`
+
+### Ejemplos reales del proyecto:
+
+**Componente Button:**
+```scss
+.button { /* Block: componente base */
+  display: inline-flex;
+  align-items: center;
+  // ... estilos base
+}
+
+.button__content { /* Element: contenido interno */
+  display: inline-flex;
+}
+
+.button__icon { /* Element: icono */
+  font-size: 1.2em;
+}
+
+.button__icon--left { /* Modifier de elemento */
+  margin-right: calc(var(--spacing-2) * -1);
+}
+
+.button--primary { /* Modifier: variante amarilla */
+  background-color: var(--color-secondary);
+}
+
+.button--lg { /* Modifier: tamaño grande */
+  padding: var(--spacing-4) var(--spacing-8);
+}
+
+.button--disabled { /* Modifier: estado deshabilitado */
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+```
+
+**Componente Header:**
+```scss
+.site-header { /* Block */
+  display: flex;
+  position: sticky;
+}
+
+.site-header__branding { /* Element: zona de logo */
+  flex-shrink: 0;
+}
+
+.site-header__nav { /* Element: navegación */
+  flex-grow: 1;
+}
+
+.site-header__nav-link { /* Element: enlace de navegación */
+  padding: var(--spacing-3);
+  
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+```
+
+**Componente Form Input:**
+```scss
+.form-input { /* Block */
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input__label { /* Element: etiqueta */
+  font-weight: var(--font-weight-medium);
+}
+
+.form-input__field { /* Element: campo de entrada */
+  padding: var(--spacing-4);
+}
+
+.form-input--error { /* Modifier: estado de error */
+  .form-input__field {
+    border-color: var(--color-error-dark);
+  }
+}
+
+.form-input--disabled { /* Modifier: estado deshabilitado */
+  opacity: 0.5;
+}
+```
+
+**Componente Card:**
+```scss
+.card { /* Block: tarjeta de receta */
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.card__image-wrapper { /* Element: contenedor de imagen */
+  position: relative;
+}
+
+.card__decorative-bg { /* Element: SVG decorativo de fondo */
+  position: absolute;
+  bottom: 0;
+  fill: rgba(65, 65, 65, 0.90);
+}
+
+.card__content { /* Element: zona de contenido */
+  position: relative;
+  z-index: 2;
+  padding: var(--spacing-4) var(--spacing-5);
+}
+
+.card__title { /* Element: título de la receta */
+  font-size: var(--font-h4-size);
+  color: var(--color-neutral-white);
+}
+
+.card__rating { /* Element: valoración con estrellas */
+  display: flex;
+  gap: var(--spacing-1);
+}
+
+.card__star { /* Element: estrella individual */
+  color: var(--color-neutral-gray);
+}
+
+.card__star--filled { /* Modifier de elemento: estrella rellena */
+  color: var(--color-secondary);
+}
+
+.card--vertical { /* Modifier: card vertical (compacta, para grids) */
+  max-width: 280px;
+  min-height: 320px;
+}
+
+.card--carousel { /* Modifier: card para carruseles */
+  max-width: 320px;
+  min-height: 360px;
+}
+
+.card--horizontal { /* Modifier: card horizontal (para listados) */
+  flex-direction: row;
+  min-height: 180px;
+  
+  .card__image-wrapper {
+    width: 35%;
+  }
+
+  .card__content {
+    width: 65%;
+    color: var(--color-text-main);
+  }
+  
+  .card__decorative-bg {
+    display: none;
+  }
+}
+
+.card--featured { /* Modifier: card destacada */
+  border: 2px solid var(--color-secondary);
+  max-width: 400px;
+  min-height: 380px;
+}
+
+.card--clickable { /* Modifier: card interactiva */
+  cursor: pointer;
+}
+```
+
+### Estrategia de nomenclatura:
+
+Pendiente: Cards, Form elements adicionales, Alerts, Style Guide page

@@ -1,0 +1,119 @@
+<article
+  [class]="cardClasses"
+  (click)="onCardClick()"
+  [attr.role]="cardClick.observers.length > 0 ? 'button' : null"
+  [attr.tabindex]="cardClick.observers.length > 0 ? 0 : null"
+  [style.background-image]="imageUrl ? 'url(' + imageUrl + ')' : 'none'"
+  class="card__image-bg"
+>
+  <!-- Imagen de fondo (oculta, solo para lazy loading) -->
+  @if (imageUrl) {
+    <img
+      class="card__image"
+      [src]="imageUrl"
+      [alt]="imageAlt || title"
+      loading="lazy"
+      aria-hidden="true"
+    />
+  }
+
+  <!-- SVG decorativo (card-form) que va encima de la imagen -->
+  @if (showDecorative && variant !== 'horizontal') {
+    <svg
+      class="card__decorative-bg"
+      viewBox="0 0 300 200"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M0,120 Q50,100 100,110 T200,120 L300,130 L300,200 L0,200 Z"
+        fill="rgba(65, 65, 65, 0.90)"
+      />
+    </svg>
+  }
+
+  <!-- Contenido superpuesto -->
+  <div class="card__content">
+    <!-- Categoría/Etiqueta -->
+    @if (category) {
+      <span class="card__category">{{ category }}</span>
+    }
+
+    <!-- Título -->
+    @if (title) {
+      <h3 class="card__title">{{ title }}</h3>
+    }
+
+    <!-- Descripción -->
+    @if (description) {
+      <p class="card__description">{{ description }}</p>
+    }
+
+    <!-- Metadatos: valoración, tiempo, dificultad -->
+    <div class="card__meta">
+      <!-- Valoración con estrellas -->
+      @if (rating > 0) {
+        <div class="card__rating" [attr.aria-label]="'Valoración: ' + rating + ' de 5 estrellas'">
+          @for (filled of stars; track $index) {
+            <span
+              class="card__star"
+              [class.card__star--filled]="filled"
+              aria-hidden="true"
+            >
+              {{ filled ? '★' : '☆' }}
+            </span>
+          }
+        </div>
+      }
+
+      <!-- Tiempo de preparación -->
+      @if (time) {
+        <span class="card__time" aria-label="Tiempo de preparación">
+          <span class="card__meta-icon" aria-hidden="true">⏱</span>
+          {{ time }}
+        </span>
+      }
+
+      <!-- Dificultad -->
+      @if (difficulty) {
+        <span class="card__difficulty" aria-label="Dificultad">
+          <span class="card__meta-icon" aria-hidden="true">📊</span>
+          {{ difficulty }}
+        </span>
+      }
+    </div>
+
+    <!-- Botones de acción -->
+    @if (showAction || variant === 'horizontal') {
+      <div class="card__actions">
+        <!-- En variante horizontal: mostrar 2 botones -->
+        @if (variant === 'horizontal') {
+          <button
+            class="card__action-button card__action-button--secondary"
+            type="button"
+            (click)="onActionClick($event, 'save')"
+          >
+            💾 Guardar
+          </button>
+          <button
+            class="card__action-button card__action-button--primary"
+            type="button"
+            (click)="onActionClick($event, 'view')"
+          >
+            {{ actionText }}
+          </button>
+        } @else {
+          <!-- En variantes vertical/carousel/featured: un botón -->
+          <button
+            class="card__action-button card__action-button--primary"
+            type="button"
+            (click)="onActionClick($event)"
+          >
+            {{ actionText }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+</article>
+

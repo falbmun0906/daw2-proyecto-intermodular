@@ -2,7 +2,7 @@
  * Header Component (site-header)
  * ========================= */
 
-@use '../../../../styles/01-tools/mixins' as *;
+@use '../../../../styles/01-tools/mixins.scss' as *;
 
 .site-header {
   @include flex-layout(row, space-between, center, var(--spacing-8));

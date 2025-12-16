@@ -2,7 +2,7 @@
  * Sidebar Component (app-sidebar)
  * ========================= */
 
-@use '../../../../styles/01-tools/mixins' as *;
+@use '../../../../styles/01-tools/mixins.scss' as *;
 
 .app-sidebar {
   display: flex;

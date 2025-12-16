@@ -2,7 +2,7 @@
  * Footer Component (site-footer)
  * ========================= */
 
-@use '../../../../styles/01-tools/mixins' as *;
+@use '../../../../styles/01-tools/mixins.scss' as *;
 
 .site-footer {
   background-color: var(--color-primary-dark);

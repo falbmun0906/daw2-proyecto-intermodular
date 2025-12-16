@@ -2,7 +2,7 @@
  * Main Component (site-main)
  * ========================= */
 
-@use '../../../../styles/01-tools/mixins' as *;
+@use '../../../../styles/01-tools/mixins.scss' as *;
 
 .site-main {
   min-height: calc(100vh - 200px); /* Ajustar según altura de header + footer */
