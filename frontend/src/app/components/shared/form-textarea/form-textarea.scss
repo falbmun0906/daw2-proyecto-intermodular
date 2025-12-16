@@ -1,0 +1,180 @@
+/* =========================
+ * FormTextarea Component
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins' as *;
+
+/* ====================================
+ * Bloque: .form-textarea
+ * ==================================== */
+
+.form-textarea {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-2));
+  width: 100%;
+}
+
+/* ====================================
+ * Elemento: Label
+ * ==================================== */
+
+.form-textarea__label {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-main);
+  line-height: 1.5;
+}
+
+.form-textarea__required {
+  color: var(--color-error-dark);
+  margin-left: var(--spacing-1);
+}
+
+/* ====================================
+ * Elemento: Textarea
+ * ==================================== */
+
+.form-textarea__field {
+  padding: var(--spacing-4);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  line-height: 1.6;
+  color: var(--color-text-main);
+  background-color: var(--color-neutral-white);
+  border: var(--border-width-medium) solid var(--color-primary);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color var(--transition-base) var(--transition-easing),
+              box-shadow var(--transition-base) var(--transition-easing);
+
+  &::placeholder {
+    color: var(--color-neutral-gray);
+    opacity: 0.7;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(242, 181, 69, 0.2);
+  }
+
+  &:disabled {
+    background-color: var(--color-primary-light);
+    color: var(--color-neutral-gray);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+/* ====================================
+ * Elemento: Character count
+ * ==================================== */
+
+.form-textarea__char-count {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-xs-size);
+  color: var(--color-neutral-gray);
+  text-align: right;
+  margin-top: calc(var(--spacing-2) * -1);
+
+  &--warning {
+    color: var(--color-error-dark);
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+/* ====================================
+ * Elemento: Help text
+ * ==================================== */
+
+.form-textarea__help {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-neutral-gray);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ====================================
+ * Elemento: Error message
+ * ==================================== */
+
+.form-textarea__error {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-error-dark);
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  &::before {
+    content: '⚠';
+    font-size: var(--font-body-size);
+  }
+}
+
+/* ====================================
+ * Elemento: Success message
+ * ==================================== */
+
+.form-textarea__success {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-success-dark);
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  &::before {
+    content: '✓';
+    font-size: var(--font-body-size);
+  }
+}
+
+/* ====================================
+ * Modificador: Estado de error
+ * ==================================== */
+
+.form-textarea--error {
+  .form-textarea__field {
+    border-color: var(--color-error-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
+    }
+  }
+}
+
+/* ====================================
+ * Modificador: Estado de éxito
+ * ==================================== */
+
+.form-textarea--success {
+  .form-textarea__field {
+    border-color: var(--color-success-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(112, 168, 0, 0.2);
+    }
+  }
+}
+
+/* ====================================
+ * Modificador: Estado deshabilitado
+ * ==================================== */
+
+.form-textarea--disabled {
+  .form-textarea__label {
+    color: var(--color-neutral-gray);
+  }
+}
+

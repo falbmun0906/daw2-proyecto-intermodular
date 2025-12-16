@@ -1,0 +1,197 @@
+/* =========================
+ * FormRadioGroup Component
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins' as *;
+
+/* ====================================
+ * Bloque: .form-radio-group
+ * ==================================== */
+
+.form-radio-group {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-2));
+  width: 100%;
+}
+
+/* ====================================
+ * Elemento: Fieldset
+ * ==================================== */
+
+.form-radio-group__fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ====================================
+ * Elemento: Legend (label del grupo)
+ * ==================================== */
+
+.form-radio-group__legend {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-3);
+  padding: 0;
+}
+
+.form-radio-group__required {
+  color: var(--color-error-dark);
+  margin-left: var(--spacing-1);
+}
+
+/* ====================================
+ * Elemento: Options container
+ * ==================================== */
+
+.form-radio-group__options {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-3));
+}
+
+/* ====================================
+ * Elemento: Single option
+ * ==================================== */
+
+.form-radio-group__option {
+  @include flex-layout(row, flex-start, center, var(--spacing-3));
+}
+
+/* ====================================
+ * Elemento: Input (radio button)
+ * ==================================== */
+
+.form-radio-group__input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  appearance: none;
+  border: var(--border-width-medium) solid var(--color-primary);
+  border-radius: 50%;
+  background-color: var(--color-neutral-white);
+  position: relative;
+  transition: background-color var(--transition-base) var(--transition-easing),
+              border-color var(--transition-base) var(--transition-easing),
+              box-shadow var(--transition-base) var(--transition-easing);
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(242, 181, 69, 0.2);
+  }
+
+  &:checked {
+    border-color: var(--color-secondary);
+    border-width: 6px;
+    background-color: var(--color-neutral-white);
+  }
+
+  &:disabled {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-neutral-gray);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:disabled:checked {
+    border-color: var(--color-neutral-gray);
+  }
+}
+
+/* ====================================
+ * Elemento: Label
+ * ==================================== */
+
+.form-radio-group__label {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ====================================
+ * Elemento: Help text
+ * ==================================== */
+
+.form-radio-group__help {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-neutral-gray);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ====================================
+ * Elemento: Error message
+ * ==================================== */
+
+.form-radio-group__error {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-error-dark);
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  &::before {
+    content: '⚠';
+    font-size: var(--font-body-size);
+  }
+}
+
+/* ====================================
+ * Modificador: Estado de error
+ * ==================================== */
+
+.form-radio-group--error {
+  .form-radio-group__input {
+    border-color: var(--color-error-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
+    }
+
+    &:checked {
+      border-color: var(--color-error-dark);
+    }
+  }
+}
+
+/* ====================================
+ * Modificador: Estado deshabilitado
+ * ==================================== */
+
+.form-radio-group--disabled {
+  .form-radio-group__legend {
+    color: var(--color-neutral-gray);
+  }
+
+  .form-radio-group__label {
+    color: var(--color-neutral-gray);
+    cursor: not-allowed;
+  }
+}
+
+/* ====================================
+ * Modificador: Inline (horizontal)
+ * ==================================== */
+
+.form-radio-group--inline {
+  .form-radio-group__options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-5);
+  }
+}
+

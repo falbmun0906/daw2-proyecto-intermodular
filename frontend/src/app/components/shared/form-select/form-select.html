@@ -1,0 +1,64 @@
+<div class="form-select" [class.form-select--error]="hasError" [class.form-select--success]="hasSuccess" [class.form-select--disabled]="disabled">
+  <!-- Label -->
+  <label [for]="selectId" class="form-select__label">
+    {{ label }}
+    @if (required) {
+      <span class="form-select__required" aria-label="obligatorio">*</span>
+    }
+  </label>
+
+  <!-- Select wrapper -->
+  <div class="form-select__wrapper">
+    <select
+      [id]="selectId"
+      [name]="name"
+      [required]="required"
+      [disabled]="disabled"
+      [attr.aria-describedby]="ariaDescribedBy"
+      [attr.aria-invalid]="hasError"
+      [attr.aria-required]="required"
+      [(ngModel)]="value"
+      (blur)="onBlur()"
+      (change)="onSelect($event)"
+      class="form-select__field"
+    >
+      <!-- Placeholder option -->
+      <option value="" disabled selected hidden>{{ placeholder }}</option>
+
+      <!-- Dynamic options -->
+      @for (option of options; track option.value) {
+        <option
+          [value]="option.value"
+          [disabled]="option.disabled || false"
+        >
+          {{ option.label }}
+        </option>
+      }
+    </select>
+
+    <!-- Custom arrow icon -->
+    <span class="form-select__arrow" aria-hidden="true">▼</span>
+  </div>
+
+  <!-- Help text -->
+  @if (helpText && !hasError && !hasSuccess) {
+    <p [id]="selectId + '-help'" class="form-select__help">
+      {{ helpText }}
+    </p>
+  }
+
+  <!-- Error message -->
+  @if (hasError && errorMessage) {
+    <p [id]="selectId + '-error'" class="form-select__error" role="alert">
+      {{ errorMessage }}
+    </p>
+  }
+
+  <!-- Success message -->
+  @if (hasSuccess && successMessage) {
+    <p [id]="selectId + '-success'" class="form-select__success" role="status">
+      {{ successMessage }}
+    </p>
+  }
+</div>
+

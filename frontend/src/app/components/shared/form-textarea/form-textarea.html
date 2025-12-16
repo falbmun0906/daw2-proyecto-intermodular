@@ -1,0 +1,56 @@
+<div class="form-textarea" [class.form-textarea--error]="hasError" [class.form-textarea--success]="hasSuccess" [class.form-textarea--disabled]="disabled">
+  <!-- Label -->
+  <label [for]="textareaId" class="form-textarea__label">
+    {{ label }}
+    @if (required) {
+      <span class="form-textarea__required" aria-label="obligatorio">*</span>
+    }
+  </label>
+
+  <!-- Textarea -->
+  <textarea
+    [id]="textareaId"
+    [name]="name"
+    [placeholder]="placeholder"
+    [required]="required"
+    [disabled]="disabled"
+    [rows]="rows"
+    [maxLength]="maxLength"
+    [attr.aria-describedby]="ariaDescribedBy"
+    [attr.aria-invalid]="hasError"
+    [attr.aria-required]="required"
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    (input)="onInput($event)"
+    class="form-textarea__field"
+  ></textarea>
+
+  <!-- Character count -->
+  @if (showCharCount) {
+    <div class="form-textarea__char-count" [class.form-textarea__char-count--warning]="remainingCharacters < 50">
+      {{ characterCount }} / {{ maxLength }}
+    </div>
+  }
+
+  <!-- Help text -->
+  @if (helpText && !hasError && !hasSuccess) {
+    <p [id]="textareaId + '-help'" class="form-textarea__help">
+      {{ helpText }}
+    </p>
+  }
+
+  <!-- Error message -->
+  @if (hasError && errorMessage) {
+    <p [id]="textareaId + '-error'" class="form-textarea__error" role="alert">
+      {{ errorMessage }}
+    </p>
+  }
+
+  <!-- Success message -->
+  @if (hasSuccess && successMessage) {
+    <p [id]="textareaId + '-success'" class="form-textarea__success" role="status">
+      {{ successMessage }}
+    </p>
+  }
+</div>
+

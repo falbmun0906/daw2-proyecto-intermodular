@@ -1,0 +1,205 @@
+/* =========================
+ * FormSelect Component
+ * ========================= */
+
+@use '../../../../styles/01-tools/mixins' as *;
+
+/* ====================================
+ * Bloque: .form-select
+ * ==================================== */
+
+.form-select {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-2));
+  width: 100%;
+}
+
+/* ====================================
+ * Elemento: Label
+ * ==================================== */
+
+.form-select__label {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-main);
+  line-height: 1.5;
+}
+
+.form-select__required {
+  color: var(--color-error-dark);
+  margin-left: var(--spacing-1);
+}
+
+/* ====================================
+ * Elemento: Wrapper (para posicionar la flecha)
+ * ==================================== */
+
+.form-select__wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ====================================
+ * Elemento: Select
+ * ==================================== */
+
+.form-select__field {
+  width: 100%;
+  padding: var(--spacing-4);
+  padding-right: var(--spacing-10);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  line-height: 1.5;
+  color: var(--color-text-main);
+  background-color: var(--color-neutral-white);
+  border: var(--border-width-medium) solid var(--color-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  appearance: none;
+  transition: border-color var(--transition-base) var(--transition-easing),
+              box-shadow var(--transition-base) var(--transition-easing);
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(242, 181, 69, 0.2);
+  }
+
+  &:disabled {
+    background-color: var(--color-primary-light);
+    color: var(--color-neutral-gray);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* Placeholder style (option disabled selected) */
+  option[disabled][selected] {
+    color: var(--color-neutral-gray);
+  }
+}
+
+/* ====================================
+ * Elemento: Arrow (flecha personalizada)
+ * ==================================== */
+
+.form-select__arrow {
+  position: absolute;
+  right: var(--spacing-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-sm-size);
+  color: var(--color-text-main);
+  pointer-events: none;
+  transition: transform var(--transition-fast) var(--transition-easing);
+}
+
+.form-select__field:focus ~ .form-select__arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* ====================================
+ * Elemento: Help text
+ * ==================================== */
+
+.form-select__help {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-neutral-gray);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ====================================
+ * Elemento: Error message
+ * ==================================== */
+
+.form-select__error {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-error-dark);
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  &::before {
+    content: '⚠';
+    font-size: var(--font-body-size);
+  }
+}
+
+/* ====================================
+ * Elemento: Success message
+ * ==================================== */
+
+.form-select__success {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-success-dark);
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  &::before {
+    content: '✓';
+    font-size: var(--font-body-size);
+  }
+}
+
+/* ====================================
+ * Modificador: Estado de error
+ * ==================================== */
+
+.form-select--error {
+  .form-select__field {
+    border-color: var(--color-error-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
+    }
+  }
+
+  .form-select__arrow {
+    color: var(--color-error-dark);
+  }
+}
+
+/* ====================================
+ * Modificador: Estado de éxito
+ * ==================================== */
+
+.form-select--success {
+  .form-select__field {
+    border-color: var(--color-success-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(112, 168, 0, 0.2);
+    }
+  }
+
+  .form-select__arrow {
+    color: var(--color-success-dark);
+  }
+}
+
+/* ====================================
+ * Modificador: Estado deshabilitado
+ * ==================================== */
+
+.form-select--disabled {
+  .form-select__label {
+    color: var(--color-neutral-gray);
+  }
+
+  .form-select__arrow {
+    color: var(--color-neutral-gray);
+  }
+}
+

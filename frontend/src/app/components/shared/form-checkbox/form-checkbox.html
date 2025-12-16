@@ -1,0 +1,41 @@
+<div class="form-checkbox" [class.form-checkbox--error]="hasError" [class.form-checkbox--disabled]="disabled">
+  <div class="form-checkbox__wrapper">
+    <!-- Checkbox input -->
+    <input
+      type="checkbox"
+      [id]="checkboxId"
+      [name]="name"
+      [required]="required"
+      [disabled]="disabled"
+      [attr.aria-describedby]="ariaDescribedBy"
+      [attr.aria-invalid]="hasError"
+      [attr.aria-required]="required"
+      [(ngModel)]="value"
+      (change)="onCheck($event)"
+      class="form-checkbox__input"
+    />
+
+    <!-- Label -->
+    <label [for]="checkboxId" class="form-checkbox__label">
+      {{ label }}
+      @if (required) {
+        <span class="form-checkbox__required" aria-label="obligatorio">*</span>
+      }
+    </label>
+  </div>
+
+  <!-- Help text -->
+  @if (helpText && !hasError) {
+    <p [id]="checkboxId + '-help'" class="form-checkbox__help">
+      {{ helpText }}
+    </p>
+  }
+
+  <!-- Error message -->
+  @if (hasError && errorMessage) {
+    <p [id]="checkboxId + '-error'" class="form-checkbox__error" role="alert">
+      {{ errorMessage }}
+    </p>
+  }
+</div>
+
