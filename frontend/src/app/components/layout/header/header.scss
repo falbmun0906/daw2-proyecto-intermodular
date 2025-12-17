@@ -12,6 +12,21 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Checkbox del menú hamburguesa oculto en desktop */
+.site-header__nav-toggle {
+  display: none !important;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Label del hamburguesa oculto en desktop */
+.site-header__nav-label {
+  display: none;
+}
+
 /* Logo */
 
 .site-header__logo {
@@ -151,86 +166,96 @@
  * ========================= */
 
 @media (max-width: 767px) {
-  .site-header {
-    position: relative;
-  }
-
+  /* Bloque derecho en fila horizontal */
   .site-header__right {
     flex-direction: row;
     align-items: center;
-    gap: var(--spacing-8);
+    gap: var(--spacing-4);
   }
 
-  /* Ocultar la navegación por defecto en mobile */
+  /* El slider a la derecha */
+  .site-header__theme-toggle {
+    flex-shrink: 0;
+  }
+
+  /* El nav se posiciona relativo para el hamburguesa */
   .site-header__nav {
-    position: fixed;
-    top: 88px;
-    left: 0;
-    right: 0;
-    background-color: var(--color-tertiary-darker);
-    box-shadow: var(--shadow-md);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    z-index: 1000;
+    position: relative;
+    flex-shrink: 0;
   }
 
-  /* Crear el icono hamburguesa con pseudo-elemento */
-  .site-header__nav::before {
-    content: '';
-    position: fixed;
-    top: 30px;
-    right: 80px;
+  /* Checkbox completamente oculto y sin afectar layout */
+  .site-header__nav-toggle {
+    display: none !important;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* Mostrar icono hamburguesa clickeable SOLO en mobile */
+  .site-header__nav-label {
+    display: block !important;
     width: 28px;
     height: 20px;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 50;
     background-image:
       linear-gradient(to bottom,
         var(--color-neutral-white) 0%,
-        var(--color-neutral-white) 20%,
-        transparent 20%,
+        var(--color-neutral-white) 15%,
+        transparent 15%,
         transparent 40%,
         var(--color-neutral-white) 40%,
         var(--color-neutral-white) 60%,
         transparent 60%,
         transparent 80%,
         var(--color-neutral-white) 80%,
-        var(--color-neutral-white) 100%
+        var(--color-neutral-white) 95%
       );
-    transition: opacity 0.3s ease;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
   }
 
-  /* Mostrar menú cuando tiene foco */
-  .site-header__nav:focus-within {
-    max-height: 400px;
-  }
-
-  .site-header__nav:focus-within::before {
-    opacity: 0.5;
-  }
-
-  /* Lista en columna */
-  .site-header__nav-list {
+  /* Vincular el ::before al checkbox - cuando checkbox está checked */
+  .site-header__nav-toggle:checked ~ .site-header__nav-list {
+    display: flex;
+    position: fixed;
+    top: 88px;
+    left: 0;
+    right: 0;
+    background-color: var(--color-tertiary-darker);
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
     flex-direction: column;
     align-items: stretch;
     padding: var(--spacing-8) var(--spacing-16);
     gap: 0;
   }
 
-  /* Links con padding completo */
+  /* Links ocultos por defecto */
+  .site-header__nav-list {
+    display: none;
+  }
+
   .site-header__nav-link {
     display: block;
-    padding: var(--spacing-4) var(--spacing-8);
+    padding: var(--spacing-8) var(--spacing-8);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.05);
     }
   }
+}
 
-  /* El slider se mantiene visible */
-  .site-header__theme-toggle {
-    flex-shrink: 0;
+/* Hacer que el hamburguesa sea label del checkbox */
+@media (max-width: 767px) {
+  .site-header__nav::before {
+    position: relative;
+    z-index: 51;
   }
 }
+
