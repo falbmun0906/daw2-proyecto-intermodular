@@ -16,13 +16,13 @@
   --color-primary-darker: #434642;
 
   /* Secundario */
-  --color-secondary-light: #FEF8EC;
+  --color-secondary-light: #8e6c28;
   --color-secondary-light-hover: #FDF4E3;
   --color-secondary-light-active: #FBE8C5;
   --color-secondary: #F2B545;
   --color-secondary-hover: #DAA33E;
   --color-secondary-active: #C29137;
-  --color-secondary-dark: #F2B545; /* mismo valor que normal según paleta */
+  --color-secondary-dark: #d59828; /* mismo valor que normal según paleta */
   --color-secondary-dark-hover: #916D29;
   --color-secondary-dark-active: #6D511F;
   --color-secondary-darker: #553F18;
@@ -169,8 +169,8 @@
     * Transiciones
     * ========================= */
 
-  --transition-fast: 150ms;
-  --transition-base: 300ms;
-  --transition-slow: 500ms;
+  --transition-fast: 50ms;
+  --transition-base: 150ms;
+  --transition-slow: 300ms;
   --transition-easing: ease-in-out;
 }

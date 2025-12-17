@@ -6,8 +6,24 @@
 
 .style-guide {
   min-height: 100vh;
-  background: var(--bg-body);
+  position: relative;
+  background-color: var(--color-primary);
+  overflow: hidden;
   padding-bottom: var(--spacing-16);
+}
+
+/* Patrón de formas decorativas de fondo (igual que home-page) */
+.style-guide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/main-bg-form.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* =========================
@@ -15,7 +31,9 @@
  * ========================= */
 
 .style-guide__hero {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-tertiary) 100%);
+  position: relative;
+  z-index: 1;
+  background: transparent;
   padding: var(--spacing-12) 0 var(--spacing-8);
   margin-bottom: var(--spacing-12);
 }
@@ -29,7 +47,7 @@
 
 .style-guide__subtitle {
   font-size: var(--font-h4-size);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: var(--spacing-6);
 }
 
@@ -38,14 +56,11 @@
  * ========================= */
 
 .style-guide__nav {
-  background: var(--surface-base);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-6);
-  margin-bottom: var(--spacing-12);
-  box-shadow: var(--shadow-md);
-  position: sticky;
-  top: var(--spacing-4);
+  position: relative;
   z-index: 10;
+  backdrop-filter: blur(10px);
+  margin-bottom: var(--spacing-12);
+  top: var(--spacing-4);
 }
 
 .style-guide__nav-list {
@@ -60,6 +75,7 @@
 .style-guide__nav-list a {
   color: var(--text-primary);
   text-decoration: none;
+  font-size: 1.2rem;
   padding: var(--spacing-2) var(--spacing-4);
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
@@ -68,7 +84,6 @@
 
 .style-guide__nav-list a:hover {
   background: var(--color-secondary-light);
-  color: var(--color-secondary-dark);
 }
 
 /* =========================
@@ -76,19 +91,19 @@
  * ========================= */
 
 .style-guide__section {
-  background: var(--surface-base);
+  position: relative;
+  z-index: 1;
   border-radius: var(--radius-lg);
+  border: dashed 1px;
+  border-color: var(--color-primary-dark);
   padding: var(--spacing-8);
   margin-bottom: var(--spacing-8);
-  box-shadow: var(--shadow-md);
 }
 
 .style-guide__section-title {
   font-size: var(--font-h2-size);
   color: var(--text-primary);
   margin-bottom: var(--spacing-6);
-  padding-bottom: var(--spacing-4);
-  border-bottom: 2px solid var(--color-primary);
 }
 
 .style-guide__subsection {
@@ -151,7 +166,7 @@
  * ========================= */
 
 .typography-demo > * {
-  margin-bottom: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
 }
 
 .typography-demo h1 {
@@ -177,9 +192,8 @@
   gap: var(--spacing-4);
   align-items: center;
   padding: var(--spacing-6);
-  background: var(--bg-primary);
   border-radius: var(--radius-md);
-  border: 1px dashed var(--border-color-primary);
+  border: 1px dashed var(--color-primary-dark);
 }
 
 .component-demo--vertical {
@@ -210,7 +224,6 @@
   padding: var(--spacing-6);
   background: var(--bg-primary);
   border-radius: var(--radius-md);
-  border: 1px dashed var(--border-color-primary);
 }
 
 /* =========================
@@ -256,6 +269,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-4);
+  border: 1px dashed var(--color-primary-dark);
+  padding: var(--spacing-6);
 }
 
 .spacing-box {
@@ -279,6 +294,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--spacing-6);
+  border: 1px dashed var(--color-primary-dark);
+  padding: var(--spacing-6);
 }
 
 .shadow-box {
@@ -298,6 +315,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--spacing-6);
+  border: 1px dashed var(--color-primary-dark);
+  padding: var(--spacing-6);
 }
 
 .radius-box {
@@ -353,4 +372,3 @@
     align-items: stretch;
   }
 }
-

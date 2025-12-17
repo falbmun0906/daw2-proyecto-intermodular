@@ -31,13 +31,13 @@
     background: transparent;
     border: none;
     color: var(--color-neutral-white);
-    transition: color var(--transition-base) var(--transition-easing);
+    transition: color var(--transition-base) var(--transition-fast);
 
     &:hover {
-      color: var(--color-secondary);
+      color: var(--color-primary-dark-active);
     }
 
-    @include focus-ring(var(--color-secondary));
+    @include focus-ring(var(--color-primary-dark-active));
   }
 }
 
@@ -74,10 +74,10 @@
 
     &:hover {
       background-color: rgba(144, 151, 142, 0.6);
-      color: var(--color-secondary);
+      color: var(--color-primary-dark-active);
     }
 
-    @include focus-ring(var(--color-secondary));
+    @include focus-ring(var(--color-primary-dark-active));
   }
 }
 

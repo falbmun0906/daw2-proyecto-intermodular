@@ -2,7 +2,7 @@
  * Tabs Component
  * ========================= */
 
-@use '../../../../styles/01-tools/mixins.scss' as *;
+@use '../../../../styles/01-tools/mixins' as *;
 
 .tabs {
   width: 100%;
@@ -11,14 +11,13 @@
 /* Lista de pestañas */
 .tabs__list {
   @include flex-layout(row, flex-start, center, 0);
-  border-bottom: var(--border-width-thin) solid var(--border-color-primary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.28);
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   position: relative;
 
-  /* Ocultar scrollbar en webkit */
   &::-webkit-scrollbar {
     height: 3px;
   }
@@ -28,7 +27,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--border-color-primary);
+    background: rgba(0, 0, 0, 0.35);
     border-radius: var(--radius-sm);
   }
 }
@@ -43,17 +42,18 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
   font-weight: var(--font-weight-medium);
-  color: var(--text-secondary);
+  color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
   white-space: nowrap;
   position: relative;
-  transition: color var(--transition-base) var(--transition-easing),
-              border-color var(--transition-base) var(--transition-easing),
-              background-color var(--transition-base) var(--transition-easing);
+  transition:
+    color var(--transition-base) var(--transition-easing),
+    border-color var(--transition-base) var(--transition-easing),
+    background-color var(--transition-base) var(--transition-easing);
 
   &:hover:not(.tabs__button--disabled) {
-    color: var(--text-primary);
-    background-color: var(--bg-primary);
+    color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(255, 255, 255, 0.35); /* visible sobre C0C9BD */
   }
 
   @include focus-ring(var(--border-color-focus));
@@ -66,33 +66,33 @@
 
 /* Pestaña activa */
 .tabs__button--active {
-  color: var(--text-primary);
+  color: rgba(0, 0, 0, 0.95);
   font-weight: var(--font-weight-semibold);
   border-bottom-color: var(--color-secondary);
 
   &:hover {
-    color: var(--text-primary);
+    color: rgba(0, 0, 0, 0.95);
   }
 }
 
 /* Pestaña deshabilitada */
 .tabs__button--disabled {
-  color: var(--text-secondary);
-  opacity: 0.5;
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 0.6;
   cursor: not-allowed;
 
   &:hover {
-    color: var(--text-secondary);
+    color: rgba(0, 0, 0, 0.45);
     background-color: transparent;
   }
 }
 
-/* Icono de pestaña */
+/* Icono de pestaña (sin emojis, pensado para SVG/íconos propios) */
 .tabs__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-h4-size);
+  font-size: var(--font-body-size);
   line-height: 1;
 }
 
@@ -124,8 +124,9 @@
   left: 0;
   height: 2px;
   background-color: var(--color-secondary);
-  transition: transform var(--transition-base) var(--transition-easing),
-              width var(--transition-base) var(--transition-easing);
+  transition:
+    transform var(--transition-base) var(--transition-easing),
+    width var(--transition-base) var(--transition-easing);
   pointer-events: none;
 }
 
@@ -138,13 +139,13 @@
   }
 }
 
-/* Responsive: tabs verticales en mobile (opcional) */
+/* Responsive: tabs verticales en mobile */
 @media (max-width: 640px) {
   .tabs--vertical {
     .tabs__list {
       flex-direction: column;
       border-bottom: none;
-      border-right: var(--border-width-thin) solid var(--border-color-primary);
+      border-right: 1px solid rgba(0, 0, 0, 0.28);
     }
 
     .tabs__button {
@@ -159,4 +160,3 @@
     }
   }
 }
-
