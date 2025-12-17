@@ -19,8 +19,10 @@
         <li><a href="#botones">Botones</a></li>
         <li><a href="#cards">Cards</a></li>
         <li><a href="#formularios">Formularios</a></li>
+        <li><a href="#formarray">FormArray</a></li>
         <li><a href="#navegacion">Navegación</a></li>
         <li><a href="#feedback">Feedback</a></li>
+        <li><a href="#interactividad">Interactividad</a></li>
         <li><a href="#utilidades">Utilidades</a></li>
       </ul>
     </nav>
@@ -428,6 +430,20 @@
       </div>
     </section>
 
+    <!-- SECCIÓN: FORMARRAY (Formularios Dinámicos) -->
+    <section id="formarray" class="style-guide__section">
+      <h2 class="style-guide__section-title">FormArray - Campos Dinámicos</h2>
+      <p class="style-guide__section-description">
+        Formulario de contacto con campos dinámicos que demuestran el uso de FormArray
+        para añadir/eliminar teléfonos y direcciones en tiempo real.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Formulario de Contacto con FormArray</h3>
+        <app-contact-form></app-contact-form>
+      </div>
+    </section>
+
     <!-- SECCIÓN: NAVEGACIÓN -->
     <section id="navegacion" class="style-guide__section">
       <h2 class="style-guide__section-title">Navegación</h2>
@@ -602,6 +618,88 @@
               </app-notification>
             }
           }
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: INTERACTIVIDAD (FASE 2) -->
+    <section id="interactividad" class="style-guide__section">
+      <h2 class="style-guide__section-title">Componentes Interactivos</h2>
+      <p class="style-guide__section-description">
+        Componentes que proporcionan feedback visual y mejoran la experiencia de usuario.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tooltips</h3>
+        <p class="style-guide__description">
+          Los tooltips muestran información adicional al hacer hover o focus sobre un elemento.
+        </p>
+        <div class="component-demo">
+          <app-tooltip text="Este es un tooltip superior" position="top">
+            <app-button variant="secondary">Hover arriba</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip a la derecha" position="right">
+            <app-button variant="secondary">Hover derecha</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip inferior" position="bottom">
+            <app-button variant="secondary">Hover abajo</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip a la izquierda" position="left">
+            <app-button variant="secondary">Hover izquierda</app-button>
+          </app-tooltip>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Toasts (Notificaciones globales)</h3>
+        <p class="style-guide__description">
+          Los toasts son notificaciones temporales que aparecen en la esquina de la pantalla.
+          Se auto-eliminan después de un tiempo configurable.
+        </p>
+        <div class="component-demo">
+          <app-button variant="primary" (buttonClick)="showToast('success')">
+            Toast Success
+          </app-button>
+          <app-button variant="danger" (buttonClick)="showToast('error')">
+            Toast Error
+          </app-button>
+          <app-button (buttonClick)="showToast('warning')">
+            Toast Warning
+          </app-button>
+          <app-button variant="secondary" (buttonClick)="showToast('info')">
+            Toast Info
+          </app-button>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Spinner / Loading Global</h3>
+        <p class="style-guide__description">
+          El spinner overlay se muestra durante operaciones asíncronas para indicar que la aplicación está procesando.
+        </p>
+        <div class="component-demo">
+          <app-button variant="primary" (buttonClick)="showSpinner()">
+            Mostrar Spinner (2s)
+          </app-button>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Theme Switcher</h3>
+        <p class="style-guide__description">
+          El toggle de tema está disponible en el header de la aplicación. Permite cambiar entre tema claro y oscuro.
+          La preferencia se persiste en localStorage.
+        </p>
+        <div class="component-demo component-demo--info">
+          <div class="info-box">
+            <span class="info-box__icon">💡</span>
+            <span class="info-box__text">
+              Prueba el switch de tema en el header (esquina superior derecha)
+            </span>
+          </div>
         </div>
       </div>
     </section>

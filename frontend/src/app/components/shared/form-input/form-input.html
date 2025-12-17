@@ -29,6 +29,8 @@
       <input
         class="form-input__field"
         [class.form-input__field--with-icon]="icon"
+        [class.form-input__field--focused]="isFocused"
+        [class.form-input__field--hovered]="isHovered"
         [id]="inputId"
         [type]="type"
         [name]="name"
@@ -39,11 +41,18 @@
         [attr.aria-invalid]="hasError"
         [(ngModel)]="value"
         (blur)="onBlur()"
+        (focus)="onFocus()"
         (input)="onInput($event)"
+        (keydown)="onKeyDown($event)"
+        (keyup)="onKeyUp($event)"
+        (mouseenter)="onMouseEnter($event)"
+        (mouseleave)="onMouseLeave($event)"
       />
     } @else {
       <textarea
         class="form-input__field form-input__field--textarea"
+        [class.form-input__field--focused]="isFocused"
+        [class.form-input__field--hovered]="isHovered"
         [id]="inputId"
         [name]="name"
         [placeholder]="placeholder"
@@ -53,7 +62,12 @@
         [attr.aria-invalid]="hasError"
         [(ngModel)]="value"
         (blur)="onBlur()"
+        (focus)="onFocus()"
         (input)="onInput($event)"
+        (keydown)="onKeyDown($event)"
+        (keyup)="onKeyUp($event)"
+        (mouseenter)="onMouseEnter($event)"
+        (mouseleave)="onMouseLeave($event)"
       ></textarea>
     }
   </div>

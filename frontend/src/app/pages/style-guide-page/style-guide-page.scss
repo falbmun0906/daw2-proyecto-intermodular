@@ -7,9 +7,10 @@
 .style-guide {
   min-height: 100vh;
   position: relative;
-  background-color: var(--color-primary);
+  background-color: var(--bg-primary);
   overflow: hidden;
   padding-bottom: var(--spacing-16);
+  transition: background-color 0.3s ease;
 }
 
 /* Patrón de formas decorativas de fondo (igual que home-page) */
@@ -21,9 +22,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  opacity: 0.8;
+  opacity: var(--svg-overlay-opacity);
   pointer-events: none;
   z-index: 0;
+  filter: var(--svg-overlay-color);
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 /* =========================
@@ -201,6 +204,50 @@
   align-items: stretch;
 }
 
+.component-demo--info {
+  background-color: var(--color-info-light, #e3f2fd);
+  border-color: var(--color-info, #2196f3);
+  border-style: solid;
+}
+
+/* =========================
+ * Info Box (para notas)
+ * ========================= */
+
+.info-box {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+
+  &__icon {
+    font-size: 1.5rem;
+  }
+
+  &__text {
+    color: var(--text-primary);
+    font-size: var(--font-body-size);
+  }
+}
+
+/* =========================
+ * Section Description
+ * ========================= */
+
+.style-guide__description {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-4);
+  font-size: var(--font-body-size);
+  opacity: 0.9;
+}
+
+.style-guide__section-description {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-6);
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
 /* =========================
  * Card Grid
  * ========================= */
@@ -222,7 +269,7 @@
   flex-direction: column;
   gap: var(--spacing-4);
   padding: var(--spacing-6);
-  background: var(--bg-primary);
+  background: var(--color-neutral-white);
   border-radius: var(--radius-md);
 }
 

@@ -15,23 +15,40 @@
     <!-- Theme switch -->
     <div class="site-header__theme-toggle">
       <label class="site-header__theme-switch">
-        <input type="checkbox" aria-label="Cambiar tema" />
+        <input
+          type="checkbox"
+          [checked]="isDarkTheme()"
+          (change)="onThemeChange($event)"
+          aria-label="Cambiar tema"
+        />
         <span class="site-header__slider"></span>
       </label>
     </div>
 
     <!-- Navegación -->
     <nav class="site-header__nav" aria-label="Navegación principal">
-      <!-- Checkbox y label para control del menú hamburguesa -->
-      <input type="checkbox" id="nav-toggle" class="site-header__nav-toggle" aria-label="Toggle navegación" />
-      <label for="nav-toggle" class="site-header__nav-label"></label>
-      <ul class="site-header__nav-list">
-        <li><a class="site-header__nav-link" routerLink="/">Inicio</a></li>
-        <li><a class="site-header__nav-link" routerLink="/style-guide">Style Guide</a></li>
-        <li><a class="site-header__nav-link" routerLink="/recetas">Recetas</a></li>
-        <li><a class="site-header__nav-link" routerLink="/despensa">Mi despensa</a></li>
+      <!-- Botón hamburguesa controlado por Angular -->
+      <button
+        class="site-header__nav-toggle-btn"
+        [class.site-header__nav-toggle-btn--open]="isMenuOpen"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="isMenuOpen"
+        aria-label="Toggle navegación"
+      >
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+        <span class="site-header__hamburger-line"></span>
+      </button>
+
+      <ul
+        class="site-header__nav-list"
+        [class.site-header__nav-list--open]="isMenuOpen"
+      >
+        <li><a class="site-header__nav-link" routerLink="/" (click)="closeMenu()">Inicio</a></li>
+        <li><a class="site-header__nav-link" routerLink="/style-guide" (click)="closeMenu()">Style Guide</a></li>
+        <li><a class="site-header__nav-link" routerLink="/recetas" (click)="closeMenu()">Recetas</a></li>
+        <li><a class="site-header__nav-link" routerLink="/despensa" (click)="closeMenu()">Mi despensa</a></li>
       </ul>
     </nav>
   </section>
 </header>
-

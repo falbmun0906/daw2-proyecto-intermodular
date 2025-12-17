@@ -1,0 +1,214 @@
+<form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <h2 class="contact-form__title">Formulario de Contacto</h2>
+  <p class="contact-form__subtitle">Ejemplo de FormArray con campos dinámicos</p>
+
+  <!-- Datos básicos -->
+  <fieldset class="contact-form__fieldset">
+    <legend class="contact-form__legend">Datos personales</legend>
+
+    <div class="contact-form__field">
+      <label class="contact-form__label" for="nombre">
+        Nombre <span class="contact-form__required">*</span>
+      </label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        class="contact-form__input"
+        [class.contact-form__input--error]="nombre?.invalid && nombre?.touched"
+        [class.contact-form__input--valid]="nombre?.valid && nombre?.touched"
+        placeholder="Tu nombre"
+      />
+      @if (nombre?.invalid && nombre?.touched) {
+        <span class="contact-form__error">{{ getErrorMessage('nombre') }}</span>
+      }
+    </div>
+
+    <div class="contact-form__field">
+      <label class="contact-form__label" for="email">
+        Email <span class="contact-form__required">*</span>
+      </label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="contact-form__input"
+        [class.contact-form__input--error]="email?.invalid && email?.touched"
+        [class.contact-form__input--valid]="email?.valid && email?.touched"
+        placeholder="tu@email.com"
+      />
+      @if (email?.invalid && email?.touched) {
+        <span class="contact-form__error">{{ getErrorMessage('email') }}</span>
+      }
+    </div>
+  </fieldset>
+
+  <!-- FormArray: Teléfonos -->
+  <fieldset class="contact-form__fieldset">
+    <legend class="contact-form__legend">
+      Teléfonos
+      <button type="button" class="contact-form__add-btn" (click)="addTelefono()">
+        + Añadir teléfono
+      </button>
+    </legend>
+
+    <div formArrayName="telefonos">
+      @for (telefonoGroup of telefonos.controls; track $index; let i = $index) {
+        <div class="contact-form__array-item" [formGroupName]="i">
+          <div class="contact-form__array-row">
+            <div class="contact-form__field contact-form__field--flex">
+              <input
+                type="tel"
+                formControlName="numero"
+                class="contact-form__input"
+                [class.contact-form__input--error]="hasArrayControlError('telefonos', i, 'numero')"
+                placeholder="612345678"
+              />
+              @if (hasArrayControlError('telefonos', i, 'numero')) {
+                <span class="contact-form__error">
+                  {{ getArrayControlError('telefonos', i, 'numero') }}
+                </span>
+              }
+            </div>
+
+            <select formControlName="tipo" class="contact-form__select">
+              <option value="movil">Móvil</option>
+              <option value="fijo">Fijo</option>
+              <option value="trabajo">Trabajo</option>
+            </select>
+
+            <button
+              type="button"
+              class="contact-form__remove-btn"
+              (click)="removeTelefono(i)"
+              [disabled]="telefonos.length === 1"
+              title="Eliminar teléfono"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </fieldset>
+
+  <!-- FormArray: Direcciones -->
+  <fieldset class="contact-form__fieldset">
+    <legend class="contact-form__legend">
+      Direcciones
+      <button type="button" class="contact-form__add-btn" (click)="addDireccion()">
+        + Añadir dirección
+      </button>
+    </legend>
+
+    <div formArrayName="direcciones">
+      @for (direccionGroup of direcciones.controls; track $index; let i = $index) {
+        <div class="contact-form__array-item contact-form__array-item--address" [formGroupName]="i">
+          <div class="contact-form__array-header">
+            <span class="contact-form__array-label">Dirección {{ i + 1 }}</span>
+            <button
+              type="button"
+              class="contact-form__remove-btn"
+              (click)="removeDireccion(i)"
+              [disabled]="direcciones.length === 1"
+              title="Eliminar dirección"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="contact-form__array-grid">
+            <div class="contact-form__field">
+              <label class="contact-form__label">Calle</label>
+              <input
+                type="text"
+                formControlName="calle"
+                class="contact-form__input"
+                [class.contact-form__input--error]="hasArrayControlError('direcciones', i, 'calle')"
+                placeholder="Calle y número"
+              />
+              @if (hasArrayControlError('direcciones', i, 'calle')) {
+                <span class="contact-form__error">Campo obligatorio</span>
+              }
+            </div>
+
+            <div class="contact-form__field">
+              <label class="contact-form__label">Ciudad</label>
+              <input
+                type="text"
+                formControlName="ciudad"
+                class="contact-form__input"
+                [class.contact-form__input--error]="hasArrayControlError('direcciones', i, 'ciudad')"
+                placeholder="Ciudad"
+              />
+              @if (hasArrayControlError('direcciones', i, 'ciudad')) {
+                <span class="contact-form__error">Campo obligatorio</span>
+              }
+            </div>
+
+            <div class="contact-form__field">
+              <label class="contact-form__label">Código Postal</label>
+              <input
+                type="text"
+                formControlName="codigoPostal"
+                class="contact-form__input"
+                [class.contact-form__input--error]="hasArrayControlError('direcciones', i, 'codigoPostal')"
+                placeholder="28001"
+                maxlength="5"
+              />
+              @if (hasArrayControlError('direcciones', i, 'codigoPostal')) {
+                <span class="contact-form__error">
+                  {{ getArrayControlError('direcciones', i, 'codigoPostal') }}
+                </span>
+              }
+            </div>
+
+            <div class="contact-form__field">
+              <label class="contact-form__label">Tipo</label>
+              <select formControlName="tipo" class="contact-form__select">
+                <option value="principal">Principal</option>
+                <option value="envio">Envío</option>
+                <option value="facturacion">Facturación</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </fieldset>
+
+  <!-- Mensaje -->
+  <fieldset class="contact-form__fieldset">
+    <legend class="contact-form__legend">Mensaje</legend>
+
+    <div class="contact-form__field">
+      <label class="contact-form__label" for="mensaje">
+        Tu mensaje <span class="contact-form__required">*</span>
+      </label>
+      <textarea
+        id="mensaje"
+        formControlName="mensaje"
+        class="contact-form__textarea"
+        [class.contact-form__input--error]="mensaje?.invalid && mensaje?.touched"
+        [class.contact-form__input--valid]="mensaje?.valid && mensaje?.touched"
+        placeholder="Escribe tu mensaje aquí..."
+        rows="4"
+      ></textarea>
+      @if (mensaje?.invalid && mensaje?.touched) {
+        <span class="contact-form__error">{{ getErrorMessage('mensaje') }}</span>
+      }
+    </div>
+  </fieldset>
+
+  <!-- Submit -->
+  <div class="contact-form__actions">
+    <button
+      type="submit"
+      class="contact-form__submit"
+      [disabled]="contactForm.invalid || isSubmitting"
+    >
+      {{ isSubmitting ? 'Enviando...' : 'Enviar mensaje' }}
+    </button>
+  </div>
+</form>
+

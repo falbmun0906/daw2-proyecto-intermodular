@@ -16,6 +16,10 @@ import { Modal } from '../../components/shared/modal/modal';
 import { Notification } from '../../components/shared/notification/notification';
 import { Pagination } from '../../components/shared/pagination/pagination';
 import { Tabs, Tab } from '../../components/shared/tabs/tabs';
+import { Tooltip } from '../../components/shared/tooltip/tooltip';
+import { ContactForm } from '../../components/shared/contact-form/contact-form';
+import { ToastService } from '../../services/toast.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-style-guide-page',
@@ -37,7 +41,9 @@ import { Tabs, Tab } from '../../components/shared/tabs/tabs';
     Modal,
     Notification,
     Pagination,
-    Tabs
+    Tabs,
+    Tooltip,
+    ContactForm
   ],
   templateUrl: './style-guide-page.html',
   styleUrl: './style-guide-page.scss'
@@ -175,6 +181,33 @@ export class StyleGuidePage {
       this.emailError = true;
       this.emailSuccess = false;
     }
+  }
+
+  // === NUEVOS COMPONENTES FASE 2 ===
+
+  constructor(
+    private toastService: ToastService,
+    private loadingService: LoadingService
+  ) {}
+
+  // Toast methods
+  showToast(type: 'success' | 'error' | 'info' | 'warning'): void {
+    const messages = {
+      success: '¡Operación completada con éxito!',
+      error: 'Ha ocurrido un error inesperado',
+      info: 'Esta es una notificación informativa',
+      warning: 'Atención: esta acción requiere confirmación'
+    };
+    this.toastService[type](messages[type]);
+  }
+
+  // Loading/Spinner methods
+  showSpinner(): void {
+    this.loadingService.show();
+    setTimeout(() => {
+      this.loadingService.hide();
+      this.toastService.success('Carga completada');
+    }, 2000);
   }
 }
 

@@ -5,8 +5,9 @@ body {
   font-family: var(--font-family-primary), 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: var(--font-body-size);
   line-height: var(--font-body-line-height);
-  color: var(--color-text-main);
-  background-color: var(--color-neutral-white);
+  color: var(--text-primary);
+  background-color: var(--bg-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Titulares */
@@ -15,13 +16,13 @@ h1 {
   font-size: var(--font-h1-size);
   line-height: var(--font-h1-line-height);
   font-weight: var(--font-h1-weight);
-  color: var(--color-text-main);
+  color: var(--text-primary);
 }
 
 h2, h3, h4 {
   font-family: var(--font-family-primary), 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Poppins */
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-main);
+  color: var(--text-primary);
 }
 
 h2 {

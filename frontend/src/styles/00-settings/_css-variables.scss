@@ -65,6 +65,12 @@
   --surface-base: var(--color-neutral-white);
   --surface-raised: var(--color-neutral-white);
   --surface-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Variables de tema (default: claro) */
+  --bg-footer-start: var(--color-tertiary-darker);
+  --bg-footer-end: #00ffff;
+  --svg-overlay-opacity: 0.8;
+  --svg-overlay-color: rgba(242, 181, 69, 1);
 }
 
 /* =========================
@@ -100,8 +106,10 @@
   --bg-primary: var(--color-primary-darker);
   --bg-secondary: var(--color-text-main);
   --bg-tertiary: var(--color-tertiary-darker);
-  --bg-dark: var(--color-text-main);
+  --bg-dark: #1a1a1a;
   --bg-body: var(--color-primary-darker);
+  --bg-footer-start: #1a1a1a;
+  --bg-footer-end: #ff0000;
 
   --text-primary: var(--color-neutral-white);
   --text-secondary: var(--color-primary-light);
@@ -112,15 +120,20 @@
 
   --surface-base: var(--color-text-main);
   --surface-raised: var(--color-primary-dark);
+
+  --svg-overlay-opacity: 0.3;
+  --svg-overlay-color: rgba(67, 70, 66, 0.6);
 }
 
 /* Clase para forzar tema claro */
 .light-theme {
-  --bg-primary: var(--color-primary-light);
+  --bg-primary: var(--color-primary);
   --bg-secondary: var(--color-neutral-white);
   --bg-tertiary: var(--color-tertiary-light);
-  --bg-dark: var(--color-primary-dark);
+  --bg-dark: var(--color-tertiary-darker);
   --bg-body: var(--color-primary-light);
+  --bg-footer-start: var(--color-tertiary-darker);
+  --bg-footer-end: #718078;
 
   --text-primary: var(--color-text-main);
   --text-secondary: var(--color-neutral-gray);
@@ -131,5 +144,8 @@
 
   --surface-base: var(--color-neutral-white);
   --surface-raised: var(--color-neutral-white);
+
+  --svg-overlay-opacity: 0.8;
+  --svg-overlay-color: rgba(242, 181, 69, 1);
 }
 

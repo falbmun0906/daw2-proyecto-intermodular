@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Button } from '../../components/shared/button/button';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [RouterModule, Button],
+  imports: [RouterModule],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss'
 })

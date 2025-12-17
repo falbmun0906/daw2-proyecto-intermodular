@@ -1,153 +1,129 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FormInput } from '../form-input/form-input';
+import { passwordStrength, passwordMatch, telefono } from '../../../validators/custom.validators';
+import { ValidationService } from '../../../services/validation.service';
+import { ToastService } from '../../../services/toast.service';
+import { LoadingService } from '../../../services/loading.service';
 
-interface RegisterFormData {
-  nombre: string;
-  apellido: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  newsletter: boolean;
-}
-
+/**
+ * RegisterForm Component
+ * Formulario de registro con validación reactiva completa.
+ * Implementa validadores síncronos, personalizados y asíncronos.
+ */
 @Component({
   selector: 'app-register-form',
-  imports: [CommonModule, FormsModule, RouterModule, FormInput],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './register-form.html',
   styleUrl: './register-form.scss',
 })
-export class RegisterForm {
-  @Output() submitForm = new EventEmitter<RegisterFormData>();
+export class RegisterForm implements OnInit {
+  @Output() submitForm = new EventEmitter<any>();
 
-  formData: RegisterFormData = {
-    nombre: '',
-    apellido: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    newsletter: false
-  };
+  registerForm!: FormGroup;
+  isSubmitting = false;
 
-  nombreError: boolean = false;
-  nombreErrorMessage: string = '';
-  apellidoError: boolean = false;
-  apellidoErrorMessage: string = '';
-  emailError: boolean = false;
-  emailErrorMessage: string = '';
-  passwordError: boolean = false;
-  passwordErrorMessage: string = '';
-  confirmPasswordError: boolean = false;
-  confirmPasswordErrorMessage: string = '';
-  generalError: boolean = false;
-  generalErrorMessage: string = '';
-  isSubmitting: boolean = false;
+  constructor(
+    private fb: FormBuilder,
+    private validationService: ValidationService,
+    private toastService: ToastService,
+    private loadingService: LoadingService
+  ) {}
 
-  validateNombre(): void {
-    if (!this.formData.nombre) {
-      this.nombreError = true;
-      this.nombreErrorMessage = 'El nombre es obligatorio';
-    } else if (this.formData.nombre.length < 2) {
-      this.nombreError = true;
-      this.nombreErrorMessage = 'El nombre debe tener al menos 2 caracteres';
-    } else {
-      this.nombreError = false;
-      this.nombreErrorMessage = '';
-    }
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      apellido: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [this.validationService.emailUniqueValidator()],
+        updateOn: 'blur'
+      }],
+      telefono: ['', [telefono()]],
+      password: ['', [Validators.required, passwordStrength()]],
+      confirmPassword: ['', [Validators.required]],
+      newsletter: [false]
+    }, {
+      validators: [passwordMatch('password', 'confirmPassword')]
+    });
   }
 
-  validateApellido(): void {
-    if (!this.formData.apellido) {
-      this.apellidoError = true;
-      this.apellidoErrorMessage = 'El apellido es obligatorio';
-    } else if (this.formData.apellido.length < 2) {
-      this.apellidoError = true;
-      this.apellidoErrorMessage = 'El apellido debe tener al menos 2 caracteres';
-    } else {
-      this.apellidoError = false;
-      this.apellidoErrorMessage = '';
-    }
+  // Getters para acceso fácil a los controles
+  get nombre() { return this.registerForm.get('nombre'); }
+  get apellido() { return this.registerForm.get('apellido'); }
+  get email() { return this.registerForm.get('email'); }
+  get telefonoControl() { return this.registerForm.get('telefono'); }
+  get password() { return this.registerForm.get('password'); }
+  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
+
+  /**
+   * Obtiene mensaje de error para un control
+   */
+  getErrorMessage(controlName: string): string {
+    const control = this.registerForm.get(controlName);
+    if (!control || !control.errors || !control.touched) return '';
+
+    const errors = control.errors;
+
+    if (errors['required']) return 'Este campo es obligatorio';
+    if (errors['minlength']) return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+    if (errors['email']) return 'Email inválido';
+    if (errors['emailTaken']) return 'Este email ya está registrado';
+    if (errors['invalidTelefono']) return 'Teléfono inválido (ej: 612345678)';
+    if (errors['noUppercase']) return 'Debe contener mayúsculas';
+    if (errors['noLowercase']) return 'Debe contener minúsculas';
+    if (errors['noNumber']) return 'Debe contener números';
+    if (errors['noSpecial']) return 'Debe contener caracteres especiales (!@#$...)';
+    if (errors['minLength']) return 'Mínimo 8 caracteres';
+
+    return 'Campo inválido';
   }
 
-  validateEmail(): void {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  /**
+   * Obtiene errores de contraseña para mostrar lista
+   */
+  getPasswordErrors(): string[] {
+    const errors = this.password?.errors;
+    if (!errors) return [];
 
-    if (!this.formData.email) {
-      this.emailError = true;
-      this.emailErrorMessage = 'El email es obligatorio';
-    } else if (!emailPattern.test(this.formData.email)) {
-      this.emailError = true;
-      this.emailErrorMessage = 'El formato del email no es válido';
-    } else {
-      this.emailError = false;
-      this.emailErrorMessage = '';
-    }
+    const messages: string[] = [];
+    if (errors['noUppercase']) messages.push('Mayúsculas');
+    if (errors['noLowercase']) messages.push('Minúsculas');
+    if (errors['noNumber']) messages.push('Números');
+    if (errors['noSpecial']) messages.push('Caracteres especiales');
+    if (errors['minLength']) messages.push('8+ caracteres');
+
+    return messages;
   }
 
-  validatePassword(): void {
-    if (!this.formData.password) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'La contraseña es obligatoria';
-    } else if (this.formData.password.length < 8) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'La contraseña debe tener al menos 8 caracteres';
-    } else {
-      this.passwordError = false;
-      this.passwordErrorMessage = '';
-    }
-
-    // Revalidar confirmación si ya hay algo escrito
-    if (this.formData.confirmPassword) {
-      this.validateConfirmPassword();
-    }
+  /**
+   * Verifica si hay error de contraseñas no coincidentes
+   */
+  hasPasswordMismatch(): boolean {
+    return this.registerForm.hasError('mismatch') &&
+           this.confirmPassword?.touched === true;
   }
 
-  validateConfirmPassword(): void {
-    if (!this.formData.confirmPassword) {
-      this.confirmPasswordError = true;
-      this.confirmPasswordErrorMessage = 'Debes confirmar la contraseña';
-    } else if (this.formData.password !== this.formData.confirmPassword) {
-      this.confirmPasswordError = true;
-      this.confirmPasswordErrorMessage = 'Las contraseñas no coinciden';
-    } else {
-      this.confirmPasswordError = false;
-      this.confirmPasswordErrorMessage = '';
-    }
-  }
-
+  /**
+   * Envía el formulario
+   */
   onSubmit(): void {
-    // Validar todos los campos
-    this.validateNombre();
-    this.validateApellido();
-    this.validateEmail();
-    this.validatePassword();
-    this.validateConfirmPassword();
-
-    // Verificar si hay errores
-    if (
-      this.nombreError ||
-      this.apellidoError ||
-      this.emailError ||
-      this.passwordError ||
-      this.confirmPasswordError
-    ) {
-      this.generalError = true;
-      this.generalErrorMessage = 'Por favor, corrige los errores en el formulario';
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      this.toastService.error('Por favor, corrige los errores del formulario');
       return;
     }
 
     this.isSubmitting = true;
-    this.generalError = false;
+    this.loadingService.show();
 
-    // Emitir el evento con los datos del formulario
-    this.submitForm.emit(this.formData);
-
-    // Simular proceso de envío
+    // Simular envío
     setTimeout(() => {
       this.isSubmitting = false;
-    }, 1000);
+      this.loadingService.hide();
+      this.toastService.success('Registro completado correctamente');
+      this.submitForm.emit(this.registerForm.value);
+    }, 1500);
   }
 }
-

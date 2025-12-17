@@ -1,90 +1,104 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FormInput } from '../form-input/form-input';
+import { ToastService } from '../../../services/toast.service';
+import { LoadingService } from '../../../services/loading.service';
 
-interface LoginFormData {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
-
+/**
+ * LoginForm Component
+ * Formulario de login con validación reactiva.
+ * Implementa validadores síncronos y feedback visual.
+ */
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule, FormsModule, RouterModule, FormInput],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
-export class LoginForm {
-  @Output() submitForm = new EventEmitter<LoginFormData>();
+export class LoginForm implements OnInit {
+  @Output() submitForm = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
 
-  formData: LoginFormData = {
-    email: '',
-    password: '',
-    rememberMe: false
-  };
+  loginForm!: FormGroup;
+  isSubmitting = false;
+  generalError = '';
 
-  emailError: boolean = false;
-  emailErrorMessage: string = '';
-  passwordError: boolean = false;
-  passwordErrorMessage: string = '';
-  generalError: boolean = false;
-  generalErrorMessage: string = '';
-  isSubmitting: boolean = false;
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private loadingService: LoadingService
+  ) {}
 
-  validateEmail(): void {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!this.formData.email) {
-      this.emailError = true;
-      this.emailErrorMessage = 'El email es obligatorio';
-    } else if (!emailPattern.test(this.formData.email)) {
-      this.emailError = true;
-      this.emailErrorMessage = 'El formato del email no es válido';
-    } else {
-      this.emailError = false;
-      this.emailErrorMessage = '';
-    }
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      rememberMe: [false]
+    });
   }
 
-  validatePassword(): void {
-    if (!this.formData.password) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'La contraseña es obligatoria';
-    } else if (this.formData.password.length < 8) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'La contraseña debe tener al menos 8 caracteres';
-    } else {
-      this.passwordError = false;
-      this.passwordErrorMessage = '';
-    }
+  // Getters para acceso fácil a los controles
+  get email() { return this.loginForm.get('email'); }
+  get password() { return this.loginForm.get('password'); }
+
+  /**
+   * Obtiene mensaje de error para un control
+   */
+  getErrorMessage(controlName: string): string {
+    const control = this.loginForm.get(controlName);
+    if (!control || !control.errors || !control.touched) return '';
+
+    const errors = control.errors;
+
+    if (errors['required']) return 'Este campo es obligatorio';
+    if (errors['email']) return 'Email inválido';
+    if (errors['minlength']) return `Mínimo ${errors['minlength'].requiredLength} caracteres`;
+
+    return 'Campo inválido';
   }
 
-  onSubmit(): void {
-    this.validateEmail();
-    this.validatePassword();
-
-    if (!this.emailError && !this.passwordError) {
-      this.isSubmitting = true;
-      this.generalError = false;
-
-      // Emitir el evento con los datos del formulario
-      this.submitForm.emit(this.formData);
-
-      // Simular proceso de login
-      setTimeout(() => {
-        this.isSubmitting = false;
-      }, 1000);
-    } else {
-      this.generalError = true;
-      this.generalErrorMessage = 'Por favor, corrige los errores del formulario';
+  /**
+   * Envía el formulario
+   */
+  onSubmit(event?: Event): void {
+    if (event) {
+      event.preventDefault();
     }
+
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.toastService.error('Por favor, corrige los errores del formulario');
+      return;
+    }
+
+    this.isSubmitting = true;
+    this.generalError = '';
+    this.loadingService.show();
+
+    // Simular login
+    setTimeout(() => {
+      this.isSubmitting = false;
+      this.loadingService.hide();
+      this.toastService.success('Inicio de sesión exitoso');
+      this.submitForm.emit(this.loginForm.value);
+    }, 1500);
   }
 
-  onCancel(): void {
+  /**
+   * Cancela el formulario
+   */
+  onCancel(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
     this.cancel.emit();
   }
-}
 
+  /**
+   * Limpia errores al escribir
+   */
+  onFieldFocus(): void {
+    this.generalError = '';
+  }
+}

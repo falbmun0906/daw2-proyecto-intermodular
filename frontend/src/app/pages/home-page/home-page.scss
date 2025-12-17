@@ -7,8 +7,9 @@
 .home-page {
   min-height: calc(100vh - 88px - 100px);
   position: relative;
-  background-color: var(--color-primary);
+  background-color: var(--bg-primary);
   overflow: hidden;
+  transition: background-color 0.3s ease;
 }
 
 .home-page::before {
@@ -19,9 +20,10 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  opacity: 0.8;
+  opacity: var(--svg-overlay-opacity);
   pointer-events: none;
   z-index: 0;
+  transition: opacity 0.3s ease;
 }
 
 .home-page__container {
