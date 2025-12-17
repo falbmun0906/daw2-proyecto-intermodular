@@ -1,0 +1,47 @@
+/* =========================
+ * Home Page Component
+ * ========================= */
+
+.home-page {
+  min-height: calc(100vh - 88px - 100px); /* viewport - header - footer */
+  position: relative;
+  background-color: var(--color-primary);
+  overflow: hidden;
+
+  /* Patrón de formas decorativas */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/main-bg-form.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: scroll;
+    background-position: center;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.home-page__container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 88px - 100px);
+  padding: var(--spacing-16);
+}
+
+.home-page__title {
+  font-family: var(--font-family-secondary), 'Glass Antiqua', cursive, serif;
+  font-size: 12rem;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--font-h1-line-height);
+  color: var(--color-text-main);
+  text-align: center;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+

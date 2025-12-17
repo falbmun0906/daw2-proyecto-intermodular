@@ -2,7 +2,7 @@
 
 /* Body */
 body {
-  font-family: var(--font-family-primary);
+  font-family: var(--font-family-primary), 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: var(--font-body-size);
   line-height: var(--font-body-line-height);
   color: var(--color-text-main);
@@ -11,7 +11,7 @@ body {
 
 /* Titulares */
 h1 {
-  font-family: var(--font-family-secondary); /* Glass-Antiqua */
+  font-family: var(--font-family-secondary), 'Glass Antiqua', 'Brush Script MT', cursive, serif; /* Glass-Antiqua */
   font-size: var(--font-h1-size);
   line-height: var(--font-h1-line-height);
   font-weight: var(--font-h1-weight);
@@ -19,7 +19,7 @@ h1 {
 }
 
 h2, h3, h4 {
-  font-family: var(--font-family-primary); /* Poppins */
+  font-family: var(--font-family-primary), 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Poppins */
   font-weight: var(--font-weight-bold);
   color: var(--color-text-main);
 }

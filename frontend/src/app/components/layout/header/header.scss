@@ -5,220 +5,232 @@
 @use '../../../../styles/01-tools/mixins.scss' as *;
 
 .site-header {
-  @include flex-layout(row, space-between, center, var(--spacing-8));
-  padding: var(--spacing-4) var(--spacing-8);
-  background-color: var(--color-primary-dark);
+  @include flex-layout(row, space-between, center);
+  height: 88px;
+  padding-inline: var(--spacing-16);
+  background-color: var(--color-tertiary-darker);
   box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-
-  @include respond-to(md) {
-    padding: var(--spacing-6) var(--spacing-16);
-  }
 }
 
-/* Branding / Logo */
-.site-header__branding {
-  flex-shrink: 0;
-  z-index: 101;
-}
+/* Logo */
 
 .site-header__logo {
   text-decoration: none;
-  transition: opacity var(--transition-base) var(--transition-easing);
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  @include focus-ring();
 }
 
 .site-header__logo-text {
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-h4-size);
-  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-secondary), 'Glass Antiqua', cursive, serif;
+  font-size: var(--font-h2-size);
+  font-weight: var(--font-weight-medium);
   color: var(--color-neutral-white);
-
-  @include respond-to(md) {
-    font-size: var(--font-h3-size);
-  }
 }
 
-/* Botón hamburguesa (solo móvil) */
-.site-header__hamburger {
+/* =========================
+ * Bloque derecho
+ * ========================= */
+
+.site-header__right {
+  @include flex-layout(column, flex-end, flex-end, var(--spacing-2));
+}
+
+/* =========================
+ * Theme switch (slider)
+ * ========================= */
+
+.site-header__theme-toggle {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
-  background: transparent;
-  border: none;
+  align-items: center;
+}
+
+.site-header__theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 28px;
+}
+
+.site-header__theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.site-header__slider {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
   cursor: pointer;
-  padding: 0;
-  z-index: 101;
-  position: relative;
+  transition: background-color 0.3s ease;
 
-  @include respond-to(md) {
-    display: none;
-  }
-
-  @include focus-ring(var(--color-secondary));
-}
-
-.site-header__hamburger-line {
-  width: 2rem;
-  height: 3px;
-  background-color: var(--color-neutral-white);
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-base) var(--transition-easing);
-  position: relative;
-  transform-origin: center;
-}
-
-/* Animación del hamburguesa a X */
-.site-header__hamburger--open .site-header__hamburger-line {
-  &:nth-child(1) {
-    transform: rotate(45deg) translateY(0.5rem);
-  }
-
-  &:nth-child(2) {
-    opacity: 0;
-    transform: translateX(1rem);
-  }
-
-  &:nth-child(3) {
-    transform: rotate(-45deg) translateY(-0.5rem);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
   }
 }
 
-/* Navegación principal */
-.site-header__nav {
-  /* Mobile: menú vertical desplegable */
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 70%;
-  max-width: 300px;
-  height: 100vh;
-  background-color: var(--color-primary-dark);
-  box-shadow: var(--shadow-xl);
-  padding: var(--spacing-16) var(--spacing-6);
-  transform: translateX(100%);
-  transition: transform var(--transition-base) var(--transition-easing);
-  overflow-y: auto;
-  z-index: 100;
+.site-header__slider::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  top: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
 
-  /* Desktop: navegación horizontal */
-  @include respond-to(md) {
-    position: static;
-    flex-grow: 1;
-    width: auto;
-    max-width: none;
-    height: auto;
-    padding: 0;
-    transform: none;
-    box-shadow: none;
-    overflow-y: visible;
+/* Iconos SVG como background */
+.site-header__slider::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 7px;
+  top: 7px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FDB813'%3E%3Cpath d='M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.592-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.592a.75.75 0 00-1.061 1.061l1.59 1.59z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.site-header__theme-switch input:checked + .site-header__slider {
+  background-color: var(--color-secondary);
+
+  &:hover {
+    background-color: var(--color-secondary-hover);
   }
 }
 
-.site-header__nav--open {
-  transform: translateX(0);
+.site-header__theme-switch input:checked + .site-header__slider::before {
+  transform: translateX(28px);
 }
+
+.site-header__theme-switch input:checked + .site-header__slider::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FDB813'%3E%3Cpath fill-rule='evenodd' d='M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  left: 35px;
+  opacity: 1;
+}
+
+.site-header__theme-switch input:focus-visible + .site-header__slider {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* =========================
+ * Navegación
+ * ========================= */
 
 .site-header__nav-list {
-  @include flex-layout(column, flex-start, stretch, var(--spacing-6));
+  @include flex-layout(row, flex-end, center, var(--spacing-10));
   list-style: none;
   margin: 0;
   padding: 0;
-
-  @include respond-to(md) {
-    @include flex-layout(row, center, center, var(--spacing-8));
-  }
-}
-
-.site-header__nav-item {
-  margin: 0;
 }
 
 .site-header__nav-link {
-  display: block;
-  padding: var(--spacing-4);
-  font-family: var(--font-family-primary);
-  font-size: var(--font-h4-size);
-  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-primary), 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-light);
   color: var(--color-neutral-white);
   text-decoration: none;
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-base) var(--transition-easing),
-              color var(--transition-base) var(--transition-easing);
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
 
   &:hover {
-    background-color: var(--color-primary-hover);
-  }
-
-  &:active {
-    background-color: var(--color-primary-active);
-  }
-
-  @include focus-ring(var(--color-secondary));
-
-  @include respond-to(md) {
-    display: inline-block;
-    padding: var(--spacing-3) var(--spacing-4);
-    font-size: var(--font-body-size);
-  }
-
-  @include respond-to(lg) {
-    font-size: var(--font-h4-size);
-    padding: var(--spacing-4) var(--spacing-6);
+    opacity: 1;
   }
 }
 
-/* Theme Toggle */
-.site-header__theme-toggle {
-  flex-shrink: 0;
-  z-index: 101;
-}
+/* =========================
+ * RESPONSIVE - Menú hamburguesa en mobile
+ * ========================= */
 
-.site-header__theme-button {
-  @include flex-layout(row, center, center, var(--spacing-2));
-  padding: var(--spacing-3);
-  background-color: transparent;
-  border: var(--border-width-thin) solid var(--color-neutral-white);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  font-size: var(--font-h4-size);
-  transition: background-color var(--transition-base) var(--transition-easing),
-              transform var(--transition-fast) var(--transition-easing);
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+@media (max-width: 767px) {
+  .site-header {
+    position: relative;
   }
 
-  &:active {
-    transform: scale(0.95);
+  .site-header__right {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-8);
   }
 
-  @include focus-ring(var(--color-secondary));
+  /* Ocultar la navegación por defecto en mobile */
+  .site-header__nav {
+    position: fixed;
+    top: 88px;
+    left: 0;
+    right: 0;
+    background-color: var(--color-tertiary-darker);
+    box-shadow: var(--shadow-md);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 1000;
+  }
 
-  @include respond-to(md) {
-    padding: var(--spacing-4);
+  /* Crear el icono hamburguesa con pseudo-elemento */
+  .site-header__nav::before {
+    content: '';
+    position: fixed;
+    top: 30px;
+    right: 80px;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1001;
+    background-image:
+      linear-gradient(to bottom,
+        var(--color-neutral-white) 0%,
+        var(--color-neutral-white) 20%,
+        transparent 20%,
+        transparent 40%,
+        var(--color-neutral-white) 40%,
+        var(--color-neutral-white) 60%,
+        transparent 60%,
+        transparent 80%,
+        var(--color-neutral-white) 80%,
+        var(--color-neutral-white) 100%
+      );
+    transition: opacity 0.3s ease;
+  }
+
+  /* Mostrar menú cuando tiene foco */
+  .site-header__nav:focus-within {
+    max-height: 400px;
+  }
+
+  .site-header__nav:focus-within::before {
+    opacity: 0.5;
+  }
+
+  /* Lista en columna */
+  .site-header__nav-list {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--spacing-8) var(--spacing-16);
+    gap: 0;
+  }
+
+  /* Links con padding completo */
+  .site-header__nav-link {
+    display: block;
+    padding: var(--spacing-4) var(--spacing-8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  /* El slider se mantiene visible */
+  .site-header__theme-toggle {
+    flex-shrink: 0;
   }
 }
-
-/* Clase de utilidad para ocultar visualmente pero mantener accesible */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
