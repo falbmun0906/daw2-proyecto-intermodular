@@ -6,7 +6,7 @@
 
 .site-header {
   @include flex-layout(row, space-between, center);
-  height: 88px;
+  padding: var(--spacing-8) 0 var(--spacing-8) 0;
   padding-inline: var(--spacing-16);
   background-color: var(--color-tertiary-darker);
   box-shadow: var(--shadow-sm);
@@ -45,7 +45,7 @@
  * ========================= */
 
 .site-header__right {
-  @include flex-layout(column, flex-end, flex-end, var(--spacing-2));
+  @include flex-layout(column, flex-end, flex-end, var(--spacing-6));
 }
 
 /* =========================
@@ -170,7 +170,7 @@
   .site-header__right {
     flex-direction: row;
     align-items: center;
-    gap: var(--spacing-4);
+    gap: var(--spacing-8);
   }
 
   /* El slider a la derecha */
