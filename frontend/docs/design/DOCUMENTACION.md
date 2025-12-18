@@ -1068,7 +1068,7 @@ export class ToastService {
 }
 ```
 
-(_Pendiente captura de toasts en acción_)
+![toast-demo](assets/toast-demo.gif)
 
 ### Theme Switcher (.theme-toggle)
 
@@ -1129,7 +1129,7 @@ export class ThemeService {
 
 El toggle en el header usa un checkbox estilizado como slider con transición suave.
 
-(_Pendiente captura comparativa de tema claro vs oscuro_)
+![theme-switch-demo](assets/theme-switch-demo.gif)
 
 ## 3.2 Validación y herramientas de CSS
 
