@@ -1,0 +1,29 @@
+<main class="about-page">
+  <div class="about-page__background"></div>
+
+  <div class="about-page__container">
+    <!-- Titulo simple -->
+    <section class="about-page__hero">
+      <h1 class="about-page__title">La pizza está a punto de salir...</h1>
+    </section>
+
+    <!-- Horno -->
+    <section class="about-page__oven">
+      <div class="oven">
+        <div class="oven__door">
+          <div class="oven__window">
+            <div class="oven__flame-container">
+              <div class="flame"></div>
+              <div class="flame"></div>
+              <div class="flame"></div>
+            </div>
+          </div>
+        </div>
+        <div class="oven__temp">
+          <span class="oven__temp-text">{{ ovenTemperature | number:'1.0-0' }}°C</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+

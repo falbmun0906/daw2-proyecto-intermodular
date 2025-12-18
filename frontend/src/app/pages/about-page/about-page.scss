@@ -1,0 +1,145 @@
+@use '../../../styles/01-tools/mixins' as *;
+
+.about-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: var(--spacing-16);
+  overflow: hidden;
+}
+
+.about-page__background {
+  position: absolute;
+  inset: 0;
+  background-image: url('../../../assets/main-bg-form.svg');
+  background-size: contain;
+  background-position: center;
+  opacity: var(--svg-overlay-opacity);
+  pointer-events: none;
+  z-index: 1;
+
+  @include respond-to(lg) {
+    background-size: 600px, 700px;
+  }
+}
+
+.about-page__container {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Hero Section */
+.about-page__hero {
+  text-align: center;
+  margin-bottom: var(--spacing-16);
+}
+
+.about-page__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-family: var(--font-family-secondary);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-6);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Oven Section */
+.about-page__oven {
+  display: flex;
+  justify-content: center;
+}
+
+.oven {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  background: linear-gradient(135deg, #333 0%, #555 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.oven__door {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #444 0%, #666 100%);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.oven__window {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 30%, #ff6b00 0%, #ff4500 25%, #8b0000 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.oven__flame-container {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.flame {
+  width: 18px;
+  height: 45px;
+  background: linear-gradient(to top, #ff6b00, #ffd700, #ffff00);
+  border-radius: 50% 50% 50% 0;
+  animation: flicker 0.8s ease-in-out infinite;
+
+  &:nth-child(2) {
+    animation-delay: 0.15s;
+    height: 55px;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+.oven__temp {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-4);
+}
+
+.oven__temp-text {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-secondary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations - Solo flickering del fuego */
+@keyframes flicker {
+  0%, 100% {
+    transform: scaleY(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scaleY(1.05);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@include respond-to(md) {
+  .about-page__title {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+  }
+
+  .oven {
+    width: 300px;
+    height: 300px;
+  }
+}
+
