@@ -37,6 +37,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/daw2-proyecto-intermodular/",
               "budgets": [
                 {
                   "type": "initial",
