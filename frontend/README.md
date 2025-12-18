@@ -502,6 +502,8 @@ toggleMenu(): void {
 </ul>
 ```
 
+![hamburger-demo](docs/design/assets/hamburger-demo.gif)
+
 ---
 
 #### 3.2 Modales
@@ -529,6 +531,8 @@ onContentClick(event: MouseEvent): void {
   event.stopPropagation();
 }
 ```
+
+![modal-demo](docs/design/assets/modal-demo.gif)
 
 ---
 
@@ -596,6 +600,8 @@ ngAfterViewInit(): void {
   }
 }
 ```
+
+![notification-demo](docs/design/assets/notification-demo.gif)
 
 ---
 
@@ -701,6 +707,8 @@ private applyTheme(theme: Theme): void {
   }
 }
 ```
+
+![theme-switch-demo](docs/design/assets/theme-switch-demo.gif)
 
 ---
 
@@ -1150,6 +1158,8 @@ this.toast.success('Guardado', 2000);  // 2 segundos
 this.toast.error('Error crítico', 0);   // Sin auto-dismiss
 ```
 
+![toast-demo](docs/design/assets/toast-demo.gif)
+
 ---
 
 ### Tarea 4: Gestión de loading states
@@ -1203,6 +1213,8 @@ export class Spinner implements OnInit, OnDestroy {
 ```
 
 Incluido en app.html: `<app-spinner></app-spinner>`
+
+![spinner-demo](docs/design/assets/spinner-demo.gif)
 
 ---
 

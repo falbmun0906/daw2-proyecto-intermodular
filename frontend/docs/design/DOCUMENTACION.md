@@ -1131,6 +1131,76 @@ El toggle en el header usa un checkbox estilizado como slider con transición su
 
 ![theme-switch-demo](assets/theme-switch-demo.gif)
 
+### Spinner de carga (.spinner)
+
+El componente spinner proporciona feedback visual durante operaciones asincrónicas.
+
+**Características:**
+
+- Animación de rotación continua
+- Múltiples tamaños (sm, md, lg)
+- Integración con `LoadingService` para control global
+- Overlay con fondo semitransparente cuando se muestra spinner global
+- Puede usarse inline en botones o como overlay fullscreen
+
+**Uso en componentes:**
+
+```typescript
+constructor(private loadingService: LoadingService) {}
+
+onSave() {
+  this.loadingService.show();
+  this.userService.saveUser(this.user).subscribe({
+    next: () => this.loadingService.hide(),
+    error: () => this.loadingService.hide()
+  });
+}
+```
+
+![spinner-demo](assets/spinner-demo.gif)
+
+### Notificaciones (.notification)
+
+Las notificaciones son alertas contextuales que informan sobre cambios en la aplicación, complementando los toasts.
+
+**Variantes:**
+
+- **Success** (verde): Estados positivos
+- **Warning** (naranja): Advertencias
+- **Error** (rojo): Errores o problemas
+- **Info** (azul): Información general
+
+**Características:**
+
+- Icono indicador de tipo
+- Título y descripción
+- Botones de acción opcionales
+- Animación suave de entrada
+- Auto-dismiss configurable
+
+![notification-demo](assets/notification-demo.gif)
+
+### Menú Hamburguesa (navegación móvil)
+
+El menú hamburguesa es el componente de navegación responsiva para dispositivos móviles, oculto en desktop.
+
+**Características:**
+
+- Botón hamburguesa que aparece solo en dispositivos pequeños (`max-width: 768px`)
+- Menú deslizable desde el lateral
+- Overlay semitransparente que cierra el menú al hacer click
+- Transiciones suaves de apertura/cierre
+- Accesibilidad: botón con `aria-label` y `aria-expanded`
+- Se integra con la navegación principal del header
+
+**Comportamiento:**
+
+- Checkbox oculto (`opacity: 0`) controla el estado visible/oculto
+- Label actúa como botón toggleable
+- Menú se desliza con `transform: translateX(-100%)` cuando está cerrado
+
+![hamburger-demo](assets/hamburger-demo.gif)
+
 ## 3.2 Validación y herramientas de CSS
 
 ### Validadores CSS utilizados
