@@ -18,6 +18,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/frontend",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -26,7 +27,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/assets",
+                "output": "assets"
               }
             ],
             "styles": [
@@ -93,6 +95,13 @@
             "styles": [
               "src/styles.scss"
             ]
+          }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "buildTarget": "frontend:build:production",
+            "baseHref": "/daw2-proyecto-intermodular/"
           }
         }
       }

@@ -116,53 +116,234 @@ Los design tokens se definen en `00-settings/_variables.scss` usando CSS Custom 
 
 **Colores**
 
-La paleta incluye colores primarios, secundarios y terciarios, además de colores semánticos (`success`, `error`, `warning`, `info`) y neutros para texto y fondos.
+La paleta de colores está organizada en grupos semánticos, cada uno con variantes de luminosidad (light, base, hover, active, dark, darker):
 
-El color primario se utiliza principalmente en fondos suaves, contenedores y elementos de interfaz neutros, mientras que el color secundario se reserva para acciones principales y elementos destacados como botones y enlaces clave. Los colores semánticos se emplean para estados: verde para éxito (acciones completadas), rojo para errores (validaciones de formulario), amarillo para avisos y azul para mensajes informativos, siguiendo el diseño de la interfaz de recetas.
+```scss
+/* Primario - Verdes suaves para fondos y elementos neutros */
+--color-primary-light: #F9FAF8;
+--color-primary: #C0C9BD;
+--color-primary-dark: #90978E;
+--color-primary-darker: #434642;
+
+/* Secundario - Amarillos para acciones principales y CTAs */
+--color-secondary-light: #EAE0C7;
+--color-secondary: #F2B545;
+--color-secondary-dark: #d59828;
+--color-secondary-darker: #553F18;
+
+/* Terciario - Azules verdosos para acentos */
+--color-tertiary-light: #F7FBFB;
+--color-tertiary: #B3D9DA;
+--color-tertiary-dark: #86A3A4;
+
+/* Semánticos - Estados y feedback */
+--color-success-dark: #6AD243;
+--color-error-dark: #D55353;
+--color-warning-dark: #FFE24E;
+--color-info-dark: #607DD9;
+
+/* Neutros - Texto y fondos */
+--color-text-main: #292C2C;
+--color-neutral-white: #eaeaea;
+--color-neutral-gray: #AEB9C7;
+```
+
+El color primario (verde) se utiliza para fondos suaves y elementos de interfaz neutros. El color secundario (amarillo) se reserva para acciones principales, botones y elementos destacados. Los colores semánticos siguen convenciones universales: verde para éxito, rojo para errores, amarillo para advertencias y azul para información.
+
+(_Pendiente captura de la paleta de colores en la guía de estilos_)
 
 **Tipografía**
 
-Se definen dos familias tipográficas: una fuente primaria (`Poppins`) para el texto general y títulos secundarios, y una fuente secundaria (`Glass-Antiqua`) para el `H1` principal y elementos de marca, en coherencia con el diseño de Figma.
+Se definen dos familias tipográficas con una escala consistente:
 
-La escala tipográfica está construida de forma coherente (`H1–H4`, párrafo, texto pequeño, leyendas), manteniendo proporciones claras entre niveles para reforzar la jerarquía visual y la legibilidad en pantalla, tanto en la home como en las vistas de listado y detalle de recetas.
+```scss
+/* Familias */
+--font-family-primary: 'Poppins', sans-serif;
+--font-family-secondary: 'Glass Antiqua', cursive;
+
+/* Escala tipográfica */
+--font-h1-size: 3.75rem;   /* 60px - Glass Antiqua */
+--font-h2-size: 3rem;      /* 48px - Poppins */
+--font-h3-size: 2.25rem;   /* 36px - Poppins */
+--font-h4-size: 1.875rem;  /* 30px - Poppins */
+--font-body-size: 1rem;    /* 16px - Poppins */
+--font-sm-size: 0.875rem;  /* 14px */
+--font-xs-size: 0.75rem;   /* 12px */
+--font-caption-size: 0.625rem; /* 10px */
+
+/* Pesos disponibles */
+--font-weight-light: 300;
+--font-weight-regular: 400;
+--font-weight-medium: 500;
+--font-weight-semibold: 600;
+--font-weight-bold: 700;
+```
+
+La fuente secundaria `Glass Antiqua` se usa exclusivamente para el `H1` principal y elementos de marca, aportando personalidad. `Poppins` se usa para todo el contenido restante, garantizando legibilidad en pantalla.
+
+(_Pendiente captura de la escala tipográfica en la guía de estilos_)
 
 **Espaciado**
 
-El sistema de espaciado se basa en un múltiplo fijo en rem (derivado de `4px` u `8px`) hasta `spacing-24`, lo que garantiza consistencia en márgenes y paddings entre componentes.
+El sistema de espaciado se basa en una escala de 4px, proporcionando 24 niveles de espaciado consistentes:
 
-Este enfoque permite que las distancias verticales y horizontales se mantengan coherentes en toda la interfaz, facilitando la alineación en el grid y la proximidad entre elementos relacionados dentro de tarjetas, secciones y formularios.
+```scss
+--spacing-1: 0.25rem;   /* 4px */
+--spacing-2: 0.5rem;    /* 8px */
+--spacing-3: 0.75rem;   /* 12px */
+--spacing-4: 1rem;      /* 16px */
+--spacing-6: 1.5rem;    /* 24px */
+--spacing-8: 2rem;      /* 32px */
+--spacing-12: 3rem;     /* 48px */
+--spacing-16: 4rem;     /* 64px */
+--spacing-24: 6rem;     /* 96px */
+```
+
+Esta escala permite mantener coherencia en márgenes, paddings y gaps entre componentes, facilitando la alineación visual y la proximidad entre elementos relacionados.
 
 **Breakpoints**
 
-Se han definido breakpoints genéricos para móvil grande (`sm 640px`), tablet (`md 768px`), escritorio (`lg 1024px`) y escritorio grande (`xl 1280px`).
+Se definen 4 breakpoints siguiendo el enfoque mobile-first:
 
-Estos valores son habituales en frameworks modernos y están alineados con el diseño de Figma, que contempla vistas diferenciadas para móvil, tablet y desktop, permitiendo adaptar el layout (por ejemplo, número de columnas del grid o disposición de filtros y contenido) según el ancho disponible.
+```scss
+--breakpoint-sm: 640px;   /* Móvil grande */
+--breakpoint-md: 768px;   /* Tablet */
+--breakpoint-lg: 1024px;  /* Desktop */
+--breakpoint-xl: 1280px;  /* Desktop grande */
+```
+
+Estos valores están alineados con el diseño de Figma y permiten adaptar layouts, número de columnas en grids y tamaños de fuente según el dispositivo.
 
 **Sombras, bordes y transiciones**
 
-Las sombras (`shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`) se basan en valores rgba con opacidades bajas para aportar profundidad a tarjetas y contenedores sin comprometer la legibilidad del contenido.
+```scss
+/* Sombras - Elevación progresiva */
+--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+--shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08);
+--shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.12);
+--shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.16);
 
-Los tokens de borde y radio (`border-width-*`, `radius-*`) permiten aplicar distintos niveles de redondeo y grosor de borde de forma consistente en botones, tarjetas y otros componentes interactivos.
+/* Bordes */
+--border-width-thin: 1px;
+--border-width-medium: 2px;
+--border-width-thick: 4px;
 
-Las transiciones (`fast`, `base`, `slow` con `ease-in-out`) se utilizan para animar cambios de color, sombra y estado (`hover`, `focus`), proporcionando microinteracciones suaves y coherentes en toda la interfaz.
+/* Radios de borde */
+--radius-sm: 2px;
+--radius-md: 5px;
+--radius-lg: 8px;
+--radius-xl: 16px;
+--radius-full: 9999px;
 
-_(Pendiente incluir capturas mostrando guía de estilos)_
+/* Transiciones */
+--transition-fast: 50ms;
+--transition-base: 150ms;
+--transition-slow: 300ms;
+--transition-easing: ease-in-out;
+```
+
+Las sombras usan opacidades bajas para no comprometer la legibilidad. Los radios de borde van desde esquinas sutiles (`radius-sm`) hasta elementos completamente redondeados (`radius-full` para avatares o badges). Las transiciones proporcionan feedback inmediato (`fast`) o animaciones más suaves (`slow`) según el contexto.
 
 ### 1.5 Mixins y funciones: Documenta cada mixin que creaste, para qué sirve, y muestra un ejemplo de uso.
 
-En `01-tools/_mixins.scss` se han definido mixins reutilizables que evitan repetir código y ayudan a aplicar patrones de diseño consistentes en todo el proyecto.
+En `01-tools/_mixins.scss` se han definido mixins reutilizables que encapsulan patrones de diseño comunes, reduciendo duplicación y garantizando consistencia.
 
-Ejemplos destacados:
+**Mixin de breakpoints (`respond-to`)**
 
-- **Mixin de breakpoints (`respond-to`)**: permite escribir reglas responsive legibles a partir de un mapa de breakpoints (`sm`, `md`, `lg`, `xl`). Se utiliza para adaptar paddings, tamaños de fuente o el número de columnas en el grid según el ancho de pantalla, manteniendo en un solo lugar la lógica de los puntos de corte.
+Permite escribir media queries legibles usando nombres semánticos en lugar de valores numéricos:
 
-- **Mixin de layout flex (`flex-layout` / `flex-center`)**: centraliza la configuración de contenedores flexibles (dirección, justificación, alineación y gap) de forma declarativa, reduciendo duplicación en elementos como barras de navegación, tarjetas o contenedores de botones.
+```scss
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px
+);
 
-- **Mixin de botón base (`button-base`)**: define el estilo base de los botones (display, paddings, radios, transiciones, tipografía) para que cada variante BEM (`.button--primary`, `.button--secondary`, etc.) solo necesite ajustar colores o iconografía, garantizando que todos los botones compartan la misma estructura y comportamiento.
+@mixin respond-to($breakpoint) {
+  @media (min-width: map.get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
 
-- **Mixin de foco accesible (`focus-ring`)**: encapsula un estilo de foco visible y suficientemente contrastado que se aplica a botones, enlaces y otros controles interactivos, cumpliendo buenas prácticas de accesibilidad sin tener que repetir reglas en cada componente.
+// Uso:
+.component {
+  padding: var(--spacing-4);
+  
+  @include respond-to(md) {
+    padding: var(--spacing-8);
+  }
+}
+```
 
-Cada mixin está documentado con su propósito y se acompaña de ejemplos de uso dentro de los componentes donde se aplica (por ejemplo, botones, layouts de tarjetas o formularios).
+**Mixin de layout flex (`flex-layout`)**
+
+Centraliza la configuración de contenedores flexibles con parámetros declarativos:
+
+```scss
+@mixin flex-layout(
+  $direction: row,
+  $justify: flex-start,
+  $align: center,
+  $gap: 0
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+// Uso en header:
+.site-header {
+  @include flex-layout(row, space-between, center);
+}
+
+// Uso en footer:
+.site-footer__social-list {
+  @include flex-layout(row, flex-start, center, var(--spacing-8));
+}
+```
+
+**Mixin de foco accesible (`focus-ring`)**
+
+Encapsula un estilo de foco visible que cumple WCAG 2.1 AA:
+
+```scss
+@mixin focus-ring($color: var(--color-info-dark), $size: 2px) {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 $size $color;
+  }
+}
+
+// Uso en botones:
+.button {
+  @include focus-ring(var(--color-info-dark));
+}
+```
+
+**Mixin de botón base (`button-base`)**
+
+Define la estructura común de todos los botones, permitiendo que las variantes solo ajusten colores:
+
+```scss
+@mixin button-base($bg, $color: var(--color-text-main)) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: var(--radius-md);
+  border: none;
+  background-color: $bg;
+  color: $color;
+  cursor: pointer;
+  transition: background-color var(--transition-base) var(--transition-easing),
+              box-shadow var(--transition-base) var(--transition-easing);
+}
+```
+
+Estos mixins se utilizan extensivamente en los componentes de layout (header, footer, sidebar) y en componentes interactivos (botones, modales, formularios), garantizando que todos compartan la misma base estructural.
 
 ### 1.6 ViewEncapsulation en Angular: Explica qué estrategia de encapsulación usarás. Angular por defecto usa Emulated (estilos encapsulados por componente). Documenta si mantendrás esto o usarás None (estilos globales). Justifica tu decisión.
 
@@ -593,26 +774,53 @@ La interfaz de Desp[i]lensa incluye una serie de componentes interactivos reutil
 
 Los botones son el elemento más versátil de la interfaz y cuentan con múltiples variantes de color, tamaño y estado:
 
-**Variantes disponibles:**
+**Estructura SCSS del bloque base:**
 
-- **`.button--primary`**: Color secundario (amarillo), para acciones principales y llamadas a la acción
-- **`.button--secondary`**: Color primario (verde), para acciones secundarias
-- **`.button--ghost`**: Sin fondo, solo texto y borde, para acciones terciarias
-- **`.button--danger`**: Color rojo, para acciones destructivas (borrar, cancelar pagos)
+```scss
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background-color var(--transition-base) var(--transition-easing),
+              transform var(--transition-fast) var(--transition-easing),
+              box-shadow var(--transition-base) var(--transition-easing);
+
+  @include focus-ring(var(--color-info-dark));
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+```
+
+**Variantes de color implementadas:**
+
+- **`.button--primary`**: `background-color: var(--color-secondary)` - Amarillo para acciones principales
+- **`.button--secondary`**: `background-color: rgba(234, 224, 199, 0.75)` - Beige/crema con transparencia
+- **`.button--ghost`**: `background-color: transparent; border: 2px solid` - Solo borde, sin fondo
+- **`.button--danger`**: `background-color: var(--color-error-dark)` - Rojo para acciones destructivas
 
 **Tamaños:**
 
-- **`.button--sm`**: 32px de alto, para contextos compactos (inline, modales pequeños)
-- **`.button--md`**: 40px de alto (por defecto), para la mayoría de contextos
-- **`.button--lg`**: 48px de alto, para botones prominentes o en mobile
+- **`.button--sm`**: 32px de alto, `font-size: var(--font-sm-size)`
+- **`.button--md`**: 40px de alto, `font-size: var(--font-body-size)`
+- **`.button--lg`**: 48px de alto, `font-size: var(--font-h4-size)`
 
 **Estados interactivos:**
 
 Cada botón soporta estados visuales mediante transiciones suaves:
-- **Hover**: Cambio de color mediante `background-color` y elevación mediante `box-shadow` 
+- **Hover**: Cambio de color mediante `background-color` y elevación mediante `box-shadow: var(--shadow-md)`
 - **Active**: Presión visual mediante `transform: scale(0.98)`
-- **Focus**: Anillo de foco accesible usando variables de color (`var(--color-info-dark)`)
-- **Disabled**: Opacidad reducida (50%) y `pointer-events: none`
+- **Focus**: Anillo de foco accesible con `box-shadow: 0 0 0 2px var(--color-info-dark)`
+- **Disabled**: `opacity: 0.5` y `pointer-events: none`
+
+(_Pendiente captura de todas las variantes de botones en la guía de estilos_)
 
 **Ejemplo de uso en componente:**
 
@@ -643,11 +851,48 @@ Los modales son componentes de overlay que centran contenido sobre el resto de l
 
 **Características:**
 
-- Overlay oscuro semitransparente (`background-color: rgba(0,0,0,0.5)`)
-- Animación suave de entrada: escala inicial 0.95 + opacidad 0
-- Cierre mediante botón X, overlay click o tecla ESC
+- Overlay oscuro semitransparente (`background-color: var(--surface-overlay)`)
+- Animación suave de entrada: `transform: scale(0.95) translateY(20px)` → `scale(1) translateY(0)`
+- Cierre mediante botón X, overlay click o tecla ESC (`@HostListener('document:keydown.escape')`)
 - Posición `position: fixed` con `z-index: 1000` para aparecer sobre todo contenido
-- Scroll contenido cuando altura excede viewport
+- `pointer-events: none` cuando está oculto, `auto` cuando visible
+
+**Estructura SCSS del modal:**
+
+```scss
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  @include flex-layout(row, center, center, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base) var(--transition-easing);
+}
+
+.modal--visible {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modal__container {
+  position: relative;
+  z-index: 10;
+  background-color: var(--surface-base);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  transform: scale(0.95) translateY(20px);
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Tamaños disponibles */
+.modal__container--sm { max-width: 400px; }
+.modal__container--md { max-width: 600px; }
+.modal__container--lg { max-width: 800px; }
+.modal__container--xl { max-width: 1200px; }
+```
+
+(_Pendiente captura de modal abierto en la guía de estilos_)
 
 **Estructura semántica:**
 
@@ -678,13 +923,41 @@ Los modales son componentes de overlay que centran contenido sobre el resto de l
 
 Los tooltips proporcionan información contextual adicional sin ocupar espacio permanente en el layout.
 
-**Características:**
+**Estructura SCSS:**
 
-- Aparecen al pasar el ratón (mouseenter) o recibir foco
-- Posicionamiento dinámico: top, bottom, left, right
-- Flecha que apunta al elemento objetivo
-- Color de fondo contrasta con el texto para legibilidad
-- Animación suave de entrada
+```scss
+.tooltip {
+  position: absolute;
+  z-index: 1000;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  color: #fff;
+  background-color: #333;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  animation: tooltipFadeIn 0.2s ease forwards;
+}
+
+.tooltip--top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+}
+
+.tooltip__arrow {
+  position: absolute;
+  border: 6px solid transparent;
+}
+
+.tooltip--top .tooltip__arrow {
+  top: 100%;
+  border-top-color: #333;
+}
+```
+
+**Posiciones disponibles:** top, bottom, left, right - cada una con su flecha apuntando al elemento.
 
 **Ejemplo:**
 
@@ -726,60 +999,122 @@ Las pestañas permiten agrupar contenido relacionado sin expandir la altura de l
 
 Las notificaciones informan al usuario de cambios de estado, errores o acciones completadas sin interrumpir el flujo de trabajo.
 
-**Variantes por tipo:**
-
-- **Success** (verde): Acciones completadas, cambios guardados
-- **Error** (rojo): Fallos de validación, errores del servidor
-- **Warning** (naranja): Advertencias, confirmaciones necesarias
-- **Info** (azul): Información general, consejos
-
-**Características:**
-
-- Auto-dismiss después de 5 segundos (configurable)
-- Posición fija en esquina superior derecha
-- Animación suave de entrada y salida
-- Click para cerrar manualmente
-- Stack múltiples toasts sin superponerse
-
-**Uso en componentes:**
+**Servicio ToastService (patrón Observable):**
 
 ```typescript
-constructor(private toastService: ToastService) {}
+@Injectable({ providedIn: 'root' })
+export class ToastService {
+  private toastsSubject = new BehaviorSubject<ToastMessage[]>([]);
+  public toasts$ = this.toastsSubject.asObservable();
 
-onSave() {
-  this.recipeService.saveRecipe(this.recipe).subscribe({
-    next: (result) => {
-      this.toastService.success('Receta guardada correctamente', 3000);
-    },
-    error: (err) => {
-      this.toastService.error('No se pudo guardar la receta', 5000);
+  show(message: string, type: ToastType, duration = 5000): void {
+    const toast = { id: ++this.idCounter, message, type, duration };
+    this.toastsSubject.next([...this.toastsSubject.getValue(), toast]);
+    
+    if (duration > 0) {
+      setTimeout(() => this.dismiss(toast.id), duration);
     }
-  });
+  }
+
+  success(message: string, duration = 4000): void { this.show(message, 'success', duration); }
+  error(message: string, duration = 8000): void { this.show(message, 'error', duration); }
+  info(message: string, duration = 3000): void { this.show(message, 'info', duration); }
+  warning(message: string, duration = 6000): void { this.show(message, 'warning', duration); }
 }
 ```
 
+**Estilos SCSS:**
+
+```scss
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 6px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease;
+
+  &--success { background-color: #4caf50; }
+  &--error { background-color: #f44336; }
+  &--warning { background-color: #ff9800; }
+  &--info { background-color: #2196f3; }
+}
+```
+
+(_Pendiente captura de toasts en acción_)
+
 ### Theme Switcher (.theme-toggle)
 
-La aplicación soporta alternancia entre tema claro y oscuro, detectando la preferencia del sistema y permitiendo manual override.
+La aplicación soporta alternancia entre tema claro y oscuro, detectando la preferencia del sistema y permitiendo override manual.
 
-**Implementación:**
+**ThemeService (gestión de tema):**
 
-- Lectura de `prefers-color-scheme` del navegador al cargar
-- Botón en header para cambiar tema
-- Persistencia en `localStorage`
-- Variables CSS diferentes según tema (ej: `--color-bg-light` vs `--color-bg-dark`)
+```typescript
+@Injectable({ providedIn: 'root' })
+export class ThemeService {
+  private currentTheme: Theme = 'light';
+  private readonly STORAGE_KEY = 'theme';
 
-**Estilos tema claro:**
+  private initializeTheme(): void {
+    const savedTheme = localStorage.getItem(this.STORAGE_KEY);
+    if (savedTheme) {
+      this.currentTheme = savedTheme as Theme;
+    } else {
+      // Detectar preferencia del sistema
+      this.currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches 
+        ? 'dark' : 'light';
+    }
+    this.applyTheme(this.currentTheme);
+  }
 
-- Fondos: Blanco y verdes suaves
-- Texto: Gris oscuro (#292C2C)
-- Formas SVG: Amarillo
+  private applyTheme(theme: Theme): void {
+    document.body.classList.toggle('dark-theme', theme === 'dark');
+    document.body.classList.toggle('light-theme', theme === 'light');
+  }
 
-**Estilos tema oscuro:**
+  toggleTheme(): void {
+    this.setTheme(this.currentTheme === 'light' ? 'dark' : 'light');
+  }
+}
+```
 
-- Fondos: Grises oscuros
-- Texto: Blanco/gris claro
-- Formas SVG: Tonos más saturados
+**Variables CSS por tema (en `_css-variables.scss`):**
+
+```scss
+/* Tema claro (default) */
+.light-theme {
+  --bg-body: var(--color-primary-light);
+  --text-primary: var(--color-text-main);
+  --surface-base: var(--color-neutral-white);
+  --bg-footer-start: var(--color-tertiary-darker);
+  --svg-overlay-color: rgba(242, 181, 69, 1);
+}
+
+/* Tema oscuro */
+.dark-theme {
+  --bg-body: var(--color-primary-darker);
+  --text-primary: var(--color-neutral-white);
+  --surface-base: var(--color-text-main);
+  --bg-footer-start: #1a1a1a;
+  --svg-overlay-color: rgba(67, 70, 66, 0.6);
+}
+```
+
+El toggle en el header usa un checkbox estilizado como slider con transición suave.
+
+(_Pendiente captura comparativa de tema claro vs oscuro_)
 
 ## 3.2 Validación y herramientas de CSS
 
