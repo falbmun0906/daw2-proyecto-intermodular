@@ -150,7 +150,13 @@ La paleta de colores está organizada en grupos semánticos, cada uno con varian
 
 El color primario (verde) se utiliza para fondos suaves y elementos de interfaz neutros. El color secundario (amarillo) se reserva para acciones principales, botones y elementos destacados. Los colores semánticos siguen convenciones universales: verde para éxito, rojo para errores, amarillo para advertencias y azul para información.
 
-(_Pendiente captura de la paleta de colores en la guía de estilos_)
+<img width="2213" height="367" alt="colores-1" src="https://github.com/user-attachments/assets/e9dac3bb-1d9b-454b-910b-3d4470f5f964" />
+<img width="2222" height="380" alt="colores-2" src="https://github.com/user-attachments/assets/bad170e0-97a1-4cd7-ba37-cfed025584a8" />
+<img width="2222" height="376" alt="colores-3" src="https://github.com/user-attachments/assets/123678b9-bbf3-4370-ac26-b1c346c13e76" />
+<img width="2222" height="355" alt="colores-4" src="https://github.com/user-attachments/assets/288c55a9-eef2-4d5f-835a-f6341493306e" />
+<img width="2222" height="346" alt="colores-5" src="https://github.com/user-attachments/assets/9e7752bb-ca35-4d49-a646-99df7e0f380a" />
+
+<br></br>
 
 **Tipografía**
 
@@ -181,7 +187,10 @@ Se definen dos familias tipográficas con una escala consistente:
 
 La fuente secundaria `Glass Antiqua` se usa exclusivamente para el `H1` principal y elementos de marca, aportando personalidad. `Poppins` se usa para todo el contenido restante, garantizando legibilidad en pantalla.
 
-(_Pendiente captura de la escala tipográfica en la guía de estilos_)
+<img width="2222" height="752" alt="tipografia-1" src="https://github.com/user-attachments/assets/db4d6b9f-4e95-4a67-892e-8c8c15ec4b1a" />
+<img width="2222" height="546" alt="tipografia-2" src="https://github.com/user-attachments/assets/648804ff-35ac-4851-88d2-752d80850fea" />
+
+<br></br>
 
 **Espaciado**
 
@@ -820,7 +829,13 @@ Cada botón soporta estados visuales mediante transiciones suaves:
 - **Focus**: Anillo de foco accesible con `box-shadow: 0 0 0 2px var(--color-info-dark)`
 - **Disabled**: `opacity: 0.5` y `pointer-events: none`
 
-(_Pendiente captura de todas las variantes de botones en la guía de estilos_)
+<img width="2222" height="228" alt="botones-1" src="https://github.com/user-attachments/assets/37c1ceb6-754b-447e-9ecf-de91b1033184" />
+<img width="2222" height="287" alt="botones-2" src="https://github.com/user-attachments/assets/749d0bae-94b5-45dc-85a5-ad71509fa9cd" />
+<img width="2221" height="225" alt="botones-3" src="https://github.com/user-attachments/assets/e7a7a842-7c19-4c85-94f1-81041dd6dc28" />
+<img width="2222" height="215" alt="botones-4" src="https://github.com/user-attachments/assets/b08579d6-1836-43b6-9515-d075222ce9a5" />
+<img width="2222" height="225" alt="botones-5" src="https://github.com/user-attachments/assets/eb0832ee-8ef2-48ea-91f1-58896ab9e88c" />
+
+<br></br>
 
 **Ejemplo de uso en componente:**
 
@@ -892,7 +907,7 @@ Los modales son componentes de overlay que centran contenido sobre el resto de l
 .modal__container--xl { max-width: 1200px; }
 ```
 
-(_Pendiente captura de modal abierto en la guía de estilos_)
+![modal-demo](assets/modal-demo.gif)
 
 **Estructura semántica:**
 
