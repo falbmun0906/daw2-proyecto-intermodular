@@ -771,39 +771,22 @@ export class ThemeService {
 
 #### 5.3 Diagrama de flujo de eventos
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FLUJO DE EVENTOS                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Usuario                                                    │
-│    │                                                        │
-│    ▼                                                        │
-│  DOM Event (click, keydown, mouseenter...)                 │
-│    │                                                        │
-│    ▼                                                        │
-│  Template Binding: (event)="handler($event)"               │
-│    │                                                        │
-│    ▼                                                        │
-│  Component Handler                                          │
-│    │                                                        │
-│    ├──► preventDefault() - Bloquea comportamiento default  │
-│    ├──► stopPropagation() - Detiene bubbling               │
-│    │                                                        │
-│    ▼                                                        │
-│  Service/State Update                                       │
-│    │                                                        │
-│    ▼                                                        │
-│  View Re-render (Zone.js / OnPush)                         │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+    flowchart TD
+    A[Usuario] --> B["DOM Event<br/>(click, keydown, mouseenter...)"]
+    B --> C["Template Binding<br/>(event)=handler($event)"]
+    C --> D[Component Handler]
+    D --> D1["preventDefault()<br/>Bloquea comportamiento por defecto"]
+    D --> D2["stopPropagation()<br/>Detiene bubbling"]
+    D --> E[Service / State Update]
+    E --> F["View Re-render<br/>(Zone.js / OnPush)"]
 
-@HostListener para eventos globales:
-┌─────────────────────────────────────────────────────────────┐
-│  document:click        → Cerrar menú al click fuera        │
-│  document:keydown.escape → Cerrar modal/menú con ESC       │
-│  window:resize         → Responsive behavior               │
-└─────────────────────────────────────────────────────────────┘
+    %% HostListener global
+    subgraph HostListener ["@HostListener"]
+        H1["document:click<br/>Cerrar menú al click fuera"]
+        H2["document:keydown.escape<br/>Cerrar modal/menú con ESC"]
+        H3["window:resize<br/>Comportamiento responsive"]
+    end
 ```
 
 ---
@@ -1259,28 +1242,31 @@ intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
 
 #### 5.1 Diagrama de arquitectura de servicios
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    ARQUITECTURA DE SERVICIOS                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐         │
-│  │ Components  │───►│  Services   │───►│   State     │         │
-│  │ (UI Layer)  │    │ (Business)  │    │ (RxJS)      │         │
-│  └─────────────┘    └─────────────┘    └─────────────┘         │
-│         │                  │                  │                 │
-│         │                  │                  │                 │
-│         ▼                  ▼                  ▼                 │
-│  ┌─────────────────────────────────────────────────────┐       │
-│  │                    SERVICIOS                         │       │
-│  ├─────────────┬─────────────┬─────────────┬──────────┤       │
-│  │ ThemeService│ ToastService│LoadingService│CommService│     │
-│  │ (Theme)     │ (Notif.)   │ (Spinner)   │ (Events) │       │
-│  └─────────────┴─────────────┴─────────────┴──────────┘       │
-│                                                                 │
-│  Patrón: BehaviorSubject → Observable → subscribe()            │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph UI["Arquitectura de Servicios"]
+        A["Components<br/>(UI Layer)"] --> B["Services<br/>(Business)"]
+        B --> C["State<br/>(RxJS)"]
+    end
+
+    subgraph S["SERVICIOS"]
+        S1["ThemeService<br/>(Theme)"]
+        S2["ToastService<br/>(Notif.)"]
+        S3["LoadingService<br/>(Spinner)"]
+        S4["CommService<br/>(Events)"]
+    end
+
+    A --> S1
+    A --> S2
+    A --> S3
+    A --> S4
+
+    B --> S1
+    B --> S2
+    B --> S3
+    B --> S4
+
+    C --- P["Patrón:<br/>BehaviorSubject → Observable → subscribe()"]
 ```
 
 ---
