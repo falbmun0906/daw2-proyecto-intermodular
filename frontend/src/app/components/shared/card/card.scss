@@ -36,7 +36,6 @@
 
   /* Estado hover: elevación y transformación */
   &:hover {
-    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
 
     .card__image {

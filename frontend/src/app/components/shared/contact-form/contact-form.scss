@@ -62,7 +62,7 @@
     border: 1px solid var(--border-color-secondary);
     border-radius: var(--radius-md);
     font-size: var(--font-body-size);
-    background: var(--surface-base);
+    background: transparent;
     color: var(--text-primary);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
@@ -79,6 +79,13 @@
     &--valid {
       border-color: var(--color-success-dark);
     }
+  }
+
+  &__select {
+    width: auto;
+    min-width: 120px;
+    max-width: 150px;
+    flex-shrink: 0;
   }
 
   &__textarea {

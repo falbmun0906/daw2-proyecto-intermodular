@@ -76,16 +76,6 @@
               <option value="fijo">Fijo</option>
               <option value="trabajo">Trabajo</option>
             </select>
-
-            <button
-              type="button"
-              class="contact-form__remove-btn"
-              (click)="removeTelefono(i)"
-              [disabled]="telefonos.length === 1"
-              title="Eliminar teléfono"
-            >
-              ✕
-            </button>
           </div>
         </div>
       }
@@ -106,15 +96,6 @@
         <div class="contact-form__array-item contact-form__array-item--address" [formGroupName]="i">
           <div class="contact-form__array-header">
             <span class="contact-form__array-label">Dirección {{ i + 1 }}</span>
-            <button
-              type="button"
-              class="contact-form__remove-btn"
-              (click)="removeDireccion(i)"
-              [disabled]="direcciones.length === 1"
-              title="Eliminar dirección"
-            >
-              ✕
-            </button>
           </div>
 
           <div class="contact-form__array-grid">

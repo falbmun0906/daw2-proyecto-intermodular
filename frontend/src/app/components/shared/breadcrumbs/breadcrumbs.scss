@@ -30,7 +30,7 @@
     padding: 0;
     background: transparent;
     border: none;
-    color: var(--color-neutral-white);
+    color: var(--text-primary);
     transition: color var(--transition-base) var(--transition-fast);
 
     &:hover {
@@ -52,7 +52,7 @@
   display: inline-flex;
   align-items: center;
   margin: 0 var(--spacing-3);
-  color: var(--color-neutral-white);
+  color: var(--text-primary);
   font-size: var(--font-h4-size);
   font-weight: var(--font-weight-regular);
 }
@@ -65,7 +65,7 @@
     font-family: var(--font-family-primary);
     font-size: var(--font-body-size);
     font-weight: var(--font-weight-medium);
-    color: var(--color-neutral-white);
+    color: var(--text-primary);
     background-color: rgba(144, 151, 142, 0.4); /* --color-primary-dark con 40% opacidad */
     border-radius: var(--radius-md);
     text-decoration: none;
@@ -89,7 +89,7 @@
     font-family: var(--font-family-primary);
     font-size: var(--font-body-size);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-white);
+    color: var(--text-primary);
     background-color: transparent;
     border: var(--border-width-medium) solid var(--color-primary-dark);
     border-radius: var(--radius-md);

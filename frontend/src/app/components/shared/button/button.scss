@@ -110,13 +110,11 @@
   &:hover:not(:disabled):not(.button--disabled) {
     background-color: var(--color-secondary-hover);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
 
   &:active:not(:disabled):not(.button--disabled) {
     background-color: var(--color-secondary-active);
     box-shadow: var(--shadow-sm);
-    transform: translateY(0);
   }
 }
 
@@ -129,13 +127,11 @@
   &:hover:not(:disabled):not(.button--disabled) {
     background-color: var(--color-primary-hover);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
 
   &:active:not(:disabled):not(.button--disabled) {
     background-color: var(--color-primary-active);
     box-shadow: var(--shadow-sm);
-    transform: translateY(0);
   }
 }
 
@@ -167,13 +163,11 @@
   &:hover:not(:disabled):not(.button--disabled) {
     background-color: #c03d3d; /* Más oscuro */
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
   }
 
   &:active:not(:disabled):not(.button--disabled) {
     background-color: #a83434; /* Aún más oscuro */
     box-shadow: var(--shadow-sm);
-    transform: translateY(0);
   }
 }
 

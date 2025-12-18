@@ -77,6 +77,14 @@ export class StyleGuidePage {
   // Notifications
   notifications: any[] = [];
 
+  // Alerts visibility
+  alertsVisible = {
+    success: true,
+    error: true,
+    warning: true,
+    info: true
+  };
+
   // Form data
   emailValue: string = '';
   passwordValue: string = '';
@@ -208,6 +216,20 @@ export class StyleGuidePage {
       this.loadingService.hide();
       this.toastService.success('Carga completada');
     }, 2000);
+  }
+
+  // Alert methods
+  onAlertDismissed(type: 'success' | 'error' | 'warning' | 'info'): void {
+    this.alertsVisible[type] = false;
+  }
+
+  regenerateAlerts(): void {
+    this.alertsVisible = {
+      success: true,
+      error: true,
+      warning: true,
+      info: true
+    };
   }
 }
 

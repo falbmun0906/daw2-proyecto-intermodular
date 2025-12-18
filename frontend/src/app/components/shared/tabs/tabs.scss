@@ -130,15 +130,6 @@
   pointer-events: none;
 }
 
-/* Contenido de las pestañas */
-.tabs__content {
-  padding: var(--spacing-6) 0;
-
-  @include respond-to(md) {
-    padding: var(--spacing-8) 0;
-  }
-}
-
 /* Responsive: tabs verticales en mobile */
 @media (max-width: 640px) {
   .tabs--vertical {
