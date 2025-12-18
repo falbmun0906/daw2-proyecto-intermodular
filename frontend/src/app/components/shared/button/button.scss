@@ -61,14 +61,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2em;
+  font-size: 1em;
+  line-height: 1;
 
   &--left {
-    margin-right: calc(var(--spacing-2) * -1);
+    margin-right: var(--spacing-1);
   }
 
   &--right {
-    margin-left: calc(var(--spacing-2) * -1);
+    margin-left: var(--spacing-1);
   }
 }
 
@@ -118,19 +119,19 @@
   }
 }
 
-/* Variante SECONDARY (verde - color primario del sistema) */
+/* Variante SECONDARY (beige/crema - EAE0C7) */
 .button--secondary {
-  background-color: var(--color-primary);
+  background-color: rgba(234, 224, 199, 0.75); /* #EAE0C7 con 75% opacidad */
   color: var(--color-text-main);
   box-shadow: var(--shadow-sm);
 
   &:hover:not(:disabled):not(.button--disabled) {
-    background-color: var(--color-primary-hover);
+    background-color: var(--color-secondary-light-hover); /* 100% opacidad */
     box-shadow: var(--shadow-md);
   }
 
   &:active:not(:disabled):not(.button--disabled) {
-    background-color: var(--color-primary-active);
+    background-color: var(--color-secondary-light-active); /* 100% opacidad */
     box-shadow: var(--shadow-sm);
   }
 }

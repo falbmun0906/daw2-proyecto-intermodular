@@ -95,6 +95,11 @@ export class StyleGuidePage {
   emailError: boolean = false;
   emailSuccess: boolean = false;
 
+  // Iconos Unicode limpios y discretos
+  searchIcon: string = '🔍';
+  arrowRightIcon: string = '→';
+  heartIcon: string = '♥';
+
   // Radio options
   radioOptions: RadioOption[] = [
     { value: 'facil', label: 'Fácil' },

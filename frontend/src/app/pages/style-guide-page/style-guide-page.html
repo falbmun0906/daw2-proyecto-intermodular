@@ -270,33 +270,33 @@
       <div class="style-guide__subsection">
         <h3 class="style-guide__subsection-title">Tamaños</h3>
         <div class="component-demo">
-          <app-button variant="secondary" size="sm">Pequeño</app-button>
-          <app-button variant="secondary" size="md">Mediano</app-button>
-          <app-button variant="secondary" size="lg">Grande</app-button>
+          <app-button variant="primary" size="sm">Pequeño</app-button>
+          <app-button variant="primary" size="md">Mediano</app-button>
+          <app-button variant="primary" size="lg">Grande</app-button>
         </div>
       </div>
 
       <div class="style-guide__subsection">
         <h3 class="style-guide__subsection-title">Estados</h3>
         <div class="component-demo">
-          <app-button variant="secondary">Normal</app-button>
-          <app-button variant="secondary" [disabled]="true">Deshabilitado</app-button>
+          <app-button variant="primary">Normal</app-button>
+          <app-button variant="primary" [disabled]="true">Deshabilitado</app-button>
         </div>
       </div>
 
       <div class="style-guide__subsection">
         <h3 class="style-guide__subsection-title">Con Iconos</h3>
         <div class="component-demo">
-          <app-button variant="secondary" iconSvg="search" iconPosition="left">Buscar</app-button>
-          <app-button variant="secondary" iconSvg="arrow-right" iconPosition="right">Siguiente</app-button>
-          <app-button variant="secondary" iconSvg="heart">Favorito</app-button>
+          <app-button variant="primary" [icon]="searchIcon" iconPosition="left">Buscar</app-button>
+          <app-button variant="primary" [icon]="arrowRightIcon" iconPosition="right">Siguiente</app-button>
+          <app-button variant="primary" [icon]="heartIcon">Favorito</app-button>
         </div>
       </div>
 
       <div class="style-guide__subsection">
         <h3 class="style-guide__subsection-title">Ancho Completo</h3>
         <div class="component-demo">
-          <app-button variant="secondary" [fullWidth]="true">Botón Ancho Completo</app-button>
+          <app-button variant="primary" [fullWidth]="true">Botón Ancho Completo</app-button>
         </div>
       </div>
     </section>
@@ -648,7 +648,7 @@
           Las alertas se pueden cerrar y regenerar con los botones correspondientes.
         </p>
         <div class="component-demo">
-          <app-button variant="secondary" size="sm" (buttonClick)="regenerateAlerts()">
+          <app-button variant="primary" size="sm" (buttonClick)="regenerateAlerts()">
             Regenerar todas las alertas
           </app-button>
         </div>
@@ -729,49 +729,18 @@
       <div class="style-guide__subsection">
         <h3 class="style-guide__subsection-title">Modal</h3>
         <div class="component-demo">
-          <app-button variant="secondary" (buttonClick)="openModal()">Abrir Modal</app-button>
+          <app-button variant="primary" (buttonClick)="openModal()">Abrir Modal</app-button>
           <app-button variant="danger" (buttonClick)="openModalLarge()">Modal Grande</app-button>
         </div>
-
-        <app-modal
-          [isOpen]="showModal"
-          title="Título del Modal"
-          size="md"
-          (closed)="closeModal()">
-          <div class="modal-content-demo">
-            <p>Este es el contenido del modal. Puedes colocar cualquier elemento aquí.</p>
-            <app-form-input
-              label="Campo de ejemplo"
-              placeholder="Escribe algo...">
-            </app-form-input>
-            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-              <app-button variant="ghost" (buttonClick)="closeModal()">Cancelar</app-button>
-              <app-button variant="secondary">Aceptar</app-button>
-            </div>
-          </div>
-        </app-modal>
-
-        <app-modal
-          [isOpen]="showModalLarge"
-          title="Modal Grande"
-          size="lg"
-          (closed)="closeModalLarge()">
-          <div class="modal-content-demo">
-            <h3>Contenido extenso</h3>
-            <p>Este modal es más grande y puede contener más información.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <app-button variant="secondary" (buttonClick)="closeModalLarge()">Cerrar</app-button>
-          </div>
-        </app-modal>
       </div>
 
       <div class="style-guide__subsection">
         <h3 class="style-guide__subsection-title">Notificaciones</h3>
         <div class="component-demo">
-          <app-button variant="secondary" (buttonClick)="showNotification('success')">Success</app-button>
+          <app-button variant="primary" (buttonClick)="showNotification('success')">Success</app-button>
           <app-button variant="danger" (buttonClick)="showNotification('error')">Error</app-button>
-          <app-button variant="secondary" (buttonClick)="showNotification('warning')">Warning</app-button>
-          <app-button variant="secondary" (buttonClick)="showNotification('info')">Info</app-button>
+          <app-button variant="primary" (buttonClick)="showNotification('warning')">Warning</app-button>
+          <app-button variant="primary" (buttonClick)="showNotification('info')">Info</app-button>
         </div>
 
         <div class="notifications-container">
@@ -805,19 +774,19 @@
         </p>
         <div class="component-demo">
           <app-tooltip text="Este es un tooltip superior" position="top">
-            <app-button variant="secondary">Hover arriba</app-button>
+            <app-button variant="primary">Hover arriba</app-button>
           </app-tooltip>
 
           <app-tooltip text="Tooltip a la derecha" position="right">
-            <app-button variant="secondary">Hover derecha</app-button>
+            <app-button variant="primary">Hover derecha</app-button>
           </app-tooltip>
 
           <app-tooltip text="Tooltip inferior" position="bottom">
-            <app-button variant="secondary">Hover abajo</app-button>
+            <app-button variant="primary">Hover abajo</app-button>
           </app-tooltip>
 
           <app-tooltip text="Tooltip a la izquierda" position="left">
-            <app-button variant="secondary">Hover izquierda</app-button>
+            <app-button variant="primary">Hover izquierda</app-button>
           </app-tooltip>
         </div>
       </div>
@@ -838,7 +807,7 @@
           <app-button (buttonClick)="showToast('warning')">
             Toast Warning
           </app-button>
-          <app-button variant="secondary" (buttonClick)="showToast('info')">
+          <app-button variant="primary" (buttonClick)="showToast('info')">
             Toast Info
           </app-button>
         </div>
@@ -955,4 +924,36 @@
     </section>
   </div>
 </div>
+
+<!-- Modales renderizados al final para evitar problemas de z-index -->
+<app-modal
+  [isOpen]="showModal"
+  title="Título del Modal"
+  size="md"
+  (closed)="closeModal()">
+  <div class="modal-content-demo">
+    <p>Este es el contenido del modal. Puedes colocar cualquier elemento aquí.</p>
+    <app-form-input
+      label="Campo de ejemplo"
+      placeholder="Escribe algo...">
+    </app-form-input>
+    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+      <app-button variant="ghost" (buttonClick)="closeModal()">Cancelar</app-button>
+      <app-button variant="primary">Aceptar</app-button>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal
+  [isOpen]="showModalLarge"
+  title="Modal Grande"
+  size="lg"
+  (closed)="closeModalLarge()">
+  <div class="modal-content-demo">
+    <h3>Contenido extenso</h3>
+    <p>Este modal es más grande y puede contener más información.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <app-button variant="primary" (buttonClick)="closeModalLarge()">Cerrar</app-button>
+  </div>
+</app-modal>
 

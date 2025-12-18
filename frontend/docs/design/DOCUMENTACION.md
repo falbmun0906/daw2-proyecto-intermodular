@@ -1,4 +1,8 @@
-# Sección 1: Arquitectura CSS y comunicación visual.
+# Sección 1: Arquitectura CSS y comunicación visual
+
+## Introducción: Modificación de etiquetas HTML mediante CSS
+
+En esta aplicación web, el HTML semántico proporciona la estructura base del documento, mientras que CSS se encarga de definir la presentación visual. Cada elemento HTML puede modificarse completamente mediante estilos: los elementos `<h1>` a `<h4>` se redefinyen con tipografía, color y espaciado personalizados; los `<button>` y `<a>` se transforman mediante variantes de color, tamaño y estado; las `<section>` y `<div>` se organizan en layouts complejos usando Flexbox y CSS Grid. Esta separación entre estructura (HTML) y presentación (CSS) permite que el mismo elemento HTML se presente de múltiples formas diferentes según su contexto, mejorando la reutilización de código y facilitando el mantenimiento del sistema de diseño.
 
 ### 1.1 Principios de comunicación visual: Explica los 5 principios básicos y cómo los aplicas en tu proyecto:
 
@@ -579,464 +583,303 @@ Esta estructura de formularios garantiza una experiencia de usuario accesible, u
 
 ---
 
-# Sección 3: Sistema de componentes UI
+# Sección 3: Componentes interactivos y validación de estilos
 
-## 3.1 Componentes implementados
+## 3.1 Componentes interactivos implementados
 
-### Button (app-button)
+La interfaz de Desp[i]lensa incluye una serie de componentes interactivos reutilizables que mejoran la experiencia del usuario mediante feedback visual, animaciones suaves y estados claros. Cada componente está diseñado con accesibilidad en mente y sigue la estructura BEM.
 
-**Propósito:**
-Componente de botón reutilizable que cubre todas las necesidades de acciones interactivas en la aplicación. Soporta múltiples variantes visuales, tamaños y estados para mantener la jerarquía visual y guiar al usuario en sus acciones.
+### Botones interactivos (.button)
+
+Los botones son el elemento más versátil de la interfaz y cuentan con múltiples variantes de color, tamaño y estado:
 
 **Variantes disponibles:**
-- **primary** (`.button--primary`): Botón de acción principal con color secundario del sistema (amarillo). Se utiliza para la acción más importante de cada pantalla (ej: "Iniciar sesión", "Guardar receta", "Buscar").
-- **secondary** (`.button--secondary`): Botón de acción secundaria con color primario del sistema (verde). Para acciones importantes pero no prioritarias (ej: "Ver más", "Filtrar").
-- **ghost** (`.button--ghost`): Botón sin fondo, solo con borde y texto. Para acciones terciarias o enlaces de baja prioridad (ej: "Cancelar", "Volver").
-- **danger** (`.button--danger`): Botón destructivo con color rojo. Para acciones irreversibles o peligrosas (ej: "Eliminar receta", "Borrar cuenta").
 
-**Tamaños disponibles:**
-- **sm** (`.button--sm`): Pequeño (32px altura, padding reducido). Para acciones compactas en tarjetas o listas.
-- **md** (`.button--md`): Mediano (40px altura). Tamaño por defecto para la mayoría de acciones.
-- **lg** (`.button--lg`): Grande (48px altura desktop, 56px tablet+). Para CTAs principales y acciones destacadas.
+- **`.button--primary`**: Color secundario (amarillo), para acciones principales y llamadas a la acción
+- **`.button--secondary`**: Color primario (verde), para acciones secundarias
+- **`.button--ghost`**: Sin fondo, solo texto y borde, para acciones terciarias
+- **`.button--danger`**: Color rojo, para acciones destructivas (borrar, cancelar pagos)
 
-**Estados que maneja:**
-- **:hover**: Cambio de color, elevación de sombra y movimiento sutil hacia arriba (translateY -2px).
-- **:focus**: Outline visible con color de info (azul) para navegación por teclado, aplicado mediante mixin `focus-ring`.
-- **:active**: Escala reducida (scale 0.98) para feedback táctil.
-- **:disabled / .button--disabled**: Opacidad reducida (0.5), cursor not-allowed, sin interacciones.
+**Tamaños:**
 
-**Modificadores adicionales:**
-- **--full-width**: Ancho completo (100%) para botones en formularios o layouts estrechos.
-- **--with-icon**: Ajusta el espaciado interno cuando el botón incluye un icono.
+- **`.button--sm`**: 32px de alto, para contextos compactos (inline, modales pequeños)
+- **`.button--md`**: 40px de alto (por defecto), para la mayoría de contextos
+- **`.button--lg`**: 48px de alto, para botones prominentes o en mobile
 
-**Características de accesibilidad:**
-- Atributo `[type]` configurable (button, submit, reset)
-- Estado deshabilitado comunicado con `aria-disabled`
-- Focus ring visible para navegación por teclado
-- Iconos opcionales marcados con `aria-hidden="true"`
-- Proyección de contenido con `<ng-content>` para flexibilidad
+**Estados interactivos:**
 
-**Ejemplo de uso:**
+Cada botón soporta estados visuales mediante transiciones suaves:
+- **Hover**: Cambio de color mediante `background-color` y elevación mediante `box-shadow` 
+- **Active**: Presión visual mediante `transform: scale(0.98)`
+- **Focus**: Anillo de foco accesible usando variables de color (`var(--color-info-dark)`)
+- **Disabled**: Opacidad reducida (50%) y `pointer-events: none`
+
+**Ejemplo de uso en componente:**
 
 ```html
-<!-- Botón primary por defecto -->
-<app-button (buttonClick)="onSave()">
-  Guardar cambios
-</app-button>
-
-<!-- Botón secundario mediano con icono izquierda -->
 <app-button 
-  variant="secondary" 
+  variant="primary" 
   size="md" 
   icon="🔍"
   iconPosition="left"
   (buttonClick)="onSearch()">
-  Buscar recetas
+  Buscar receta
 </app-button>
 
-<!-- Botón ghost pequeño -->
 <app-button 
-  variant="ghost" 
-  size="sm"
-  (buttonClick)="onCancel()">
-  Cancelar
-</app-button>
-
-<!-- Botón danger grande, ancho completo, deshabilitado -->
-<app-button 
-  variant="danger"
-  size="lg"
-  [fullWidth]="true"
-  [disabled]="isProcessing"
-  type="submit"
+  variant="danger" 
+  size="sm" 
+  [disabled]="isDeleting"
   (buttonClick)="onDelete()">
-  Eliminar receta
-</app-button>
-
-<!-- Botón primary con icono a la derecha -->
-<app-button 
-  icon="→"
-  iconPosition="right"
-  (buttonClick)="onNext()">
-  Siguiente paso
+  Eliminar
 </app-button>
 ```
 
-**Código TypeScript del componente:**
+### Modales (.modal)
 
-```typescript
-@Input() variant: 'primary' | 'secondary' | 'ghost' | 'danger' = 'primary';
-@Input() size: 'sm' | 'md' | 'lg' = 'md';
-@Input() type: 'button' | 'submit' | 'reset' = 'button';
-@Input() disabled: boolean = false;
-@Input() fullWidth: boolean = false;
-@Input() icon: string = '';
-@Input() iconPosition: 'left' | 'right' = 'left';
-@Output() buttonClick = new EventEmitter<MouseEvent>();
-```
+Los modales son componentes de overlay que centran contenido sobre el resto de la página, ideales para formularios, confirmaciones y contenido importante.
 
----
+(_Aquí se muestra un ejemplo de un modal de confirmación._)
 
-### Card (app-card)
+**Características:**
 
-**Propósito:**
-Componente de tarjeta reutilizable diseñado específicamente para mostrar recetas de forma visual y atractiva. Combina imagen de fondo, SVG decorativo, información estructurada y acción principal en un contenedor elegante y responsive.
+- Overlay oscuro semitransparente (`background-color: rgba(0,0,0,0.5)`)
+- Animación suave de entrada: escala inicial 0.95 + opacidad 0
+- Cierre mediante botón X, overlay click o tecla ESC
+- Posición `position: fixed` con `z-index: 1000` para aparecer sobre todo contenido
+- Scroll contenido cuando altura excede viewport
 
-**Variantes disponibles:**
-- **vertical** (`.card--vertical`): Tarjeta vertical compacta (por defecto). Imagen arriba (180px), contenido sobre SVG decorativo en la parte inferior. max-width 280px. Ideal para grids compactos de recetas en home.
-- **carousel** (`.card--carousel`): Tarjeta vertical para carruseles. Ligeramente más grande que vertical (200px de imagen). max-width 320px. Pensada para secciones destacadas con scroll horizontal.
-- **horizontal** (`.card--horizontal`): Tarjeta horizontal con imagen a la izquierda (35%) y contenido a la derecha (65%) sobre fondo blanco. Sin SVG decorativo. Para listados o páginas de búsqueda. min-height 180px, ancho completo.
-- **featured** (`.card--featured`): Tarjeta destacada más grande con borde amarillo (2px) y efectos hover más pronunciados. Para recetas principales o promociones especiales. max-width 400px, min-height 380px.
-
-**Tamaños y dimensiones (respetando relación de aspecto):**
-- **Vertical (default)**: 337px × 406px (relación aspecto 0.83) - Para grids compactos
-- **Carousel**: 575px × 533px (relación aspecto 1.08) - Para carruseles/secciones destacadas
-- **Horizontal (listado)**: 813px × 493px (relación aspecto 1.65) - Para listados de búsqueda
-- **Featured**: 575px × 533px (como carousel, pero con borde especial) - Para promociones
-
-**Estructura interna:**
-La tarjeta es un contenedor donde **la imagen de fondo ocupa TODA la tarjeta** (100% width y height) con el contenido superpuesto encima:
-
-1. **Imagen de fondo (ocupa 100%)**: Se aplica como `background-image` con `background-size: cover` y `background-position: center`, permitiendo zoom smooth en hover (scale 1.05)
-2. **SVG decorativo (card-form)**: Forma orgánica gris oscura (rgba(65,65,65,0.90)) superpuesta en la parte inferior, creando un área visual para el contenido (no aparece en variante horizontal)
-3. **Contenido superpuesto** (position: absolute, bottom: 0, con gradiente de fondo oscuro):
-   - Categoría/Etiqueta (opcional): Badge amarillo con texto en mayúsculas
-   - Título (h3): Fuente Poppins, bold, texto blanco, máximo 2 líneas con ellipsis
-   - Descripción (opcional): Texto blanco, máximo 2 líneas con ellipsis
-   - Metadatos:
-     - Valoración: Estrellas (★/☆) de 0 a 5
-     - Tiempo de preparación: Icono ⏱ + texto
-     - Dificultad: Icono + texto
-   - Botones de acción (en la parte inferior del contenido):
-     - **Variantes vertical/carousel/featured**: Un botón "Ver receta" (primary, amarillo, ancho completo)
-     - **Variante horizontal**: Dos botones flex (flex: 1 cada uno) - "Guardar" (secondary, gris semitransparente) y "Ver receta" (primary, amarillo)
-
-**Estados que maneja:**
-- **:hover**: Elevación de sombra (shadow-md → shadow-xl), translateY(-8px) y zoom de imagen (scale 1.05)
-- **:hover (featured)**: Elevación mayor (translateY -12px + scale 1.02) con sombra amarilla
-- **:focus**: Focus ring visible para cards clickeables (role="button")
-- **:active**: Reducción del translateY a -4px para feedback táctil
-- **clickeable**: Cursor pointer cuando se proporciona evento `(cardClick)`
-
-**Propiedades Input:**
-- `variant`: 'vertical' | 'carousel' | 'horizontal' | 'featured' (por defecto: 'vertical')
-- `imageUrl`: URL de la imagen de fondo
-- `imageAlt`: Texto alternativo para la imagen
-- `title`: Título de la receta
-- `description`: Descripción breve
-- `rating`: Valoración de 0 a 5
-- `time`: Tiempo de preparación (ej: "30 min")
-- `difficulty`: Nivel de dificultad (ej: "Fácil")
-- `category`: Categoría o etiqueta
-- `actionText`: Texto del botón de acción (por defecto: "Ver receta")
-- `showAction`: Mostrar u ocultar el botón (por defecto: true)
-- `showDecorative`: Mostrar u ocultar el SVG decorativo (por defecto: true, no aplica a horizontal)
-
-**Eventos Output:**
-- `(cardClick)`: Emitido al hacer click en cualquier parte de la card
-- `(actionClick)`: Emitido al hacer click en el botón de acción "Ver receta" (con stopPropagation)
-- `(saveClick)`: Emitido al hacer click en el botón "Guardar" (solo en variante horizontal)
-
-**Características de accesibilidad:**
-- Uso semántico de `<article>` para cada card
-- Atributo `role="button"` cuando la card es clickeable
-- `tabindex="0"` para navegación por teclado en cards clickeables
-- `aria-label` para valoración con estrellas legible por lectores de pantalla
-- Iconos decorativos marcados con `aria-hidden="true"`
-- `loading="lazy"` en imágenes para optimización de rendimiento
-- Focus ring visible para navegación por teclado
-
-**Ejemplo de uso:**
+**Estructura semántica:**
 
 ```html
-<!-- Card VERTICAL (337x406, para grids compactos en home) -->
-<app-card
-  variant="vertical"
-  imageUrl="/assets/images/pizza-margherita.jpg"
-  imageAlt="Pizza Margherita recién horneada"
-  title="Pizza Margherita"
-  description="Clásica pizza italiana con tomate, mozzarella"
-  [rating]="4.5"
-  time="45 min"
-  difficulty="Media"
-  category="Italiana"
-  (actionClick)="verReceta(1)"
-></app-card>
-
-<!-- Card CAROUSEL (575x533, para secciones destacadas con scroll horizontal) -->
-<app-card
-  variant="carousel"
-  imageUrl="/assets/images/paella-valenciana.jpg"
-  imageAlt="Paella Valenciana tradicional"
-  title="Paella Valenciana Auténtica"
-  description="Arroz, pollo, conejo, judías verdes y garrofón"
-  [rating]="5"
-  time="90 min"
-  difficulty="Difícil"
-  category="Destacada"
-  (actionClick)="verReceta(2)"
-></app-card>
-
-<!-- Card HORIZONTAL (813x493, para listados de búsqueda con dos botones) -->
-<app-card
-  variant="horizontal"
-  imageUrl="/assets/images/ensalada-cesar.jpg"
-  imageAlt="Ensalada César"
-  title="Ensalada César"
-  description="Lechuga romana, pollo, parmesano y salsa César casera"
-  [rating]="4"
-  time="20 min"
-  difficulty="Fácil"
-  category="Ensaladas"
-  actionText="Ver receta"
-  (cardClick)="verDetalleReceta(3)"
-  (actionClick)="verRecetaCompleta(3)"
-  (saveClick)="agregarAFavoritos(3)"
-></app-card>
-
-<!-- Card FEATURED (575x533, para promociones especiales con borde amarillo) -->
-<app-card
-  variant="featured"
-  imageUrl="/assets/images/tarta-chocolate.jpg"
-  imageAlt="Tarta de Chocolate belga"
-  title="Tarta de Chocolate Belga Premium"
-  description="Chocolate 72%, nata, frambuesas y coulis de maracuyá"
-  [rating]="4.8"
-  time="60 min"
-  difficulty="Media"
-  category="Postres"
-  actionText="Ver receta completa"
-  (actionClick)="verRecetaDestacada(4)"
-></app-card>
+<app-modal 
+  [isOpen]="showModal"
+  title="Confirmar acción"
+  size="md"
+  [closeOnEscape]="true"
+  (closed)="onModalClosed()">
+  
+  <div class="modal-content">
+    <p>¿Estás seguro de que deseas continuar?</p>
+  </div>
+  
+  <div class="modal-footer">
+    <app-button variant="ghost" (buttonClick)="closeModal()">
+      Cancelar
+    </app-button>
+    <app-button variant="primary" (buttonClick)="confirm()">
+      Confirmar
+    </app-button>
+  </div>
+</app-modal>
 ```
 
-**Código TypeScript del componente:**
+### Tooltips (.tooltip)
+
+Los tooltips proporcionan información contextual adicional sin ocupar espacio permanente en el layout.
+
+**Características:**
+
+- Aparecen al pasar el ratón (mouseenter) o recibir foco
+- Posicionamiento dinámico: top, bottom, left, right
+- Flecha que apunta al elemento objetivo
+- Color de fondo contrasta con el texto para legibilidad
+- Animación suave de entrada
+
+**Ejemplo:**
+
+```html
+<app-tooltip text="Número de porciones que aporta esta receta" position="top">
+  <span class="recipe-servings">4 porciones</span>
+</app-tooltip>
+```
+
+### Tabs y navegación por pestañas (.tabs)
+
+Las pestañas permiten agrupar contenido relacionado sin expandir la altura de la página.
+
+**Estructura:**
+
+```html
+<app-tabs [tabs]="[
+  { id: 'ingredientes', label: 'Ingredientes', icon: '🥗' },
+  { id: 'pasos', label: 'Pasos', icon: '👨‍🍳' },
+  { id: 'info', label: 'Info nutricional', icon: '📊' }
+]"
+[activeTabId]="activeTab"
+(tabChanged)="onTabChanged($event)">
+</app-tabs>
+
+<div *ngIf="activeTab === 'ingredientes'">
+  <!-- Contenido de ingredientes -->
+</div>
+```
+
+**Estilos:**
+
+- Tab activa: texto en color secundario con borde inferior más grueso
+- Tab inactiva: texto gris, sin borde
+- Transición suave entre tabs
+- Accesible mediante teclado (arrow keys, enter)
+
+### Notificaciones y Toasts (.toast, .notification)
+
+Las notificaciones informan al usuario de cambios de estado, errores o acciones completadas sin interrumpir el flujo de trabajo.
+
+**Variantes por tipo:**
+
+- **Success** (verde): Acciones completadas, cambios guardados
+- **Error** (rojo): Fallos de validación, errores del servidor
+- **Warning** (naranja): Advertencias, confirmaciones necesarias
+- **Info** (azul): Información general, consejos
+
+**Características:**
+
+- Auto-dismiss después de 5 segundos (configurable)
+- Posición fija en esquina superior derecha
+- Animación suave de entrada y salida
+- Click para cerrar manualmente
+- Stack múltiples toasts sin superponerse
+
+**Uso en componentes:**
 
 ```typescript
-@Input() variant: 'vertical' | 'carousel' | 'horizontal' | 'featured' = 'vertical';
-@Input() imageUrl: string = '';
-@Input() imageAlt: string = '';
-@Input() title: string = '';
-@Input() description: string = '';
-@Input() rating: number = 0;
-@Input() time: string = '';
-@Input() difficulty: string = '';
-@Input() category: string = '';
-@Input() actionText: string = 'Ver receta';
-@Input() showAction: boolean = true;
-@Input() showDecorative: boolean = true;
-@Output() cardClick = new EventEmitter<void>();
-@Output() actionClick = new EventEmitter<void>();
-@Output() saveClick = new EventEmitter<void>();
-```
+constructor(private toastService: ToastService) {}
 
-**Implementación del SVG decorativo (card-form):**
-
-El SVG decorativo utiliza una curva Bézier cuadrática (path con comando Q) para crear una forma orgánica y suave que se adapta al ancho de la card:
-
-```svg
-<svg viewBox="0 0 300 200" preserveAspectRatio="none">
-  <path
-    d="M0,120 Q50,100 100,110 T200,120 L300,130 L300,200 L0,200 Z"
-    fill="rgba(41, 44, 44, 0.85)"
-  />
-</svg>
-```
-
-- `preserveAspectRatio="none"`: Permite que el SVG se estire para llenar el contenedor
-- `fill="rgba(41, 44, 44, 0.85)"`: Color oscuro semitransparente que permite ver la imagen de fondo
-- La curva crea una forma ondulada natural que aporta dinamismo visual
-
----
-
-## 3.2 Nomenclatura y metodología
-
-Este proyecto utiliza **BEM (Block Element Modifier)** de forma estricta para garantizar componentes predecibles, escalables y fáciles de mantener.
-
-### Estructura BEM aplicada:
-
-**Block (Bloque):**
-Representa un componente independiente y reutilizable.
-- Ejemplo: `.button`, `.card`, `.form-input`, `.site-header`
-
-**Element (Elemento):**
-Parte interna del bloque que no tiene sentido fuera de su contexto.
-- Se conecta con doble guion bajo: `__`
-- Ejemplo: `.button__icon`, `.button__content`, `.card__title`, `.form-input__label`
-
-**Modifier (Modificador):**
-Variación del bloque o elemento que cambia su apariencia o comportamiento.
-- Se conecta con doble guion: `--`
-- Ejemplo: `.button--primary`, `.button--lg`, `.card--featured`, `.form-input--error`
-
-### Ejemplos reales del proyecto:
-
-**Componente Button:**
-```scss
-.button { /* Block: componente base */
-  display: inline-flex;
-  align-items: center;
-  // ... estilos base
-}
-
-.button__content { /* Element: contenido interno */
-  display: inline-flex;
-}
-
-.button__icon { /* Element: icono */
-  font-size: 1.2em;
-}
-
-.button__icon--left { /* Modifier de elemento */
-  margin-right: calc(var(--spacing-2) * -1);
-}
-
-.button--primary { /* Modifier: variante amarilla */
-  background-color: var(--color-secondary);
-}
-
-.button--lg { /* Modifier: tamaño grande */
-  padding: var(--spacing-4) var(--spacing-8);
-}
-
-.button--disabled { /* Modifier: estado deshabilitado */
-  opacity: 0.5;
-  cursor: not-allowed;
+onSave() {
+  this.recipeService.saveRecipe(this.recipe).subscribe({
+    next: (result) => {
+      this.toastService.success('Receta guardada correctamente', 3000);
+    },
+    error: (err) => {
+      this.toastService.error('No se pudo guardar la receta', 5000);
+    }
+  });
 }
 ```
 
-**Componente Header:**
-```scss
-.site-header { /* Block */
-  display: flex;
-  position: sticky;
-}
+### Theme Switcher (.theme-toggle)
 
-.site-header__branding { /* Element: zona de logo */
-  flex-shrink: 0;
-}
+La aplicación soporta alternancia entre tema claro y oscuro, detectando la preferencia del sistema y permitiendo manual override.
 
-.site-header__nav { /* Element: navegación */
-  flex-grow: 1;
-}
+**Implementación:**
 
-.site-header__nav-link { /* Element: enlace de navegación */
-  padding: var(--spacing-3);
-  
-  &:hover {
-    background-color: var(--color-primary-hover);
-  }
-}
-```
+- Lectura de `prefers-color-scheme` del navegador al cargar
+- Botón en header para cambiar tema
+- Persistencia en `localStorage`
+- Variables CSS diferentes según tema (ej: `--color-bg-light` vs `--color-bg-dark`)
 
-**Componente Form Input:**
-```scss
-.form-input { /* Block */
-  display: flex;
-  flex-direction: column;
-}
+**Estilos tema claro:**
 
-.form-input__label { /* Element: etiqueta */
-  font-weight: var(--font-weight-medium);
-}
+- Fondos: Blanco y verdes suaves
+- Texto: Gris oscuro (#292C2C)
+- Formas SVG: Amarillo
 
-.form-input__field { /* Element: campo de entrada */
-  padding: var(--spacing-4);
-}
+**Estilos tema oscuro:**
 
-.form-input--error { /* Modifier: estado de error */
-  .form-input__field {
-    border-color: var(--color-error-dark);
-  }
-}
+- Fondos: Grises oscuros
+- Texto: Blanco/gris claro
+- Formas SVG: Tonos más saturados
 
-.form-input--disabled { /* Modifier: estado deshabilitado */
-  opacity: 0.5;
-}
-```
+## 3.2 Validación y herramientas de CSS
 
-**Componente Card:**
-```scss
-.card { /* Block: tarjeta de receta */
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
-}
+### Validadores CSS utilizados
 
-.card__image-wrapper { /* Element: contenedor de imagen */
-  position: relative;
-}
+La validación de estilos se ha realizado mediante:
 
-.card__decorative-bg { /* Element: SVG decorativo de fondo */
-  position: absolute;
-  bottom: 0;
-  fill: rgba(65, 65, 65, 0.90);
-}
+1. **W3C CSS Validator**: Comprobación de sintaxis CSS válida y cumplimiento de estándares
+2. **StyleLint**: Linter configurado en el proyecto para mantener consistencia en nomenclatura, orden de propiedades y convenciones
+3. **Browser DevTools**: Inspección de estilos computados, cascada CSS y especificidad
 
-.card__content { /* Element: zona de contenido */
-  position: relative;
-  z-index: 2;
-  padding: var(--spacing-4) var(--spacing-5);
-}
+### Criterios de validación aplicados
 
-.card__title { /* Element: título de la receta */
-  font-size: var(--font-h4-size);
-  color: var(--color-neutral-white);
-}
+- **Especificidad controlada**: Uso de ITCSS para evitar guerras de especificidad
+- **Nomenclatura consistente**: Todas las clases siguen BEM (`.block`, `.block__element`, `.block--modifier`)
+- **Variables de diseño**: Todos los valores de color, espaciado, tipografía provienen de design tokens
+- **Propiedades recomendadas**: Se evitan deprecaciones de CSS y se usan propiedades modernas (CSS Grid, Flexbox, Custom Properties)
 
-.card__rating { /* Element: valoración con estrellas */
-  display: flex;
-  gap: var(--spacing-1);
-}
+### Buenas prácticas implementadas
 
-.card__star { /* Element: estrella individual */
-  color: var(--color-neutral-gray);
-}
+- **Mobile-first**: Media queries comenzando en dispositivos pequeños (`min-width`)
+- **Accesibilidad**: Suficiente contraste de color (WCAG AA), focus rings visibles, estados activos claros
+- **Performance**: Minimización de reflows, uso de `will-change` en animaciones, evitar shadows excesivos
+- **Mantenibilidad**: Documentación de cada componente, examples de uso, propósito de variables
 
-.card__star--filled { /* Modifier de elemento: estrella rellena */
-  color: var(--color-secondary);
-}
+## 3.3 Guía de estilo actualizada
 
-.card--vertical { /* Modifier: card vertical (compacta, para grids) */
-  max-width: 280px;
-  min-height: 320px;
-}
+La guía de estilo (Style Guide Page) actúa como referencia viva de todos los componentes disponibles y sus variantes. Se encuentra disponible en la ruta `/style-guide` y se actualiza constantemente conforme se añaden nuevos componentes.
 
-.card--carousel { /* Modifier: card para carruseles */
-  max-width: 320px;
-  min-height: 360px;
-}
+### Estructura de la guía de estilo
 
-.card--horizontal { /* Modifier: card horizontal (para listados) */
-  flex-direction: row;
-  min-height: 180px;
-  
-  .card__image-wrapper {
-    width: 35%;
-  }
+La página de style guide está organizada en secciones temáticas:
 
-  .card__content {
-    width: 65%;
-    color: var(--color-text-main);
-  }
-  
-  .card__decorative-bg {
-    display: none;
-  }
-}
+1. **Paleta de colores**: Mostrando todas las variables de color (primarios, secundarios, semánticos)
+2. **Tipografía**: Jerarquía de headings (H1–H4), texto base, pesos disponibles
+3. **Botones**: Todas las variantes (primary, secondary, ghost, danger) y tamaños (sm, md, lg)
+4. **Cards**: Variantes vertical, horizontal, featured, carrusel
+5. **Formularios**: Inputs, textareas, checkboxes, radio buttons, selects
+6. **FormArray**: Demostración de campos dinámicos (añadir/eliminar teléfonos, direcciones)
+7. **Navegación**: Breadcrumbs, tabs, paginación
+8. **Feedback**: Alertas, badges, modales, notificaciones, toasts
+9. **Componentes interactivos**: Tooltips, spinner, theme switcher
+10. **Utilidades**: Espaciado, sombras, radios de borde, transiciones
 
-.card--featured { /* Modifier: card destacada */
-  border: 2px solid var(--color-secondary);
-  max-width: 400px;
-  min-height: 380px;
-}
+### Uso de la guía de estilo
 
-.card--clickable { /* Modifier: card interactiva */
-  cursor: pointer;
-}
-```
+La guía de estilo sirve como:
 
-### Estrategia de nomenclatura:
+- **Referencia para desarrolladores**: Visualizar componentes disponibles y sus estados antes de usarlos
+- **Documentación visual**: Cada componente muestra su nombre, variantes, tamaños y estados
+- **Testing manual**: Verificar que los estilos renderean correctamente en diferentes navegadores
+- **Base para discusiones de diseño**: Facilita comunicación sobre cambios visuales o nuevos componentes
 
-Pendiente: Cards, Form elements adicionales, Alerts, Style Guide page
+### Componentes documentados en la guía
+
+Cada componente en la guía de estilo incluye:
+
+- **Título descriptivo**: Nombre y categoría del componente
+- **Ejemplo interactivo**: Renderización real del componente
+- **Variantes**: Todas las posibilidades visuales (colores, tamaños, estados)
+- **Propiedades**: Input/Output principales si es un componente Angular
+- **Notas de uso**: Cuándo usar cada variante, buenas prácticas de accesibilidad
+
+### Ejemplos de componentes en la guía
+
+**Botones:**
+- Todas las 4 variantes (primary, secondary, ghost, danger)
+- Todos los 3 tamaños (sm, md, lg)
+- Estados: normal, hover, active, disabled
+- Con iconos y ancho completo
+
+**Cards:**
+- Variante vertical (para grids)
+- Variante horizontal (para listados)
+- Variante featured (destacada)
+- Estados interactivos (hover, active)
+
+**Formularios:**
+- Input text, email, password, tel
+- Textarea con contador de caracteres
+- Checkbox simple y agrupado
+- Radio buttons vertical e inline
+- Select/dropdown
+- Validación visual (error, success, pending)
+- Estados: normal, focused, disabled, filled
+
+**Componentes complejos:**
+- Modal con diferentes tamaños
+- Tabs funcionales
+- Notificaciones con auto-dismiss
+- Tooltips en 4 posiciones
+- Paginación con navegación
+
+### Mantenimiento de la guía de estilo
+
+Cada vez que se añade un nuevo componente o se modifica uno existente:
+
+1. Se actualiza el componente en `src/app/components/shared/`
+2. Se añade un ejemplo en la página de style guide
+3. Se documenta en esta sección de DOCUMENTACION.md
+4. Se verifica que los estilos sigan las convenciones (BEM, ITCSS, design tokens)
+
+Esta práctica garantiza que la guía de estilo siempre refleja el estado actual de la interfaz y sirve como fuente de verdad para los componentes disponibles.

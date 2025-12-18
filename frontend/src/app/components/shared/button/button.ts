@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   selector: 'app-button',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './button.html',
   styleUrl: './button.scss',
@@ -47,7 +48,7 @@ export class Button {
   @Input() fullWidth: boolean = false;
 
   /**
-   * Icono opcional (emoji o texto)
+   * Icono opcional (SVG string, emoji o texto)
    */
   @Input() icon: string = '';
 
@@ -60,6 +61,7 @@ export class Button {
    * Evento de click
    */
   @Output() buttonClick = new EventEmitter<MouseEvent>();
+
 
   /**
    * Genera las clases CSS del botón
