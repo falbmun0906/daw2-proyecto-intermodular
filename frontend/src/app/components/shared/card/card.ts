@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Badge } from '../badge/badge';
 
 /**
  * Componente Card reutilizable para tarjetas de recetas
@@ -9,7 +10,7 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   selector: 'app-card',
-  imports: [CommonModule],
+  imports: [CommonModule, Badge],
   templateUrl: './card.html',
   styleUrl: './card.scss',
 })

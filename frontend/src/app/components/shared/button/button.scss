@@ -24,23 +24,17 @@
 
   /* Bordes y forma */
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   cursor: pointer;
 
   /* Transiciones suaves */
   transition: background-color var(--transition-base) var(--transition-easing),
               color var(--transition-base) var(--transition-easing),
-              transform var(--transition-fast) var(--transition-easing),
               box-shadow var(--transition-base) var(--transition-easing),
               opacity var(--transition-base) var(--transition-easing);
 
   /* Accesibilidad: focus visible */
   @include focus-ring(var(--color-info-dark));
-
-  /* Estados interactivos por defecto */
-  &:active:not(:disabled):not(.button--disabled) {
-    transform: scale(0.98);
-  }
 }
 
 /* ====================================
@@ -151,7 +145,6 @@
 
   &:active:not(:disabled):not(.button--disabled) {
     background-color: var(--color-primary-light-active);
-    transform: scale(0.98);
   }
 }
 

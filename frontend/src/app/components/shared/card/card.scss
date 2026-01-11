@@ -19,7 +19,7 @@
   width: 100%;
 
   /* Forma y bordes */
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-sm);
   background-color: var(--color-neutral-white);
 
   /* Background image */
@@ -31,8 +31,7 @@
   box-shadow: var(--shadow-md);
 
   /* Transiciones suaves */
-  transition: transform var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
+  transition: box-shadow var(--transition-base) var(--transition-easing);
 
   /* Estado hover: elevación y transformación */
   &:hover {
@@ -51,6 +50,19 @@
 .card__image-bg {
   background-size: cover;
   background-position: center;
+
+  /* Overlay oscuro para aumentar contraste con el contenido */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 /* ====================================
@@ -115,22 +127,22 @@
   left: 0;
   right: 0;
   z-index: 3;
-  padding: var(--spacing-5) var(--spacing-5);
+  padding: var(--spacing-10) var(--spacing-6);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
 }
 
 /* ====================================
- * Elemento: Categoría/Etiqueta
+ * Elemento: Categoría/Etiqueta (ahora dentro de meta)
  * ==================================== */
 
 .card__category {
-  display: inline-block;
-  align-self: flex-start;
-  padding: var(--spacing-2) var(--spacing-3);
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-1) var(--spacing-3);
   background-color: var(--color-secondary);
   color: var(--color-text-main);
   font-family: var(--font-family-primary);
-  font-size: var(--font-xs-size);
+  font-size: var(--font-sm-size);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -144,7 +156,7 @@
 
 .card__title {
   font-family: var(--font-family-primary);
-  font-size: var(--font-h4-size);
+  font-size: var(--font-h3-size);
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   color: var(--color-neutral-white);
@@ -164,7 +176,7 @@
 
 .card__description {
   font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
+  font-size: var(--font-body-size);
   line-height: 1.4;
   color: var(--color-neutral-white);
   margin: 0;
@@ -184,7 +196,7 @@
 .card__meta {
   @include flex-layout(row, flex-start, center, var(--spacing-4));
   flex-wrap: wrap;
-  font-size: var(--font-sm-size);
+  font-size: var(--font-body-size);
   color: var(--color-neutral-white);
 }
 
@@ -231,8 +243,8 @@
  * ==================================== */
 
 .card__actions {
-  @include flex-layout(row, center, center, var(--spacing-3));
-  margin-top: var(--spacing-3);
+  @include flex-layout(row, flex-end, center, var(--spacing-3));
+  margin-top: auto;
   gap: var(--spacing-3);
 }
 
@@ -242,26 +254,17 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-2);
-  padding: var(--spacing-3) var(--spacing-5);
+  padding: var(--spacing-3) var(--spacing-6);
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
+  font-size: var(--font-body-size);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: background-color var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing),
-              transform var(--transition-fast) var(--transition-easing);
+              box-shadow var(--transition-base) var(--transition-easing);
 
   @include focus-ring(var(--color-info-dark));
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
 }
 
 /* Botón primary (Ver receta) */
@@ -277,17 +280,15 @@
   }
 }
 
-/* Botón secondary (Guardar) - solo en horizontal */
+/* Botón secondary (igual que button--secondary) */
 .card__action-button--secondary {
-  background-color: rgba(192, 201, 189, 0.8);
-  color: var(--color-text-main);
-  border: var(--border-width-thin) solid var(--color-text-main);
-  box-shadow: none;
+  background-color: rgba(234, 224, 199, 0.75); /* #EAE0C7 con 75% opacidad */
+  box-shadow: var(--shadow-sm);
   flex: 1;
 
   &:hover {
-    background-color: var(--color-primary);
-    box-shadow: var(--shadow-sm);
+    background-color: var(--color-secondary-light-hover);
+    box-shadow: var(--shadow-md);
   }
 }
 
@@ -297,10 +298,6 @@
 
 .card--clickable {
   cursor: pointer;
-
-  &:active {
-    transform: translateY(-4px);
-  }
 }
 
 /* ====================================
@@ -313,8 +310,43 @@
   width: 100%;
   aspect-ratio: 337 / 406;
 
+  /* Filtro de ruido verdoso sobre la imagen */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    /* Ruido SVG con tono verdoso */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    /* Tono verdoso */
+    background-color: rgba(107, 142, 95, 0.15);
+    background-blend-mode: multiply;
+  }
+
+  /* Contenido ocupa toda la card para que margin-top: auto funcione en botones */
   .card__content {
-    padding: var(--spacing-4) var(--spacing-4);
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, transparent 40%, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+  }
+
+  /* Ocultar el decorativo en vertical */
+  .card__decorative-bg {
+    display: none;
+  }
+
+
+  .card__action-button {
+    flex: none;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-sm-size);
   }
 }
 
@@ -346,7 +378,7 @@
 .card--horizontal {
   max-width: none;
   width: 100%;
-  aspect-ratio: 813 / 493;
+  aspect-ratio: 813 / 400;
 
   .card__image-wrapper {
     width: 100%;
@@ -371,10 +403,6 @@
   .card__meta {
     color: var(--color-neutral-white);
   }
-
-  &:hover {
-    transform: translateY(-6px);
-  }
 }
 
 /* ====================================
@@ -386,11 +414,9 @@
   max-width: 575px;
   width: 100%;
   aspect-ratio: 575 / 533;
-  border: var(--border-width-medium) solid var(--color-secondary);
   box-shadow: var(--shadow-lg);
 
   &:hover {
-    transform: translateY(-10px);
     box-shadow: 0 12px 32px rgba(242, 181, 69, 0.25);
   }
 
@@ -437,7 +463,7 @@
 
   .card--horizontal {
     max-width: none;
-    aspect-ratio: 813 / 493;
+    aspect-ratio: 813 / 400;
   }
 }
 

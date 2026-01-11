@@ -34,11 +34,6 @@
 
   <!-- Contenido superpuesto -->
   <div class="card__content">
-    <!-- Categoría/Etiqueta -->
-    @if (category) {
-      <span class="card__category">{{ category }}</span>
-    }
-
     <!-- Título -->
     @if (title) {
       <h3 class="card__title">{{ title }}</h3>
@@ -49,8 +44,19 @@
       <p class="card__description">{{ description }}</p>
     }
 
-    <!-- Metadatos: valoración, tiempo, dificultad -->
+    <!-- Metadatos: categoría, valoración, tiempo, dificultad -->
     <div class="card__meta">
+      <!-- Categoría -->
+      @if (category) {
+        @if (variant === 'vertical') {
+          <app-badge variant="secondary" size="sm">
+            {{ category }}
+          </app-badge>
+        } @else {
+          <span class="card__category">{{ category }}</span>
+        }
+      }
+
       <!-- Valoración con estrellas -->
       @if (rating > 0) {
         <div class="card__rating" [attr.aria-label]="'Valoración: ' + rating + ' de 5 estrellas'">
@@ -68,18 +74,32 @@
 
       <!-- Tiempo de preparación -->
       @if (time) {
-        <span class="card__time" aria-label="Tiempo de preparación">
-          <span class="card__meta-icon" aria-hidden="true">⏱</span>
-          {{ time }}
-        </span>
+        @if (variant === 'vertical') {
+          <app-badge variant="neutral" size="sm">
+            <span class="card__meta-icon" aria-hidden="true">⏱</span>
+            {{ time }}
+          </app-badge>
+        } @else {
+          <span class="card__time" aria-label="Tiempo de preparación">
+            <span class="card__meta-icon" aria-hidden="true">⏱</span>
+            {{ time }}
+          </span>
+        }
       }
 
       <!-- Dificultad -->
       @if (difficulty) {
-        <span class="card__difficulty" aria-label="Dificultad">
-          <span class="card__meta-icon" aria-hidden="true">📊</span>
-          {{ difficulty }}
-        </span>
+        @if (variant === 'vertical') {
+          <app-badge variant="neutral" size="sm">
+            <span class="card__meta-icon" aria-hidden="true">📊</span>
+            {{ difficulty }}
+          </app-badge>
+        } @else {
+          <span class="card__difficulty" aria-label="Dificultad">
+            <span class="card__meta-icon" aria-hidden="true">📊</span>
+            {{ difficulty }}
+          </span>
+        }
       }
     </div>
 
@@ -105,7 +125,7 @@
         } @else {
           <!-- En variantes vertical/carousel/featured: un botón -->
           <button
-            class="card__action-button card__action-button--primary"
+            class="card__action-button card__action-button--secondary"
             type="button"
             (click)="onActionClick($event)"
           >
