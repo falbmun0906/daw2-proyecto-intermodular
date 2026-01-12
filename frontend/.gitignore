@@ -11,6 +11,8 @@
 npm-debug.log
 yarn-error.log
 
+.oculto/
+
 # IDEs and editors
 .idea/
 .project
@@ -41,3 +43,4 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+/.oculto/
