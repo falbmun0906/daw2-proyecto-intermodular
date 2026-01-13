@@ -1,12 +1,25 @@
 @use '../../../styles/01-tools/mixins' as *;
 
 .home-page {
-  background: linear-gradient(135deg,
-    var(--color-primary-light) 0%,
-    var(--color-tertiary-light) 50%,
-    var(--color-secondary-light) 100%);
+  background-color: var(--bg-primary);
   position: relative;
   overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.home-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../../../assets/main-bg-form.svg');
+  background-repeat: no-repeat;
+  background-size: 2400px;
+  background-position: center;
+  opacity: var(--svg-overlay-opacity);
+  pointer-events: none;
+  z-index: 0;
+  filter: var(--svg-overlay-color);
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .hero {
@@ -14,6 +27,7 @@
   position: relative;
   padding: var(--spacing-16);
   @include flex-layout(column, flex-end, center, 0);
+  z-index: 1;
 }
 
 .hero__collage {
@@ -84,6 +98,8 @@
 .trending,
 .must-see {
   padding: var(--spacing-20) var(--spacing-16);
+  position: relative;
+  z-index: 1;
 }
 
 .trending__title,
@@ -140,13 +156,14 @@
   background: url('/assets/kitchen-bg.jpg') center/cover;
   @include flex-layout(row, center, center, 0);
   padding: var(--spacing-16);
+  z-index: 1;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.65);
-  }
+.kitchen-control::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .kitchen-control__content {
@@ -178,9 +195,8 @@
   grid-template-columns: 40% 60%;
   gap: var(--spacing-12);
   align-items: center;
-  background: linear-gradient(135deg,
-    var(--color-primary-light) 0%,
-    var(--color-tertiary-light) 100%);
+  position: relative;
+  z-index: 1;
 }
 
 .newsletter__blob {
