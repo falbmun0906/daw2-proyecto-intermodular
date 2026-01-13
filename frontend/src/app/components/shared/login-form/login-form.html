@@ -1,81 +1,93 @@
 <form class="login-form" [formGroup]="loginForm" (submit)="onSubmit($event)">
   <h1 class="login-form__title">Iniciar sesión</h1>
 
-  <!-- Fieldset: Credenciales de acceso -->
   <fieldset class="login-form__fieldset">
     <legend class="visually-hidden">Credenciales de acceso</legend>
 
-    <!-- Email -->
-    <div class="login-form__field">
-      <label class="login-form__label" for="email">
-        Email <span class="login-form__required">*</span>
-      </label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        class="login-form__input"
-        [class.login-form__input--error]="email?.invalid && email?.touched"
-        [class.login-form__input--valid]="email?.valid && email?.touched"
-        placeholder="tu@email.com"
-        (focus)="onFieldFocus()"
-      />
-      @if (email?.invalid && email?.touched) {
-        <span class="login-form__error">{{ getErrorMessage('email') }}</span>
-      }
-    </div>
+    <app-form-input
+      type="email"
+      label="Email"
+      name="email"
+      placeholder="tu@email.com"
+      icon="✉"
+      [required]="true"
+      formControlName="email"
+      [errorMessage]="getErrorMessage('email')"
+      [hasError]="!!(email?.invalid && email?.touched)"
+      class="login-form__field"
+    />
 
-    <!-- Password -->
-    <div class="login-form__field">
-      <label class="login-form__label" for="password">
-        Contraseña <span class="login-form__required">*</span>
-      </label>
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        class="login-form__input"
-        [class.login-form__input--error]="password?.invalid && password?.touched"
-        [class.login-form__input--valid]="password?.valid && password?.touched"
-        placeholder="Tu contraseña"
-        (focus)="onFieldFocus()"
-      />
-      @if (password?.invalid && password?.touched) {
-        <span class="login-form__error">{{ getErrorMessage('password') }}</span>
-      }
-    </div>
+    <app-form-input
+      type="password"
+      label="Contraseña"
+      name="password"
+      placeholder="Tu contraseña"
+      icon="🔒"
+      [required]="true"
+      formControlName="password"
+      [errorMessage]="getErrorMessage('password')"
+      [hasError]="!!(password?.invalid && password?.touched)"
+      class="login-form__field"
+    />
   </fieldset>
 
-  <!-- Recordar sesión -->
   <div class="login-form__options">
-    <label class="login-form__checkbox-label">
-      <input
-        type="checkbox"
-        formControlName="rememberMe"
-        class="login-form__checkbox"
-      />
-      <span>Recuérdame</span>
-    </label>
+    <app-form-checkbox
+      label="Recuérdame"
+      name="rememberMe"
+      formControlName="rememberMe"
+    />
+
+    <app-button
+      type="submit"
+      variant="secondary"
+      size="md"
+      [disabled]="loginForm.invalid || isSubmitting"
+      class="login-form__submit">
+      {{ isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión' }}
+    </app-button>
   </div>
 
-  <!-- Error general -->
   @if (generalError) {
     <div class="login-form__general-error">{{ generalError }}</div>
   }
 
-  <!-- Botón submit -->
-  <div class="login-form__actions">
-    <button
-      type="submit"
-      class="login-form__submit"
-      [disabled]="loginForm.invalid || isSubmitting"
-    >
-      {{ isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión' }}
-    </button>
+  <p class="login-form__register-link">
+    ¿No tienes cuenta? <a routerLink="/registro">Regístrate</a>
+  </p>
+
+  <div class="login-form__divider">
+    <span class="login-form__divider-line"></span>
+    <span class="login-form__divider-text">o</span>
+    <span class="login-form__divider-line"></span>
   </div>
 
-  <!-- Link a registro -->
-  <p class="login-form__register-link">
-    ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
-  </p>
+  <div class="login-form__social">
+    <app-button
+      variant="secondary"
+      size="md"
+      class="login-form__social-btn"
+      (buttonClick)="onSocialLogin('google')">
+      <img src="assets/icons/google.svg" alt="" class="login-form__social-icon" />
+      Iniciar con Google
+    </app-button>
+
+    <app-button
+      variant="secondary"
+      size="md"
+      class="login-form__social-btn"
+      (buttonClick)="onSocialLogin('facebook')">
+      <img src="assets/icons/facebook.svg" alt="" class="login-form__social-icon" />
+      Iniciar con Facebook
+    </app-button>
+
+    <app-button
+      variant="secondary"
+      size="md"
+      class="login-form__social-btn"
+      (buttonClick)="onSocialLogin('x')">
+      <img src="assets/icons/x.svg" alt="" class="login-form__social-icon" />
+      Iniciar con X
+    </app-button>
+  </div>
 </form>

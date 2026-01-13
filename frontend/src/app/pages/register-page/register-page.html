@@ -3,10 +3,14 @@
     <div class="register-page__form-container">
       <app-register-form
         (submitForm)="onSubmit($event)"
-      ></app-register-form>
+        (cancel)="onCancel()"
+      />
     </div>
-    <div class="register-page__image">
-      <h2 class="register-page__image-title">Desp[i]lensa</h2>
+
+    <div class="register-page__image-container">
+      <div class="register-page__image">
+        <img src="assets/logo-main.svg" alt="Desp[i]ensa" class="register-page__image-logo" />
+      </div>
     </div>
   </div>
 </div>

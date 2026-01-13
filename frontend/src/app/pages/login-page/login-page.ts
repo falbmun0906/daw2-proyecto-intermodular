@@ -15,5 +15,9 @@ export class LoginPage {
     console.log('Login form submitted:', formData);
     // Aquí iría la lógica de autenticación
   }
+
+  onCancel(): void {
+    this.router.navigate(['/']);
+  }
 }
 

@@ -2,6 +2,7 @@
  * FormTextarea Component
  * ========================= */
 
+@use '../../../../styles/00-settings/variables.scss' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
 /* ====================================
@@ -21,8 +22,9 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-main);
+  color: var(--text-primary);
   line-height: 1.5;
+  margin-bottom: var(--spacing-1);
 }
 
 .form-textarea__required {
@@ -39,35 +41,45 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-body-size);
   line-height: 1.6;
-  color: var(--color-text-main);
-  background-color: var(--color-neutral-white);
-  border: var(--border-width-medium) solid var(--color-primary);
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color-secondary);
   border-radius: var(--radius-md);
   resize: vertical;
   min-height: 100px;
-  transition: border-color var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &::placeholder {
-    color: var(--color-neutral-gray);
-    opacity: 0.7;
-  }
-
-  &:hover:not(:disabled) {
-    border-color: var(--color-primary-hover);
+    color: var(--text-secondary);
   }
 
   &:focus {
     outline: none;
-    border-color: var(--color-secondary);
-    box-shadow: 0 0 0 3px rgba(242, 181, 69, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 192, 201, 189), 0.2);
   }
 
   &:disabled {
-    background-color: var(--color-primary-light);
-    color: var(--color-neutral-gray);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
     cursor: not-allowed;
     opacity: 0.6;
+  }
+
+  &--error {
+    border-color: var(--color-error-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
+    }
+  }
+
+  &--valid {
+    border-color: var(--color-success-dark);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    }
   }
 }
 
@@ -78,9 +90,9 @@
 .form-textarea__char-count {
   font-family: var(--font-family-primary);
   font-size: var(--font-xs-size);
-  color: var(--color-neutral-gray);
+  color: var(--text-secondary);
   text-align: right;
-  margin-top: calc(var(--spacing-2) * -1);
+  margin-top: var(--spacing-1);
 
   &--warning {
     color: var(--color-error-dark);
@@ -95,9 +107,10 @@
 .form-textarea__help {
   font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
-  color: var(--color-neutral-gray);
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.4;
+  margin-top: var(--spacing-1);
 }
 
 /* ====================================
@@ -105,39 +118,9 @@
  * ==================================== */
 
 .form-textarea__error {
-  font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
   color: var(--color-error-dark);
-  margin: 0;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-
-  &::before {
-    content: '⚠';
-    font-size: var(--font-body-size);
-  }
-}
-
-/* ====================================
- * Elemento: Success message
- * ==================================== */
-
-.form-textarea__success {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
-  color: var(--color-success-dark);
-  margin: 0;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-
-  &::before {
-    content: '✓';
-    font-size: var(--font-body-size);
-  }
+  margin-top: var(--spacing-1);
 }
 
 /* ====================================
@@ -163,7 +146,7 @@
     border-color: var(--color-success-dark);
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba(112, 168, 0, 0.2);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
     }
   }
 }
@@ -177,4 +160,3 @@
     color: var(--color-neutral-gray);
   }
 }
-

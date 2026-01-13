@@ -1,28 +1,25 @@
-/* =========================
- * FormSelect Component
- * ========================= */
-
+@use '../../../../styles/00-settings/variables.scss' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
-/* ====================================
+/* =========================
  * Bloque: .form-select
- * ==================================== */
+ * ========================= */
 
 .form-select {
   @include flex-layout(column, flex-start, stretch, var(--spacing-2));
   width: 100%;
 }
 
-/* ====================================
- * Elemento: Label
- * ==================================== */
+/* =========================
+ * Label
+ * ========================= */
 
 .form-select__label {
-  font-family: var(--font-family-primary);
+  display: block;
   font-size: var(--font-sm-size);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-main);
-  line-height: 1.5;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-1);
 }
 
 .form-select__required {
@@ -30,135 +27,55 @@
   margin-left: var(--spacing-1);
 }
 
-/* ====================================
- * Elemento: Wrapper (para posicionar la flecha)
- * ==================================== */
+/* =========================
+ * Wrapper
+ * ========================= */
 
 .form-select__wrapper {
   position: relative;
   width: 100%;
 }
 
-/* ====================================
- * Elemento: Select
- * ==================================== */
+/* =========================
+ * Select field
+ * ========================= */
 
 .form-select__field {
   width: 100%;
-  padding: var(--spacing-4);
+  padding: var(--spacing-3);
   padding-right: var(--spacing-10);
-  font-family: var(--font-family-primary);
+
   font-size: var(--font-body-size);
-  line-height: 1.5;
-  color: var(--color-text-main);
-  background-color: var(--color-neutral-white);
-  border: var(--border-width-medium) solid var(--color-primary);
+  font-family: var(--font-family-primary);
+  color: var(--text-primary);
+
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color-secondary);
   border-radius: var(--radius-md);
+
   cursor: pointer;
   appearance: none;
-  transition: border-color var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 
   &:hover:not(:disabled) {
-    border-color: var(--color-primary-hover);
+    border-color: var(--color-primary);
   }
 
   &:focus {
     outline: none;
-    border-color: var(--color-secondary);
-    box-shadow: 0 0 0 3px rgba(242, 181, 69, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 192, 201, 189), 0.2);
   }
 
   &:disabled {
-    background-color: var(--color-primary-light);
-    color: var(--color-neutral-gray);
-    cursor: not-allowed;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
     opacity: 0.6;
+    cursor: not-allowed;
   }
 
-  /* Placeholder style (option disabled selected) */
-  option[disabled][selected] {
-    color: var(--color-neutral-gray);
-  }
-}
-
-/* ====================================
- * Elemento: Arrow (flecha personalizada)
- * ==================================== */
-
-.form-select__arrow {
-  position: absolute;
-  right: var(--spacing-4);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: var(--font-sm-size);
-  color: var(--color-text-main);
-  pointer-events: none;
-  transition: transform var(--transition-fast) var(--transition-easing);
-}
-
-.form-select__field:focus ~ .form-select__arrow {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-/* ====================================
- * Elemento: Help text
- * ==================================== */
-
-.form-select__help {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
-  color: var(--color-neutral-gray);
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* ====================================
- * Elemento: Error message
- * ==================================== */
-
-.form-select__error {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
-  color: var(--color-error-dark);
-  margin: 0;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-
-  &::before {
-    content: '⚠';
-    font-size: var(--font-body-size);
-  }
-}
-
-/* ====================================
- * Elemento: Success message
- * ==================================== */
-
-.form-select__success {
-  font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
-  color: var(--color-success-dark);
-  margin: 0;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-
-  &::before {
-    content: '✓';
-    font-size: var(--font-body-size);
-  }
-}
-
-/* ====================================
- * Modificador: Estado de error
- * ==================================== */
-
-.form-select--error {
-  .form-select__field {
+  &--error {
     border-color: var(--color-error-dark);
 
     &:focus {
@@ -166,40 +83,63 @@
     }
   }
 
-  .form-select__arrow {
-    color: var(--color-error-dark);
-  }
-}
-
-/* ====================================
- * Modificador: Estado de éxito
- * ==================================== */
-
-.form-select--success {
-  .form-select__field {
+  &--valid {
     border-color: var(--color-success-dark);
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba(112, 168, 0, 0.2);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
     }
   }
 
-  .form-select__arrow {
-    color: var(--color-success-dark);
+  option {
+    background: var(--surface-base);
+    color: var(--text-primary);
+  }
+
+  option[disabled][selected] {
+    color: var(--text-secondary);
   }
 }
 
-/* ====================================
- * Modificador: Estado deshabilitado
- * ==================================== */
+/* =========================
+ * Arrow
+ * ========================= */
 
-.form-select--disabled {
-  .form-select__label {
-    color: var(--color-neutral-gray);
-  }
+.form-select__arrow {
+  position: absolute;
+  right: var(--spacing-3);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 
-  .form-select__arrow {
-    color: var(--color-neutral-gray);
-  }
+  font-size: var(--font-sm-size);
+  color: var(--text-primary);
+
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
+.form-select__field:focus ~ .form-select__arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* =========================
+ * Help / messages
+ * ========================= */
+
+.form-select__help {
+  font-size: var(--font-sm-size);
+  color: var(--text-secondary);
+  margin-top: var(--spacing-1);
+}
+
+.form-select__error {
+  font-size: var(--font-sm-size);
+  color: var(--color-error-dark);
+  margin-top: var(--spacing-1);
+}
+
+.form-select__success {
+  font-size: var(--font-sm-size);
+  color: var(--color-success-dark);
+  margin-top: var(--spacing-1);
+}

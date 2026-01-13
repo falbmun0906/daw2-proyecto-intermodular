@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service';
 
 /**
@@ -18,7 +18,8 @@ export class Header {
 
   constructor(
     private elementRef: ElementRef,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private router: Router
   ) {}
 
   /**
@@ -73,5 +74,17 @@ export class Header {
   onThemeChange(event: Event): void {
     event.stopPropagation();
     this.toggleTheme();
+  }
+
+  onMiDespensaClick(): void {
+    const isLoggedIn = localStorage.getItem('userToken') || sessionStorage.getItem('userToken');
+
+    if (isLoggedIn) {
+      this.router.navigate(['/mi-cocina']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+    this.closeMenu();
   }
 }

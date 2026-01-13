@@ -3,10 +3,14 @@
     <div class="login-page__form-container">
       <app-login-form
         (submitForm)="onSubmit($event)"
-      ></app-login-form>
+        (cancel)="onCancel()"
+      />
     </div>
-    <div class="login-page__image">
-      <h2 class="login-page__image-title">Desp[i]lensa</h2>
+
+    <div class="login-page__image-container">
+      <div class="login-page__image">
+        <img src="assets/logo-main.svg" alt="Desp[i]ensa" class="login-page__image-logo" />
+      </div>
     </div>
   </div>
 </div>

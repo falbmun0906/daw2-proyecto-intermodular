@@ -2,6 +2,7 @@
  * FormRadioGroup Component
  * ========================= */
 
+@use '../../../../styles/00-settings/variables.scss' as *;
 @use '../../../../styles/01-tools/mixins' as *;
 
 /* ====================================
@@ -31,7 +32,7 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-main);
+  color: var(--text-primary);
   line-height: 1.5;
   margin-bottom: var(--spacing-3);
   padding: 0;
@@ -68,39 +69,37 @@
   flex-shrink: 0;
   cursor: pointer;
   appearance: none;
-  border: var(--border-width-medium) solid var(--color-primary);
+  border: 1px solid var(--border-color-secondary);
   border-radius: 50%;
-  background-color: var(--color-neutral-white);
+  background: var(--bg-secondary);
   position: relative;
-  transition: background-color var(--transition-base) var(--transition-easing),
-              border-color var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:hover:not(:disabled) {
-    border-color: var(--color-primary-hover);
+    border-color: var(--color-primary);
   }
 
   &:focus {
     outline: none;
-    border-color: var(--color-secondary);
-    box-shadow: 0 0 0 3px rgba(242, 181, 69, 0.2);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb, 192, 201, 189), 0.2);
   }
 
   &:checked {
-    border-color: var(--color-secondary);
-    border-width: 6px;
-    background-color: var(--color-neutral-white);
+    border-color: var(--color-primary);
+    background: radial-gradient(circle, var(--color-primary) 40%, transparent 40%);
   }
 
   &:disabled {
-    background-color: var(--color-primary-light);
-    border-color: var(--color-neutral-gray);
+    background: var(--bg-secondary);
+    border-color: var(--text-secondary);
     cursor: not-allowed;
     opacity: 0.6;
   }
 
   &:disabled:checked {
-    border-color: var(--color-neutral-gray);
+    border-color: var(--text-secondary);
+    background: radial-gradient(circle, var(--text-secondary) 40%, transparent 40%);
   }
 }
 
@@ -112,7 +111,7 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-body-size);
   font-weight: var(--font-weight-regular);
-  color: var(--color-text-main);
+  color: var(--text-primary);
   line-height: 1.5;
   cursor: pointer;
   user-select: none;
@@ -125,9 +124,8 @@
 .form-radio-group__help {
   font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
-  color: var(--color-neutral-gray);
-  margin: 0;
-  line-height: 1.4;
+  color: var(--text-secondary);
+  margin-top: var(--spacing-1);
 }
 
 /* ====================================
@@ -135,19 +133,9 @@
  * ==================================== */
 
 .form-radio-group__error {
-  font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
   color: var(--color-error-dark);
-  margin: 0;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-
-  &::before {
-    content: '⚠';
-    font-size: var(--font-body-size);
-  }
+  margin-top: var(--spacing-1);
 }
 
 /* ====================================
@@ -161,37 +149,5 @@
     &:focus {
       box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
     }
-
-    &:checked {
-      border-color: var(--color-error-dark);
-    }
   }
 }
-
-/* ====================================
- * Modificador: Estado deshabilitado
- * ==================================== */
-
-.form-radio-group--disabled {
-  .form-radio-group__legend {
-    color: var(--color-neutral-gray);
-  }
-
-  .form-radio-group__label {
-    color: var(--color-neutral-gray);
-    cursor: not-allowed;
-  }
-}
-
-/* ====================================
- * Modificador: Inline (horizontal)
- * ==================================== */
-
-.form-radio-group--inline {
-  .form-radio-group__options {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: var(--spacing-5);
-  }
-}
-

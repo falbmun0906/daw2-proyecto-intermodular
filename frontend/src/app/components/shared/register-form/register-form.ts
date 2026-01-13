@@ -2,6 +2,9 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FormInput } from '../form-input/form-input';
+import { FormCheckbox } from '../form-checkbox/form-checkbox';
+import { Button } from '../button/button';
 import { passwordStrength, passwordMatch, telefono } from '../../../validators/custom.validators';
 import { ValidationService } from '../../../services/validation.service';
 import { ToastService } from '../../../services/toast.service';
@@ -14,15 +17,17 @@ import { LoadingService } from '../../../services/loading.service';
  */
 @Component({
   selector: 'app-register-form',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormInput, FormCheckbox, Button],
   templateUrl: './register-form.html',
   styleUrl: './register-form.scss',
 })
 export class RegisterForm implements OnInit {
   @Output() submitForm = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<void>();
 
   registerForm!: FormGroup;
   isSubmitting = false;
+  generalError = '';
 
   constructor(
     private fb: FormBuilder,
@@ -108,7 +113,11 @@ export class RegisterForm implements OnInit {
   /**
    * Envía el formulario
    */
-  onSubmit(): void {
+  onSubmit(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+    }
+
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       this.toastService.error('Por favor, corrige los errores del formulario');
@@ -116,14 +125,21 @@ export class RegisterForm implements OnInit {
     }
 
     this.isSubmitting = true;
+    this.generalError = '';
     this.loadingService.show();
 
-    // Simular envío
     setTimeout(() => {
       this.isSubmitting = false;
       this.loadingService.hide();
       this.toastService.success('Registro completado correctamente');
       this.submitForm.emit(this.registerForm.value);
     }, 1500);
+  }
+
+  onCancel(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.cancel.emit();
   }
 }
