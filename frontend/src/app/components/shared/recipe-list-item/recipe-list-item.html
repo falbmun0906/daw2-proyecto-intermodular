@@ -1,0 +1,46 @@
+<article class="recipe-list-item">
+  <div class="recipe-list-item__image-container">
+    <img
+      [src]="imageUrl"
+      [alt]="title"
+      class="recipe-list-item__image"
+      loading="lazy"
+    />
+    <div class="recipe-list-item__title-blob">
+      <h2 class="recipe-list-item__title">{{ title }}</h2>
+    </div>
+  </div>
+
+  <div class="recipe-list-item__content">
+    <div class="recipe-list-item__rating">
+      @for (filled of stars; track $index) {
+        <span class="recipe-list-item__star" [class.recipe-list-item__star--filled]="filled">
+          {{ filled ? '★' : '☆' }}
+        </span>
+      }
+      <span class="recipe-list-item__rating-count">({{ ratingCount }})</span>
+    </div>
+
+    <div class="recipe-list-item__tags">
+      @for (tag of tags; track tag) {
+        <app-badge variant="neutral" size="sm">{{ tag }}</app-badge>
+      }
+    </div>
+
+    <div class="recipe-list-item__actions">
+      <app-button
+        variant="ghost"
+        size="sm"
+        (buttonClick)="onSave()">
+        💾 Guardar
+      </app-button>
+      <app-button
+        variant="secondary"
+        size="sm"
+        (buttonClick)="onView()">
+        Ver receta
+      </app-button>
+    </div>
+  </div>
+</article>
+

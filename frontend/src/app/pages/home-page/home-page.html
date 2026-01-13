@@ -1,19 +1,145 @@
 <main class="home-page">
-  <div class="home-page__container">
-    <img
-      class="home-page__logo"
-      src="assets/logo-main.svg"
-      alt="Desp[i]ensa"
-      loading="eager"
-    />
+  <section class="hero">
+    <div class="hero__collage">
+      <img src="assets/recipes/salad.jpg" alt="Ensalada" class="hero__img hero__img--1" loading="eager" />
+      <img src="assets/recipes/meat.jpg" alt="Plato principal" class="hero__img hero__img--2" loading="eager" />
+      <img src="assets/recipes/cake.jpg" alt="Postre" class="hero__img hero__img--3" loading="eager" />
+      <img src="assets/recipes/dish.jpg" alt="Plato" class="hero__img hero__img--4" loading="eager" />
+    </div>
 
-    <nav class="home-page__links">
-      <a routerLink="/sobre" class="home-page__link">
-        Sobre el sitio
-      </a>
-      <a routerLink="/style-guide" class="home-page__link">
-        Guía de estilo
-      </a>
-    </nav>
-  </div>
+    <div class="hero__logo-blob">
+      <img src="assets/logo-main.svg" alt="Desp[i]ensa" class="hero__logo" />
+    </div>
+
+    <app-button
+      variant="secondary"
+      size="md"
+      class="hero__cta"
+      (buttonClick)="onInspireClick()">
+      Inspírate y cocina algo nuevo
+    </app-button>
+  </section>
+
+  <section class="trending">
+    <h2 class="trending__title">Tendencias de esta semana</h2>
+
+    <div class="trending__carousel">
+      <app-button
+        variant="ghost"
+        class="trending__nav trending__nav--prev"
+        (buttonClick)="prevSlide()"
+        [attr.aria-label]="'Anterior'">
+        ‹
+      </app-button>
+
+      <div class="trending__track">
+        @for (recipe of trendingRecipes; track recipe.id) {
+          <app-card
+            variant="carousel"
+            [imageUrl]="recipe.imageUrl"
+            [imageAlt]="recipe.title"
+            [title]="recipe.title"
+            [rating]="recipe.rating"
+            [category]="recipe.category"
+            [time]="recipe.time"
+            [difficulty]="recipe.difficulty"
+            [actionText]="'Ver receta'"
+            (actionClick)="onRecipeClick(recipe.id)"
+          />
+        }
+      </div>
+
+      <app-button
+        variant="ghost"
+        class="trending__nav trending__nav--next"
+        (buttonClick)="nextSlide()"
+        [attr.aria-label]="'Siguiente'">
+        ›
+      </app-button>
+    </div>
+  </section>
+
+  <section class="must-see">
+    <h2 class="must-see__title">Recetas que no te puedes perder</h2>
+
+    <div class="must-see__grid">
+      @for (recipe of mustSeeRecipes; track recipe.id) {
+        <app-card
+          variant="vertical"
+          [imageUrl]="recipe.imageUrl"
+          [imageAlt]="recipe.title"
+          [title]="recipe.title"
+          [rating]="recipe.rating"
+          [category]="recipe.category"
+          [time]="recipe.time"
+          [difficulty]="recipe.difficulty"
+          [actionText]="'Ver receta'"
+          (actionClick)="onRecipeClick(recipe.id)"
+        />
+      }
+    </div>
+  </section>
+
+  <section class="kitchen-control">
+    <div class="kitchen-control__content">
+      <h2 class="kitchen-control__title">Tu cocina, siempre bajo control.</h2>
+      <p class="kitchen-control__subtitle">
+        Guarda tus alimentos, planifica tus comidas y encuentra recetas con lo que ya tienes.
+      </p>
+      <app-button
+        variant="secondary"
+        size="md"
+        (buttonClick)="onKitchenClick()">
+        🗄️ Ir a mi cocina
+      </app-button>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <div class="newsletter__illustration">
+      <div class="newsletter__blob">
+        <svg class="newsletter__pantry" viewBox="0 0 280 320" aria-hidden="true">
+          <rect x="40" y="40" width="200" height="240" fill="#fff" rx="8"/>
+          <rect x="50" y="60" width="180" height="60" fill="#e8e4f0" rx="4"/>
+          <rect x="50" y="130" width="180" height="60" fill="#e8e4f0" rx="4"/>
+          <rect x="50" y="200" width="180" height="60" fill="#e8e4f0" rx="4"/>
+          <circle cx="80" cy="90" r="12" fill="#c0c9bd"/>
+          <circle cx="120" cy="90" r="12" fill="#b3d9da"/>
+          <circle cx="160" cy="90" r="12" fill="#f2b545"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="newsletter__form">
+      <h2 class="newsletter__title">Sin pensar demasiado, a un solo clic.</h2>
+      <p class="newsletter__subtitle">
+        Recibe nuestras novedades, recetas y tips directamente en tu bandeja.
+      </p>
+
+      <form (submit)="onNewsletterSubmit($event)">
+        <app-form-input
+          type="email"
+          name="email"
+          placeholder="tu@email.com"
+          icon="👤"
+          [(ngModel)]="newsletterEmail"
+          [required]="true"
+          class="newsletter__input"
+        />
+
+        <app-button
+          type="submit"
+          variant="secondary"
+          size="md"
+          class="newsletter__submit">
+          Suscribirme
+        </app-button>
+
+        <p class="newsletter__legal">
+          Tus datos serán usados exclusivamente para enviarte nuestro newsletter.
+          Puedes darte de baja en cualquier momento y consultar nuestra Política de Privacidad.
+        </p>
+      </form>
+    </div>
+  </section>
 </main>

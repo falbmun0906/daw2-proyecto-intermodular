@@ -1,0 +1,35 @@
+<article
+  class="meal-card"
+  [class.meal-card--primary]="isPrimary"
+  [style.background-image]="'url(' + imageUrl + ')'">
+  <div class="meal-card__overlay"></div>
+
+  <div class="meal-card__content">
+    <p class="meal-card__time">{{ time }}</p>
+    <h3 class="meal-card__title">{{ title }}</h3>
+
+    @if (isPrimary && rating > 0) {
+      <div class="meal-card__rating">
+        @for (filled of stars; track $index) {
+          <span class="meal-card__star" [class.meal-card__star--filled]="filled">
+            {{ filled ? '★' : '☆' }}
+          </span>
+        }
+      </div>
+    }
+
+    <div class="meal-card__tags">
+      @for (tag of tags; track tag) {
+        <app-badge variant="neutral" size="sm">{{ tag }}</app-badge>
+      }
+      <app-button
+        variant="secondary"
+        size="sm"
+        class="meal-card__view-btn"
+        (buttonClick)="onViewClick()">
+        Ver receta
+      </app-button>
+    </div>
+  </div>
+</article>
+

@@ -1,0 +1,113 @@
+<main class="recipe-detail">
+  <app-breadcrumbs [items]="breadcrumbItems" />
+
+  <section class="recipe-hero">
+    <img [src]="recipe.imageUrl" [alt]="recipe.title" class="recipe-hero__image" loading="eager" />
+
+    <div class="recipe-hero__info-blob">
+      <h1 class="recipe-hero__title">{{ recipe.title }}</h1>
+
+      <div class="recipe-hero__rating">
+        @for (star of [1,2,3,4,5]; track star) {
+          <span class="recipe-hero__star" [class.recipe-hero__star--filled]="star <= recipe.rating">
+            {{ star <= recipe.rating ? '★' : '☆' }}
+          </span>
+        }
+      </div>
+
+      <div class="recipe-hero__tags">
+        @for (tag of recipe.tags; track tag; let i = $index) {
+          <app-badge [variant]="i === 0 ? 'success' : 'neutral'" size="md">
+            {{ tag }}
+          </app-badge>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="recipe-description">
+    <h2 class="recipe-description__title">Descripción</h2>
+    <p class="recipe-description__text">{{ recipe.description }}</p>
+  </section>
+
+  <section class="recipe-ingredients">
+    <h2 class="recipe-ingredients__title">Ingredientes</h2>
+
+    <div class="recipe-ingredients__container">
+      <div class="recipe-ingredients__grid">
+        @for (ingredient of ingredients; track ingredient.id) {
+          <app-ingredient-card
+            [name]="ingredient.name"
+            [quantity]="ingredient.quantity"
+            [imageUrl]="ingredient.imageUrl"
+          />
+        }
+      </div>
+
+      <aside class="recipe-ingredients__controls">
+        <div class="servings-selector">
+          <p class="servings-selector__label">¿Cuántos comensales?</p>
+          <div class="servings-selector__control">
+            <app-button variant="ghost" size="sm" (buttonClick)="decreaseServings()">−</app-button>
+            <span class="servings-selector__value">{{ servings }}</span>
+            <app-button variant="ghost" size="sm" (buttonClick)="increaseServings()">+</app-button>
+          </div>
+        </div>
+
+        <div class="add-to-list">
+          <p class="add-to-list__label">¿Te falta algo?</p>
+          <app-button variant="secondary" size="md" (buttonClick)="onAddToList()">
+            📝 Añadir a la lista
+          </app-button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="recipe-steps">
+    @for (step of steps; track step.id) {
+      <article class="recipe-step">
+        <div class="recipe-step__header">
+          <h3 class="recipe-step__title">Paso {{ step.stepNumber }} de {{ step.totalSteps }}</h3>
+          <app-badge variant="info" size="sm">⏱ {{ step.duration }}</app-badge>
+        </div>
+        <p class="recipe-step__description">{{ step.description }}</p>
+      </article>
+    }
+  </section>
+
+  <section class="recipe-feedback">
+    <h2 class="recipe-feedback__title">¿Te ha gustado?</h2>
+
+    <div class="recipe-feedback__container">
+      <div class="recipe-feedback__rate">
+        <div class="recipe-feedback__rate-text">
+          <p class="recipe-feedback__rate-title">Valora esta receta</p>
+          <p class="recipe-feedback__rate-subtitle">Número de reseñas: {{ recipe.ratingCount }}</p>
+        </div>
+        <div class="recipe-feedback__stars">
+          @for (star of [1,2,3,4,5]; track star) {
+            <button
+              type="button"
+              class="recipe-feedback__star"
+              [class.recipe-feedback__star--filled]="star <= userRating"
+              (click)="onRate(star)">
+              {{ star <= userRating ? '★' : '☆' }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="recipe-feedback__favorites">
+        <div class="recipe-feedback__favorites-text">
+          <p class="recipe-feedback__favorites-title">Añade esta receta a favoritos</p>
+          <p class="recipe-feedback__favorites-subtitle">Y disfrútala más tarde</p>
+        </div>
+        <app-button variant="secondary" size="md" (buttonClick)="onAddToFavorites()">
+          ⭐ Guardar
+        </app-button>
+      </div>
+    </div>
+  </section>
+</main>
+

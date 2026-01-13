@@ -1,0 +1,180 @@
+@use '../../../styles/01-tools/mixins' as *;
+
+.recipes-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg,
+    var(--color-primary-light) 0%,
+    var(--color-tertiary-light) 50%,
+    var(--color-secondary-light) 100%);
+}
+
+.recipes-page__container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--spacing-8);
+  padding: var(--spacing-8);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.recipes-page__filters {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  height: fit-content;
+  position: sticky;
+  top: calc(80px + var(--spacing-4));
+}
+
+.filter-group {
+  margin-bottom: var(--spacing-6);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.filter-group__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-main);
+  margin-bottom: var(--spacing-3);
+}
+
+.filter-group__options {
+  @include flex-layout(column, flex-start, flex-start, var(--spacing-2));
+}
+
+.recipes-page__content {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-6));
+}
+
+.recipes-page__header {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5) var(--spacing-6);
+  @include flex-layout(row, space-between, center, var(--spacing-6));
+}
+
+.recipes-page__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h3-size);
+  color: var(--color-text-main);
+  margin: 0;
+}
+
+.recipes-page__search {
+  position: relative;
+  width: 300px;
+}
+
+.recipes-page__search-input {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-10) var(--spacing-3) var(--spacing-4);
+  border: 1px solid var(--color-neutral-gray);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  background: var(--color-neutral-white);
+
+  &::placeholder {
+    color: var(--color-neutral-gray);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+  }
+}
+
+.recipes-page__search-icon {
+  position: absolute;
+  right: var(--spacing-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.recipes-page__list {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-6));
+}
+
+.recipe-list-item {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--spacing-6);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--transition-base);
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.recipe-list-item__image-container {
+  position: relative;
+}
+
+.recipe-list-item__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.recipe-list-item__title-blob {
+  position: absolute;
+  top: var(--spacing-4);
+  right: calc(-1 * var(--spacing-6));
+  background: var(--color-tertiary-dark);
+  padding: var(--spacing-3) var(--spacing-5);
+  border-radius: 25px 5px 25px 5px;
+  max-width: 200px;
+}
+
+.recipe-list-item__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h4-size);
+  color: var(--color-neutral-white);
+  margin: 0;
+}
+
+.recipe-list-item__content {
+  @include flex-layout(column, space-between, flex-start, var(--spacing-4));
+}
+
+.recipe-list-item__rating {
+  @include flex-layout(row, flex-start, center, var(--spacing-2));
+}
+
+.recipe-list-item__star {
+  font-size: 1.2rem;
+  color: var(--color-neutral-gray);
+
+  &--filled {
+    color: var(--color-secondary);
+  }
+}
+
+.recipe-list-item__rating-count {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-neutral-gray);
+  margin-left: var(--spacing-2);
+}
+
+.recipe-list-item__tags {
+  @include flex-layout(row, flex-start, center, var(--spacing-2));
+  flex-wrap: wrap;
+}
+
+.recipe-list-item__actions {
+  @include flex-layout(row, flex-end, center, var(--spacing-3));
+  margin-top: auto;
+}
+
