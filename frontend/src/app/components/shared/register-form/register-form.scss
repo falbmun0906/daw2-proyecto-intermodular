@@ -7,17 +7,18 @@
 
 .register-form {
   width: 100%;
-  max-width: 500px;
-  background: rgba(255, 255, 255, 0.95);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-base);
   padding: var(--spacing-10);
-  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
 
   /* Título */
   &__title {
     font-family: var(--font-family-secondary);
     font-size: var(--font-h2-size);
-    color: var(--color-text-main);
+    font-weight: var(--font-weight-light);
     text-align: center;
     margin: 0 0 var(--spacing-8) 0;
   }
@@ -53,15 +54,28 @@
 
   /* Acciones (botones) */
   &__submit {
+    display: flex;
+    justify-content: center;
     width: 100%;
     margin-bottom: var(--spacing-4);
+
+    ::ng-deep button {
+      width: 50%;
+      min-width: 300px;
+      justify-content: center;
+      padding-left: var(--spacing-6);
+    }
+
+    ::ng-deep .button__content {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+    }
   }
 
   /* Login */
   &__login-link {
     text-align: center;
-    font-size: var(--font-sm-size);
-    color: var(--color-text-main);
     margin: 0;
 
     a {

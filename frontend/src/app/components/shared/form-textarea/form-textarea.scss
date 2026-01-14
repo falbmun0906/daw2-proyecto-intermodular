@@ -42,7 +42,7 @@
   font-size: var(--font-body-size);
   line-height: 1.6;
   color: var(--text-primary);
-  background: var(--bg-secondary);
+  background: transparent;
   border: 1px solid var(--border-color-secondary);
   border-radius: var(--radius-md);
   resize: vertical;
@@ -68,18 +68,10 @@
 
   &--error {
     border-color: var(--color-error-dark);
-
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
-    }
   }
 
   &--valid {
     border-color: var(--color-success-dark);
-
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-    }
   }
 }
 
@@ -130,10 +122,6 @@
 .form-textarea--error {
   .form-textarea__field {
     border-color: var(--color-error-dark);
-
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
-    }
   }
 }
 
@@ -144,10 +132,6 @@
 .form-textarea--success {
   .form-textarea__field {
     border-color: var(--color-success-dark);
-
-    &:focus {
-      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-    }
   }
 }
 

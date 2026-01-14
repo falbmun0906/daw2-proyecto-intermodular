@@ -8,6 +8,10 @@
   min-height: 100vh;
   background-color: var(--bg-primary);
   isolation: isolate; // crea stacking context limpio
+
+  &__pagination {
+    margin: 0 auto;
+  }
 }
 
 /* Fondo decorativo SVG (igual que home-page) */
@@ -53,7 +57,7 @@
   top: calc(var(--spacing-8));
   align-self: start;
 
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--surface-base);
   border-radius: var(--radius-lg);
   padding: var(--spacing-6);
   height: fit-content;
@@ -72,9 +76,8 @@
 
 .filter-group__title {
   font-family: var(--font-family-secondary);
-  font-size: var(--font-body-size);
+  font-size: var(--font-h5-size);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-main);
   margin-bottom: var(--spacing-3);
 }
 
@@ -104,7 +107,6 @@
 .recipes-page__title {
   font-family: var(--font-family-secondary);
   font-size: var(--font-h3-size);
-  color: var(--color-text-main);
   margin: 0;
 }
 

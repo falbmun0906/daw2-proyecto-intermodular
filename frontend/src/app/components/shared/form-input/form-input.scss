@@ -47,7 +47,7 @@
     font-size: var(--font-body-size);
     color: var(--text-primary);
 
-    background: var(--bg-secondary);
+    background: transparent;
     border: 1px solid var(--border-color-secondary);
     border-radius: var(--radius-md);
 
@@ -72,18 +72,10 @@
 
     &--error {
       border-color: var(--color-error-dark);
-
-      &:focus {
-        box-shadow: 0 0 0 3px rgba(217, 74, 74, 0.2);
-      }
     }
 
     &--valid {
       border-color: var(--color-success-dark);
-
-      &:focus {
-        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-      }
     }
 
     &--textarea {
@@ -119,17 +111,17 @@
   }
 
   &__error-message {
-    @include flex-layout(row, flex-start, center, var(--spacing-2));
+    display: block;
     font-family: var(--font-family-primary);
-    font-size: var(--font-xs-size);
+    font-size: var(--font-sm-size);
     color: var(--color-error-dark);
     margin-top: var(--spacing-1);
   }
 
   &__success-message {
-    @include flex-layout(row, flex-start, center, var(--spacing-2));
+    display: block;
     font-family: var(--font-family-primary);
-    font-size: var(--font-xs-size);
+    font-size: var(--font-sm-size);
     color: var(--color-success-dark);
     margin-top: var(--spacing-1);
   }

@@ -31,6 +31,8 @@
         [class.form-input__field--with-icon]="icon"
         [class.form-input__field--focused]="isFocused"
         [class.form-input__field--hovered]="isHovered"
+        [class.form-input__field--error]="hasError"
+        [class.form-input__field--valid]="hasSuccess"
         [id]="inputId"
         [type]="type"
         [name]="name"
@@ -53,6 +55,8 @@
         class="form-input__field form-input__field--textarea"
         [class.form-input__field--focused]="isFocused"
         [class.form-input__field--hovered]="isHovered"
+        [class.form-input__field--error]="hasError"
+        [class.form-input__field--valid]="hasSuccess"
         [id]="inputId"
         [name]="name"
         [placeholder]="placeholder"
@@ -89,7 +93,6 @@
       [id]="inputId + '-error'"
       role="alert"
     >
-      <span class="form-input__message-icon" aria-hidden="true">⚠️</span>
       {{ errorMessage }}
     </p>
   }
@@ -101,7 +104,6 @@
       [id]="inputId + '-success'"
       role="status"
     >
-      <span class="form-input__message-icon" aria-hidden="true">✓</span>
       {{ successMessage }}
     </p>
   }
