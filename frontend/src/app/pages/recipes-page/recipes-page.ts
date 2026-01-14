@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FormCheckbox } from '../../components/shared/form-checkbox/form-checkbox';
 import { FormInput } from '../../components/shared/form-input/form-input';
 import { Pagination } from '../../components/shared/pagination/pagination';
-import { RecipeListItem } from '../../components/shared/recipe-list-item/recipe-list-item';
+import { Card } from '../../components/shared/card/card';
 
 interface Recipe {
   id: number;
@@ -29,7 +29,7 @@ interface FilterOption {
 @Component({
   selector: 'app-recipes-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormCheckbox, FormInput, Pagination, RecipeListItem],
+  imports: [CommonModule, FormsModule, FormCheckbox, FormInput, Pagination, Card],
   templateUrl: './recipes-page.html',
   styleUrl: './recipes-page.scss'
 })

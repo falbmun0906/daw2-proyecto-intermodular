@@ -118,5 +118,5 @@
    Lista de recetas
    ========================= */
 .recipes-page__list {
-  @include flex-layout(column, flex-start, stretch, var(--spacing-6));
+  @include flex-layout(column, flex-start, stretch, var(--spacing-4));
 }

@@ -33,14 +33,14 @@
 
       <div class="recipes-page__list">
         @for (recipe of recipes; track recipe.id) {
-          <app-recipe-list-item
+          <app-card
+            variant="horizontal"
             [title]="recipe.title"
             [imageUrl]="recipe.imageUrl"
             [rating]="recipe.rating"
-            [ratingCount]="recipe.ratingCount"
-            [tags]="recipe.tags"
-            (saveRecipe)="onSaveRecipe(recipe.id)"
-            (viewRecipe)="onViewRecipe(recipe.id)"
+            actionText="Ver receta"
+            (actionClick)="onViewRecipe(recipe.id)"
+            (saveClick)="onSaveRecipe(recipe.id)"
           />
         }
       </div>
