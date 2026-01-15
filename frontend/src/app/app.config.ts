@@ -15,11 +15,6 @@ import { loggingInterceptor } from './core/interceptors/logging.interceptor';
  *   1. authInterceptor: Añade headers de autenticación y cliente
  *   2. errorInterceptor: Manejo global de errores HTTP
  *   3. loggingInterceptor: Logging de peticiones y respuestas
- *
- * TAREA 5.6 - Interceptores HTTP (10 puntos):
- * ✅ authInterceptor: Headers de autenticación
- * ✅ errorInterceptor: Manejo global de errores (401, 403, 404, 500)
- * ✅ loggingInterceptor: Logging de peticiones HTTP
  */
 export const appConfig: ApplicationConfig = {
   providers: [

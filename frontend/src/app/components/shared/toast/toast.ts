@@ -5,12 +5,7 @@ import { ToastService, ToastMessage } from '../../../services/toast.service';
 
 /**
  * Toast Component
- * Componente overlay que muestra notificaciones/toasts.
- *
- * CUMPLE CRITERIOS DE RÚBRICA:
- * - 1.1: @ViewChild + ElementRef en ngAfterViewInit (10/10)
- * - 1.2: Renderer2 para manipulación segura del DOM (10/10)
- * - 1.3: createElement() + appendChild() para iconos dinámicos + removeChild() en ngOnDestroy (10/10)
+ * Sistema de notificaciones globales que utiliza instanciación dinámica de nodos.
  */
 @Component({
   selector: 'app-toast',
