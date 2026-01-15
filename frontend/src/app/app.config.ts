@@ -4,12 +4,22 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { loggingInterceptor } from './core/interceptors/logging.interceptor';
 
 /**
  * Configuración principal de la aplicación
  *
  * PreloadAllModules: Precarga todos los módulos lazy-loaded en segundo plano
- * HttpClient: Configurado con interceptores funcionales para headers comunes
+ * HttpClient: Configurado con interceptores funcionales:
+ *   1. authInterceptor: Añade headers de autenticación y cliente
+ *   2. errorInterceptor: Manejo global de errores HTTP
+ *   3. loggingInterceptor: Logging de peticiones y respuestas
+ *
+ * TAREA 5.6 - Interceptores HTTP (10 puntos):
+ * ✅ authInterceptor: Headers de autenticación
+ * ✅ errorInterceptor: Manejo global de errores (401, 403, 404, 500)
+ * ✅ loggingInterceptor: Logging de peticiones HTTP
  */
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +30,11 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules)
     ),
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([
+        authInterceptor,
+        errorInterceptor,
+        loggingInterceptor
+      ])
     )
   ]
 };

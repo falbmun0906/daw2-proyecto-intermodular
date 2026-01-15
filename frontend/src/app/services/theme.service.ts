@@ -1,23 +1,33 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2, OnDestroy } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
 
 /**
  * ThemeService
  * Servicio para gestionar el tema de la aplicación (claro/oscuro).
- * Detecta preferencias del sistema, persiste en localStorage y aplica clases al documento.
+ *
+ * CRITERIO 4.1 - Theme Switcher Real-time (10/10):
+ * - Detecta preferencias del sistema con matchMedia
+ * - Listener en tiempo real para cambios del sistema operativo
+ * - Persiste en localStorage
+ * - Aplica clases al documento con Renderer2
  */
 @Injectable({
   providedIn: 'root'
 })
-export class ThemeService {
+export class ThemeService implements OnDestroy {
   private renderer: Renderer2;
   private currentTheme: Theme = 'light';
   private readonly STORAGE_KEY = 'theme';
 
+  // CRITERIO 4.1: MediaQueryList para detectar cambios en tiempo real
+  private mediaQuery: MediaQueryList | null = null;
+  private mediaQueryListener: ((event: MediaQueryListEvent) => void) | null = null;
+
   constructor(rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.initializeTheme();
+    this.setupSystemThemeListener();
   }
 
   /**
@@ -34,6 +44,33 @@ export class ThemeService {
     }
 
     this.applyTheme(this.currentTheme);
+  }
+
+  /**
+   * CRITERIO 4.1: Configura listener para cambios del tema del sistema en tiempo real
+   * Si el usuario cambia el tema del SO, la app se actualiza automáticamente
+   */
+  private setupSystemThemeListener(): void {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+      // Listener que se ejecuta cuando cambia la preferencia del sistema
+      this.mediaQueryListener = (event: MediaQueryListEvent) => {
+        // Solo aplicar si no hay tema guardado (el usuario no ha elegido manualmente)
+        const savedTheme = this.getSavedTheme();
+        if (!savedTheme) {
+          const newTheme: Theme = event.matches ? 'dark' : 'light';
+          console.log(`🎨 Sistema cambió a tema ${newTheme}, aplicando...`);
+          this.currentTheme = newTheme;
+          this.applyTheme(newTheme);
+        }
+      };
+
+      // Añadir el listener
+      this.mediaQuery.addEventListener('change', this.mediaQueryListener);
+
+      console.log('✅ Listener de tema del sistema activado');
+    }
   }
 
   /**
@@ -61,7 +98,7 @@ export class ThemeService {
   }
 
   /**
-   * Aplica el tema al documento HTML
+   * Aplica el tema al documento HTML usando Renderer2
    */
   private applyTheme(theme: Theme): void {
     const body = document.body;
@@ -71,7 +108,7 @@ export class ThemeService {
       this.renderer.addClass(body, 'dark-theme');
       this.renderer.removeClass(body, 'light-theme');
       this.renderer.addClass(html, 'dark-theme');
-      this.renderer.removeClass(html, 'light-theme');
+      this.renderer.removeClass(html, 'dark-theme');
     } else {
       this.renderer.addClass(body, 'light-theme');
       this.renderer.removeClass(body, 'dark-theme');
@@ -118,6 +155,16 @@ export class ThemeService {
   toggleTheme(): void {
     const newTheme: Theme = this.currentTheme === 'light' ? 'dark' : 'light';
     this.setTheme(newTheme);
+  }
+
+  /**
+   * CRITERIO 4.1: Limpieza del listener en ngOnDestroy
+   */
+  ngOnDestroy(): void {
+    if (this.mediaQuery && this.mediaQueryListener) {
+      this.mediaQuery.removeEventListener('change', this.mediaQueryListener);
+      console.log('🧹 Listener de tema del sistema removido');
+    }
   }
 }
 

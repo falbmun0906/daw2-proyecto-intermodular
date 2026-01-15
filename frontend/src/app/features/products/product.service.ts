@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 import { ApiService } from '../../core/services/api.service';
 import { Product, CreateProductDto, UpdateProductDto } from './models/product';
 
@@ -53,19 +54,31 @@ export class ProductService {
 
   /**
    * GET /products - Obtener todos los productos
+   *
+   * TAREA 5.3: Retry logic para peticiones fallidas
+   * Reintenta automáticamente hasta 2 veces en caso de error de red
+   *
    * @returns Observable con array de productos
    */
   getAll(): Observable<Product[]> {
-    return this.api.get<Product[]>(this.endpoint);
+    return this.api.get<Product[]>(this.endpoint).pipe(
+      retry(2) // Reintentar hasta 2 veces si falla (total 3 intentos)
+    );
   }
 
   /**
    * GET /products/:id - Obtener un producto por ID
+   *
+   * TAREA 5.3: Retry logic para peticiones fallidas
+   * Reintenta automáticamente hasta 2 veces en caso de error de red
+   *
    * @param id ID del producto
    * @returns Observable con el producto
    */
   getById(id: string): Observable<Product> {
-    return this.api.get<Product>(`${this.endpoint}/${id}`);
+    return this.api.get<Product>(`${this.endpoint}/${id}`).pipe(
+      retry(2) // Reintentar hasta 2 veces si falla
+    );
   }
 
   /**
