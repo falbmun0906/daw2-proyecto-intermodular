@@ -23,6 +23,8 @@
     (blur)="onBlur()"
     (input)="onInput($event)"
     class="form-textarea__field"
+    [class.form-textarea__field--error]="hasError"
+    [class.form-textarea__field--valid]="hasSuccess"
   ></textarea>
 
   <!-- Character count -->

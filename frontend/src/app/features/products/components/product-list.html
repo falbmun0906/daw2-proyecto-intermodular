@@ -1,0 +1,86 @@
+<div class="product-list">
+  <div class="product-list__header">
+    <h1>Cat��logo de Productos</h1>
+    <a routerLink="/productos/nuevo" class="btn btn--primary">
+      ➕ Nuevo Producto
+    </a>
+  </div>
+
+  <!-- TAREA 5.5: Loading State -->
+  @if (state().loading) {
+    <div class="product-list__loading">
+      <div class="spinner"></div>
+      <p>Cargando productos...</p>
+    </div>
+  }
+
+  <!-- TAREA 5.5: Error State con acción sugerida -->
+  @if (state().error && !state().loading) {
+    <div class="product-list__error">
+      <p class="error-message">❌ {{ state().error }}</p>
+      <button (click)="loadProducts()" class="btn btn--secondary">
+        🔄 Reintentar
+      </button>
+    </div>
+  }
+
+  <!-- TAREA 5.5: Empty State cuando no hay datos -->
+  @if (!state().loading && !state().error && state().data?.length === 0) {
+    <div class="product-list__empty">
+      <p class="empty-message">📦 No hay productos disponibles</p>
+      <a routerLink="/productos/nuevo" class="btn btn--primary">
+        ➕ Crear primer producto
+      </a>
+    </div>
+  }
+
+  <!-- TAREA 5.5: Data State - Lista de productos -->
+  @if (!state().loading && !state().error && state().data && state().data!.length > 0) {
+    <div class="product-list__grid">
+      @for (product of state().data!; track product.id) {
+        <div class="product-card">
+          <img
+            [src]="product.imageUrl"
+            [alt]="product.name"
+            class="product-card__image"
+          />
+
+          <div class="product-card__content">
+            <h3 class="product-card__name">{{ product.name }}</h3>
+            <p class="product-card__category">{{ product.category }}</p>
+            <p class="product-card__description">{{ product.description }}</p>
+
+            <div class="product-card__info">
+              <span class="product-card__price">{{ product.price | currency:'EUR' }}</span>
+              <span class="product-card__stock" [class.product-card__stock--low]="product.stock < 10">
+                Stock: {{ product.stock }}
+              </span>
+            </div>
+
+            <div class="product-card__actions">
+              <a
+                [routerLink]="['/productos', product.id]"
+                class="btn btn--sm btn--secondary"
+              >
+                👁️ Ver
+              </a>
+              <a
+                [routerLink]="['/productos', product.id, 'editar']"
+                class="btn btn--sm btn--info"
+              >
+                ✏️ Editar
+              </a>
+              <button
+                (click)="onDelete(product.id, product.name)"
+                class="btn btn--sm btn--danger"
+              >
+                🗑️ Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+

@@ -1,0 +1,25 @@
+@use '../../../../styles/01-tools/mixins' as *;
+
+.pending-product {
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.pending-product__name {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-h4-size);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.pending-product__urgency,
+.pending-product__days {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-text-main);
+  margin: var(--spacing-1) 0;
+}
+

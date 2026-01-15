@@ -75,3 +75,18 @@ $breakpoints: (
   transition: background-color var(--transition-base) var(--transition-easing),
   box-shadow var(--transition-base) var(--transition-easing);
 }
+
+@mixin bg-pattern($size: 1200px auto, $opacity: var(--svg-overlay-opacity), $filter: var(--svg-overlay-color)) {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../../assets/main-bg-form.svg');
+  background-repeat: no-repeat;
+  background-size: $size;
+  background-position: center;
+  opacity: $opacity;
+  pointer-events: none;
+  z-index: 0;
+  filter: $filter;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}

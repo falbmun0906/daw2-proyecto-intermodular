@@ -1,0 +1,122 @@
+@use '../../../styles/01-tools/mixins' as *;
+
+/* =========================
+   Página raíz
+   ========================= */
+.recipes-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  isolation: isolate; // crea stacking context limpio
+
+  &__pagination {
+    margin: 0 auto;
+  }
+}
+
+/* Fondo decorativo SVG (igual que home-page) */
+.recipes-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background-image: url('../../../assets/main-bg-form.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2400px;
+
+  opacity: var(--svg-overlay-opacity);
+  filter: var(--svg-overlay-color);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================
+   Contenedor principal
+   ========================= */
+.recipes-page__container {
+  position: relative;
+  z-index: 1; // ⬅️ sube todo el contenido sobre el SVG
+
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--spacing-8);
+
+  padding: var(--spacing-8);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* =========================
+   Filtros (STICKY FUNCIONAL)
+   ========================= */
+.recipes-page__filters {
+  position: sticky;
+  top: calc(var(--spacing-8));
+  align-self: start;
+
+  background: var(--surface-base);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  height: fit-content;
+}
+
+/* =========================
+   Filter groups
+   ========================= */
+.filter-group {
+  margin-bottom: var(--spacing-6);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.filter-group__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h5-size);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-3);
+}
+
+.filter-group__options {
+  @include flex-layout(column, flex-start, flex-start, var(--spacing-2));
+}
+
+/* =========================
+   Contenido principal
+   ========================= */
+.recipes-page__content {
+  min-width: 0; // evita desbordes en grid
+  @include flex-layout(column, flex-start, stretch, var(--spacing-6));
+}
+
+/* =========================
+   Header
+   ========================= */
+.recipes-page__header {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-5) var(--spacing-6);
+
+  @include flex-layout(row, space-between, center, var(--spacing-6));
+}
+
+.recipes-page__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h3-size);
+  margin: 0;
+}
+
+.recipes-page__search {
+  width: 300px;
+}
+
+/* =========================
+   Lista de recetas
+   ========================= */
+.recipes-page__list {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-4));
+}

@@ -2,6 +2,9 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FormInput } from '../form-input/form-input';
+import { FormCheckbox } from '../form-checkbox/form-checkbox';
+import { Button } from '../button/button';
 import { ToastService } from '../../../services/toast.service';
 import { LoadingService } from '../../../services/loading.service';
 
@@ -12,7 +15,7 @@ import { LoadingService } from '../../../services/loading.service';
  */
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, FormInput, FormCheckbox, Button],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
@@ -95,9 +98,11 @@ export class LoginForm implements OnInit {
     this.cancel.emit();
   }
 
-  /**
-   * Limpia errores al escribir
-   */
+  onSocialLogin(provider: 'google' | 'facebook' | 'x'): void {
+    console.log('Social login with:', provider);
+    this.toastService.info(`Iniciando sesión con ${provider}...`);
+  }
+
   onFieldFocus(): void {
     this.generalError = '';
   }

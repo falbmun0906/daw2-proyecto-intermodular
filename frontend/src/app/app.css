@@ -1,0 +1,11 @@
+.app-main {
+  min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 100px));
+  padding: var(--spacing-md);
+}
+
+.app-breadcrumb-container {
+  max-width: 1400px;
+  margin: 0 auto var(--spacing-sm) auto;
+  padding: 0 var(--spacing-md);
+}
+

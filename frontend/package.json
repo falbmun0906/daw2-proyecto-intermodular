@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "style-guide": "ng serve --open --port 4200 && start http://localhost:4200/style-guide",
-    "sg": "npm run style-guide"
+    "sg": "npm run style-guide",
+    "api": "json-server --watch db.json --port 3000",
+    "dev:full": "concurrently \"npm run api\" \"ng serve\""
   },
   "prettier": {
     "printWidth": 100,
@@ -40,8 +42,10 @@
     "@angular/cli": "^20.3.8",
     "@angular/compiler-cli": "^20.3.0",
     "@types/jasmine": "~5.1.0",
-    "angular-cli-ghpages": "^2.0.3",
+    "angular-cli-ghpages": "^3.0.2",
+    "concurrently": "^9.2.1",
     "jasmine-core": "~5.9.0",
+    "json-server": "^1.0.0-beta.3",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",

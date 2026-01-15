@@ -403,6 +403,29 @@
   .card__meta {
     color: var(--color-neutral-white);
   }
+
+  .card__actions {
+    display: flex;
+    gap: var(--spacing-4);
+  }
+
+  .card__action-button {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-sm-size);
+    border-radius: var(--radius-md);
+
+    /* Opcional: ancho mínimo coherente */
+    min-width: 140px;
+    max-width: 150px;
+  }
+
+  .card__action-button--primary {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .card__action-button--secondary {
+    opacity: 0.9;
+  }
 }
 
 /* ====================================

@@ -1,0 +1,103 @@
+<div class="planner">
+  <aside class="planner__sidebar" [class.planner__sidebar--collapsed]="sidebarCollapsed">
+    <h2 class="planner__sidebar-title">Mi cocina</h2>
+
+    <nav class="planner__nav">
+      @for (item of sidebarItems; track item.id) {
+        <app-button
+          [variant]="item.active ? 'secondary' : 'ghost'"
+          size="md"
+          class="planner__nav-item"
+          (buttonClick)="onNavItemClick(item.id)">
+          {{ item.icon }} {{ item.label }}
+        </app-button>
+      }
+    </nav>
+
+    <app-button
+      variant="ghost"
+      size="sm"
+      class="planner__sidebar-toggle"
+      (buttonClick)="toggleSidebar()"
+      [attr.aria-label]="sidebarCollapsed ? 'Expandir menú' : 'Contraer menú'">
+      {{ sidebarCollapsed ? '→' : '←' }}
+    </app-button>
+  </aside>
+
+  <main class="planner__content">
+    <section class="planner__calendar-section">
+      <h1 class="planner__calendar-title">Mi calendario de comidas</h1>
+
+      <div class="planner__calendar">
+        <div class="planner__calendar-header">
+          <span class="planner__calendar-day-name">Lun</span>
+          <span class="planner__calendar-day-name">Mar</span>
+          <span class="planner__calendar-day-name">Mié</span>
+          <span class="planner__calendar-day-name">Jue</span>
+          <span class="planner__calendar-day-name">Vie</span>
+          <span class="planner__calendar-day-name">Sáb</span>
+          <span class="planner__calendar-day-name">Dom</span>
+        </div>
+
+        <div class="planner__calendar-grid">
+          @for (day of calendarDays; track day.date) {
+            <div class="calendar-day" [class]="getCalendarClass(day.mealsCount)">
+              {{ day.date }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="planner__legend">
+        <div class="planner__legend-item">
+          <span class="planner__legend-dot planner__legend-dot--two-meals"></span>
+          <span class="planner__legend-text">Dos comidas planificadas</span>
+        </div>
+        <div class="planner__legend-item">
+          <span class="planner__legend-dot planner__legend-dot--one-meal"></span>
+          <span class="planner__legend-text">Una comida planificada</span>
+        </div>
+        <div class="planner__legend-item">
+          <span class="planner__legend-dot planner__legend-dot--no-meals"></span>
+          <span class="planner__legend-text">No hay comidas planificadas</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="planner__actions-section">
+      <app-button variant="secondary" size="md" (buttonClick)="onAddMealPlan()">
+        ➕ Añadir plan de comida
+      </app-button>
+
+      <div class="planner__search-wrapper">
+        <app-form-input
+          type="text"
+          placeholder="Buscar plan"
+          icon="🔍"
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          class="planner__search"
+        />
+
+        <app-button variant="ghost" size="sm" (buttonClick)="onFilter()">
+          🔧 Filtrar
+        </app-button>
+      </div>
+    </section>
+
+    <section class="planner__plans-section">
+      @for (plan of mealPlans; track plan.id) {
+        <app-meal-plan-card
+          [dateTime]="plan.dateTime"
+          [title]="plan.title"
+          [imageUrl]="plan.imageUrl"
+          [tags]="plan.tags"
+          (viewPlan)="onViewPlan(plan.id)"
+          (deletePlan)="onDeletePlan(plan.id)"
+          (addToList)="onAddToList(plan.id)"
+        />
+      }
+    </section>
+  </main>
+</div>
+

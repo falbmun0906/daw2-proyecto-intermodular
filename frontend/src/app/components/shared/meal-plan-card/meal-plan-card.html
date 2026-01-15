@@ -1,0 +1,27 @@
+<article class="meal-plan-card" [style.background-image]="'url(' + imageUrl + ')'">
+  <div class="meal-plan-card__overlay"></div>
+
+  <div class="meal-plan-card__content">
+    <p class="meal-plan-card__datetime">{{ dateTime }}</p>
+    <h3 class="meal-plan-card__title">{{ title }}</h3>
+
+    <div class="meal-plan-card__tags">
+      @for (tag of tags; track tag) {
+        <app-badge variant="neutral" size="sm">{{ tag }}</app-badge>
+      }
+    </div>
+
+    <div class="meal-plan-card__actions">
+      <app-button variant="secondary" size="sm" (buttonClick)="onView()">
+        Ver
+      </app-button>
+      <app-button variant="danger" size="sm" (buttonClick)="onDelete()">
+        Eliminar
+      </app-button>
+      <app-button variant="secondary" size="sm" (buttonClick)="onAddToList()">
+        📝 Añadir a la lista
+      </app-button>
+    </div>
+  </div>
+</article>
+

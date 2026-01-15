@@ -21,6 +21,8 @@
       (blur)="onBlur()"
       (change)="onSelect($event)"
       class="form-select__field"
+      [class.form-select__field--error]="hasError"
+      [class.form-select__field--valid]="hasSuccess"
     >
       <!-- Placeholder option -->
       <option value="" disabled selected hidden>{{ placeholder }}</option>

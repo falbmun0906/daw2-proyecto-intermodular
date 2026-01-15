@@ -15,5 +15,9 @@ export class RegisterPage {
     console.log('Register form submitted:', formData);
     // Aquí iría la lógica de registro
   }
+
+  onCancel(): void {
+    this.router.navigate(['/']);
+  }
 }
 
