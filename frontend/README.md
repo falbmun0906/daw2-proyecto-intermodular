@@ -14,7 +14,7 @@
   - [Tarea 1: Manipulación del DOM](#tarea-1-manipulación-del-dom)
     - [1.1 Acceder al DOM: @ViewChild y ElementRef](#11-acceder-al-dom-viewchild-y-elementref)
     - [1.2 Modificar estilos y propiedades: Renderer2](#12-modificar-estilos-y-propiedades-renderer2)
-    - [1.3 Creación y eliminación dinámica de elementos](#13-creación-y-eliminación-dinámica-de-elementos)
+    - [1.3 Creación y eliminación programática de elementos](#13-creación-y-eliminación-programática-de-elementos)
     - [1.4 Buenas prácticas y seguridad](#14-buenas-prácticas-y-seguridad)
     - [1.5 Criterios de aceptación](#15-criterios-de-aceptación)
   - [Tarea 2: Sistema de eventos](#tarea-2-sistema-de-eventos)
@@ -35,9 +35,10 @@
     - [4.2 Toggle tema y persistencia](#42-toggle-tema-y-persistencia)
     - [4.3 Aplicación del tema al inicio](#43-aplicación-del-tema-al-inicio)
   - [Tarea 5: Documentación técnica sobre arquitectura de eventos](#tarea-5-documentación-técnica-sobre-arquitectura-de-eventos)
-    - [5.1 Patrón unidireccional de eventos](#51-patrón-unidireccional-de-eventos)
-    - [5.2 Servicios y centralización de eventos](#52-servicios-y-centralización-de-eventos)
-    - [5.3 Diagrama de flujo de eventos](#53-diagrama-de-flujo-de-eventos)
+    - [5.1 Arquitectura de Eventos y Patrón Unidireccional](#51-arquitectura-de-eventos-y-patrón-unidireccional)
+    - [5.2 Diagrama visual del flujo de eventos](#52-diagrama-visual-del-flujo-de-eventos)
+    - [5.3 Tabla de compatibilidad de navegadores](#53-tabla-de-compatibilidad-de-navegadores)
+    - [5.4 Servicios y centralización de la lógica de eventos](#54-servicios-y-centralización-de-la-lógica-de-eventos)
   - [Entregables Fase 1](#entregables-fase-1)
 
 - [FASE 2: Componentes interactivos y comunicación](#fase-2-componentes-interactivos-y-comunicación)
@@ -69,7 +70,7 @@
   - [Tarea 1: Formularios reactivos básicos](#tarea-1-formularios-reactivos-básicos)
     - [1.1 Implementar FormBuilder en todos los formularios](#11-implementar-formbuilder-en-todos-los-formularios)
     - [1.2 FormGroup y FormControl para cada campo](#12-formgroup-y-formcontrol-para-cada-campo)
-    - [1.3 Validadores síncronos integrados (required, minLength, email, pattern, min/max)](#13-validadores-síncronos-integrados-required-minlength-email-pattern-minmax)
+    - [1.3 Validadores síncronos integrados (required, minLength, email, pattern, min/max)](#13-validadores-síncronos-integrados)
   - [Tarea 2: Validadores personalizados](#tarea-2-validadores-personalizados)
     - [2.1 Validador de contraseña fuerte](#21-validador-de-contraseña-fuerte)
     - [2.2 Validador de confirmación de contraseña](#22-validador-de-confirmación-de-contraseña)
@@ -81,9 +82,9 @@
     - [3.3 Debounce para evitar múltiples llamadas](#33-debounce-para-evitar-múltiples-llamadas)
     - [3.4 Configuración avanzada (updateOn, pending)](#34-configuración-avanzada-updateon-pending)
   - [Tarea 4: FormArray para contenido dinámico](#tarea-4-formarray-para-contenido-dinámico)
-    - [4.1 Definir FormArray y validación por elemento](#41-definir-formarray-y-validación-por-elemento)
-    - [4.2 Template con agregar y eliminar dinámico](#42-template-con-agregar-y-eliminar-dinámico)
-    - [4.3 Acceso y validación de elementos en el array](#43-acceso-y-validación-de-elementos-en-el-array)
+    - [4.1 Definición del formulario con FormArray](#41-definición-del-formulario-con-formarray)
+    - [4.2 Acceso al FormArray con getters](#42-acceso-al-formarray-con-getters)
+    - [4.3 Crear elementos dinámicamente](#43-crear-elementos-dinámicamente)
   - [Tarea 5: Mostrar errores y feedback visual](#tarea-5-mostrar-errores-y-feedback-visual)
     - [5.1 Mostrar errores tras touched/dirty](#51-mostrar-errores-tras-toucheddirty)
     - [5.2 Deshabilitar submit si formulario inválido](#52-deshabilitar-submit-si-formulario-inválido)
@@ -107,7 +108,7 @@
     - [2.3 Query params y fragments](#23-query-params-y-fragments)
     - [2.4 NavigationExtras para estado](#24-navigationextras-para-estado)
   - [Tarea 3: Lazy Loading](#tarea-3-lazy-loading)
-    - [3.1 Módulos/rutas con carga perezosa](#31-módulos-rutas-con-carga-perezosa)
+    - [3.1 Módulos/rutas con carga perezosa](#31-módulosrutas-con-carga-perezosa)
     - [3.2 Estrategia de precarga (PreloadAllModules)](#32-estrategia-de-precarga-preloadallmodules)
     - [3.3 Verificar chunking en build production](#33-verificar-chunking-en-build-production)
   - [Tarea 4: Route Guards](#tarea-4-route-guards)
@@ -171,9 +172,6 @@
 
 - [Recursos y referencias](#recursos-y-referencias)
   - [Documentación oficial](#documentación-oficial)
-
-- [Apéndices](#apéndices)
-  - [Plantillas y ejemplos](#plantillas-y-ejemplos)
 
 
 ## Introducción
@@ -1699,7 +1697,7 @@ graph TD
     User((Usuario)) -- Interacción --> DOM[DOM Event: click, keydown, submit...]
 
     %% Captura y Handler
-    subgraph ComponentLevel [Capa de Componente]
+    subgraph ComponentLevel ["Capa de Componente"]
         DOM --> Binding["Template Binding<br/>(evento)='handler($event)'"]
         Binding --> Handler["Component Handler<br/>(TypeScript Method)"]
         
@@ -1710,13 +1708,13 @@ graph TD
     end
 
     %% Capa de Datos / Servicio
-    subgraph DataLayer [Capa de Servicio y Estado]
+    subgraph DataLayer ["Capa de Servicio y Estado"]
         Control --> Update[Actualización de Propiedades / Signal]
         Update --> Service[Service Centralizado<br/>BehaviorSubject / API Request]
     end
 
     %% Re-renderizado
-    subgraph GlobalEvents [@HostListener Global]
+    subgraph GlobalEvents ["@HostListener Global"]
         H1[document:click] --> Handler
         H2[document:keydown.escape] --> Handler
         H3[window:resize] --> Handler
