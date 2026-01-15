@@ -36,11 +36,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         errorMessage = `Error de conexión: ${error.error.message}`;
         console.error('Error del cliente:', error.error.message);
 
-        toastService.show({
-          message: 'Error de conexión. Por favor, verifica tu red.',
-          type: 'error',
-          duration: 5000
-        });
+        toastService.show(
+          'Error de conexión. Por favor, verifica tu red.',
+          'error',
+          5000
+        );
       } else {
         // Error del lado del servidor
         console.error(
@@ -53,11 +53,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         switch (error.status) {
           case 401:
             errorMessage = 'No autorizado. Por favor, inicia sesión.';
-            toastService.show({
-              message: errorMessage,
-              type: 'error',
-              duration: 4000
-            });
+            toastService.show(
+              errorMessage,
+              'error',
+              4000
+            );
             // Redirigir al login
             router.navigate(['/login'], {
               queryParams: { returnUrl: router.url }
@@ -66,47 +66,47 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
           case 403:
             errorMessage = 'No tienes permisos para realizar esta acción.';
-            toastService.show({
-              message: errorMessage,
-              type: 'error',
-              duration: 4000
-            });
+            toastService.show(
+              errorMessage,
+              'error',
+              4000
+            );
             break;
 
           case 404:
             errorMessage = 'Recurso no encontrado.';
-            toastService.show({
-              message: errorMessage,
-              type: 'error',
-              duration: 3000
-            });
+            toastService.show(
+              errorMessage,
+              'error',
+              3000
+            );
             break;
 
           case 500:
             errorMessage = 'Error interno del servidor. Inténtalo más tarde.';
-            toastService.show({
-              message: errorMessage,
-              type: 'error',
-              duration: 5000
-            });
+            toastService.show(
+              errorMessage,
+              'error',
+              5000
+            );
             break;
 
           case 503:
             errorMessage = 'Servicio no disponible. Inténtalo más tarde.';
-            toastService.show({
-              message: errorMessage,
-              type: 'error',
-              duration: 5000
-            });
+            toastService.show(
+              errorMessage,
+              'error',
+              5000
+            );
             break;
 
           default:
             errorMessage = error.error?.message || error.message || 'Error desconocido';
-            toastService.show({
-              message: `Error: ${errorMessage}`,
-              type: 'error',
-              duration: 4000
-            });
+            toastService.show(
+              `Error: ${errorMessage}`,
+              'error',
+              4000
+            );
         }
       }
 
