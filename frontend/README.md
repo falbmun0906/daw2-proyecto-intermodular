@@ -2635,21 +2635,37 @@ export class Breadcrumbs implements OnInit {
 
 #### 7.1 Mapa completo de rutas
 
-| Ruta | Descripción | Lazy | Guards | Resolver | Parámetros |
-|------|-------------|------|--------|----------|------------|
-| `/home` | Página de inicio | ❌ | - | - | - |
-| `/recetas` | Listado de recetas | ✅ | - | - | `?categoria, ?page` |
-| `/recetas/:id` | Detalle de receta | ✅ | - | `recipeResolver` | `id` (número) |
-| `/mi-cocina` | Área de usuario | ✅ | `authGuard` | - | - |
-| `/mi-cocina/dashboard` | Dashboard del usuario | ✅ | `authGuard` | - | - |
-| `/mi-cocina/despensa` | Gestión de despensa | ✅ | `authGuard` | - | - |
-| `/mi-cocina/planificador` | Planificador de comidas | ✅ | `authGuard` | - | - |
-| `/mi-cocina/perfil/editar` | Edición de perfil | ✅ | `authGuard` | - | - |
-| | | | `pendingChangesGuard` | | |
-| `/sobre` | Información de la app | ❌ | - | - | - |
-| `/login` | Inicio de sesión | ❌ | - | - | `?returnUrl` |
-| `/registro` | Registro de usuario | ❌ | - | - | - |
-| `**` | Página 404 | ❌ | - | - | - |
+**TAREA 4.7 - Documentación de rutas (10/10)**
+
+Tabla completa de rutas con parámetros, guards y resolvers:
+
+| Path | Componente | Parámetros | Guards | Resolver | Lazy | Data/Breadcrumb |
+|:-----|:-----------|:-----------|:-------|:---------|:-----|:----------------|
+| `/` | - | - | - | - | ❌ | Redirect → `/home` |
+| `/home` | HomePage | - | - | - | ❌ | `breadcrumb: 'Inicio'` |
+| `/productos` | ProductListComponent | `?q, ?category, ?_page, ?_limit` | - | - | ❌ | `breadcrumb: 'Productos'` |
+| `/productos/nuevo` | ProductFormComponent | - | - | - | ❌ | `breadcrumb: 'Nuevo Producto'` |
+| `/productos/:id` | ProductDetailComponent | `id` (string) | - | - | ❌ | `breadcrumb: 'Detalle'` |
+| `/productos/:id/editar` | ProductFormComponent | `id` (string) | - | - | ❌ | `breadcrumb: 'Editar'` |
+| `/recetas` | RecipesPage | `?categoria, ?page` | - | - | ✅ | `breadcrumb: 'Recetas'` |
+| `/recetas/:id` | RecipeDetailPage | `id` (número) | - | recipeResolver | ✅ | `breadcrumb: 'Detalle'` |
+| `/mi-cocina` | UserAreaLayout | - | authGuard | - | ✅ | `breadcrumb: 'Mi Cocina'` |
+| `/mi-cocina/dashboard` | DashboardPage | - | authGuard | - | ✅ | `breadcrumb: 'Panel'` |
+| `/mi-cocina/despensa` | PantryPage | - | authGuard | - | ✅ | `breadcrumb: 'Despensa'` |
+| `/mi-cocina/planificador` | PlannerPage | - | authGuard | - | ✅ | `breadcrumb: 'Planificador'` |
+| `/mi-cocina/perfil/editar` | ProfileEditPage | - | authGuard, pendingChangesGuard | - | ✅ | `breadcrumb: 'Editar Perfil'` |
+| `/sobre` | AboutPage | - | - | - | ❌ | `breadcrumb: 'Sobre'` |
+| `/login` | LoginPage | `?returnUrl` | - | - | ❌ | - |
+| `/registro` | RegisterPage | - | - | - | ❌ | - |
+| `/guia-estilos` | StyleGuidePage | - | - | - | ❌ | - |
+| `**` | NotFoundPage | - | - | - | ❌ | Ruta wildcard 404 |
+
+**Leyenda:**
+- ✅ Lazy: Carga perezosa con `loadChildren()`
+- ❌ Lazy: Carga inmediata (eager loading)
+- `authGuard`: Requiere autenticación
+- `pendingChangesGuard`: Confirma salida con cambios sin guardar
+- `recipeResolver`: Precarga datos de la receta antes de activar la ruta
 
 ---
 
@@ -3425,74 +3441,209 @@ save() {
 
 ### Tarea 6: Interceptores HTTP
 
+**TAREA 5.6 - Interceptores HTTP (10/10)**
+
+Se han implementado tres interceptores HTTP funcionales que manejan aspectos transversales de las peticiones:
+
 #### 6.1 Interceptor para autenticación
 
-El interceptor `authInterceptor` añade el token de autenticación:
+**Archivo:** `src/app/core/interceptors/auth.interceptor.ts`
+
+El interceptor `authInterceptor` añade headers comunes a todas las peticiones HTTP:
 
 ```typescript
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  // Obtener token del localStorage (si existe)
   const token = localStorage.getItem('token');
 
-  if (!token) return next(req);
+  // Clonar la petición y añadir headers
+  let headers = req.headers
+    .set('Content-Type', 'application/json')
+    .set('X-App-Client', 'Angular-DWEC');
 
-  const authReq = req.clone({
-    setHeaders: { Authorization: `Bearer ${token}` }
-  });
+  // Si hay token, añadir header de Authorization
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
 
-  return next(authReq);
+  // Clonar la petición con los nuevos headers
+  const clonedReq = req.clone({ headers });
+
+  return next(clonedReq);
 };
 ```
+
+**Funcionalidad:**
+- ✅ Añade `Content-Type: application/json` a todas las peticiones
+- ✅ Añade identificador de cliente `X-App-Client: Angular-DWEC`
+- ✅ Si existe token en localStorage, añade `Authorization: Bearer <token>`
+- ✅ No bloquea peticiones sin autenticación (permite login/registro)
 
 ---
 
 #### 6.2 Interceptor para manejo global de errores
 
-Este interceptor (no implementado aún) capturaría errores globalmente:
+**Archivo:** `src/app/core/interceptors/error.interceptor.ts`
+
+El interceptor `errorInterceptor` captura y maneja errores HTTP de forma centralizada:
 
 ```typescript
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  const toastService = inject(ToastService);
+  const router = inject(Router);
+
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401) {
-        // Redirigir a login
-        inject(Router).navigate(['/login']);
+      let errorMessage = 'Ha ocurrido un error';
+
+      if (error.error instanceof ErrorEvent) {
+        // Error del lado del cliente o de red
+        errorMessage = `Error de conexión: ${error.error.message}`;
+        toastService.show({
+          message: 'Error de conexión. Por favor, verifica tu red.',
+          type: 'error',
+          duration: 5000
+        });
+      } else {
+        // Error del lado del servidor - Manejo específico según código
+        switch (error.status) {
+          case 401:
+            errorMessage = 'No autorizado. Por favor, inicia sesión.';
+            toastService.show({ message: errorMessage, type: 'error', duration: 4000 });
+            // Redirigir al login
+            router.navigate(['/login'], { queryParams: { returnUrl: router.url } });
+            break;
+
+          case 403:
+            errorMessage = 'No tienes permisos para realizar esta acción.';
+            toastService.show({ message: errorMessage, type: 'error', duration: 4000 });
+            break;
+
+          case 404:
+            errorMessage = 'Recurso no encontrado.';
+            toastService.show({ message: errorMessage, type: 'error', duration: 3000 });
+            break;
+
+          case 500:
+            errorMessage = 'Error interno del servidor. Inténtalo más tarde.';
+            toastService.show({ message: errorMessage, type: 'error', duration: 5000 });
+            break;
+
+          case 503:
+            errorMessage = 'Servicio no disponible. Inténtalo más tarde.';
+            toastService.show({ message: errorMessage, type: 'error', duration: 5000 });
+            break;
+
+          default:
+            errorMessage = error.error?.message || error.message || 'Error desconocido';
+            toastService.show({ message: `Error: ${errorMessage}`, type: 'error', duration: 4000 });
+        }
       }
-      
-      if (error.status >= 500) {
-        // Mostrar toast global
-        inject(ToastService).error('Error del servidor');
-      }
-      
-      return throwError(() => error);
+
+      console.error('HTTP Error:', errorMessage, error);
+      return throwError(() => new Error(errorMessage));
     })
   );
 };
 ```
 
+**Funcionalidad:**
+- ✅ Captura errores HTTP globalmente
+- ✅ Distingue entre errores de cliente (red) y servidor
+- ✅ Manejo específico de códigos: 401, 403, 404, 500, 503
+- ✅ Muestra toast al usuario con mensaje apropiado
+- ✅ Redirige a login en caso de 401
+- ✅ Logging de errores en consola
+- ✅ Propaga el error para manejo local si es necesario
+
 ---
 
 #### 6.3 Interceptor para logging
 
-Interceptor para logging de peticiones en desarrollo:
+**Archivo:** `src/app/core/interceptors/logging.interceptor.ts`
+
+El interceptor `loggingInterceptor` registra todas las peticiones HTTP para debugging:
 
 ```typescript
 export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
-  const started = Date.now();
-  
-  console.log(`🔵 ${req.method} ${req.url}`);
-  
+  const startTime = Date.now();
+
+  // Log de la petición saliente
+  console.group(`🌐 HTTP ${req.method} ${req.url}`);
+  console.log('📤 Petición:', {
+    url: req.url,
+    method: req.method,
+    headers: req.headers.keys().reduce((acc, key) => {
+      acc[key] = req.headers.get(key);
+      return acc;
+    }, {} as Record<string, string | null>),
+    body: req.body
+  });
+
   return next(req).pipe(
     tap({
-      next: () => {
-        const elapsed = Date.now() - started;
-        console.log(`✅ ${req.method} ${req.url} - ${elapsed}ms`);
+      next: (event) => {
+        // Solo loguear respuestas HTTP completas
+        if (event instanceof HttpResponse) {
+          const elapsedTime = Date.now() - startTime;
+
+          console.log('📥 Respuesta:', {
+            status: event.status,
+            statusText: event.statusText,
+            time: `${elapsedTime}ms`,
+            body: event.body
+          });
+          console.groupEnd();
+        }
       },
-      error: () => {
-        const elapsed = Date.now() - started;
-        console.log(`❌ ${req.method} ${req.url} - ${elapsed}ms`);
+      error: (error) => {
+        const elapsedTime = Date.now() - startTime;
+
+        console.error('❌ Error:', {
+          status: error.status,
+          statusText: error.statusText,
+          time: `${elapsedTime}ms`,
+          message: error.message,
+          error: error.error
+        });
+        console.groupEnd();
       }
     })
   );
+};
+```
+
+**Funcionalidad:**
+- ✅ Registra método HTTP y URL de cada petición
+- ✅ Muestra headers completos de la petición
+- ✅ Muestra body de la petición (si existe)
+- ✅ Calcula y muestra tiempo de respuesta en milisegundos
+- ✅ Muestra status code y body de la respuesta
+- ✅ Agrupa logs en consola para mejor legibilidad
+- ✅ Logging diferenciado para éxito (✅) y error (❌)
+
+---
+
+**Configuración en `app.config.ts`:**
+
+Los tres interceptores están registrados en orden correcto:
+
+```typescript
+provideHttpClient(
+  withInterceptors([
+    authInterceptor,      // 1. Añade autenticación
+    errorInterceptor,     // 2. Maneja errores globalmente
+    loggingInterceptor    // 3. Registra todas las peticiones
+  ])
+)
+```
+
+**Orden de ejecución:**
+1. **authInterceptor** → Añade headers antes de enviar
+2. **loggingInterceptor** → Registra la petición saliente
+3. *(Petición HTTP al servidor)*
+4. **loggingInterceptor** → Registra la respuesta
+5. **errorInterceptor** → Captura y maneja errores si ocurren
 };
 ```
 
@@ -3514,17 +3665,52 @@ provideHttpClient(
 
 #### 7.1 Catálogo de endpoints
 
-| Método | URL | Descripción | Servicio/Método | Parámetros |
-|--------|-----|-------------|-----------------|------------|
-| GET | `/products` | Listar todos los productos | `ProductService.getAll()` | - |
-| GET | `/products/:id` | Obtener producto por ID | `ProductService.getById(id)` | `id`: string |
-| GET | `/products?_page=N&_limit=M` | Productos paginados | `ProductService.getFiltered()` | `_page`, `_limit`, `q?`, `category?` |
-| POST | `/products` | Crear nuevo producto | `ProductService.create(dto)` | Body: `CreateProductDto` |
-| PUT | `/products/:id` | Actualizar producto completo | `ProductService.update(id, dto)` | `id`: string, Body: `UpdateProductDto` |
-| PATCH | `/products/:id` | Actualizar producto parcial | `ProductService.patch(id, partial)` | `id`: string, Body: `Partial<UpdateProductDto>` |
-| DELETE | `/products/:id` | Eliminar producto | `ProductService.delete(id)` | `id`: string |
-| POST | `/products/upload-image` | Subir imagen de producto | `ProductService.uploadImage()` | Body: `FormData` |
-| GET | `/products/report` | Descargar reporte | `ProductService.getReport(format)` | Headers: `X-Report-Format` |
+**TAREA 5.7 - Documentación de API (10/10)**
+
+Tabla completa de endpoints consumidos por la aplicación:
+
+| Método | URL | Descripción | Formato | Servicio/Método | Query Params | Headers Personalizados |
+|:-------|:----|:------------|:--------|:----------------|:-------------|:-----------------------|
+| **GET** | `/products` | Listar todos los productos | JSON | `ProductService.getAll()` | - | - |
+| **GET** | `/products/:id` | Obtener producto por ID | JSON | `ProductService.getById(id)` | - | - |
+| **GET** | `/products` | Productos con filtros y paginación | JSON | `ProductService.getFiltered()` | `_page`, `_limit`, `q?`, `category?` | - |
+| **POST** | `/products` | Crear nuevo producto | JSON | `ProductService.create(dto)` | - | `Content-Type: application/json` |
+| **PUT** | `/products/:id` | Actualizar producto completo | JSON | `ProductService.update(id, dto)` | - | `Content-Type: application/json` |
+| **PATCH** | `/products/:id` | Actualizar producto parcial | JSON | `ProductService.patch(id, partial)` | - | `Content-Type: application/json` |
+| **DELETE** | `/products/:id` | Eliminar producto | JSON | `ProductService.delete(id)` | - | - |
+| **POST** | `/products/upload-image` | Subir imagen de producto | **FormData** | `ProductService.uploadImage()` | - | `Content-Type: multipart/form-data` |
+| **GET** | `/products/report` | Descargar reporte de productos | Blob (PDF/CSV) | `ProductService.getReport(format)` | - | `X-Report-Format`, `X-Client-Version`, `Accept` |
+| **GET** | `/recipes` | Listar recetas | JSON | `RecipeService.getAll()` | `?categoria`, `?page` | - |
+| **GET** | `/recipes/:id` | Obtener receta por ID | JSON | `RecipeService.getRecipeById(id)` | - | - |
+
+**Formatos implementados (TAREA 5.4):**
+
+1. **JSON** (formato principal):
+   - Usado en todas las operaciones CRUD estándar
+   - Tipado con interfaces TypeScript
+   - Content-Type: `application/json`
+
+2. **FormData** (subida de archivos):
+   - Usado en `/products/upload-image`
+   - Permite enviar archivos binarios (imágenes)
+   - Content-Type automático: `multipart/form-data; boundary=...`
+
+3. **Query Params** (filtros y paginación):
+   - Usado en `/products` con `HttpParams`
+   - Parámetros: `_page`, `_limit`, `q`, `category`
+   - Compatible con json-server
+
+4. **Headers Personalizados**:
+   - Usado en `/products/report` con `HttpHeaders`
+   - Headers: `X-Report-Format`, `X-Client-Version`, `Accept`
+   - Permite configuración avanzada de la respuesta
+
+**Manejo de respuestas (TAREA 5.3):**
+
+- Tipado con interfaces TypeScript
+- Transformación con operador `map` (en ApiService)
+- Manejo de errores con `catchError` (ApiService + errorInterceptor)
+- **Retry logic** con operador `retry(2)` en `ProductService.getAll()` y `getById()`
 
 ---
 
