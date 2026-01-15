@@ -2843,16 +2843,16 @@ Application bundle generation complete.
 
 **Cumplimiento de criterios de evaluación:**
 
-| Criterio | Puntos | Cumplimiento |
-|----------|--------|--------------|
-| 4.1 Configuración de rutas | 10/10 | ✅ 5+ rutas, parámetros dinámicos, rutas hijas, wildcard 404 |
-| 4.2 Navegación programática | 10/10 | ✅ Router.navigate, NavigationExtras, lectura parámetros |
-| 4.3 Lazy loading | 10/10 | ✅ loadChildren, PreloadAllModules, chunks verificados |
-| 4.4 Route guards | 10/10 | ✅ authGuard + returnUrl, pendingChangesGuard integrados |
-| 4.5 Resolvers | 10/10 | ✅ recipeResolver, loading state, error handling |
-| 4.6 Breadcrumbs dinámicos | 10/10 | ✅ Desde data rutas, auto-actualización, navegables |
-| 4.7 Documentación | 10/10 | ✅ Mapa rutas, estrategia lazy, guards/resolvers docs |
-| **Total FASE 4** | **70/70** | ✅ **Implementación completa** |
+| Criterio | Cumplimiento |
+|----------|---------------|
+| 4.1 Configuración de rutas | ✅ 5+ rutas, parámetros dinámicos, rutas hijas, wildcard 404 |
+| 4.2 Navegación programática | ✅ Router.navigate, NavigationExtras, lectura parámetros |
+| 4.3 Lazy loading | ✅ loadChildren, PreloadAllModules, chunks verificados |
+| 4.4 Route guards | ✅ authGuard + returnUrl, pendingChangesGuard integrados |
+| 4.5 Resolvers | ✅ recipeResolver, loading state, error handling |
+| 4.6 Breadcrumbs dinámicos | ✅ Desde data rutas, auto-actualización, navegables |
+| 4.7 Documentación | ✅ Mapa rutas, estrategia lazy, guards/resolvers docs |
+| **Total FASE 4** | ✅ **Implementación completa** |
 
 ---
 
@@ -3775,16 +3775,16 @@ npm run dev:full
 
 **Cumplimiento de criterios de evaluación:**
 
-| Criterio | Puntos | Cumplimiento |
-|----------|--------|--------------|
-| 5.1 Configuración HttpClient | 10/10 | ✅ provideHttpClient, ApiService, interceptor headers |
-| 5.2 CRUD Completo | 10/10 | ✅ GET listado+detalle, POST, PUT, DELETE, UI integrada |
-| 5.3 Manejo de respuestas | 10/10 | ✅ Interfaces TS, map, catchError, retry implementados |
-| 5.4 Diferentes formatos | 10/10 | ✅ JSON, FormData, query params, headers personalizados |
-| 5.5 Estados de carga y error | 10/10 | ✅ Loading spinner, error/empty states, toasts éxito |
-| 5.6 Interceptores HTTP | 10/10 | ✅ authInterceptor implementado, estructura para más |
-| 5.7 Documentación API | 10/10 | ✅ Catálogo endpoints, interfaces docs, estrategia errores |
-| **Total FASE 5** | **70/70** | ✅ **Implementación completa** |
+| Criterio | Cumplimiento |
+|----------|----------|
+| 5.1 Configuración HttpClient | ✅ provideHttpClient, ApiService, interceptor headers |
+| 5.2 CRUD Completo | ✅ GET listado+detalle, POST, PUT, DELETE, UI integrada |
+| 5.3 Manejo de respuestas | ✅ Interfaces TS, map, catchError, retry implementados |
+| 5.4 Diferentes formatos | ✅ JSON, FormData, query params, headers personalizados |
+| 5.5 Estados de carga y error | ✅ Loading spinner, error/empty states, toasts éxito |
+| 5.6 Interceptores HTTP | ✅ authInterceptor implementado, estructura para más |
+| 5.7 Documentación API | ✅ Catálogo endpoints, interfaces docs, estrategia errores |
+| **Total FASE 5** | ✅ **Implementación completa** |
 
 ---
 
@@ -3879,42 +3879,3 @@ describe('passwordStrength', () => {
   - DOM API y manipulación del DOM
   - Eventos del navegador (KeyboardEvent, MouseEvent)
   - CSS Variables y custom properties
-
-## Apéndices
-
-### Plantillas y ejemplos
-
-**Template de componente standalone:**
-
-```typescript
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-@Component({
-  selector: 'app-example',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './example.html',
-  styleUrl: './example.scss'
-})
-export class Example {
-  // Implementación
-}
-```
-
-**Template de servicio singleton:**
-
-```typescript
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-
-@Injectable({ providedIn: 'root' })
-export class ExampleService {
-  private dataSubject = new BehaviorSubject<any>(null);
-  public data$ = this.dataSubject.asObservable();
-
-  updateData(data: any): void {
-    this.dataSubject.next(data);
-  }
-}
-```
