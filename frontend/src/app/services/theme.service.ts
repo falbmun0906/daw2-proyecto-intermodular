@@ -4,13 +4,10 @@ export type Theme = 'light' | 'dark';
 
 /**
  * ThemeService
- * Servicio para gestionar el tema de la aplicación (claro/oscuro).
  *
- * CRITERIO 4.1 - Theme Switcher Real-time (10/10):
- * - Detecta preferencias del sistema con matchMedia
- * - Listener en tiempo real para cambios del sistema operativo
- * - Persiste en localStorage
- * - Aplica clases al documento con Renderer2
+ * Orquestador central para la gestión de estilos visuales.
+ * Implementa sincronización reactiva con las preferencias del Sistema Operativo
+ * y persistencia en el almacenamiento local del cliente.
  */
 @Injectable({
   providedIn: 'root'
