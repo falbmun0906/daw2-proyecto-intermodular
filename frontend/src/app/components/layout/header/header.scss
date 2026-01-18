@@ -6,30 +6,15 @@
 
 .site-header {
   @include flex-layout(row, space-between, center);
-  padding: var(--spacing-8) 0 var(--spacing-8) 0;
+  padding: var(--spacing-8) 0;
   padding-inline: var(--spacing-16);
   background-color: var(--bg-dark);
   box-shadow: var(--shadow-sm);
   transition: background-color 0.3s ease;
-}
-
-/* Checkbox del menú hamburguesa oculto en desktop */
-.site-header__nav-toggle {
-  display: none !important;
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-/* Label del hamburguesa oculto en desktop */
-.site-header__nav-label {
-  display: none;
+  position: relative;
 }
 
 /* Logo */
-
 .site-header__logo {
   text-decoration: none;
 }
@@ -98,7 +83,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* Iconos SVG como background */
 .site-header__slider::after {
   content: '';
   position: absolute;
@@ -163,105 +147,7 @@
 }
 
 /* =========================
- * RESPONSIVE - Menú hamburguesa en mobile
- * ========================= */
-
-@media (max-width: 767px) {
-  /* Bloque derecho en fila horizontal */
-  .site-header__right {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-8);
-  }
-
-  /* El slider a la derecha */
-  .site-header__theme-toggle {
-    flex-shrink: 0;
-  }
-
-  /* El nav se posiciona relativo para el hamburguesa */
-  .site-header__nav {
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  /* Checkbox completamente oculto y sin afectar layout */
-  .site-header__nav-toggle {
-    display: none !important;
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-  }
-
-  /* Mostrar icono hamburguesa clickeable SOLO en mobile */
-  .site-header__nav-label {
-    display: block !important;
-    width: 28px;
-    height: 20px;
-    cursor: pointer;
-    z-index: 50;
-    background-image:
-      linear-gradient(to bottom,
-        var(--color-neutral-white) 0%,
-        var(--color-neutral-white) 15%,
-        transparent 15%,
-        transparent 40%,
-        var(--color-neutral-white) 40%,
-        var(--color-neutral-white) 60%,
-        transparent 60%,
-        transparent 80%,
-        var(--color-neutral-white) 80%,
-        var(--color-neutral-white) 95%
-      );
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
-
-  /* Vincular el ::before al checkbox - cuando checkbox está checked */
-  .site-header__nav-toggle:checked ~ .site-header__nav-list {
-    display: flex;
-    position: fixed;
-    top: 88px;
-    left: 0;
-    right: 0;
-    background-color: var(--color-tertiary-darker);
-    box-shadow: var(--shadow-md);
-    z-index: 1000;
-    flex-direction: column;
-    align-items: stretch;
-    padding: var(--spacing-8) var(--spacing-16);
-    gap: 0;
-  }
-
-  /* Links ocultos por defecto */
-  .site-header__nav-list {
-    display: none;
-  }
-
-  .site-header__nav-link {
-    display: block;
-    padding: var(--spacing-8) var(--spacing-8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-  }
-}
-
-/* Hacer que el hamburguesa sea label del checkbox */
-@media (max-width: 767px) {
-  .site-header__nav::before {
-    position: relative;
-    z-index: 51;
-  }
-}
-
-/* =========================
- * Botón hamburguesa controlado por Angular
+ * Botón hamburguesa
  * ========================= */
 
 .site-header__nav-toggle-btn {
@@ -285,7 +171,6 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Animación del hamburguesa cuando está abierto */
 .site-header__nav-toggle-btn--open {
   .site-header__hamburger-line:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
@@ -298,32 +183,58 @@
   }
 }
 
+/* =========================
+ * RESPONSIVE - Mobile
+ * ========================= */
+
 @media (max-width: 767px) {
-  /* Ocultar el label original del checkbox */
-  .site-header__nav-label {
-    display: none !important;
+  .site-header__right {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-8);
   }
 
-  /* Mostrar el botón hamburguesa controlado por Angular */
+  .site-header__theme-toggle {
+    flex-shrink: 0;
+  }
+
+  .site-header__nav {
+    position: static;
+    flex-shrink: 0;
+  }
+
   .site-header__nav-toggle-btn {
     display: flex;
   }
 
-  /* Menú abierto con la clase de Angular */
+  .site-header__nav-list {
+    display: none;
+  }
+
   .site-header__nav-list--open {
     display: flex !important;
-    position: fixed;
-    top: 88px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    background-color: var(--color-tertiary-darker);
+    background-color: var(--bg-dark);
     box-shadow: var(--shadow-md);
-    z-index: 1000;
+    z-index: 999;
     flex-direction: column;
     align-items: stretch;
     padding: var(--spacing-8) var(--spacing-16);
     gap: 0;
     animation: slideDown 0.3s ease;
+  }
+
+  .site-header__nav-link {
+    display: block;
+    padding: var(--spacing-8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
   }
 }
 
@@ -337,4 +248,3 @@
     transform: translateY(0);
   }
 }
-
