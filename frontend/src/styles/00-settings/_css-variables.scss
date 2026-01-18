@@ -71,6 +71,9 @@
   --bg-footer-end: #00ffff;
   --svg-overlay-opacity: 0.8;
   --svg-overlay-color: rgba(242, 181, 69, 1);
+
+  /* Filtro de iconos para tema claro por defecto (gris oscuro) */
+  --icon-color-filter: brightness(0) saturate(100%) invert(25%) sepia(0%) saturate(0%);
 }
 
 /* =========================
@@ -123,6 +126,9 @@
 
   --svg-overlay-opacity: 0.3;
   --svg-overlay-color: rgba(67, 70, 66, 0.6);
+
+  /* Filtro de iconos para tema oscuro (blanco) */
+  --icon-color-filter: brightness(0) invert(1);
 }
 
 /* Clase para forzar tema claro */
@@ -147,5 +153,8 @@
 
   --svg-overlay-opacity: 0.8;
   --svg-overlay-color: rgba(242, 181, 69, 1);
+
+  /* Filtro de iconos para tema claro (gris oscuro) */
+  --icon-color-filter: brightness(0) saturate(100%) invert(25%) sepia(0%) saturate(0%);
 }
 

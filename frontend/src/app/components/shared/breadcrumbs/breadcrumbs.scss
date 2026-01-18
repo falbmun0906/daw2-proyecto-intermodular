@@ -116,3 +116,56 @@
   }
 }
 
+/* =========================
+ * Modifier: Hero
+ * Breadcrumbs sin dependencia de temas (light/dark)
+ * Siempre blancas sobre fondo oscuro
+ * ========================= */
+.breadcrumbs--hero {
+  .breadcrumbs__item--home {
+    .breadcrumbs__link--icon {
+      color: #ffffff;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      &:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .breadcrumbs__separator {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .breadcrumbs__item--intermediate {
+    .breadcrumbs__link--intermediate {
+      color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        color: rgba(255, 255, 255, 0.95);
+      }
+
+      &:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .breadcrumbs__item--current {
+    .breadcrumbs__text--active {
+      color: #ffffff;
+      background-color: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      cursor: default;
+    }
+  }
+}
+

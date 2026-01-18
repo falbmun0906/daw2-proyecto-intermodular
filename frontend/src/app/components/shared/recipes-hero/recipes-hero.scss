@@ -1,0 +1,163 @@
+.recipes-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 320px;
+  overflow: hidden;
+  padding: var(--spacing-8);
+
+  // IMPORTANTE: Hero es independiente de temas (light/dark)
+  --breadcrumb-padding: 2rem;
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.15) 100%),
+      url('../../../../assets/recipes-hero-bg.png') center / cover no-repeat;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    max-width: calc(1400px - var(--spacing-16));
+    margin: 0 auto;
+  }
+
+  &__breadcrumbs {
+    margin: 0;
+    margin-bottom: auto;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  &__title {
+    font-family: var(--font-family-secondary);
+    font-size: 6.5rem;
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    flex: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+  }
+
+  &__search {
+    flex: 1;
+    max-width: 380px;
+
+    // Estilos independientes de temas
+    input {
+      width: 100%;
+      height: 48px;
+      background-color: #ffffff;
+      color: #1f2937;
+      border: none;
+      border-radius: 6px;
+      padding: 0 1rem 0 2.75rem;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.2s ease;
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    // Estilos del icono del input
+    ::ng-deep .form-input__icon {
+      color: #6b7280;
+      left: 0.75rem;
+    }
+  }
+}
+
+// Media queries para responsividad
+@media (max-width: 768px) {
+  .recipes-hero {
+    min-height: 280px;
+
+    &__content {
+      padding: 1.5rem;
+      --breadcrumb-padding: 1.5rem;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    &__title {
+      font-size: 1.875rem;
+      margin-bottom: 0;
+    }
+
+    &__search {
+      max-width: 100%;
+
+      input {
+        height: 44px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .recipes-hero {
+    min-height: 240px;
+
+    &__content {
+      padding: 1rem;
+      --breadcrumb-padding: 1rem;
+    }
+
+    &__breadcrumbs {
+      ::ng-deep .breadcrumbs__item {
+        font-size: 0.75rem;
+      }
+    }
+
+    &__title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &__search {
+      max-width: 100%;
+
+      input {
+        height: 40px;
+        padding: 0 0.75rem 0 2.25rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+
+
+

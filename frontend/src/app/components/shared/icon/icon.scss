@@ -1,6 +1,19 @@
 .icon {
   display: inline-block;
   vertical-align: middle;
+  filter: var(--icon-color-filter, none);
+  transition: filter 0.3s ease;
+
+  &--phosphor {
+    // Los iconos Phosphor responden al tema
+    filter: var(--icon-color-filter, none);
+  }
+
+  &--social {
+    // Los iconos sociales no se ven afectados por filtros
+    filter: none;
+  }
 }
+
 
 

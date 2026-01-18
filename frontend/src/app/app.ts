@@ -4,11 +4,10 @@ import { Header } from './components/layout/header/header';
 import { Footer } from './components/layout/footer/footer';
 import { Toast } from './components/shared/toast/toast';
 import { Spinner } from './components/shared/spinner/spinner';
-import { Breadcrumbs } from './components/shared/breadcrumbs/breadcrumbs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Toast, Spinner, Breadcrumbs],
+  imports: [RouterOutlet, Header, Footer, Toast, Spinner],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

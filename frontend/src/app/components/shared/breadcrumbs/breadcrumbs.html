@@ -1,4 +1,4 @@
-<nav class="breadcrumbs" aria-label="Migas de pan">
+<nav class="breadcrumbs" [ngClass]="{ 'breadcrumbs--hero': variant === 'hero' }" aria-label="Migas de pan">
   <ol class="breadcrumbs__list">
     <!-- Nivel 1: Solo icono de casa -->
     @if (isLevel1) {

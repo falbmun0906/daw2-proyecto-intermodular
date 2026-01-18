@@ -411,12 +411,12 @@
 
   .card__action-button {
     padding: var(--spacing-3) var(--spacing-6);
-    font-size: var(--font-sm-size);
+    font-size: var(--font-h5-size);
     border-radius: var(--radius-md);
 
     /* Opcional: ancho mínimo coherente */
     min-width: 140px;
-    max-width: 150px;
+    max-width: 180px;
   }
 
   .card__action-button--primary {
