@@ -1,11 +1,32 @@
 <div class="not-found-page">
-  <div class="not-found-page__content">
-    <h1 class="not-found-page__title">404</h1>
-    <h2 class="not-found-page__subtitle">Página no encontrada</h2>
-    <p class="not-found-page__description">
-      Lo sentimos, la página que estás buscando no existe o ha sido movida.
-    </p>
-    <a routerLink="/" class="not-found-page__link">Volver al inicio</a>
+  <!-- Overlay de fondo -->
+  <div class="not-found-page__overlay"></div>
+
+  <div class="not-found-page__content not-found-page__content--vertical">
+    <!-- Imagen del plato (arriba) -->
+    <div class="not-found-page__image-container">
+      <img
+        src="assets/404-error.png"
+        alt="Plato vacío"
+        class="not-found-page__image"
+      />
+    </div>
+
+    <!-- Contenido de texto (debajo) -->
+    <div class="not-found-page__text-container">
+      <h1 class="not-found-page__title">Ups...</h1>
+      <h2 class="not-found-page__subtitle">Página no encontrada</h2>
+      <p class="not-found-page__description">
+        Lo sentimos, la página que buscas no está aquí. Pero no te vayas con las manos vacías: descubre una receta inspiradora.
+      </p>
+
+      <!-- Frase catchy -->
+      <p class="not-found-page__tagline">¿Hambre de ideas? Encuentra el plato perfecto para tu despensa.</p>
+
+      <div class="not-found-page__actions">
+        <app-button variant="primary" routerLink="/">Volver al inicio</app-button>
+        <app-button variant="secondary" routerLink="/recetas">Explorar recetas</app-button>
+      </div>
+    </div>
   </div>
 </div>
-
