@@ -58,10 +58,10 @@ export class StyleGuidePage {
 
   // Tabs
   tabs: Tab[] = [
-    { id: 'tab1', label: 'Recetas', icon: '🍽️' },
-    { id: 'tab2', label: 'Ingredientes', icon: '🥗', badge: '5' },
-    { id: 'tab3', label: 'Favoritos', icon: '❤️' },
-    { id: 'tab4', label: 'Deshabilitado', icon: '🚫', disabled: true }
+    { id: 'tab1', label: 'Recetas', icon: '' },
+    { id: 'tab2', label: 'Ingredientes', icon: '', badge: '5' },
+    { id: 'tab3', label: 'Favoritos', icon: '' },
+    { id: 'tab4', label: 'Deshabilitado', icon: '', disabled: true }
   ];
   activeTab: string = 'tab1';
 
@@ -95,10 +95,10 @@ export class StyleGuidePage {
   emailError: boolean = false;
   emailSuccess: boolean = false;
 
-  // Iconos Unicode limpios y discretos
-  searchIcon: string = '🔍';
-  arrowRightIcon: string = '→';
-  heartIcon: string = '♥';
+  // Iconos Lucide modernos y escalables
+  searchIcon: string = 'Search';
+  arrowRightIcon: string = 'ArrowRight';
+  heartIcon: string = 'Heart';
 
   // Radio options
   radioOptions: RadioOption[] = [

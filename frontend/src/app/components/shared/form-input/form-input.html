@@ -20,7 +20,11 @@
     <!-- Icono opcional -->
     @if (icon) {
       <span class="form-input__icon" aria-hidden="true">
-        {{ icon }}
+        @if (isLucideIcon(icon)) {
+          <app-icon [name]="icon" [size]="20"></app-icon>
+        } @else {
+          {{ icon }}
+        }
       </span>
     }
 

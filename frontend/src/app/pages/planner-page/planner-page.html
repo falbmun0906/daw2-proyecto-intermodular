@@ -66,21 +66,21 @@
 
     <section class="planner__actions-section">
       <app-button variant="secondary" size="md" (buttonClick)="onAddMealPlan()">
-        ➕ Añadir plan de comida
+        + Añadir plan de comida
       </app-button>
 
       <div class="planner__search-wrapper">
         <app-form-input
           type="text"
           placeholder="Buscar plan"
-          icon="🔍"
+          [icon]="'🔍'"
           [(ngModel)]="searchQuery"
           (input)="onSearch()"
-          class="planner__search"
+          class="planner__search form-input--search"
         />
 
         <app-button variant="ghost" size="sm" (buttonClick)="onFilter()">
-          🔧 Filtrar
+          Filtrar
         </app-button>
       </div>
     </section>

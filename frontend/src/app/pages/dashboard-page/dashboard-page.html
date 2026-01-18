@@ -61,17 +61,17 @@
         <app-form-input
           type="text"
           placeholder="Buscar ingrediente"
-          icon="🔍"
+          [icon]="'🔍'"
           [(ngModel)]="searchQuery"
           (input)="onSearch()"
-          class="shopping-list__search"
+          class="shopping-list__search form-input--search"
         />
 
         <app-button
           variant="ghost"
           size="sm"
           (buttonClick)="onFilter()">
-          🔧 Filtrar
+          Filtrar
         </app-button>
       </div>
 
@@ -94,10 +94,10 @@
         </app-button>
 
         <app-button
-          variant="secondary"
+          variant="ghost"
           size="md"
           (buttonClick)="onShareList()">
-          🔗 Compartir
+          Compartir
         </app-button>
       </div>
     </section>

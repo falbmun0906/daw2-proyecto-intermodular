@@ -470,7 +470,7 @@ this.renderer.addClass(this.alertContainer.nativeElement, 'alert--fade-out');
 
 // ThemeService: Cambiar tema
 this.renderer.addClass(document.body, 'dark-theme');
-this.renderer.removeClass(document.body, 'light-theme');
+this.renderer.removeClass(document.body, 'regular-theme');
 ```
 
 3. **setAttribute() / removeAttribute()** - ARIA y accesibilidad:
@@ -576,9 +576,9 @@ private applyTheme(theme: Theme): void {
   
   if (theme === 'dark') {
     this.renderer.addClass(body, 'dark-theme');
-    this.renderer.removeClass(body, 'light-theme');
+    this.renderer.removeClass(body, 'regular-theme');
   } else {
-    this.renderer.addClass(body, 'light-theme');
+    this.renderer.addClass(body, 'regular-theme');
     this.renderer.removeClass(body, 'dark-theme');
   }
 }
@@ -1543,9 +1543,9 @@ Detección de preferencia del sistema:
 private getSystemPreference(): Theme {
   if (typeof window !== 'undefined' && window.matchMedia) {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return prefersDark ? 'dark' : 'light';
+    return prefersDark ? 'dark' : 'regular';
   }
-  return 'light';
+  return 'regular';
 }
 ```
 
@@ -1571,7 +1571,7 @@ private getSystemPreference(): Theme {
 1. Toggle entre light/dark:
 ```typescript
 toggleTheme(): void {
-  const newTheme: Theme = this.currentTheme === 'light' ? 'dark' : 'light';
+  const newTheme: Theme = this.currentTheme === 'regular' ? 'dark' : 'regular';
   this.setTheme(newTheme);
 }
 ```
@@ -1588,9 +1588,9 @@ private saveTheme(theme: Theme): void {
 private applyTheme(theme: Theme): void {
   if (theme === 'dark') {
     this.renderer.addClass(body, 'dark-theme');
-    this.renderer.removeClass(body, 'light-theme');
+    this.renderer.removeClass(body, 'regular-theme');
   } else {
-    this.renderer.addClass(body, 'light-theme');
+    this.renderer.addClass(body, 'regular-theme');
     this.renderer.removeClass(body, 'dark-theme');
   }
 }
@@ -1773,7 +1773,7 @@ export class ThemeService {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addEventListener('change', (event) => {
       if (!this.hasUserOverride()) { // Solo si el usuario no eligió manualmente
-        this.applyTheme(event.matches ? 'dark' : 'light');
+        this.applyTheme(event.matches ? 'dark' : 'regular');
       }
     });
   }

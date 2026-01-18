@@ -39,10 +39,10 @@
 
       <div class="pantry__actions">
         <app-button variant="secondary" size="md" (buttonClick)="onAddProduct()">
-          📦 Añadir producto
+          Añadir producto
         </app-button>
         <app-button variant="secondary" size="md" (buttonClick)="onCreatePantry()">
-          ➕ Nueva despensa
+          Nueva despensa
         </app-button>
       </div>
     </section>
@@ -54,14 +54,14 @@
         <app-form-input
           type="text"
           placeholder="Buscar ingrediente"
-          icon="🔍"
+          [icon]="'🔍'"
           [(ngModel)]="searchQueryFridge"
           (input)="onSearchFridge()"
-          class="pantry__search"
+          class="pantry__search form-input--search"
         />
 
         <app-button variant="ghost" size="sm" (buttonClick)="onFilterFridge()">
-          🔧 Filtrar
+          Filtrar
         </app-button>
       </div>
 
@@ -87,14 +87,14 @@
         <app-form-input
           type="text"
           placeholder="Buscar ingrediente"
-          icon="🔍"
+          [icon]="'🔍'"
           [(ngModel)]="searchQueryCupboard"
           (input)="onSearchCupboard()"
-          class="pantry__search"
+          class="pantry__search form-input--search"
         />
 
         <app-button variant="ghost" size="sm" (buttonClick)="onFilterCupboard()">
-          🔧 Filtrar
+          Filtrar
         </app-button>
       </div>
 

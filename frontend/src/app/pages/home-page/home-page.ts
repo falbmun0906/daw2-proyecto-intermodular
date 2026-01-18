@@ -27,6 +27,11 @@ interface Recipe {
 export class HomePage {
   newsletterEmail: string = '';
 
+  // Iconos
+  prevIcon: string = 'chevron-right';
+  nextIcon: string = 'chevron-right';
+  searchIcon: string = 'search';
+
   trendingRecipes: Recipe[] = [
     {
       id: 1,

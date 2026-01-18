@@ -38,10 +38,10 @@ export class PlannerPage {
   sidebarCollapsed: boolean = false;
 
   sidebarItems: SidebarNavItem[] = [
-    { id: 'resumen', label: 'Resumen', icon: '📊', active: false },
-    { id: 'despensa', label: 'Despensa', icon: '🏪', active: false },
-    { id: 'planificador', label: 'Planificador', icon: '📅', active: true },
-    { id: 'lista', label: 'Lista', icon: '📝', active: false }
+    { id: 'resumen', label: 'Resumen', icon: '', active: false },
+    { id: 'despensa', label: 'Despensa', icon: '', active: false },
+    { id: 'planificador', label: 'Planificador', icon: '', active: true },
+    { id: 'lista', label: 'Lista', icon: '', active: false }
   ];
 
   calendarDays: CalendarDay[] = [

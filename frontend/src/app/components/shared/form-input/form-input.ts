@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Icon } from '../icon/icon';
 
 /**
  * FormInput Component
@@ -9,7 +10,7 @@ import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/f
  */
 @Component({
   selector: 'app-form-input',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Icon],
   templateUrl: './form-input.html',
   styleUrl: './form-input.scss',
   providers: [
@@ -162,5 +163,18 @@ export class FormInput implements ControlValueAccessor {
       ids.push(`${this.inputId}-success`);
     }
     return ids.join(' ');
+  }
+
+  /**
+   * Verifica si el icono es un nombre válido
+   */
+  isLucideIcon(iconName: string): boolean {
+    const validIcons = [
+      'search', 'filter', 'settings', 'heart', 'star', 'arrow-right',
+      'chevron-right', 'home', 'user', 'menu', 'x', 'check',
+      'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
+      'mail', 'lock', 'google', 'facebook', 'x-icon', 'user-check']
+
+    return validIcons.includes(iconName);
   }
 }

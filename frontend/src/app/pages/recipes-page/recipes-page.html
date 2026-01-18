@@ -24,10 +24,10 @@
         <app-form-input
           type="text"
           placeholder="Buscar receta"
-          icon="🔍"
+          [icon]="'🔍'"
           [(ngModel)]="searchQuery"
           (input)="onSearch()"
-          class="recipes-page__search"
+          class="recipes-page__search form-input--search"
         />
       </div>
 

@@ -129,4 +129,37 @@
   &__message-icon {
     flex-shrink: 0;
   }
+
+  /* Modificador para buscadores */
+  &--search {
+    width: 100%;
+
+    .form-input__field {
+      background: var(--surface-base);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-4);
+      padding-left: var(--spacing-12);
+      height: 44px;
+      display: flex;
+      align-items: center;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      &::placeholder {
+        color: var(--text-secondary);
+      }
+    }
+
+    .form-input__icon {
+      left: var(--spacing-4);
+      width: 20px;
+      height: 20px;
+      color: #000;
+      font-size: 20px;
+    }
+  }
 }

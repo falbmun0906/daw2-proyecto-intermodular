@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { Icon } from '../icon/icon';
 /**
  * Componente Button reutilizable
  *
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Icon],
   templateUrl: './button.html',
   styleUrl: './button.scss',
 })
@@ -100,6 +100,19 @@ export class Button {
     if (!this.disabled) {
       this.buttonClick.emit(event);
     }
+  }
+
+  /**
+   * Verifica si el icono es un nombre válido
+   */
+  isLucideIcon(iconName: string): boolean {
+    const validIcons = [
+      'search', 'filter', 'settings', 'heart', 'star', 'arrow-right',
+      'chevron-right', 'home', 'user', 'menu', 'x', 'check',
+      'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
+      'mail', 'lock', 'google', 'facebook', 'x-icon'
+    ];
+    return validIcons.includes(iconName);
   }
 }
 
