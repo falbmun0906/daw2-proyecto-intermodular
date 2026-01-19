@@ -18,6 +18,7 @@ export class Icon {
   @Input() size: number = 20;
   @Input() color: string = 'currentColor';
   @Input() solidBlack: boolean = false; // Nueva propiedad para evitar filter de tema
+  @Input() solidWhite: boolean = false; // Nueva propiedad para forzar icono blanco
 
   // Iconos que se cargan desde assets
   private socialIcons = ['google', 'facebook', 'x-icon'];
@@ -28,6 +29,10 @@ export class Icon {
 
   get hasSolidBlack(): boolean {
     return this.solidBlack;
+  }
+
+  get hasSolidWhite(): boolean {
+    return this.solidWhite;
   }
 
   get iconPath(): string {
@@ -48,6 +53,7 @@ export class Icon {
       'star': 'star',
       'arrow-right': 'arrow-right',
       'chevron-right': 'caret-right',
+      'chevron-left': 'caret-left',
       'home': 'house',
       'user': 'user',
       'menu': 'list',
@@ -62,7 +68,10 @@ export class Icon {
       'mail': 'envelope-simple',
       'lock': 'lock',
       'user-check': 'user-check',
-      'usb': 'usb'
+      'usb': 'usb',
+      'chef-hat': 'chef-hat',
+      'utensils': 'fork-knife',
+      'fire': 'fire'
     };
     const phosphorName = phosphorMap[this.name] || this.name;
     return `assets/icons/phosphor/regular/${phosphorName}.svg`;

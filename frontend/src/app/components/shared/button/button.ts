@@ -21,8 +21,9 @@ export class Button {
    * - 'secondary': Color primario (verde), para acciones secundarias
    * - 'ghost': Sin fondo, solo texto y borde
    * - 'danger': Color rojo, para acciones destructivas
+   * - 'cta': Call-To-Action, variante destacada con sombra y escala
    */
-  @Input() variant: 'primary' | 'secondary' | 'ghost' | 'danger' = 'primary';
+  @Input() variant: 'primary' | 'secondary' | 'ghost' | 'danger' | 'cta' = 'primary';
 
   /**
    * Tamaño del botón
@@ -110,9 +111,36 @@ export class Button {
       'search', 'filter', 'settings', 'heart', 'star', 'arrow-right',
       'chevron-right', 'home', 'user', 'menu', 'x', 'check',
       'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
-      'mail', 'lock', 'google', 'facebook', 'x-icon'
+      'mail', 'lock', 'google', 'facebook', 'x-icon', 'chef-hat',
+      'utensils', 'fire'
     ];
     return validIcons.includes(iconName);
+  }
+
+  /**
+   * Calcula el tamaño del icono dinámicamente según el tamaño del botón
+   * Para variante CTA y lg, el icono es del tamaño de la fuente
+   */
+  get iconSize(): number {
+    // Para CTA, el icono es más grande (proporcional al tamaño del texto)
+    if (this.variant === 'cta') {
+      if (this.size === 'lg') {
+        return 28; // Para CTA lg
+      } else if (this.size === 'md') {
+        return 22; // Para CTA md
+      }
+    }
+
+    // Para otros tamaños
+    switch (this.size) {
+      case 'sm':
+        return 16;
+      case 'lg':
+        return 24;
+      case 'md':
+      default:
+        return 20;
+    }
   }
 }
 

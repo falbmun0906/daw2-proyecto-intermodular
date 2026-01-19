@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Card } from '../../components/shared/card/card';
 import { Button } from '../../components/shared/button/button';
 import { FormInput } from '../../components/shared/form-input/form-input';
+import { CarouselNavButton } from '../../components/shared/carousel-nav-button/carousel-nav-button';
 
 interface Recipe {
   id: number;
@@ -19,7 +20,7 @@ interface Recipe {
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule, Card, Button, FormInput],
+  imports: [RouterModule, CommonModule, FormsModule, Card, Button, FormInput, CarouselNavButton],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   encapsulation: ViewEncapsulation.None
@@ -27,10 +28,6 @@ interface Recipe {
 export class HomePage {
   newsletterEmail: string = '';
 
-  // Iconos
-  prevIcon: string = 'chevron-right';
-  nextIcon: string = 'chevron-right';
-  searchIcon: string = 'search';
 
   trendingRecipes: Recipe[] = [
     {

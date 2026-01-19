@@ -16,6 +16,13 @@
   /* Modifier: iconos siempre negros - NO aplica filter de tema */
   &--solid-black {
     filter: none;
-    color: #000000;
+    color: var(--color-neutral-gray);
+  }
+
+  /* Modifier: iconos siempre blancos - NO aplica filter de tema, forzar blanco */
+  &--solid-white {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    color: var(--color-neutral-white);
   }
 }

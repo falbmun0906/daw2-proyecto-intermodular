@@ -156,10 +156,10 @@
   opacity: 1;
 }
 
-.site-header__theme-switch input:focus-visible + .site-header__slider {
+/*.site-header__theme-switch input:focus-visible + .site-header__slider {
   outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
-}
+}*/
 
 /* =========================
  * Navegación
@@ -186,6 +186,13 @@
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   padding: var(--spacing-2) 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
   /* Underline sutil tipo 'arañazo' como en el footer */
   &::after {
@@ -207,10 +214,9 @@
     }
   }
 
-  &:focus {
-    outline: 2px solid var(--color-secondary);
-    outline-offset: 4px;
-    border-radius: 2px;
+  &:focus,
+  &:focus-visible {
+    outline: none;
   }
 }
 
@@ -239,11 +245,11 @@
     transform: scale(0.95);
   }
 
-  &:focus-visible {
+/*  &:focus-visible {
     outline: 2px solid var(--color-secondary);
     outline-offset: 4px;
     border-radius: 2px;
-  }
+  }*/
 }
 
 .site-header__hamburger-line {

@@ -1,0 +1,77 @@
+@use '../../../../styles/01-tools/mixins' as *;
+
+.carousel-nav-button {
+  /* Dimensiones */
+  width: 60px;
+  height: 400px;
+
+
+  /* Fondo oscuro semitransparente */
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+
+  /* Contenido centrado */
+  @include flex-layout(row, center, center, 0);
+
+  /* Colores y efectos */
+  color: var(--color-neutral-beige);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Resetear estilos por defecto */
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+
+  /* Estados hover */
+  &:hover:not(.carousel-nav-button--disabled) {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  /* Estado disabled */
+  &.carousel-nav-button--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Estado active/pressed */
+  &.carousel-nav-button--pressed:not(.carousel-nav-button--disabled) {
+    transform: scale(0.95);
+  }
+
+  /* Focus accesible */
+  &:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &.carousel-nav-button--pressed {
+      transform: none;
+    }
+  }
+}
+
+.carousel-nav-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-neutral-beige);
+  user-select: none;
+}
+
+/* Variantes direccionales (pueden usarse para animaciones futuras) */
+.carousel-nav-button--prev {
+  border-radius: 3rem var(--radius-sm) var(--radius-sm) 3rem;
+}
+
+.carousel-nav-button--next {
+  border-radius: var(--radius-sm) 3rem 3rem var(--radius-sm);
+}
+

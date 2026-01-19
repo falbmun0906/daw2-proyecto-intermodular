@@ -76,12 +76,12 @@
   /* Login */
   &__login-link {
     text-align: center;
-    margin: 0;
+    margin-top: var(--spacing-8);
 
     a {
       color: var(--color-secondary);
       text-decoration: none;
-      font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-light);
 
       &:hover {
         text-decoration: underline;
