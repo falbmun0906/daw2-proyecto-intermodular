@@ -71,7 +71,9 @@ export class Icon {
       'usb': 'usb',
       'chef-hat': 'chef-hat',
       'utensils': 'fork-knife',
-      'fire': 'fire'
+      'fire': 'fire',
+      'schedule': 'clock',
+      'chart-bar': 'chart-bar'
     };
     const phosphorName = phosphorMap[this.name] || this.name;
     return `assets/icons/phosphor/regular/${phosphorName}.svg`;

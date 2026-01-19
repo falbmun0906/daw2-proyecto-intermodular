@@ -76,12 +76,12 @@
       @if (time) {
         @if (variant === 'vertical') {
           <app-badge variant="neutral" size="sm">
-            <span class="card__meta-icon" aria-hidden="true">⏱</span>
+            <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
             {{ time }}
           </app-badge>
         } @else {
           <span class="card__time" aria-label="Tiempo de preparación">
-            <span class="card__meta-icon" aria-hidden="true">⏱</span>
+            <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
             {{ time }}
           </span>
         }
@@ -91,12 +91,12 @@
       @if (difficulty) {
         @if (variant === 'vertical') {
           <app-badge variant="neutral" size="sm">
-            <span class="card__meta-icon" aria-hidden="true">📊</span>
+            <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
             {{ difficulty }}
           </app-badge>
         } @else {
           <span class="card__difficulty" aria-label="Dificultad">
-            <span class="card__meta-icon" aria-hidden="true">📊</span>
+            <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
             {{ difficulty }}
           </span>
         }

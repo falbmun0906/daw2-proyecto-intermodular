@@ -1,10 +1,9 @@
 @use '../../../../styles/01-tools/mixins' as *;
 
 .carousel-nav-button {
-  /* Dimensiones */
-  width: 60px;
-  height: 400px;
-
+  /* Dimensiones base - Desktop */
+  width: 40px;
+  height: 200px;
 
   /* Fondo oscuro semitransparente */
   background-color: rgba(0, 0, 0, 0.5);
@@ -25,6 +24,10 @@
   appearance: none;
   outline: none;
 
+  /* Accesibilidad táctil mejorada */
+  position: relative;
+  z-index: 2;
+
   /* Estados hover */
   &:hover:not(.carousel-nav-button--disabled) {
     background-color: rgba(0, 0, 0, 0.75);
@@ -41,10 +44,16 @@
     transform: scale(0.95);
   }
 
-  /* Focus accesible */
+  /* Focus accesible mejorado */
   &:focus-visible {
-    outline: 2px solid var(--color-secondary);
+    outline: 3px solid var(--color-secondary);
     outline-offset: 2px;
+    z-index: 10;
+  }
+
+  /* Accesibilidad para usuarios de teclado */
+  &:focus:not(:focus-visible) {
+    outline: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -64,9 +73,10 @@
   height: 32px;
   color: var(--color-neutral-beige);
   user-select: none;
+  pointer-events: none; /* Evitar problemas de click en el icono */
 }
 
-/* Variantes direccionales (pueden usarse para animaciones futuras) */
+/* Variantes direccionales */
 .carousel-nav-button--prev {
   border-radius: 3rem var(--radius-sm) var(--radius-sm) 3rem;
 }
@@ -75,3 +85,149 @@
   border-radius: var(--radius-sm) 3rem 3rem var(--radius-sm);
 }
 
+/* ====================================
+ * RESPONSIVE BREAKPOINTS
+ * ==================================== */
+
+/* Tablets grandes y dispositivos medianos (≤1024px) */
+@media (max-width: 1024px) {
+  .carousel-nav-button {
+    width: 30px;
+    height: 150px;
+  }
+
+  .carousel-nav-button__icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Tablets (≤768px) */
+@media (max-width: 768px) {
+  .carousel-nav-button {
+    width: 45px;
+    height: 300px;
+  }
+
+  .carousel-nav-button__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Móviles y pantallas pequeñas (≤630px) */
+@media (max-width: 630px) {
+  .carousel-nav-button {
+    width: 40px;
+    height: 250px;
+
+    /* Aumentar área táctil sin cambiar apariencia visual */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -8px; /* Expande el área táctil 8px en todas direcciones */
+      z-index: -1;
+    }
+  }
+
+  .carousel-nav-button__icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Móviles pequeños (≤480px) */
+@media (max-width: 480px) {
+  .carousel-nav-button {
+    width: 36px;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.6); /* Ligeramente más opaco en móviles pequeños */
+
+    /* Área táctil ampliada para móviles pequeños */
+    &::before {
+      inset: -10px; /* Más área táctil en dispositivos pequeños */
+    }
+  }
+
+  .carousel-nav-button__icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Ajustar border-radius para dispositivos pequeños */
+  .carousel-nav-button--prev {
+    border-radius: 2rem var(--radius-sm) var(--radius-sm) 2rem;
+  }
+
+  .carousel-nav-button--next {
+    border-radius: var(--radius-sm) 2rem 2rem var(--radius-sm);
+  }
+}
+
+/* Móviles muy pequeños (≤360px) */
+@media (max-width: 360px) {
+  .carousel-nav-button {
+    width: 32px;
+    height: 180px;
+
+    &::before {
+      inset: -12px; /* Máxima área táctil para dispositivos muy pequeños */
+    }
+  }
+
+  .carousel-nav-button__icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ====================================
+ * ACCESIBILIDAD ADICIONAL
+ * ==================================== */
+
+/* Alto contraste para usuarios con necesidades de accesibilidad */
+@media (prefers-contrast: more) {
+  .carousel-nav-button {
+    background-color: rgba(0, 0, 0, 0.85);
+    border: 2px solid var(--color-neutral-beige);
+
+    &:hover:not(.carousel-nav-button--disabled) {
+      background-color: rgba(0, 0, 0, 0.95);
+      border-color: var(--color-secondary);
+    }
+
+    &:focus-visible {
+      outline-width: 4px;
+    }
+  }
+
+  .carousel-nav-button__icon {
+    color: var(--color-neutral-white);
+  }
+}
+
+/* Modo oscuro o tema oscuro preferido */
+@media (prefers-color-scheme: dark) {
+  .carousel-nav-button {
+    background-color: rgba(255, 255, 255, 0.15);
+
+    &:hover:not(.carousel-nav-button--disabled) {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+  }
+}
+
+/* Optimización para pantallas táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .carousel-nav-button {
+    /* Aumentar tamaño mínimo para targets táctiles (44x44px según WCAG) */
+    min-width: 44px;
+    min-height: 44px;
+
+    /* Feedback visual más pronunciado en touch */
+    &:active:not(.carousel-nav-button--disabled) {
+      background-color: rgba(0, 0, 0, 0.85);
+      transform: scale(0.98);
+    }
+  }
+}

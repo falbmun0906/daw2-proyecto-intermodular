@@ -112,7 +112,7 @@ export class Button {
       'chevron-right', 'home', 'user', 'menu', 'x', 'check',
       'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
       'mail', 'lock', 'google', 'facebook', 'x-icon', 'chef-hat',
-      'utensils', 'fire'
+      'utensils', 'fire', 'schedule', 'chart-bar'
     ];
     return validIcons.includes(iconName);
   }

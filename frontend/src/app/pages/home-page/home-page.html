@@ -44,7 +44,7 @@
         (navigate)="prevSlide()"
       ></app-carousel-nav-button>
 
-      <div class="trending__track">
+      <div class="trending__track" #carouselTrack>
         @for (recipe of trendingRecipes; track recipe.id) {
           <app-card
             variant="carousel"

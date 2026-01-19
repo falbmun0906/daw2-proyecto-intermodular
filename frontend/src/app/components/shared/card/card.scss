@@ -9,31 +9,19 @@
  * ==================================== */
 
 .card {
-  /* Estructura */
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-
-  /* Dimensiones base - la imagen ocupa TODO */
   width: 100%;
-
-  /* Forma y bordes */
   border-radius: var(--radius-sm);
   background-color: var(--color-neutral-white);
-
-  /* Background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  /* Elevación */
   box-shadow: var(--shadow-md);
-
-  /* Transiciones suaves */
   transition: box-shadow var(--transition-base) var(--transition-easing);
 
-  /* Estado hover: elevación y transformación */
   &:hover {
     box-shadow: var(--shadow-lg);
 
@@ -42,16 +30,17 @@
     }
   }
 
-  /* Accesibilidad: focus visible para cards clickeables */
   @include focus-ring(var(--color-info-dark));
 }
 
-/* Clase auxiliar para background-image (aplicada dinámicamente) */
+/* ====================================
+ * Elementos base
+ * ==================================== */
+
 .card__image-bg {
   background-size: cover;
   background-position: center;
 
-  /* Overlay oscuro para aumentar contraste con el contenido */
   &::after {
     content: '';
     position: absolute;
@@ -65,37 +54,22 @@
   }
 }
 
-/* ====================================
- * Elemento: Wrapper de imagen (ocupa TODO)
- * ==================================== */
-
 .card__image-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   background-color: var(--color-primary-light);
-
-  /* La imagen es el fondo principal */
   flex-grow: 1;
 }
 
-/* ====================================
- * Elemento: Imagen de fondo (oculta, para lazy loading)
- * ==================================== */
-
 .card__image {
-  display: none; /* Oculta, solo para preload */
+  display: none;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
-
-/* ====================================
- * Elemento: SVG decorativo de fondo (card-form)
- * SUPERPUESTO SOBRE LA IMAGEN
- * ==================================== */
 
 .card__decorative-bg {
   position: absolute;
@@ -105,20 +79,12 @@
   height: 55%;
   z-index: 1;
   pointer-events: none;
-
-  /* Transición suave */
   transition: opacity var(--transition-base) var(--transition-easing);
 
-  /* Forma orgánica en la parte inferior */
   path {
-    fill: rgba(65, 65, 65, 0.90); /* Gris oscuro más oscuro que text-main */
+    fill: rgba(65, 65, 65, 0.90);
   }
 }
-
-/* ====================================
- * Elemento: Contenido de la card
- * SUPERPUESTO SOBRE LA IMAGEN Y EL SVG
- * ==================================== */
 
 .card__content {
   @include flex-layout(column, flex-start, stretch, var(--spacing-3));
@@ -132,7 +98,7 @@
 }
 
 /* ====================================
- * Elemento: Categoría/Etiqueta (ahora dentro de meta)
+ * Elementos de contenido
  * ==================================== */
 
 .card__category {
@@ -147,12 +113,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-radius: var(--radius-md);
-  box-shadow: none;
 }
-
-/* ====================================
- * Elemento: Título
- * ==================================== */
 
 .card__title {
   font-family: var(--font-family-primary);
@@ -161,18 +122,12 @@
   line-height: 1.2;
   color: var(--color-neutral-white);
   margin: 0;
-
-  /* Limitar a 2 líneas con ellipsis */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* ====================================
- * Elemento: Descripción
- * ==================================== */
 
 .card__description {
   font-family: var(--font-family-primary);
@@ -180,8 +135,6 @@
   line-height: 1.4;
   color: var(--color-neutral-white);
   margin: 0;
-
-  /* Limitar a 2 líneas con ellipsis */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -190,7 +143,7 @@
 }
 
 /* ====================================
- * Elemento: Metadatos (rating, time, difficulty)
+ * Metadatos
  * ==================================== */
 
 .card__meta {
@@ -203,10 +156,6 @@
 .card__meta-icon {
   margin-right: var(--spacing-1);
 }
-
-/* ====================================
- * Elemento: Valoración con estrellas
- * ==================================== */
 
 .card__rating {
   @include flex-layout(row, flex-start, center, var(--spacing-1));
@@ -222,24 +171,16 @@
   }
 }
 
-/* ====================================
- * Elemento: Tiempo de preparación
- * ==================================== */
-
 .card__time {
   @include flex-layout(row, flex-start, center, var(--spacing-1));
 }
-
-/* ====================================
- * Elemento: Dificultad
- * ==================================== */
 
 .card__difficulty {
   @include flex-layout(row, flex-start, center, var(--spacing-1));
 }
 
 /* ====================================
- * Elemento: Acciones (botones)
+ * Acciones
  * ==================================== */
 
 .card__actions {
@@ -249,7 +190,6 @@
 }
 
 .card__action-button {
-  /* Estilos base de botón */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -267,7 +207,6 @@
   @include focus-ring(var(--color-info-dark));
 }
 
-/* Botón primary (Ver receta) */
 .card__action-button--primary {
   background-color: var(--color-secondary);
   color: var(--color-text-main);
@@ -280,9 +219,8 @@
   }
 }
 
-/* Botón secondary (igual que button--secondary) */
 .card__action-button--secondary {
-  background-color: rgba(234, 224, 199, 0.75); /* #EAE0C7 con 75% opacidad */
+  background-color: rgba(234, 224, 199, 0.75);
   box-shadow: var(--shadow-sm);
   flex: 1;
 
@@ -293,24 +231,19 @@
 }
 
 /* ====================================
- * Modificador: Card clickeable
- * ====================================*/
+ * Modificadores
+ * ==================================== */
 
 .card--clickable {
   cursor: pointer;
 }
 
-/* ====================================
- * Modificador: Variante vertical (DEFAULT)
- * Dimensión: 337x406 (relación aspecto ~0.83)
- * ==================================== */
-
+/* Variante vertical (DEFAULT) */
 .card--vertical {
   max-width: 337px;
   width: 100%;
   aspect-ratio: 337 / 406;
 
-  /* Filtro de ruido verdoso sobre la imagen */
   &::before {
     content: '';
     position: absolute;
@@ -320,45 +253,37 @@
     height: 100%;
     z-index: 1;
     pointer-events: none;
-    /* Ruido SVG con tono verdoso */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     opacity: 0.08;
     mix-blend-mode: overlay;
-    /* Tono verdoso */
-    background-color: rgba(107, 142, 95, 0.15);
-    background-blend-mode: multiply;
   }
 
-  /* Contenido ocupa toda la card para que margin-top: auto funcione en botones */
   .card__content {
     top: 0;
     bottom: 0;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, transparent 40%, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
   }
 
-  /* Ocultar el decorativo en vertical */
   .card__decorative-bg {
     display: none;
   }
 
-
   .card__action-button {
     flex: none;
     padding: var(--spacing-2) var(--spacing-4);
-    font-size: var(--font-sm-size);
+    font-size: var(--font-lg-size);
+    color: var(--color-text-main);
   }
 }
 
-/* ====================================
- * Modificador: Variante carrusel (CAROUSEL)
- * Dimensión: 575x533 (relación aspecto ~1.08)
- * ==================================== */
-
+/* Variante carrusel */
 .card--carousel {
+  min-width: 575px;
   max-width: 575px;
-  width: 100%;
-  aspect-ratio: 575 / 533;
+  width: 575px;
+  height: 533px;
+  flex-shrink: 0;
 
   .card__content {
     padding: var(--spacing-5) var(--spacing-5);
@@ -369,12 +294,7 @@
   }
 }
 
-/* ====================================
- * Modificador: Variante horizontal (LISTADO)
- * Dimensión: 813x493 (relación aspecto ~1.65)
- * Imagen ocupa TODO, contenido OVERLAY en la parte inferior
- * ==================================== */
-
+/* Variante horizontal */
 .card--horizontal {
   max-width: none;
   width: 100%;
@@ -392,12 +312,12 @@
   }
 
   .card__decorative-bg {
-    display: none; /* Ocultar SVG - solo imagen */
+    display: none;
   }
 
   .card__title,
   .card__description {
-    color: var(--color-neutral-white); /* Texto blanco sobre imagen */
+    color: var(--color-neutral-white);
   }
 
   .card__meta {
@@ -413,8 +333,6 @@
     padding: var(--spacing-3) var(--spacing-6);
     font-size: var(--font-h5-size);
     border-radius: var(--radius-md);
-
-    /* Opcional: ancho mínimo coherente */
     min-width: 140px;
     max-width: 180px;
   }
@@ -428,11 +346,7 @@
   }
 }
 
-/* ====================================
- * Modificador: Card destacada (featured)
- * Similar a carousel pero con borde especial
- * ==================================== */
-
+/* Variante featured */
 .card--featured {
   max-width: 575px;
   width: 100%;
@@ -454,7 +368,7 @@
 }
 
 /* ====================================
- * Variaciones responsive
+ * Responsive
  * ==================================== */
 
 @include respond-to(md) {
@@ -464,8 +378,11 @@
   }
 
   .card--carousel {
-    max-width: 600px;
-    aspect-ratio: 600 / 555;
+    min-width: 450px;
+    max-width: 450px;
+    width: 450px;
+    height: auto;
+    aspect-ratio: 450 / 416;
   }
 
   .card__title {
@@ -480,8 +397,10 @@
   }
 
   .card--carousel {
+    min-width: 575px;
     max-width: 575px;
-    aspect-ratio: 575 / 533;
+    width: 575px;
+    height: 533px;
   }
 
   .card--horizontal {
