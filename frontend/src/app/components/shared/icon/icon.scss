@@ -1,7 +1,6 @@
 .icon {
   display: inline-block;
   vertical-align: middle;
-  filter: var(--icon-color-filter, none);
   transition: filter 0.3s ease;
 
   &--phosphor {
@@ -13,7 +12,10 @@
     // Los iconos sociales no se ven afectados por filtros
     filter: none;
   }
+
+  /* Modifier: iconos siempre negros - NO aplica filter de tema */
+  &--solid-black {
+    filter: none;
+    color: #000000;
+  }
 }
-
-
-

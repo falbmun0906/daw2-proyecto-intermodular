@@ -17,12 +17,17 @@ export class Icon {
   @Input() name: string = 'search';
   @Input() size: number = 20;
   @Input() color: string = 'currentColor';
+  @Input() solidBlack: boolean = false; // Nueva propiedad para evitar filter de tema
 
   // Iconos que se cargan desde assets
   private socialIcons = ['google', 'facebook', 'x-icon'];
 
   get isSocialIcon(): boolean {
     return this.socialIcons.includes(this.name);
+  }
+
+  get hasSolidBlack(): boolean {
+    return this.solidBlack;
   }
 
   get iconPath(): string {
@@ -63,4 +68,3 @@ export class Icon {
     return `assets/icons/phosphor/regular/${phosphorName}.svg`;
   }
 }
-

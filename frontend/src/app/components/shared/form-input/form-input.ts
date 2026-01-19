@@ -35,6 +35,9 @@ export class FormInput implements ControlValueAccessor {
   @Input() hasError: boolean = false;
   @Input() hasSuccess: boolean = false;
 
+  // Nueva propiedad: variant para estilos especiales (ej. 'search')
+  @Input() variant: 'default' | 'search' = 'default';
+
   // Eventos estándar
   @Output() blur = new EventEmitter<void>();
   @Output() inputChange = new EventEmitter<any>();

@@ -15,6 +15,7 @@
         type="text"
         [placeholder]="config.searchPlaceholder || 'Buscar receta'"
         [icon]="'search'"
+        [variant]="'search'"
         [(ngModel)]="searchQuery"
         (inputChange)="onSearchChange()"
         class="recipes-hero__search form-input--search"
@@ -22,4 +23,3 @@
     </div>
   </div>
 </section>
-

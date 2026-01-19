@@ -46,8 +46,8 @@
     font-family: var(--font-family-primary);
     font-size: var(--font-body-size);
     color: var(--text-primary);
+    background-color: var(--surface-base);
 
-    background: transparent;
     border: 1px solid var(--border-color-secondary);
     border-radius: var(--radius-md);
 
@@ -135,14 +135,13 @@
     width: 100%;
 
     .form-input__field {
-      background: var(--surface-base);
       border: none;
       border-radius: var(--radius-sm);
       padding: var(--spacing-4);
       padding-left: var(--spacing-12);
-      height: 44px;
       display: flex;
       align-items: center;
+      background-color: var(--color-neutral-white);
 
       &:focus {
         outline: none;
@@ -150,16 +149,8 @@
       }
 
       &::placeholder {
-        color: var(--text-secondary);
+        color: var(--text-placeholder);
       }
-    }
-
-    .form-input__icon {
-      left: var(--spacing-4);
-      width: 20px;
-      height: 20px;
-      color: #000;
-      font-size: 20px;
     }
   }
 }

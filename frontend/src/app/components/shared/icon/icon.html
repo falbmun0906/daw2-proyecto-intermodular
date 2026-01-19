@@ -12,7 +12,7 @@
     [attr.width]="size"
     [attr.height]="size"
     [attr.alt]="name"
-    class="icon icon--phosphor"
+    [class]="'icon ' + (hasSolidBlack ? 'icon--solid-black' : 'icon--phosphor')"
   />
 }
 

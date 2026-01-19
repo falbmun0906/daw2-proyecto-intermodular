@@ -3,6 +3,7 @@
   [class.form-input--error]="hasError"
   [class.form-input--success]="hasSuccess"
   [class.form-input--disabled]="disabled"
+  [class.form-input--search]="variant === 'search'"
 >
   <!-- Label -->
   <label
@@ -21,7 +22,7 @@
     @if (icon) {
       <span class="form-input__icon" aria-hidden="true">
         @if (isLucideIcon(icon)) {
-          <app-icon [name]="icon" [size]="20"></app-icon>
+          <app-icon [name]="icon" [size]="20" [solidBlack]="variant === 'search'"></app-icon>
         } @else {
           {{ icon }}
         }
@@ -112,4 +113,3 @@
     </p>
   }
 </div>
-
