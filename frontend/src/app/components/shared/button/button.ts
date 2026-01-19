@@ -60,6 +60,11 @@ export class Button {
   @Input() iconPosition: 'left' | 'right' = 'left';
 
   /**
+   * Clase del icono: 'solid-black' | 'solid-white' | undefined
+   */
+  @Input() iconClass: 'solid-black' | 'solid-white' | undefined = undefined;
+
+  /**
    * Evento de click
    */
   @Output() buttonClick = new EventEmitter<MouseEvent>();
@@ -113,7 +118,7 @@ export class Button {
       'chevron-right', 'home', 'user', 'menu', 'x', 'check',
       'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
       'mail', 'lock', 'google', 'facebook', 'x-icon', 'chef-hat',
-      'utensils', 'fire', 'schedule', 'chart-bar'
+      'utensils', 'fire', 'schedule', 'chart-bar', 'cooking-pot'
     ];
     return validIcons.includes(iconName);
   }
@@ -135,12 +140,14 @@ export class Button {
     // Para otros tamaños
     switch (this.size) {
       case 'sm':
-        return 16;
+        return 18;
       case 'lg':
-        return 24;
+        return 28;
+      case 'xl':
+        return 32;
       case 'md':
       default:
-        return 20;
+        return 24;
     }
   }
 }

@@ -9,7 +9,11 @@
   @if (icon && iconPosition === 'left') {
     <span class="button__icon button__icon--left" aria-hidden="true">
       @if (isLucideIcon(icon)) {
-        <app-icon [name]="icon" [size]="iconSize"></app-icon>
+        <app-icon
+          [name]="icon"
+          [size]="iconSize"
+          [ngClass]="{'icon--solid-black': iconClass === 'solid-black', 'icon--solid-white': iconClass === 'solid-white'}">
+        </app-icon>
       } @else {
         {{ icon }}
       }
@@ -25,12 +29,15 @@
   @if (icon && iconPosition === 'right') {
     <span class="button__icon button__icon--right" aria-hidden="true">
       @if (isLucideIcon(icon)) {
-        <app-icon [name]="icon" [size]="iconSize"></app-icon>
+        <app-icon
+          [name]="icon"
+          [size]="iconSize"
+          [ngClass]="{'icon--solid-black': iconClass === 'solid-black', 'icon--solid-white': iconClass === 'solid-white'}">
+        </app-icon>
       } @else {
         {{ icon }}
       }
     </span>
   }
 </button>
-
 

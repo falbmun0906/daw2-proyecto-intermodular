@@ -73,7 +73,8 @@ export class Icon {
       'utensils': 'fork-knife',
       'fire': 'fire',
       'schedule': 'clock',
-      'chart-bar': 'chart-bar'
+      'chart-bar': 'chart-bar',
+      'cooking-pot': 'cooking-pot'
     };
     const phosphorName = phosphorMap[this.name] || this.name;
     return `assets/icons/phosphor/regular/${phosphorName}.svg`;

@@ -13,16 +13,20 @@
     filter: none;
   }
 
-  /* Modifier: iconos siempre negros - NO aplica filter de tema */
+  /* Modifier: iconos siempre negros - NO aplica filter de tema, más grande */
   &--solid-black {
     filter: none;
     color: var(--color-neutral-gray);
+    width: 1.5em;
+    height: 1.5em;
   }
 
-  /* Modifier: iconos siempre blancos - NO aplica filter de tema, forzar blanco */
+  /* Modifier: iconos siempre blancos - NO aplica filter de tema, forzar blanco, más grande */
   &--solid-white {
     filter: brightness(0) invert(1) !important;
     -webkit-filter: brightness(0) invert(1) !important;
     color: var(--color-neutral-white);
+    width: 1.5em;
+    height: 1.5em;
   }
 }
