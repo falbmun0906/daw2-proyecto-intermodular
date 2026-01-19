@@ -21,12 +21,12 @@
   @if (showDecorative && variant !== 'horizontal') {
     <svg
       class="card__decorative-bg"
-      viewBox="0 0 300 200"
+      viewBox="0 0 783 316"
       preserveAspectRatio="none"
       aria-hidden="true"
     >
       <path
-        d="M0,120 Q50,100 100,110 T200,120 L300,130 L300,200 L0,200 Z"
+        d="M739.125 130.458C759.183 114.913 783.229 67.4004 707.348 30.182C664.611 9.21987 612.715 15.4394 548 2.81402C483.494 -9.77066 396.811 23.7828 323.331 26.3464C245.721 29.0541 137.267 14.1053 74.2211 30.182C10.5302 46.4231 21.936 64.8753 7.19306 91.9754C-6.5438 117.226 -0.223199 142.93 22.8878 167.327C45.4243 191.119 36.5549 247.886 92.9896 263.308C147.948 278.327 231.107 316.742 313.093 263.307C389.566 225.732 451.913 261.833 515.466 251.552C578.92 241.287 622.078 192.472 657.633 171.401C692.07 150.992 717.814 146.974 739.125 130.458Z"
         fill="rgba(65, 65, 65, 0.90)"
       />
     </svg>
@@ -34,30 +34,14 @@
 
   <!-- Contenido superpuesto -->
   <div class="card__content">
-    <!-- Título -->
-    @if (title) {
-      <h3 class="card__title">{{ title }}</h3>
-    }
-
-    <!-- Descripción -->
-    @if (description) {
-      <p class="card__description">{{ description }}</p>
-    }
-
-    <!-- Metadatos: categoría, valoración, tiempo, dificultad -->
-    <div class="card__meta">
-      <!-- Categoría -->
-      @if (category) {
-        @if (variant === 'vertical') {
-          <app-badge variant="secondary" size="sm">
-            {{ category }}
-          </app-badge>
-        } @else {
-          <span class="card__category">{{ category }}</span>
-        }
+    <!-- Wrapper para título, rating y metadatos -->
+    <div class="card__info">
+      <!-- 1. Título -->
+      @if (title) {
+        <h4 class="card__title">{{ title }}</h4>
       }
 
-      <!-- Valoración con estrellas -->
+      <!-- 2. Valoración con estrellas -->
       @if (rating > 0) {
         <div class="card__rating" [attr.aria-label]="'Valoración: ' + rating + ' de 5 estrellas'">
           @for (filled of stars; track $index) {
@@ -66,71 +50,80 @@
               [class.card__star--filled]="filled"
               aria-hidden="true"
             >
-              {{ filled ? '★' : '☆' }}
-            </span>
+            {{ filled ? '★' : '☆' }}
+          </span>
           }
         </div>
       }
 
-      <!-- Tiempo de preparación -->
-      @if (time) {
-        @if (variant === 'vertical') {
-          <app-badge variant="neutral" size="sm">
-            <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
-            {{ time }}
-          </app-badge>
-        } @else {
-          <span class="card__time" aria-label="Tiempo de preparación">
-            <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
-            {{ time }}
-          </span>
+      <!-- 3. Metadatos: badges y spans -->
+      <div class="card__meta">
+        <!-- Categoría -->
+        @if (category) {
+          @if (variant === 'vertical') {
+            <app-badge variant="secondary" size="sm">
+              {{ category }}
+            </app-badge>
+          } @else {
+            <span class="card__category">{{ category }}</span>
+          }
         }
-      }
 
-      <!-- Dificultad -->
-      @if (difficulty) {
-        @if (variant === 'vertical') {
-          <app-badge variant="neutral" size="sm">
-            <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
-            {{ difficulty }}
-          </app-badge>
-        } @else {
-          <span class="card__difficulty" aria-label="Dificultad">
-            <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
-            {{ difficulty }}
+        <!-- Tiempo de preparación -->
+        @if (time) {
+          @if (variant === 'vertical' || variant === 'carousel') {
+            <app-badge variant="neutral" size="md">
+              <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
+              {{ time }}
+            </app-badge>
+          } @else {
+            <span class="card__time" aria-label="Tiempo de preparación">
+            <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
+              {{ time }}
           </span>
+          }
         }
+
+        <!-- Dificultad -->
+        @if (difficulty) {
+          @if (variant === 'vertical' || variant === 'carousel') {
+            <app-badge variant="neutral" size="md">
+              <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
+              {{ difficulty }}
+            </app-badge>
+          } @else {
+            <span class="card__difficulty" aria-label="Dificultad">
+            <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
+              {{ difficulty }}
+          </span>
+          }
+        }
+      </div>
+
+      <!-- Descripción (si la necesitas) -->
+      @if (description) {
+        <p class="card__description">{{ description }}</p>
       }
     </div>
 
-    <!-- Botones de acción -->
+    <!-- Botones de acción (separados) -->
     @if (showAction || variant === 'horizontal') {
       <div class="card__actions">
-        <!-- En variante horizontal: mostrar 2 botones -->
         @if (variant === 'horizontal') {
-          <button
-            class="card__action-button card__action-button--secondary"
-            type="button"
-            (click)="onActionClick($event, 'save')"
-          >
+          <app-button variant="secondary" size="md" (click)="onActionClick($event, 'save')">
             Guardar
-          </button>
-          <button
-            class="card__action-button card__action-button--primary"
-            type="button"
-            (click)="onActionClick($event, 'view')"
-          >
+          </app-button>
+          <app-button variant="primary" size="md" (click)="onActionClick($event, 'view')">
             {{ actionText }}
-          </button>
+          </app-button>
+        } @else if (variant === 'carousel') {
+          <app-button variant="secondary" size="xl" (click)="onActionClick($event)">
+            {{ actionText }}
+          </app-button>
         } @else {
-          <!-- En variantes vertical/carousel/featured: un botón -->
-          <button
-            class="card__action-button card__action-button--secondary"
-            type="button"
-            (click)="onActionClick($event)"
-          >
+          <app-button variant="secondary" size="md" (click)="onActionClick($event)">
             {{ actionText }}
-          </button>
+          </app-button>
         }
       </div>
     }

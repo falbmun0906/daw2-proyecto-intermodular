@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Badge } from '../badge/badge';
 import { Icon } from '../icon/icon';
+import { Button } from '../button/button';
 
 /**
  * Componente Card reutilizable para tarjetas de recetas
@@ -11,7 +12,7 @@ import { Icon } from '../icon/icon';
  */
 @Component({
   selector: 'app-card',
-  imports: [CommonModule, Badge, Icon],
+  imports: [CommonModule, Badge, Icon, Button],
   templateUrl: './card.html',
   styleUrl: './card.scss',
 })

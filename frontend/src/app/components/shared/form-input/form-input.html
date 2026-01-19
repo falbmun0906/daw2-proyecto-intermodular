@@ -5,16 +5,19 @@
   [class.form-input--disabled]="disabled"
   [class.form-input--search]="variant === 'search'"
 >
-  <!-- Label -->
-  <label
-    class="form-input__label"
-    [for]="inputId"
-  >
-    {{ label }}
-    @if (required) {
-      <span class="form-input__required" aria-label="Campo requerido">*</span>
-    }
-  </label>
+
+  @if (label) {
+    <label
+      class="form-input__label"
+      [class.form-input__label--sr-only]="!showLabel"
+      [for]="inputId"
+    >
+      {{ label }}
+      @if (required) {
+        <span class="form-input__required" aria-label="Campo requerido">*</span>
+      }
+    </label>
+  }
 
   <!-- Input wrapper con icono opcional -->
   <div class="form-input__wrapper">

@@ -30,8 +30,9 @@ export class Button {
    * - 'sm': Pequeño
    * - 'md': Mediano (por defecto)
    * - 'lg': Grande
+   * - 'xl': Extra grande
    */
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   /**
    * Tipo de botón HTML

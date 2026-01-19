@@ -126,29 +126,32 @@
       </div>
     </div>
 
-    <div class="newsletter__form">
+    <div class="newsletter__content">
       <h2 class="newsletter__title">Sin pensar demasiado, a un solo clic.</h2>
       <p class="newsletter__subtitle">
         Recibe nuestras novedades, recetas y tips directamente en tu bandeja.
       </p>
 
-      <form (submit)="onNewsletterSubmit($event)">
-        <app-form-input
-          type="email"
-          name="email"
-          placeholder="tu@email.com"
-          [(ngModel)]="newsletterEmail"
-          [required]="true"
-          class="newsletter__input"
-        />
+      <form (submit)="onNewsletterSubmit($event)" class="newsletter__form">
+        <div class="newsletter__input-wrapper">
+          <app-form-input
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="tu@email.com"
+            icon="mail"
+            [showLabel]="false"
+            [(ngModel)]="newsletterEmail"
+            [required]="true"
+          />
 
-        <app-button
-          type="submit"
-          variant="secondary"
-          size="md"
-          class="newsletter__submit">
-          Suscribirme
-        </app-button>
+          <app-button
+            type="submit"
+            variant="secondary"
+            size="md">
+            Suscribirme
+          </app-button>
+        </div>
 
         <p class="newsletter__legal">
           Tus datos serán usados exclusivamente para enviarte nuestro newsletter.

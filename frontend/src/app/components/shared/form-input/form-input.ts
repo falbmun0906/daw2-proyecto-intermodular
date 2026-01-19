@@ -23,6 +23,7 @@ import { Icon } from '../icon/icon';
 })
 export class FormInput implements ControlValueAccessor {
   @Input() label: string = '';
+  @Input() showLabel: boolean = true;
   @Input() type: string = 'text';
   @Input() name: string = '';
   @Input() placeholder: string = '';

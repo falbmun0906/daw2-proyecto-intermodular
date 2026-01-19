@@ -39,7 +39,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 1,
       title: 'Hamburguesa',
-      imageUrl: 'assets/recipes/burger.jpg',
+      imageUrl: 'assets/recipes/burger.png',
       rating: 4.5,
       category: 'Almuerzo',
       time: '30 min',
@@ -48,7 +48,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 2,
       title: 'Pizza',
-      imageUrl: 'assets/recipes/pizza.jpg',
+      imageUrl: 'assets/recipes/pizza-margarita.png',
       rating: 5,
       category: 'Cena',
       time: '45 min',
@@ -57,10 +57,37 @@ export class HomePage implements AfterViewInit {
     {
       id: 3,
       title: 'Huevos fritos',
-      imageUrl: 'assets/recipes/eggs.jpg',
+      imageUrl: 'assets/recipes/eggs.png',
       rating: 4,
       category: 'Desayuno',
       time: '10 min',
+      difficulty: 'Fácil'
+    },
+    {
+      id: 4,
+      title: 'Ensalada César',
+      imageUrl: 'assets/recipes/salad.png',
+      rating: 4.2,
+      category: 'Almuerzo',
+      time: '15 min',
+      difficulty: 'Fácil'
+    },
+    {
+      id: 5,
+      title: 'Pasta Carbonara',
+      imageUrl: 'assets/recipes/pasta.png',
+      rating: 4.8,
+      category: 'Cena',
+      time: '25 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 6,
+      title: 'Tortitas con sirope',
+      imageUrl: 'assets/recipes/pancakes.png',
+      rating: 4.6,
+      category: 'Desayuno',
+      time: '20 min',
       difficulty: 'Fácil'
     }
   ];

@@ -3,10 +3,10 @@
 .carousel-nav-button {
   /* Dimensiones base - Desktop */
   width: 40px;
-  height: 200px;
+  height: 300px;
 
   /* Fondo oscuro semitransparente */
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   border: none;
 
   /* Contenido centrado */
@@ -30,7 +30,7 @@
 
   /* Estados hover */
   &:hover:not(.carousel-nav-button--disabled) {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(255, 255, 255, 0.15);
   }
 
   /* Estado disabled */
@@ -93,7 +93,6 @@
 @media (max-width: 1024px) {
   .carousel-nav-button {
     width: 30px;
-    height: 150px;
   }
 
   .carousel-nav-button__icon {
@@ -119,7 +118,6 @@
 @media (max-width: 630px) {
   .carousel-nav-button {
     width: 40px;
-    height: 250px;
 
     /* Aumentar área táctil sin cambiar apariencia visual */
     &::before {
@@ -140,7 +138,6 @@
 @media (max-width: 480px) {
   .carousel-nav-button {
     width: 36px;
-    height: 200px;
     background-color: rgba(0, 0, 0, 0.6); /* Ligeramente más opaco en móviles pequeños */
 
     /* Área táctil ampliada para móviles pequeños */
@@ -168,7 +165,6 @@
 @media (max-width: 360px) {
   .carousel-nav-button {
     width: 32px;
-    height: 180px;
 
     &::before {
       inset: -12px; /* Máxima área táctil para dispositivos muy pequeños */

@@ -89,6 +89,13 @@
   min-height: 40px;
 }
 
+/* Tamaño extra grande (xl) */
+.button--xl {
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-h5-size);
+  min-height: 44px;
+}
+
 /* Tamaño grande (lg) */
 .button--lg {
   padding: var(--spacing-4) var(--spacing-8);
