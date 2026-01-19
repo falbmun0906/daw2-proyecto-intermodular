@@ -430,7 +430,7 @@
   min-height: 600px;
   position: relative;
   background: url('/assets/cta-image.png') center/cover;
-  @include flex-layout(row, center, center, 0);
+  @include flex-layout(row, flex-start, center, 0);
   padding: var(--spacing-16);
   z-index: 1;
 }
@@ -444,13 +444,13 @@
 .kitchen-control__content {
   position: relative;
   z-index: 1;
-  text-align: center;
+  text-align: left;
   max-width: 800px;
 }
 
 .kitchen-control__title {
   font-family: var(--font-family-secondary);
-  font-size: var(--font-h2-size);
+  font-size: var(--font-h1-size);
   color: var(--color-neutral-white);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-5);
@@ -458,7 +458,7 @@
 
 .kitchen-control__subtitle {
   font-family: var(--font-family-primary);
-  font-size: var(--font-body-size);
+  font-size: var(--font-h4-size);
   color: var(--color-neutral-white);
   margin-bottom: var(--spacing-9);
   line-height: 1.6;
@@ -592,6 +592,7 @@
 .newsletter__content {
   display: flex;
   flex-direction: column;
+  max-width: 720px;
   gap: var(--spacing-4);
 
   @media (max-width: 900px) {
@@ -630,7 +631,6 @@
 .newsletter__subtitle {
   font-family: var(--font-family-primary);
   font-size: var(--font-lg-size);
-  color: var(--text-secondary);
   margin: 0;
   line-height: 1.6;
 
@@ -704,10 +704,11 @@
 .newsletter__legal {
   font-family: var(--font-family-primary);
   font-size: var(--font-xs-size);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: 1.5;
   margin: 0;
   opacity: 0.8;
+
 
   @media (max-width: 900px) {
     text-align: center;
