@@ -1,5 +1,4 @@
 <main class="recipe-detail">
-  <app-breadcrumbs [items]="breadcrumbItems" />
 
   @if (loading()) {
     <div class="recipe-loading">
@@ -9,6 +8,7 @@
 
   @if (!loading() && recipe()) {
     <section class="recipe-hero">
+      <app-breadcrumbs [items]="breadcrumbItems" variant="hero"/>
       <img [src]="recipe()!.imageUrl" [alt]="recipe()!.title" class="recipe-hero__image" loading="eager" />
 
       <div class="recipe-hero__info-blob">
@@ -38,38 +38,39 @@
     </section>
 
     <section class="recipe-ingredients">
-      <h2 class="recipe-ingredients__title">Ingredientes</h2>
+      <!-- FILA 1: Título y Control de Comensales -->
+      <div class="recipe-ingredients__header">
+        <h2 class="recipe-ingredients__title">Ingredientes</h2>
 
-      <div class="recipe-ingredients__container">
-        <div class="recipe-ingredients__grid">
-          @for (ingredient of recipe()!.ingredients; track ingredient.id) {
-            <app-ingredient-card
-              [name]="ingredient.name"
-              [quantity]="ingredient.quantity"
-              [imageUrl]="ingredient.imageUrl"
-            />
-          }
-        </div>
-
-      <aside class="recipe-ingredients__controls">
         <div class="servings-selector">
           <p class="servings-selector__label">¿Cuántos comensales?</p>
           <div class="servings-selector__control">
-            <app-button variant="ghost" size="sm" (buttonClick)="decreaseServings()">−</app-button>
+            <app-button variant="secondary" size="sm" (buttonClick)="decreaseServings()">−</app-button>
             <span class="servings-selector__value">{{ servings }}</span>
-            <app-button variant="ghost" size="sm" (buttonClick)="increaseServings()">+</app-button>
+            <app-button variant="secondary" size="sm" (buttonClick)="increaseServings()">+</app-button>
           </div>
         </div>
+      </div>
 
-        <div class="add-to-list">
-          <p class="add-to-list__label">¿Te falta algo?</p>
-          <app-button variant="secondary" size="md" (buttonClick)="onAddToList()">
-            Añadir a la lista
-          </app-button>
-        </div>
-      </aside>
-    </div>
-  </section>
+      <!-- FILA 2: Grid de Ingredientes -->
+      <div class="recipe-ingredients__grid">
+        @for (ingredient of recipe()!.ingredients; track ingredient.id) {
+          <app-ingredient-card
+            [name]="ingredient.name"
+            [quantity]="ingredient.quantity"
+            [imageUrl]="ingredient.imageUrl"
+          />
+        }
+      </div>
+
+      <!-- FILA 3: Añadir a la lista -->
+      <div class="add-to-list">
+        <p class="add-to-list__label">¿Te falta algo?</p>
+        <app-button variant="primary" size="md" (buttonClick)="onAddToList()">
+          Añadir a la lista
+        </app-button>
+      </div>
+    </section>
 
   <section class="recipe-steps">
     @for (step of recipe()!.steps; track step.id) {
@@ -110,7 +111,7 @@
           <p class="recipe-feedback__favorites-title">Añade esta receta a favoritos</p>
           <p class="recipe-feedback__favorites-subtitle">Y disfrútala más tarde</p>
         </div>
-        <app-button variant="secondary" size="md" (buttonClick)="onAddToFavorites()">
+        <app-button variant="primary" size="md" (buttonClick)="onAddToFavorites()">
           Guardar
         </app-button>
       </div>
