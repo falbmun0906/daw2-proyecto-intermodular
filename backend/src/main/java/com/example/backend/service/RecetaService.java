@@ -6,6 +6,7 @@ import com.example.backend.dto.RecetaIngredienteResponse;
 import com.example.backend.dto.RecetaResponse;
 import com.example.backend.model.Receta;
 import com.example.backend.model.RecetaIngrediente;
+import com.example.backend.model.TipoDieta;
 import com.example.backend.repository.RecetaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,13 +36,25 @@ public class RecetaService {
      * @return respuesta con la receta creada
      */
     public RecetaResponse crear(RecetaCreateRequest request) {
+        Set<TipoDieta> etiquetas = new HashSet<>();
+        if (request.getEtiquetas() != null) {
+            request.getEtiquetas().forEach(etiqueta -> {
+                try {
+                    etiquetas.add(TipoDieta.valueOf(etiqueta));
+                } catch (IllegalArgumentException e) {
+                    // Ignorar etiquetas inválidas
+                }
+            });
+        }
+
         Receta receta = Receta.builder()
                 .nombre(request.getNombre())
                 .descripcion(request.getDescripcion())
-                .instrucciones(request.getInstrucciones())
+                .imagenUrl(request.getImagenUrl())
                 .tiempoPreparacion(request.getTiempoPreparacion())
                 .porciones(request.getPorciones())
                 .fechaCreacion(LocalDateTime.now())
+                .etiquetas(etiquetas)
                 .build();
 
         Receta saved = recetaRepository.save(receta);
@@ -176,14 +189,20 @@ public class RecetaService {
      * @return DTO Response
      */
     private RecetaResponse mapToResponse(Receta receta) {
+        Set<String> etiquetasStr = new HashSet<>();
+        if (receta.getEtiquetas() != null) {
+            receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
+        }
+
         return RecetaResponse.builder()
                 .id(receta.getId())
                 .nombre(receta.getNombre())
                 .descripcion(receta.getDescripcion())
-                .instrucciones(receta.getInstrucciones())
+                .imagenUrl(receta.getImagenUrl())
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
                 .fechaCreacion(receta.getFechaCreacion())
+                .etiquetas(etiquetasStr)
                 .build();
     }
 
@@ -194,11 +213,16 @@ public class RecetaService {
      * @return DTO Response detallado
      */
     private RecetaDetailedResponse mapToDetailedResponse(Receta receta) {
+        Set<String> etiquetasStr = new HashSet<>();
+        if (receta.getEtiquetas() != null) {
+            receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
+        }
+
         return RecetaDetailedResponse.builder()
                 .id(receta.getId())
                 .nombre(receta.getNombre())
                 .descripcion(receta.getDescripcion())
-                .instrucciones(receta.getInstrucciones())
+                .imagenUrl(receta.getImagenUrl())
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
                 .fechaCreacion(receta.getFechaCreacion())
@@ -218,6 +242,16 @@ public class RecetaService {
                                 .opcional(ri.getOpcional())
                                 .build())
                         .collect(Collectors.toList()))
+                .pasos(receta.getPasos()
+                        .stream()
+                        .map(paso -> com.example.backend.dto.RecetaPasoResponse.builder()
+                                .id(paso.getId())
+                                .orden(paso.getOrden())
+                                .descripcion(paso.getDescripcion())
+                                .tiempoMinutos(paso.getTiempoMinutos())
+                                .build())
+                        .collect(Collectors.toList()))
+                .etiquetas(etiquetasStr)
                 .build();
     }
 }

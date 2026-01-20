@@ -19,8 +19,11 @@ public class RecetaCreateRequest {
     @Size(max = 1000, message = "La descripción no puede exceder 1000 caracteres")
     private String descripcion;
 
-    @NotBlank(message = "Las instrucciones son obligatorias")
-    private String instrucciones;
+    @Size(max = 500, message = "La URL de la imagen no puede exceder 500 caracteres")
+    private String imagenUrl;
+
+    @Size(max = 500, message = "Las etiquetas no pueden exceder 500 caracteres")
+    private java.util.Set<String> etiquetas;
 
     @NotNull(message = "El tiempo de preparación es obligatorio")
     @Min(value = 1, message = "El tiempo debe ser mayor a 0")
@@ -29,5 +32,7 @@ public class RecetaCreateRequest {
     @NotNull(message = "Las porciones son obligatorias")
     @Min(value = 1, message = "Las porciones deben ser mayor a 0")
     private Integer porciones;
-}
 
+    @NotBlank(message = "La dificultad es obligatoria")
+    private String dificultad; // BAJA, MEDIA, ALTA
+}

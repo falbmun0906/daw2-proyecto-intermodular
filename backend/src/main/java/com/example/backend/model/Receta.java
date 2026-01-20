@@ -29,11 +29,11 @@ public class Receta {
     private String nombre;
 
     @Size(max = 1000, message = "La descripción no puede exceder 1000 caracteres")
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @NotBlank(message = "Las instrucciones son obligatorias")
-    @Column(nullable = false, columnDefinition = "LONGTEXT")
-    private String instrucciones;
+    @Size(max = 500, message = "La URL de la imagen no puede exceder 500 caracteres")
+    private String imagenUrl;
 
     @NotNull(message = "El tiempo de preparación es obligatorio")
     @Min(value = 1, message = "El tiempo debe ser mayor a 0")
@@ -45,10 +45,26 @@ public class Receta {
     @Column(nullable = false)
     private Integer porciones;
 
+    @NotBlank(message = "La dificultad es obligatoria")
+    @Column(nullable = false)
+    private String dificultad; // BAJA, MEDIA, ALTA
+
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "receta_etiquetas", joinColumns = @JoinColumn(name = "receta_id"))
+    @Column(name = "tipo_dieta")
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Set<TipoDieta> etiquetas = new HashSet<>();
+
     // ==================== RELACIONES ====================
+
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<RecetaPaso> pasos = new ArrayList<>();
 
     @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
@@ -65,4 +81,3 @@ public class Receta {
     @EqualsAndHashCode.Exclude
     private List<PlanificacionDia> planificacionesDia = new ArrayList<>();
 }
-

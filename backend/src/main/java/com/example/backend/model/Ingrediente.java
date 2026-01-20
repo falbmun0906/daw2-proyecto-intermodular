@@ -37,6 +37,9 @@ public class Ingrediente {
     @Min(value = 0, message = "Las calorías no pueden ser negativas")
     private Integer caloriasPorUnidad;
 
+    @Size(max = 500, message = "La URL de la imagen no puede exceder 500 caracteres")
+    private String imagenUrl;
+
     // ==================== RELACIONES ====================
 
     @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -54,4 +57,3 @@ public class Ingrediente {
     @EqualsAndHashCode.Exclude
     private List<ListaItem> listaItems = new ArrayList<>();
 }
-

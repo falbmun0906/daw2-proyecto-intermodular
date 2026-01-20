@@ -40,7 +40,7 @@ public class ListaCompra {
     @Builder.Default
     private EstadoListaCompra estado = EstadoListaCompra.PENDIENTE;
 
-    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "TEXT")
     private String textoWhatsappGenerado;
 
     // ==================== RELACIONES ====================

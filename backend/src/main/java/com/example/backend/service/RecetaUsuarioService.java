@@ -167,7 +167,7 @@ public class RecetaUsuarioService {
                 .id(recetaUsuario.getReceta().getId())
                 .nombre(recetaUsuario.getReceta().getNombre())
                 .descripcion(recetaUsuario.getReceta().getDescripcion())
-                .instrucciones(recetaUsuario.getReceta().getInstrucciones())
+                .imagenUrl(recetaUsuario.getReceta().getImagenUrl())
                 .tiempoPreparacion(recetaUsuario.getReceta().getTiempoPreparacion())
                 .porciones(recetaUsuario.getReceta().getPorciones())
                 .fechaCreacion(recetaUsuario.getReceta().getFechaCreacion())
