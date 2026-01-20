@@ -14,6 +14,16 @@
   padding: var(--spacing-10);
   box-shadow: var(--shadow-xl);
 
+  /* Responsive padding */
+  @media (max-width: 768px) {
+    padding: var(--spacing-8);
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--spacing-6) var(--spacing-4);
+    box-shadow: none;
+  }
+
   /* Título */
   &__title {
     font-family: var(--font-family-secondary);
@@ -21,14 +31,34 @@
     font-weight: var(--font-weight-light);
     text-align: center;
     margin: 0 0 var(--spacing-8) 0;
+
+    @media (max-width: 768px) {
+      font-size: var(--font-h3-size);
+      margin-bottom: var(--spacing-6);
+    }
+
+    @media (max-width: 480px) {
+      font-size: var(--font-h4-size);
+      margin-bottom: var(--spacing-5);
+    }
   }
 
-  /* Fieldset (zona expansiva) */
+  /* Fieldset */
   &__fieldset {
     border: none;
     padding: 0;
     margin: 0 0 var(--spacing-6) 0;
     @include flex-layout(column, flex-start, stretch, var(--spacing-5));
+
+    @media (max-width: 768px) {
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-5);
+    }
+
+    @media (max-width: 480px) {
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+    }
   }
 
   /* Campos */
@@ -36,18 +66,28 @@
     width: 100%;
   }
 
-  /* Opciones (checkbox) */
+  /* Opciones (checkbox + forgot password) */
   &__options {
-    @include flex-layout(row, space-between, center, var(--spacing-4));
-    margin-bottom: var(--spacing-6);
+    @include flex-layout(row, space-between, flex-start, var(--spacing-4));
+
+    @media (max-width: 869px) {
+      gap: var(--spacing-2);
+    }
+
+    @media (max-width: 768px) {
+      margin-bottom: var(--spacing-5);
+    }
+
+    @media (max-width: 480px) {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--spacing-4);
+      gap: var(--spacing-5);
+    }
   }
 
-  &__checkbox-label {
+  &__label {
     display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-2);
-    font-size: var(--font-sm-size);
-    color: var(--color-text-main);
     cursor: pointer;
     user-select: none;
 
@@ -59,6 +99,10 @@
       flex: 1;
       line-height: 1.4;
     }
+
+    @media (max-width: 1080px) {
+      font-size: var(--font-xs-size);
+    }
   }
 
   &__checkbox {
@@ -68,6 +112,11 @@
     cursor: pointer;
     accent-color: var(--color-secondary);
     flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      width: 16px;
+      height: 16px;
+    }
   }
 
   /* Error general */
@@ -79,12 +128,70 @@
     font-size: var(--font-sm-size);
     margin-bottom: var(--spacing-4);
     text-align: center;
+
+    @media (max-width: 480px) {
+      padding: var(--spacing-2);
+      font-size: var(--font-xs-size);
+      margin-bottom: var(--spacing-3);
+    }
   }
 
-  /* Registro */
+  /* Botón submit principal */
+  &__submit {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: var(--spacing-4);
+
+    @media (max-width: 480px) {
+      margin-bottom: var(--spacing-3);
+    }
+
+    ::ng-deep button {
+      justify-content: center;
+
+      @media (max-width: 869px) {
+        padding: var(--spacing-3) var(--spacing-1);
+      }
+
+      @media (max-width: 768px) {
+        min-width: 180px; // ← REDUCIR de 280px
+      }
+
+      @media (max-width: 640px) {
+        min-width: 160px; // ← REDUCIR de 250px
+      }
+
+      @media (max-width: 480px) {
+        width: 100%; // ← Full width en móviles
+        min-width: auto;
+      }
+    }
+
+    ::ng-deep .button__content {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+
+      @media (max-width: 480px) {
+        gap: var(--spacing-2);
+      }
+    }
+  }
+
+  /* Registro link */
   &__register-link {
     text-align: center;
     margin: var(--spacing-6) 0;
+
+    @media (max-width: 768px) {
+      margin: var(--spacing-5) 0;
+    }
+
+    @media (max-width: 480px) {
+      margin: var(--spacing-4) 0;
+      font-size: var(--font-sm-size);
+    }
 
     a {
       color: var(--color-secondary);
@@ -94,6 +201,10 @@
       &:hover {
         text-decoration: underline;
       }
+
+      @media (max-width: 480px) {
+        font-size: var(--font-sm-size);
+      }
     }
   }
 
@@ -101,6 +212,15 @@
   &__divider {
     @include flex-layout(row, center, center, var(--spacing-3));
     margin: var(--spacing-6) 0;
+
+    @media (max-width: 768px) {
+      margin: var(--spacing-5) 0;
+    }
+
+    @media (max-width: 480px) {
+      margin: var(--spacing-4) 0;
+      gap: var(--spacing-2);
+    }
   }
 
   &__divider-line {
@@ -113,11 +233,20 @@
     font-size: var(--font-sm-size);
     color: var(--color-neutral-gray);
     padding: 0 var(--spacing-3);
+
+    @media (max-width: 480px) {
+      font-size: var(--font-xs-size);
+      padding: 0 var(--spacing-2);
+    }
   }
 
   /* Botones sociales */
   &__social {
     @include flex-layout(column, flex-start, stretch, var(--spacing-3));
+
+    @media (max-width: 480px) {
+      gap: var(--spacing-2);
+    }
   }
 
   &__social-btn {
@@ -125,30 +254,59 @@
     min-width: 300px;
     position: relative;
     @include flex-layout(row, center, center, var(--spacing-3));
+    font-weight: var(--font-weight-light);
+
+    @media (max-width: 640px) {
+      min-width: 250px;
+    }
+
+    @media (max-width: 480px) {
+      min-width: auto;
+    }
 
     ::ng-deep button {
       width: 50%;
       min-width: 300px;
       justify-content: center;
       padding-left: var(--spacing-6);
+
+      @media (max-width: 768px) {
+        width: 60%;
+        min-width: 280px;
+      }
+
+      @media (max-width: 640px) {
+        width: 80%;
+        min-width: 250px;
+      }
+
+      @media (max-width: 480px) {
+        width: 100%;
+        min-width: auto;
+        padding-left: var(--spacing-4);
+      }
     }
 
     ::ng-deep .button__content {
       display: flex;
       align-items: center;
       gap: var(--spacing-3);
+
+      @media (max-width: 480px) {
+        gap: var(--spacing-2);
+      }
     }
   }
 
   &__social-icon {
     width: 20px;
     height: 20px;
-  }
 
-/*  !* Acción principal *!
-  &__submit {
-    flex: 0;
-  }*/
+    @media (max-width: 480px) {
+      width: 18px;
+      height: 18px;
+    }
+  }
 }
 
 /* Visually hidden (para legend) */

@@ -19,7 +19,7 @@
  * ==================================== */
 
 .form-checkbox__wrapper {
-  @include flex-layout(row, flex-start, center, var(--spacing-3));
+  @include flex-layout(row, flex-start, center, var(--spacing-1));
 }
 
 /* ====================================
