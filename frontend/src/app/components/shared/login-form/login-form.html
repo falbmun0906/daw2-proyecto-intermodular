@@ -9,7 +9,7 @@
       label="Email"
       name="email"
       placeholder="tu@email.com"
-      icon="✉"
+      [icon]="mailIcon"
       [required]="true"
       formControlName="email"
       [errorMessage]="getErrorMessage('email')"
@@ -22,8 +22,7 @@
       label="Contraseña"
       name="password"
       placeholder="Tu contraseña"
-      icon="🔒"
-      [required]="true"
+      [icon]="lockIcon"
       formControlName="password"
       [errorMessage]="getErrorMessage('password')"
       [hasError]="!!(password?.invalid && password?.touched)"
@@ -36,6 +35,7 @@
       label="Recuérdame"
       name="rememberMe"
       formControlName="rememberMe"
+      class="login-form__label"
     />
 
     <app-button
@@ -66,27 +66,27 @@
     <app-button
       variant="secondary"
       size="md"
+      [icon]="googleIcon"
       class="login-form__social-btn"
       (buttonClick)="onSocialLogin('google')">
-      <img src="assets/icons/google.svg" alt="" class="login-form__social-icon" />
       Iniciar con Google
     </app-button>
 
     <app-button
       variant="secondary"
       size="md"
+      [icon]="facebookIcon"
       class="login-form__social-btn"
       (buttonClick)="onSocialLogin('facebook')">
-      <img src="assets/icons/facebook.svg" alt="" class="login-form__social-icon" />
       Iniciar con Facebook
     </app-button>
 
     <app-button
       variant="secondary"
       size="md"
+      [icon]="xIcon"
       class="login-form__social-btn"
       (buttonClick)="onSocialLogin('x')">
-      <img src="assets/icons/x.svg" alt="" class="login-form__social-icon" />
       Iniciar con X
     </app-button>
   </div>

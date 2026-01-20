@@ -11,30 +11,6 @@ import { ProductFormComponent } from './features/products/components/product-for
 
 /**
  * Configuración de rutas de la aplicación
- *
- * TAREA 4.1 - Configuración de rutas (10 puntos):
- * ✅ 5+ rutas principales: home, recetas, recetas/:id, mi-cocina (con hijas), sobre
- * ✅ Rutas con parámetros dinámicos funcionales (:id)
- * ✅ Rutas hijas anidadas (mi-cocina -> dashboard, despensa, planificador)
- * ✅ Ruta wildcard ** al final para 404
- *
- * TAREA 4.2 - Navegación programática (10 puntos):
- * ✅ Router service implementado en NavigationService
- * ✅ Navegación con parámetros, queryParams, fragment y estado
- * ✅ Lectura de parámetros en RecipeDetailPage con ActivatedRoute
- *
- * TAREA 4.3 - Lazy loading (10 puntos):
- * ✅ Módulos de recetas y mi-cocina con lazy loading (loadChildren)
- * ✅ PreloadAllModules configurado en app.config.ts
- * ✅ Chunks distintos verificables en build de producción
- *
- * TAREA 4.4 - Route guards (10 puntos):
- * ✅ authGuard protege rutas de mi-cocina
- * ✅ Redirección a /login con returnUrl cuando no autenticado
- * ✅ pendingChangesGuard en formularios con cambios sin guardar
- *
- * TAREA 5.2 - CRUD completo (10 puntos):
- * ✅ Rutas de productos con operaciones CRUD integradas en UI
  */
 
 export const routes: Routes = [

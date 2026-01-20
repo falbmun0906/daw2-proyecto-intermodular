@@ -17,9 +17,9 @@
   <!-- TAREA 5.5: Error State con acción sugerida -->
   @if (state().error && !state().loading) {
     <div class="product-list__error">
-      <p class="error-message">❌ {{ state().error }}</p>
+      <p class="error-message">{{ state().error }}</p>
       <button (click)="loadProducts()" class="btn btn--secondary">
-        🔄 Reintentar
+        Reintentar
       </button>
     </div>
   }
@@ -27,9 +27,9 @@
   <!-- TAREA 5.5: Empty State cuando no hay datos -->
   @if (!state().loading && !state().error && state().data?.length === 0) {
     <div class="product-list__empty">
-      <p class="empty-message">📦 No hay productos disponibles</p>
+      <p class="empty-message">No hay productos disponibles</p>
       <a routerLink="/productos/nuevo" class="btn btn--primary">
-        ➕ Crear primer producto
+        Crear primer producto
       </a>
     </div>
   }
@@ -62,19 +62,19 @@
                 [routerLink]="['/productos', product.id]"
                 class="btn btn--sm btn--secondary"
               >
-                👁️ Ver
+                Ver
               </a>
               <a
                 [routerLink]="['/productos', product.id, 'editar']"
                 class="btn btn--sm btn--info"
               >
-                ✏️ Editar
+                Editar
               </a>
               <button
                 (click)="onDelete(product.id, product.name)"
                 class="btn btn--sm btn--danger"
               >
-                🗑️ Eliminar
+                Eliminar
               </button>
             </div>
           </div>

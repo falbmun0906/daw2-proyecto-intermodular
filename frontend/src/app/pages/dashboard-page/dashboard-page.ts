@@ -43,10 +43,10 @@ export class DashboardPage {
   sidebarCollapsed: boolean = false;
 
   sidebarItems: SidebarNavItem[] = [
-    { id: 'resumen', label: 'Resumen', icon: '📊', active: true },
-    { id: 'despensa', label: 'Despensa', icon: '🏪', active: false },
-    { id: 'planificador', label: 'Planificador', icon: '📅', active: false },
-    { id: 'lista', label: 'Lista', icon: '📝', active: false }
+    { id: 'resumen', label: 'Resumen', icon: '', active: true },
+    { id: 'despensa', label: 'Despensa', icon: '', active: false },
+    { id: 'planificador', label: 'Planificador', icon: '', active: false },
+    { id: 'lista', label: 'Lista', icon: '', active: false }
   ];
 
   todayMeals: Meal[] = [

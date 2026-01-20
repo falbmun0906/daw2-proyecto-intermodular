@@ -29,6 +29,12 @@ export class RegisterForm implements OnInit {
   isSubmitting = false;
   generalError = '';
 
+  // Iconos
+  mailIcon: string = 'mail';
+  lockIcon: string = 'lock';
+  userIcon: string = 'user';
+  lastNameIcon: string = 'user-check';
+
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService,

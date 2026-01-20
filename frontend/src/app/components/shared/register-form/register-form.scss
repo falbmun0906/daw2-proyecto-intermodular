@@ -14,6 +14,16 @@
   padding: var(--spacing-10);
   box-shadow: var(--shadow-xl);
 
+  /* Responsive padding */
+  @media (max-width: 768px) {
+    padding: var(--spacing-8);
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--spacing-6) var(--spacing-4);
+    box-shadow: none; // Quitar sombra en móviles
+  }
+
   /* Título */
   &__title {
     font-family: var(--font-family-secondary);
@@ -21,6 +31,16 @@
     font-weight: var(--font-weight-light);
     text-align: center;
     margin: 0 0 var(--spacing-8) 0;
+
+    @media (max-width: 768px) {
+      font-size: var(--font-h3-size);
+      margin-bottom: var(--spacing-6);
+    }
+
+    @media (max-width: 480px) {
+      font-size: var(--font-h4-size);
+      margin-bottom: var(--spacing-5);
+    }
   }
 
   /* Fieldset */
@@ -29,6 +49,16 @@
     padding: 0;
     margin: 0 0 var(--spacing-6) 0;
     @include flex-layout(column, flex-start, stretch, var(--spacing-5));
+
+    @media (max-width: 768px) {
+      gap: var(--spacing-4);
+      margin-bottom: var(--spacing-5);
+    }
+
+    @media (max-width: 480px) {
+      gap: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
+    }
   }
 
   /* Campos */
@@ -39,6 +69,14 @@
   /* Opciones (checkbox) */
   &__options {
     margin-bottom: var(--spacing-6);
+
+    @media (max-width: 768px) {
+      margin-bottom: var(--spacing-5);
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: var(--spacing-4);
+    }
   }
 
   /* Error general */
@@ -50,6 +88,12 @@
     font-size: var(--font-sm-size);
     margin-bottom: var(--spacing-4);
     text-align: center;
+
+    @media (max-width: 480px) {
+      padding: var(--spacing-2);
+      font-size: var(--font-xs-size);
+      margin-bottom: var(--spacing-3);
+    }
   }
 
   /* Acciones (botones) */
@@ -59,32 +103,69 @@
     width: 100%;
     margin-bottom: var(--spacing-4);
 
+    @media (max-width: 480px) {
+      margin-bottom: var(--spacing-3);
+    }
+
     ::ng-deep button {
       width: 50%;
       min-width: 300px;
       justify-content: center;
       padding-left: var(--spacing-6);
+
+      @media (max-width: 768px) {
+        width: 60%;
+        min-width: 280px;
+      }
+
+      @media (max-width: 640px) {
+        width: 80%;
+        min-width: 250px;
+      }
+
+      @media (max-width: 480px) {
+        width: 100%;
+        min-width: auto;
+        padding-left: var(--spacing-4);
+      }
     }
 
     ::ng-deep .button__content {
       display: flex;
       align-items: center;
       gap: var(--spacing-3);
+
+      @media (max-width: 480px) {
+        gap: var(--spacing-2);
+      }
     }
   }
 
-  /* Login */
+  /* Login link */
   &__login-link {
     text-align: center;
-    margin: 0;
+    margin-top: var(--spacing-8);
+
+    @media (max-width: 768px) {
+      margin-top: var(--spacing-6);
+    }
+
+    @media (max-width: 480px) {
+      margin-top: var(--spacing-5);
+      font-size: var(--font-sm-size);
+    }
 
     a {
       color: var(--color-secondary);
       text-decoration: none;
-      font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-light);
 
       &:hover {
         text-decoration: underline;
+      }
+
+      @media (max-width: 480px) {
+        font-size: var(--font-sm-size);
       }
     }
   }

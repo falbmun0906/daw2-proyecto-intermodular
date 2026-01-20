@@ -77,7 +77,7 @@ export class ThemeService implements OnDestroy {
     if (typeof window !== 'undefined' && window.localStorage) {
       const saved = localStorage.getItem(this.STORAGE_KEY);
       if (saved === 'light' || saved === 'dark') {
-        return saved;
+        return saved as Theme;
       }
     }
     return null;

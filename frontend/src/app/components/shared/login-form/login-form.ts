@@ -27,6 +27,13 @@ export class LoginForm implements OnInit {
   isSubmitting = false;
   generalError = '';
 
+  // Iconos
+  mailIcon: string = 'mail';
+  lockIcon: string = 'lock';
+  googleIcon: string = 'google';
+  facebookIcon: string = 'facebook';
+  xIcon: string = 'x-icon';
+
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,

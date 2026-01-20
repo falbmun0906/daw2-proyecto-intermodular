@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FormInput } from './form-input';
 
 describe('FormInput', () => {

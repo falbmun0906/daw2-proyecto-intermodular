@@ -2,9 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FormCheckbox } from '../../components/shared/form-checkbox/form-checkbox';
-import { FormInput } from '../../components/shared/form-input/form-input';
 import { Pagination } from '../../components/shared/pagination/pagination';
 import { Card } from '../../components/shared/card/card';
+import { RecipesHero } from '../../components/shared/recipes-hero/recipes-hero';
 import { NavigationService } from '../../services/navigation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -31,7 +31,7 @@ interface FilterOption {
 @Component({
   selector: 'app-recipes-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormCheckbox, FormInput, Pagination, Card],
+  imports: [CommonModule, FormsModule, FormCheckbox, Pagination, Card, RecipesHero],
   templateUrl: './recipes-page.html',
   styleUrl: './recipes-page.scss'
 })
@@ -43,6 +43,12 @@ export class RecipesPage implements OnInit {
 
   // Mensaje de error desde el resolver (cuando falla la carga de una receta)
   errorMessage = signal<string | null>(null);
+
+  // Configuración del hero
+  breadcrumbItems = [
+    { label: 'Inicio', url: '/' },
+    { label: 'Recetas', url: '/recetas', isActive: true }
+  ];
 
   searchQuery: string = '';
   currentPage: number = 1;

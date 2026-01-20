@@ -1,6 +1,12 @@
-<article class="ingredient-card">
-  <img [src]="imageUrl" [alt]="name" class="ingredient-card__image" loading="lazy" />
-  <h3 class="ingredient-card__name">{{ name }}</h3>
-  <p class="ingredient-card__quantity">{{ quantity }}</p>
-</article>
-
+<div class="ingredient-card">
+  <img
+    [src]="imageUrl"
+    [alt]="name"
+    class="ingredient-card__image"
+    loading="lazy"
+  />
+  <div class="ingredient-card__info">
+    <h3 class="ingredient-card__name">{{ name }}</h3>
+    <p class="ingredient-card__quantity">{{ quantity }}</p>
+  </div>
+</div>

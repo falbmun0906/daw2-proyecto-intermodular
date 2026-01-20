@@ -19,6 +19,7 @@ export class Breadcrumbs implements OnInit {
   // Si se pasan items manualmente, se usan esos; si no, se obtienen del servicio
   @Input() items: BreadcrumbItem[] = [];
   @Input() autoUpdate: boolean = true; // Activar actualización automática desde rutas
+  @Input() variant: 'default' | 'hero' = 'default'; // Variante de estilo
 
   private breadcrumbService = inject(BreadcrumbService);
 

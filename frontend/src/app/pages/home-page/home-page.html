@@ -1,19 +1,33 @@
 <main class="home-page">
   <section class="hero">
-    <div class="hero__collage">
-      <img src="assets/recipes/salad.jpg" alt="Ensalada" class="hero__img hero__img--1" loading="eager" />
-      <img src="assets/recipes/meat.jpg" alt="Plato principal" class="hero__img hero__img--2" loading="eager" />
-      <img src="assets/recipes/cake.jpg" alt="Postre" class="hero__img hero__img--3" loading="eager" />
-      <img src="assets/recipes/dish.jpg" alt="Plato" class="hero__img hero__img--4" loading="eager" />
+    <!-- Grid de imágenes ordenado -->
+    <div class="hero__grid">
+      <div class="hero__grid-item hero__grid-item--1">
+        <img src="assets/hero-img-1.png" alt="Ensalada" class="hero__img" loading="eager" />
+      </div>
+      <div class="hero__grid-item hero__grid-item--2">
+        <img src="assets/hero-img-2.png" alt="Plato principal" class="hero__img" loading="eager" />
+      </div>
+      <div class="hero__grid-item hero__grid-item--3">
+        <img src="assets/hero-img-3.png" alt="Postre" class="hero__img" loading="eager" />
+      </div>
+      <div class="hero__grid-item hero__grid-item--4">
+        <img src="assets/hero-img-4.png" alt="Plato" class="hero__img" loading="eager" />
+      </div>
+
+      <!-- Logo blob sobre el grid -->
+      <div class="hero__logo-container">
+        <div class="hero__logo-blob"></div>
+        <h1 class="hero__logo-text">Desp[i]lensa</h1>
+      </div>
     </div>
 
-    <div class="hero__logo-blob">
-      <img src="assets/logo-main.svg" alt="Desp[i]ensa" class="hero__logo" />
-    </div>
-
+    <!-- CTA fuera del grid -->
     <app-button
-      variant="secondary"
-      size="md"
+      variant="cta"
+      size="lg"
+      icon="chef-hat"
+      iconPosition="left"
       class="hero__cta"
       (buttonClick)="onInspireClick()">
       Inspírate y cocina algo nuevo
@@ -24,15 +38,13 @@
     <h2 class="trending__title">Tendencias de esta semana</h2>
 
     <div class="trending__carousel">
-      <app-button
-        variant="ghost"
+      <app-carousel-nav-button
+        direction="prev"
         class="trending__nav trending__nav--prev"
-        (buttonClick)="prevSlide()"
-        [attr.aria-label]="'Anterior'">
-        ‹
-      </app-button>
+        (navigate)="prevSlide()"
+      ></app-carousel-nav-button>
 
-      <div class="trending__track">
+      <div class="trending__track" #carouselTrack>
         @for (recipe of trendingRecipes; track recipe.id) {
           <app-card
             variant="carousel"
@@ -49,13 +61,11 @@
         }
       </div>
 
-      <app-button
-        variant="ghost"
+      <app-carousel-nav-button
+        direction="next"
         class="trending__nav trending__nav--next"
-        (buttonClick)="nextSlide()"
-        [attr.aria-label]="'Siguiente'">
-        ›
-      </app-button>
+        (navigate)="nextSlide()"
+      ></app-carousel-nav-button>
     </div>
   </section>
 
@@ -87,10 +97,12 @@
         Guarda tus alimentos, planifica tus comidas y encuentra recetas con lo que ya tienes.
       </p>
       <app-button
-        variant="secondary"
-        size="md"
+        variant="primary"
+        size="lg"
+        icon="cooking-pot"
+        iconClass="solid-black"
         (buttonClick)="onKitchenClick()">
-        🗄️ Ir a mi cocina
+        Ir a mi cocina
       </app-button>
     </div>
   </section>
@@ -98,42 +110,50 @@
   <section class="newsletter">
     <div class="newsletter__illustration">
       <div class="newsletter__blob">
-        <svg class="newsletter__pantry" viewBox="0 0 280 320" aria-hidden="true">
-          <rect x="40" y="40" width="200" height="240" fill="#fff" rx="8"/>
-          <rect x="50" y="60" width="180" height="60" fill="#e8e4f0" rx="4"/>
-          <rect x="50" y="130" width="180" height="60" fill="#e8e4f0" rx="4"/>
-          <rect x="50" y="200" width="180" height="60" fill="#e8e4f0" rx="4"/>
-          <circle cx="80" cy="90" r="12" fill="#c0c9bd"/>
-          <circle cx="120" cy="90" r="12" fill="#b3d9da"/>
-          <circle cx="160" cy="90" r="12" fill="#f2b545"/>
+        <!-- SVG de fondo -->
+        <svg class="newsletter__blob-svg" viewBox="0 0 400 600" aria-hidden="true">
+          <path
+            d="M 0.331959 290.641 C 3.27266 343.649 32.7831 380.806 48.956 427.775 C 67.1179 480.52 67.5483 554.915 101.244 583.701 C 134.831 612.394 175.103 574.228 213.1 568.004 C 253.234 561.429 298.478 583.376 330.865 546.083 C 363.584 508.409 372.603 438.5 379.816 376.038 C 386.536 317.839 382.866 258.684 370.525 202.611 C 358.491 147.93 339.861 95.9387 310.409 60.6761 C 281.727 26.3364 245.108 17.5949 209.354 9.64341 C 173.451 1.65863 135.633 -9.42545 102.893 14.5255 C 70.2047 38.4392 50.9994 90.0418 32.9202 138.715 C 15.4097 185.856 -2.68566 236.242 0.331959 290.641 Z"
+            fill="var(--color-primary-darker)"
+          />
         </svg>
+
+        <!-- Imagen superpuesta -->
+        <img
+          src="assets/newsletter-image.png"
+          alt="Newsletter illustration"
+          class="newsletter__image"
+          loading="lazy"
+        />
       </div>
     </div>
 
-    <div class="newsletter__form">
+    <div class="newsletter__content">
       <h2 class="newsletter__title">Sin pensar demasiado, a un solo clic.</h2>
       <p class="newsletter__subtitle">
         Recibe nuestras novedades, recetas y tips directamente en tu bandeja.
       </p>
 
-      <form (submit)="onNewsletterSubmit($event)">
-        <app-form-input
-          type="email"
-          name="email"
-          placeholder="tu@email.com"
-          icon="👤"
-          [(ngModel)]="newsletterEmail"
-          [required]="true"
-          class="newsletter__input"
-        />
+      <form (submit)="onNewsletterSubmit($event)" class="newsletter__form">
+        <div class="newsletter__input-wrapper">
+          <app-form-input
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="tu@email.com"
+            icon="mail"
+            [showLabel]="false"
+            [(ngModel)]="newsletterEmail"
+            [required]="true"
+          />
 
-        <app-button
-          type="submit"
-          variant="secondary"
-          size="md"
-          class="newsletter__submit">
-          Suscribirme
-        </app-button>
+          <app-button
+            type="submit"
+            variant="primary"
+            size="md">
+            Suscribirme
+          </app-button>
+        </div>
 
         <p class="newsletter__legal">
           Tus datos serán usados exclusivamente para enviarte nuestro newsletter.

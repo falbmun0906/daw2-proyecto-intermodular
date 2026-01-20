@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { Icon } from '../icon/icon';
 /**
  * Componente Button reutilizable
  *
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Icon],
   templateUrl: './button.html',
   styleUrl: './button.scss',
 })
@@ -21,16 +21,18 @@ export class Button {
    * - 'secondary': Color primario (verde), para acciones secundarias
    * - 'ghost': Sin fondo, solo texto y borde
    * - 'danger': Color rojo, para acciones destructivas
+   * - 'cta': Call-To-Action, variante destacada con sombra y escala
    */
-  @Input() variant: 'primary' | 'secondary' | 'ghost' | 'danger' = 'primary';
+  @Input() variant: 'primary' | 'secondary' | 'ghost' | 'danger' | 'cta' = 'primary';
 
   /**
    * Tamaño del botón
    * - 'sm': Pequeño
    * - 'md': Mediano (por defecto)
    * - 'lg': Grande
+   * - 'xl': Extra grande
    */
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
   /**
    * Tipo de botón HTML
@@ -56,6 +58,11 @@ export class Button {
    * Posición del icono
    */
   @Input() iconPosition: 'left' | 'right' = 'left';
+
+  /**
+   * Clase del icono: 'solid-black' | 'solid-white' | undefined
+   */
+  @Input() iconClass: 'solid-black' | 'solid-white' | undefined = undefined;
 
   /**
    * Evento de click
@@ -99,6 +106,48 @@ export class Button {
   onClick(event: MouseEvent): void {
     if (!this.disabled) {
       this.buttonClick.emit(event);
+    }
+  }
+
+  /**
+   * Verifica si el icono es un nombre válido
+   */
+  isLucideIcon(iconName: string): boolean {
+    const validIcons = [
+      'search', 'filter', 'settings', 'heart', 'star', 'arrow-right',
+      'chevron-right', 'home', 'user', 'menu', 'x', 'check',
+      'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
+      'mail', 'lock', 'google', 'facebook', 'x-icon', 'chef-hat',
+      'utensils', 'fire', 'schedule', 'chart-bar', 'cooking-pot'
+    ];
+    return validIcons.includes(iconName);
+  }
+
+  /**
+   * Calcula el tamaño del icono dinámicamente según el tamaño del botón
+   * Para variante CTA y lg, el icono es del tamaño de la fuente
+   */
+  get iconSize(): number {
+    // Para CTA, el icono es más grande (proporcional al tamaño del texto)
+    if (this.variant === 'cta') {
+      if (this.size === 'lg') {
+        return 28; // Para CTA lg
+      } else if (this.size === 'md') {
+        return 22; // Para CTA md
+      }
+    }
+
+    // Para otros tamaños
+    switch (this.size) {
+      case 'sm':
+        return 18;
+      case 'lg':
+        return 28;
+      case 'xl':
+        return 32;
+      case 'md':
+      default:
+        return 24;
     }
   }
 }

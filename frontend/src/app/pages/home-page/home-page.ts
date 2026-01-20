@@ -1,10 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Card } from '../../components/shared/card/card';
 import { Button } from '../../components/shared/button/button';
 import { FormInput } from '../../components/shared/form-input/form-input';
+import { CarouselNavButton } from '../../components/shared/carousel-nav-button/carousel-nav-button';
 
 interface Recipe {
   id: number;
@@ -19,19 +20,26 @@ interface Recipe {
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule, Card, Button, FormInput],
+  imports: [RouterModule, CommonModule, FormsModule, Card, Button, FormInput, CarouselNavButton],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   encapsulation: ViewEncapsulation.None
 })
-export class HomePage {
+export class HomePage implements AfterViewInit {
+  @ViewChild('carouselTrack') carouselTrack!: ElementRef;
+
   newsletterEmail: string = '';
+  private carouselScrollAmount = 600; // Scroll de 600px por click
+
+  ngAfterViewInit(): void {
+    // Inicialización si es necesaria
+  }
 
   trendingRecipes: Recipe[] = [
     {
       id: 1,
       title: 'Hamburguesa',
-      imageUrl: 'assets/recipes/burger.jpg',
+      imageUrl: 'assets/recipes/burger.png',
       rating: 4.5,
       category: 'Almuerzo',
       time: '30 min',
@@ -40,7 +48,7 @@ export class HomePage {
     {
       id: 2,
       title: 'Pizza',
-      imageUrl: 'assets/recipes/pizza.jpg',
+      imageUrl: 'assets/recipes/pizza-margarita.png',
       rating: 5,
       category: 'Cena',
       time: '45 min',
@@ -49,10 +57,37 @@ export class HomePage {
     {
       id: 3,
       title: 'Huevos fritos',
-      imageUrl: 'assets/recipes/eggs.jpg',
+      imageUrl: 'assets/recipes/eggs.png',
       rating: 4,
       category: 'Desayuno',
       time: '10 min',
+      difficulty: 'Fácil'
+    },
+    {
+      id: 4,
+      title: 'Ensalada César',
+      imageUrl: 'assets/recipes/salad.png',
+      rating: 4.2,
+      category: 'Almuerzo',
+      time: '15 min',
+      difficulty: 'Fácil'
+    },
+    {
+      id: 5,
+      title: 'Pasta Carbonara',
+      imageUrl: 'assets/recipes/pasta.png',
+      rating: 4.8,
+      category: 'Cena',
+      time: '25 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 6,
+      title: 'Tortitas con sirope',
+      imageUrl: 'assets/recipes/pancakes.png',
+      rating: 4.6,
+      category: 'Desayuno',
+      time: '20 min',
       difficulty: 'Fácil'
     }
   ];
@@ -61,7 +96,7 @@ export class HomePage {
     {
       id: 4,
       title: 'Ensalada César',
-      imageUrl: 'assets/recipes/salad.jpg',
+      imageUrl: 'assets/recipes/salad.png',
       rating: 4.5,
       category: 'Almuerzo',
       time: '15 min',
@@ -70,7 +105,7 @@ export class HomePage {
     {
       id: 5,
       title: 'Pasta Carbonara',
-      imageUrl: 'assets/recipes/pasta.jpg',
+      imageUrl: 'assets/recipes/pasta.png',
       rating: 5,
       category: 'Cena',
       time: '25 min',
@@ -79,91 +114,91 @@ export class HomePage {
     {
       id: 6,
       title: 'Tarta de chocolate',
-      imageUrl: 'assets/recipes/cake.jpg',
+      imageUrl: 'assets/recipes/cake.png',
       rating: 4.8,
       category: 'Postre',
       time: '60 min',
       difficulty: 'Difícil'
     },
     {
-      id: 4,
-      title: 'Ensalada César',
-      imageUrl: 'assets/recipes/salad.jpg',
+      id: 7,
+      title: 'Sopa de tomate',
+      imageUrl: 'assets/recipes/soup.png',
       rating: 4.5,
       category: 'Almuerzo',
-      time: '15 min',
+      time: '20 min',
       difficulty: 'Fácil'
     },
     {
-      id: 5,
-      title: 'Pasta Carbonara',
-      imageUrl: 'assets/recipes/pasta.jpg',
+      id: 8,
+      title: 'Pechuga de pollo a la mostaza',
+      imageUrl: 'assets/recipes/chicken.png',
       rating: 5,
       category: 'Cena',
+      time: '30 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 9,
+      title: 'Tiramisú',
+      imageUrl: 'assets/recipes/tiramisu.png',
+      rating: 4.8,
+      category: 'Postre',
+      time: '45 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 10,
+      title: 'Ramen casero',
+      imageUrl: 'assets/recipes/ramen.png',
+      rating: 4.5,
+      category: 'Almuerzo',
+      time: '40 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 11,
+      title: 'Salmón al horno',
+      imageUrl: 'assets/recipes/salmon.png',
+      rating: 5,
+      category: 'Cena',
+      time: '35 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 12,
+      title: 'Brownies de chocolate',
+      imageUrl: 'assets/recipes/brownies.png',
+      rating: 4.8,
+      category: 'Postre',
+      time: '50 min',
+      difficulty: 'Media'
+    },
+    {
+      id: 13,
+      title: 'Tacos al pastor',
+      imageUrl: 'assets/recipes/tacos.png',
+      rating: 4.5,
+      category: 'Almuerzo',
       time: '25 min',
       difficulty: 'Media'
     },
     {
-      id: 6,
-      title: 'Tarta de chocolate',
-      imageUrl: 'assets/recipes/cake.jpg',
-      rating: 4.8,
-      category: 'Postre',
-      time: '60 min',
+      id: 14,
+      title: 'Filete con salsa de champiñones',
+      imageUrl: 'assets/recipes/steak.png',
+      rating: 5,
+      category: 'Cena',
+      time: '40 min',
       difficulty: 'Difícil'
     },
     {
-      id: 4,
-      title: 'Ensalada César',
-      imageUrl: 'assets/recipes/salad.jpg',
-      rating: 4.5,
-      category: 'Almuerzo',
-      time: '15 min',
-      difficulty: 'Fácil'
-    },
-    {
-      id: 5,
-      title: 'Pasta Carbonara',
-      imageUrl: 'assets/recipes/pasta.jpg',
-      rating: 5,
-      category: 'Cena',
-      time: '25 min',
-      difficulty: 'Media'
-    },
-    {
-      id: 6,
-      title: 'Tarta de chocolate',
-      imageUrl: 'assets/recipes/cake.jpg',
+      id: 15,
+      title: 'Macarons de frambuesa',
+      imageUrl: 'assets/recipes/macarons.png',
       rating: 4.8,
       category: 'Postre',
-      time: '60 min',
-      difficulty: 'Difícil'
-    },
-    {
-      id: 4,
-      title: 'Ensalada César',
-      imageUrl: 'assets/recipes/salad.jpg',
-      rating: 4.5,
-      category: 'Almuerzo',
-      time: '15 min',
-      difficulty: 'Fácil'
-    },
-    {
-      id: 5,
-      title: 'Pasta Carbonara',
-      imageUrl: 'assets/recipes/pasta.jpg',
-      rating: 5,
-      category: 'Cena',
-      time: '25 min',
-      difficulty: 'Media'
-    },
-    {
-      id: 6,
-      title: 'Tarta de chocolate',
-      imageUrl: 'assets/recipes/cake.jpg',
-      rating: 4.8,
-      category: 'Postre',
-      time: '60 min',
+      time: '90 min',
       difficulty: 'Difícil'
     }
   ];
@@ -186,11 +221,21 @@ export class HomePage {
   }
 
   prevSlide(): void {
-    console.log('Previous slide');
+    if (this.carouselTrack) {
+      this.carouselTrack.nativeElement.scrollBy({
+        left: -this.carouselScrollAmount,
+        behavior: 'smooth'
+      });
+    }
   }
 
   nextSlide(): void {
-    console.log('Next slide');
+    if (this.carouselTrack) {
+      this.carouselTrack.nativeElement.scrollBy({
+        left: this.carouselScrollAmount,
+        behavior: 'smooth'
+      });
+    }
   }
 }
 

@@ -37,8 +37,8 @@
 }
 
 .login-page__form-container {
-  display: grid;
-  align-items: stretch;
+  min-width: 0; // ← IMPORTANTE: permite que se encoja
+  width: 100%; // ← Respeta el ancho del grid padre
 }
 
 .login-page__image-container {
@@ -48,6 +48,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    min-height: 500px;
+  }
 
   @media (max-width: 768px) {
     display: none;
@@ -60,4 +64,3 @@
   object-fit: cover;
   display: block;
 }
-

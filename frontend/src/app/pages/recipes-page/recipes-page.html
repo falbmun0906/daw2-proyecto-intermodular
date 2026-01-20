@@ -1,4 +1,15 @@
 <main class="recipes-page">
+  <!-- Hero Section con Breadcrumbs, Título y Buscador -->
+  <app-recipes-hero
+    [config]="{
+      breadcrumbItems: breadcrumbItems,
+      title: 'Recetas',
+      searchPlaceholder: 'Buscar receta',
+      onSearch: onSearch.bind(this),
+      searchValue: searchQuery,
+    }"
+  ></app-recipes-hero>
+
   <div class="recipes-page__container">
     <aside class="recipes-page__filters">
       @for (filterGroup of filters; track filterGroup.title) {
@@ -19,18 +30,6 @@
     </aside>
 
     <div class="recipes-page__content">
-      <div class="recipes-page__header">
-        <h1 class="recipes-page__title">Recetas</h1>
-        <app-form-input
-          type="text"
-          placeholder="Buscar receta"
-          icon="🔍"
-          [(ngModel)]="searchQuery"
-          (input)="onSearch()"
-          class="recipes-page__search"
-        />
-      </div>
-
       <div class="recipes-page__list">
         @for (recipe of recipes; track recipe.id) {
           <app-card

@@ -47,7 +47,7 @@ export class RecipeService {
       rating: 4.5,
       ratingCount: 125,
       tags: ['Italiana', 'Fácil', 'Rápida'],
-      imageUrl: 'assets/recipes/pizza.jpg',
+      imageUrl: 'assets/recipes/pizza.png',
       description: 'La pizza Margarita es un clásico de la cocina italiana que nunca pasa de moda.',
       servings: 4,
       prepTime: '15 min',

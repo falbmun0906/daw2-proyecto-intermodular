@@ -1079,7 +1079,7 @@ La aplicación soporta alternancia entre tema claro y oscuro, detectando la pref
 ```typescript
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private currentTheme: Theme = 'light';
+  private currentTheme: Theme = 'regular';
   private readonly STORAGE_KEY = 'theme';
 
   private initializeTheme(): void {
@@ -1089,18 +1089,18 @@ export class ThemeService {
     } else {
       // Detectar preferencia del sistema
       this.currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches 
-        ? 'dark' : 'light';
+        ? 'dark' : 'regular';
     }
     this.applyTheme(this.currentTheme);
   }
 
   private applyTheme(theme: Theme): void {
     document.body.classList.toggle('dark-theme', theme === 'dark');
-    document.body.classList.toggle('light-theme', theme === 'light');
+    document.body.classList.toggle('regular-theme', theme === 'regular');
   }
 
   toggleTheme(): void {
-    this.setTheme(this.currentTheme === 'light' ? 'dark' : 'light');
+    this.setTheme(this.currentTheme === 'regular' ? 'dark' : 'regular');
   }
 }
 ```

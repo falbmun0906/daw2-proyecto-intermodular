@@ -17,7 +17,7 @@
 
   /* Tipografía */
   font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-regular);
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -29,9 +29,9 @@
 
   /* Transiciones suaves */
   transition: background-color var(--transition-base) var(--transition-easing),
-              color var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing),
-              opacity var(--transition-base) var(--transition-easing);
+  color var(--transition-base) var(--transition-easing),
+  box-shadow var(--transition-base) var(--transition-easing),
+  opacity var(--transition-base) var(--transition-easing);
 
   /* Accesibilidad: focus visible */
   @include focus-ring(var(--color-info-dark));
@@ -45,6 +45,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  /* Aumentar ligeramente el tamaño de la tipografía dentro del botón
+     sin alterar el tamaño del contenedor (padding/min-height). */
+  font-size: 1.06em; /* 6% más grande que el tamaño base definido por la variante */
 }
 
 /* ====================================
@@ -55,7 +58,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1em;
+  /* Mantener la iconografía en proporción con el texto aumentado */
+  font-size: 1.06em; /* igual que .button__content */
   line-height: 1;
 
   &--left {
@@ -83,6 +87,13 @@
   padding: var(--spacing-3) var(--spacing-6);
   font-size: var(--font-body-size);
   min-height: 40px;
+}
+
+/* Tamaño extra grande (xl) */
+.button--xl {
+  padding: var(--spacing-3) var(--spacing-8);
+  font-size: var(--font-h5-size);
+  min-height: 44px;
 }
 
 /* Tamaño grande (lg) */
@@ -165,6 +176,30 @@
   }
 }
 
+/* Variante CTA (Call-To-Action - destacada con sombra elevada) */
+.button--cta {
+  background-color: var(--color-secondary);
+  color: var(--color-text-main);
+  box-shadow: var(--shadow-lg);
+  transition: background-color var(--transition-base) var(--transition-easing),
+  color var(--transition-base) var(--transition-easing),
+  box-shadow var(--transition-base) var(--transition-easing),
+  opacity var(--transition-base) var(--transition-easing),
+  transform var(--transition-base) var(--transition-easing);
+
+  &:hover:not(:disabled):not(.button--disabled) {
+    background-color: var(--color-secondary-hover);
+    box-shadow: var(--shadow-2xl);
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled):not(.button--disabled) {
+    background-color: var(--color-secondary-active);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(0);
+  }
+}
+
 /* ====================================
  * Modificador: Estado deshabilitado
  * ==================================== */
@@ -213,3 +248,87 @@
   }
 }
 
+/* Responsive para tablets y dispositivos grandes */
+@media (max-width: 1024px) {
+  .button--md {
+    padding: var(--spacing-3) var(--spacing-5);
+    font-size: var(--font-body-size);
+    min-height: 40px;
+  }
+
+  .button--lg {
+    padding: var(--spacing-4) var(--spacing-8);
+    font-size: var(--font-h4-size);
+    min-height: 48px;
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .button--sm {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-xs-size);
+    min-height: 28px;
+  }
+
+  .button--md {
+    font-size: var(--font-sm-size);
+    min-height: 36px;
+  }
+
+  .button--lg {
+    padding: var(--spacing-3) var(--spacing-6);
+    min-height: 40px;
+  }
+
+  /* CTA ocupa todo el ancho en móviles */
+  .button--cta {
+    width: 100%;
+    display: flex;
+  }
+}
+
+/* Responsive para breakpoint crítico 630px */
+@media (max-width: 630px) {
+  /* Ocultar iconos en todos los botones para evitar que se rompan */
+  .button__icon {
+    display: none;
+  }
+
+  /* Ajustar gap ya que no hay iconos */
+  .button--with-icon {
+    gap: 0;
+  }
+
+  /* Permitir que el texto haga wrap si es necesario */
+  .button {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* Responsive para móviles muy pequeños */
+@media (max-width: 480px) {
+  .button--sm {
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-xs-size);
+    min-height: 28px;
+  }
+
+  .button--md {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-sm-size);
+    min-height: 32px;
+  }
+
+  .button--lg {
+    padding: var(--spacing-3) var(--spacing-5);
+    min-height: 40px;
+  }
+
+  /* Asegurar que CTA sigue siendo full-width */
+  .button--cta {
+    width: 100%;
+    display: flex;
+  }
+}

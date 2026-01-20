@@ -16,6 +16,18 @@
     font-weight: var(--font-weight-medium);
     color: var(--text-primary);
     margin-bottom: var(--spacing-1);
+
+    &--sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
   }
 
   &__required {
@@ -46,8 +58,8 @@
     font-family: var(--font-family-primary);
     font-size: var(--font-body-size);
     color: var(--text-primary);
+    background-color: var(--surface-base);
 
-    background: transparent;
     border: 1px solid var(--border-color-secondary);
     border-radius: var(--radius-md);
 
@@ -128,5 +140,29 @@
 
   &__message-icon {
     flex-shrink: 0;
+  }
+
+  /* Modificador para buscadores */
+  &--search {
+    width: 100%;
+
+    .form-input__field {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-4);
+      padding-left: var(--spacing-12);
+      display: flex;
+      align-items: center;
+      background-color: var(--color-neutral-white);
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      &::placeholder {
+        color: var(--text-placeholder);
+      }
+    }
   }
 }

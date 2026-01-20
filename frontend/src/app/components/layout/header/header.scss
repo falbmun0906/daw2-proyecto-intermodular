@@ -1,37 +1,42 @@
 /* =========================
  * Header Component (site-header)
+ * Modern & Responsive 2026
  * ========================= */
 
 @use '../../../../styles/01-tools/mixins.scss' as *;
 
 .site-header {
   @include flex-layout(row, space-between, center);
-  padding: var(--spacing-8) 0 var(--spacing-8) 0;
-  padding-inline: var(--spacing-16);
+  padding: clamp(var(--spacing-6), 2vw, var(--spacing-8)) var(--spacing-16);
   background-color: var(--bg-dark);
   box-shadow: var(--shadow-sm);
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+
+  @media (max-width: 767px) {
+    padding-inline: var(--spacing-8);
+  }
+
+  @media (max-width: 639px) {
+    padding-inline: var(--spacing-4);
+  }
 }
 
-/* Checkbox del menú hamburguesa oculto en desktop */
-.site-header__nav-toggle {
-  display: none !important;
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-/* Label del hamburguesa oculto en desktop */
-.site-header__nav-label {
-  display: none;
-}
-
-/* Logo */
+/* =========================
+ * Logo
+ * ========================= */
 
 .site-header__logo {
   text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .site-header__logo-text {
@@ -39,6 +44,15 @@
   font-size: var(--font-h2-size);
   font-weight: var(--font-weight-medium);
   color: var(--color-neutral-white);
+  transition: color 0.3s ease;
+
+  .site-header__logo:hover & {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  @media (max-width: 639px) {
+    font-size: calc(var(--font-h2-size) * 0.85);
+  }
 }
 
 /* =========================
@@ -47,6 +61,12 @@
 
 .site-header__right {
   @include flex-layout(column, flex-end, flex-end, var(--spacing-6));
+
+  @media (max-width: 767px) {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-6);
+  }
 }
 
 /* =========================
@@ -78,10 +98,15 @@
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 14px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.22);
+    transform: scale(1.02);
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 }
 
@@ -94,11 +119,10 @@
   top: 3px;
   background-color: #ffffff;
   border-radius: 50%;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* Iconos SVG como background */
 .site-header__slider::after {
   content: '';
   position: absolute;
@@ -110,7 +134,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   pointer-events: none;
 }
 
@@ -132,10 +156,10 @@
   opacity: 1;
 }
 
-.site-header__theme-switch input:focus-visible + .site-header__slider {
+/*.site-header__theme-switch input:focus-visible + .site-header__slider {
   outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
-}
+}*/
 
 /* =========================
  * Navegación
@@ -146,6 +170,10 @@
   list-style: none;
   margin: 0;
   padding: 0;
+
+  @media (max-width: 1023px) {
+    gap: var(--spacing-8);
+  }
 }
 
 .site-header__nav-link {
@@ -154,114 +182,46 @@
   font-weight: var(--font-weight-light);
   color: var(--color-neutral-white);
   text-decoration: none;
-  opacity: 0.9;
-  transition: opacity 0.2s ease;
+  opacity: 0.85;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: var(--spacing-2) 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Underline sutil tipo 'arañazo' como en el footer */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: width 0.3s ease;
+  }
 
   &:hover {
     opacity: 1;
-  }
-}
 
-/* =========================
- * RESPONSIVE - Menú hamburguesa en mobile
- * ========================= */
-
-@media (max-width: 767px) {
-  /* Bloque derecho en fila horizontal */
-  .site-header__right {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-8);
-  }
-
-  /* El slider a la derecha */
-  .site-header__theme-toggle {
-    flex-shrink: 0;
-  }
-
-  /* El nav se posiciona relativo para el hamburguesa */
-  .site-header__nav {
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  /* Checkbox completamente oculto y sin afectar layout */
-  .site-header__nav-toggle {
-    display: none !important;
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-  }
-
-  /* Mostrar icono hamburguesa clickeable SOLO en mobile */
-  .site-header__nav-label {
-    display: block !important;
-    width: 28px;
-    height: 20px;
-    cursor: pointer;
-    z-index: 50;
-    background-image:
-      linear-gradient(to bottom,
-        var(--color-neutral-white) 0%,
-        var(--color-neutral-white) 15%,
-        transparent 15%,
-        transparent 40%,
-        var(--color-neutral-white) 40%,
-        var(--color-neutral-white) 60%,
-        transparent 60%,
-        transparent 80%,
-        var(--color-neutral-white) 80%,
-        var(--color-neutral-white) 95%
-      );
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
-
-  /* Vincular el ::before al checkbox - cuando checkbox está checked */
-  .site-header__nav-toggle:checked ~ .site-header__nav-list {
-    display: flex;
-    position: fixed;
-    top: 88px;
-    left: 0;
-    right: 0;
-    background-color: var(--color-tertiary-darker);
-    box-shadow: var(--shadow-md);
-    z-index: 1000;
-    flex-direction: column;
-    align-items: stretch;
-    padding: var(--spacing-8) var(--spacing-16);
-    gap: 0;
-  }
-
-  /* Links ocultos por defecto */
-  .site-header__nav-list {
-    display: none;
-  }
-
-  .site-header__nav-link {
-    display: block;
-    padding: var(--spacing-8) var(--spacing-8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+    &::after {
+      width: 100%;
     }
   }
-}
 
-/* Hacer que el hamburguesa sea label del checkbox */
-@media (max-width: 767px) {
-  .site-header__nav::before {
-    position: relative;
-    z-index: 51;
+  &:focus,
+  &:focus-visible {
+    outline: none;
   }
 }
 
 /* =========================
- * Botón hamburguesa controlado por Angular
+ * Botón hamburguesa
  * ========================= */
 
 .site-header__nav-toggle-btn {
@@ -275,6 +235,21 @@
   border: none;
   cursor: pointer;
   z-index: 50;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+/*  &:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }*/
 }
 
 .site-header__hamburger-line {
@@ -282,48 +257,107 @@
   width: 100%;
   height: 2px;
   background-color: var(--color-neutral-white);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Animación del hamburguesa cuando está abierto */
 .site-header__nav-toggle-btn--open {
   .site-header__hamburger-line:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
   }
   .site-header__hamburger-line:nth-child(2) {
     opacity: 0;
+    transform: scaleX(0);
   }
   .site-header__hamburger-line:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
   }
 }
 
+/* =========================
+ * RESPONSIVE - Mobile
+ * ========================= */
+
 @media (max-width: 767px) {
-  /* Ocultar el label original del checkbox */
-  .site-header__nav-label {
-    display: none !important;
+  .site-header__right {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-6);
   }
 
-  /* Mostrar el botón hamburguesa controlado por Angular */
+  .site-header__theme-toggle {
+    flex-shrink: 0;
+  }
+
+  .site-header__nav {
+    position: static;
+    flex-shrink: 0;
+  }
+
   .site-header__nav-toggle-btn {
     display: flex;
   }
 
-  /* Menú abierto con la clase de Angular */
+  .site-header__nav-list {
+    display: none;
+  }
+
   .site-header__nav-list--open {
     display: flex !important;
-    position: fixed;
-    top: 88px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    background-color: var(--color-tertiary-darker);
-    box-shadow: var(--shadow-md);
-    z-index: 1000;
+    background-color: var(--bg-dark);
+    z-index: 999;
     flex-direction: column;
     align-items: stretch;
-    padding: var(--spacing-8) var(--spacing-16);
+    padding: var(--spacing-6) var(--spacing-8);
     gap: 0;
-    animation: slideDown 0.3s ease;
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .site-header__nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: var(--spacing-4) var(--spacing-6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 1;
+
+    /* Resetear el ::after en móvil */
+    &::after {
+      display: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+      padding-left: var(--spacing-8);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+@media (max-width: 639px) {
+  .site-header__nav-list--open {
+    padding: var(--spacing-4) var(--spacing-6);
+  }
+
+  .site-header__nav-link {
+    min-height: 44px;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: 0.95rem;
+
+    &:hover {
+      padding-left: var(--spacing-6);
+    }
   }
 }
 
@@ -338,3 +372,82 @@
   }
 }
 
+/* =========================
+ * Accesibilidad: Animaciones reducidas
+ * ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__logo,
+  .site-header__nav-link,
+  .site-header__slider,
+  .site-header__nav-toggle-btn,
+  .site-header__hamburger-line {
+    transition: none;
+  }
+
+  .site-header__nav-link::after {
+    transition: none;
+  }
+
+  .site-header__nav-list--open {
+    animation: none;
+  }
+
+  .site-header__logo:hover,
+  .site-header__nav-link:hover,
+  .site-header__slider:hover {
+    transform: none;
+  }
+}
+
+/* =========================
+ * Light Theme Support
+ * ========================= */
+
+:root.light-theme .site-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .site-header__logo-text {
+    color: var(--color-text-main);
+  }
+
+  .site-header__nav-link {
+    color: var(--color-text-main);
+
+    &::after {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .site-header__slider {
+    background-color: rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .site-header__hamburger-line {
+    background-color: var(--color-text-main);
+  }
+
+  @media (max-width: 767px) {
+    .site-header__nav-list--open {
+      background-color: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .site-header__nav-link {
+      border-bottom-color: rgba(0, 0, 0, 0.06);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+    }
+  }
+}

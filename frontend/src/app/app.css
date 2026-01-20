@@ -1,5 +1,4 @@
 .app-main {
-  min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 100px));
   padding: var(--spacing-md);
 }
 

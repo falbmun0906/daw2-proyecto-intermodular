@@ -41,10 +41,10 @@ export class PantryPage {
   sidebarCollapsed: boolean = false;
 
   sidebarItems: SidebarNavItem[] = [
-    { id: 'resumen', label: 'Resumen', icon: '📊', active: false },
-    { id: 'despensa', label: 'Despensa', icon: '🏪', active: true },
-    { id: 'planificador', label: 'Planificador', icon: '📅', active: false },
-    { id: 'lista', label: 'Lista', icon: '📝', active: false }
+    { id: 'resumen', label: 'Resumen', icon: '', active: false },
+    { id: 'despensa', label: 'Despensa', icon: '', active: true },
+    { id: 'planificador', label: 'Planificador', icon: '', active: false },
+    { id: 'lista', label: 'Lista', icon: '', active: false }
   ];
 
   pantryLocations: PantryLocation[] = [

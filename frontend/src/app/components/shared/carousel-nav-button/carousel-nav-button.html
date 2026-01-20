@@ -1,0 +1,19 @@
+<button
+  class="carousel-nav-button"
+  [class.carousel-nav-button--prev]="direction === 'prev'"
+  [class.carousel-nav-button--next]="direction === 'next'"
+  [class.carousel-nav-button--disabled]="disabled"
+  [class.carousel-nav-button--pressed]="isPressed"
+  [attr.aria-label]="ariaLabel"
+  [attr.disabled]="disabled ? true : null"
+  (click)="onClick()"
+>
+  <app-icon
+    class="carousel-nav-button__icon"
+    [name]="iconName"
+    [size]="32"
+    color="currentColor"
+    [solidWhite]="true"
+  ></app-icon>
+</button>
+
