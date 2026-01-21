@@ -1,5 +1,0 @@
-# Ignorar reportes generados por Newman
-reports/
-*.html
-*.json.bak
-
