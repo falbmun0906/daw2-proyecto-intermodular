@@ -11,14 +11,26 @@
 
   <nav class="app-sidebar__nav">
     @for (item of items; track item.id) {
-      <button
-        class="app-sidebar__nav-button"
-        [class.app-sidebar__nav-button--active]="item.active"
-        (click)="onLinkClick(item.id)">
-        <span class="app-sidebar__nav-indent"></span>
-        <app-icon [name]="item.icon" class="app-sidebar__nav-icon"></app-icon>
-        <span class="app-sidebar__nav-text">{{ item.label }}</span>
-      </button>
+      @if (item.id === 'lista') {
+        <button
+          class="app-sidebar__nav-button"
+          [class.app-sidebar__nav-button--active]="item.active"
+          (click)="onNavToShoppingList()">
+          <span class="app-sidebar__nav-indent"></span>
+          <app-icon [name]="item.icon" class="app-sidebar__nav-icon"></app-icon>
+          <span class="app-sidebar__nav-text">{{ item.label }}</span>
+        </button>
+      } @else {
+        <a
+          [routerLink]="item.route"
+          class="app-sidebar__nav-button"
+          [class.app-sidebar__nav-button--active]="item.active"
+          (click)="onLinkClick(item.id)">
+          <span class="app-sidebar__nav-indent"></span>
+          <app-icon [name]="item.icon" class="app-sidebar__nav-icon"></app-icon>
+          <span class="app-sidebar__nav-text">{{ item.label }}</span>
+        </a>
+      }
     }
   </nav>
 

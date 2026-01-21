@@ -46,7 +46,7 @@ interface SidebarNavItem {
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, Button, FormInput, MealCard, ShoppingItem, PendingProduct, Icon, Sidebar],
+  imports: [CommonModule, RouterModule, FormsModule, Button, FormInput, MealCard, ShoppingItem, PendingProduct, Sidebar],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss'
 })

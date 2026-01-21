@@ -49,11 +49,14 @@ export class Sidebar implements OnChanges, AfterViewInit {
 
   onLinkClick(itemId: string) {
     this.itemClick.emit(itemId);
-    // NO cerrar sidebar al hacer click en navegación
+  }
+
+  onNavToShoppingList(): void {
+    this.itemClick.emit('lista');
+    document.querySelector('.dashboard__shopping')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   onToggle() {
-    // No permitir toggle en móvil
     if (this.isMobile) {
       return;
     }
