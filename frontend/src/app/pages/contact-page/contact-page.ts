@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Button } from '../../components/shared/button/button';
 import { Breadcrumbs } from '../../components/shared/breadcrumbs/breadcrumbs';
 import { FormInput } from '../../components/shared/form-input/form-input';
@@ -9,38 +9,31 @@ import { FormTextarea } from '../../components/shared/form-textarea/form-textare
 @Component({
   selector: 'app-contact-page',
   standalone: true,
-  imports: [RouterLink, Button, Breadcrumbs, FormInput, FormTextarea, ReactiveFormsModule, FormsModule],
+  imports: [RouterLink, Button, Breadcrumbs, FormInput, FormTextarea, FormsModule],
   templateUrl: './contact-page.html',
   styleUrls: ['./contact-page.scss']
 })
 export class ContactPage {
-  contactForm: FormGroup;
   isSubmitting = false;
   submitSuccess = false;
   formData = { name: '', email: '', subject: '', message: '' };
-
-  constructor(private fb: FormBuilder) {
-    this.contactForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      subject: ['', [Validators.required, Validators.minLength(5)]],
-      message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]]
-    });
-  }
+  fieldErrors = {
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  };
 
   onSubmit() {
-    // Sincronizar formData con contactForm antes de validar
-    this.contactForm.patchValue(this.formData);
-
-    if (this.contactForm.valid) {
+    if (this.isFormValid()) {
       this.isSubmitting = true;
 
       // Simular envío de formulario
       setTimeout(() => {
         this.isSubmitting = false;
         this.submitSuccess = true;
-        this.contactForm.reset();
         this.formData = { name: '', email: '', subject: '', message: '' };
+        this.fieldErrors = { name: '', email: '', subject: '', message: '' };
 
         // Ocultar mensaje de éxito después de 5 segundos
         setTimeout(() => {
@@ -50,27 +43,71 @@ export class ContactPage {
     }
   }
 
+  private isFormValid(): boolean {
+    return this.isFieldValid('name') && this.isFieldValid('email') && this.isFieldValid('subject') && this.isFieldValid('message');
+  }
+
+  private isFieldValid(field: 'name' | 'email' | 'subject' | 'message'): boolean {
+    const value = this.formData[field];
+
+    if (!value || value.trim() === '') {
+      return false;
+    }
+
+    if (field === 'name' && value.length < 2) {
+      return false;
+    }
+
+    if (field === 'email' && !this.isValidEmail(value)) {
+      return false;
+    }
+
+    if (field === 'subject' && value.length < 5) {
+      return false;
+    }
+
+    if (field === 'message' && (value.length < 10 || value.length > 500)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   hasError(field: string): boolean {
-    const control = this.contactForm.get(field);
-    return !!(control && control.invalid && (control.dirty || control.touched));
+    return this.fieldErrors[field as keyof typeof this.fieldErrors] !== '';
   }
 
   getErrorMessage(field: string): string {
-    const control = this.contactForm.get(field);
+    const value = this.formData[field as keyof typeof this.formData];
 
-    if (control?.hasError('required')) {
+    if (!value || value.trim() === '') {
       return 'Este campo es obligatorio';
     }
-    if (control?.hasError('email')) {
+
+    if (field === 'email' && !this.isValidEmail(value)) {
       return 'Introduce un correo electrónico válido';
     }
-    if (control?.hasError('minlength')) {
-      const minLength = control.errors?.['minlength'].requiredLength;
-      return `Mínimo ${minLength} caracteres`;
+
+    if (field === 'name' && value.length < 2) {
+      return 'Mínimo 2 caracteres';
     }
-    if (control?.hasError('maxlength')) {
-      const maxLength = control.errors?.['maxlength'].requiredLength;
-      return `Máximo ${maxLength} caracteres`;
+
+    if (field === 'subject' && value.length < 5) {
+      return 'Mínimo 5 caracteres';
+    }
+
+    if (field === 'message') {
+      if (value.length < 10) {
+        return 'Mínimo 10 caracteres';
+      }
+      if (value.length > 500) {
+        return 'Máximo 500 caracteres';
+      }
     }
 
     return '';

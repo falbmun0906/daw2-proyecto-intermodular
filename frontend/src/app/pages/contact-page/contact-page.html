@@ -11,7 +11,7 @@
           <p class="contact-page__subtitle">Estamos aquí para ayudarte</p>
         </div>
         <div class="page-header__image-container">
-          <!-- Placeholder para imagen -->
+          <img src="assets/contact-2-nobg.png" alt="Ilustración de contacto" class="contact-page__header-image" />
         </div>
       </div>
 
@@ -44,7 +44,7 @@
 
           <!-- Formulario de contacto -->
           <section class="contact-page__form-section">
-            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-page__form">
+            <form (ngSubmit)="onSubmit()" class="contact-page__form">
               <div class="contact-page__form-group">
                 <app-form-input
                   label="Nombre completo"
@@ -109,7 +109,7 @@
                 <app-button
                   type="submit"
                   variant="primary"
-                  [disabled]="contactForm.invalid || isSubmitting">
+                  [disabled]="isSubmitting">
                   {{ isSubmitting ? 'Enviando...' : 'Enviar mensaje' }}
                 </app-button>
                 <app-button
