@@ -1,6 +1,5 @@
 .accordion {
   width: 100%;
-  border: 1px solid var(--color-border, #e5e7eb);
   border-radius: 8px;
   overflow: hidden;
 
@@ -13,7 +12,6 @@
 
     &--expanded {
       .accordion__header {
-        background: var(--color-primary-50, #eff6ff);
         border-bottom: 1px solid var(--color-border, #e5e7eb);
       }
 
@@ -34,18 +32,14 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    background: var(--bg-card, white);
+    background: var(--surface-base, white);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: left;
     font-size: 16px;
     font-weight: 500;
-    color: var(--color-text, #1f2937);
-
-    &:hover:not(:disabled) {
-      background: var(--color-gray-50, #f9fafb);
-    }
+    color: var(--text-primary, #1f2937);
 
     &:focus {
       outline: 2px solid var(--color-primary, #3b82f6);

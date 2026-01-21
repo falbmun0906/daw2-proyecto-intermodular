@@ -4,10 +4,10 @@ import { Button } from '../../components/shared/button/button';
 import { Breadcrumbs } from '../../components/shared/breadcrumbs/breadcrumbs';
 
 @Component({
-  selector: 'app-about-page',
+  selector: 'app-privacy-page',
   standalone: true,
   imports: [RouterLink, Button, Breadcrumbs],
-  templateUrl: './about-page.html',
-  styleUrls: ['./about-page.scss']
+  templateUrl: './privacy-page.html',
+  styleUrls: ['./privacy-page.scss']
 })
-export class AboutPage {}
+export class PrivacyPage {}

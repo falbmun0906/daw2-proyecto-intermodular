@@ -1,12 +1,12 @@
 @use '../../../styles/01-tools/mixins' as *;
 
-.about-page {
+.privacy-page {
   position: relative;
   background-color: var(--bg-primary);
   min-height: 100vh;
 }
 
-.about-page__overlay {
+.privacy-page__overlay {
   position: absolute;
   inset: 0;
   background-image: url('../../../assets/main-bg-form.svg');
@@ -20,37 +20,31 @@
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.about-page__content {
+.privacy-page__content {
   position: relative;
   z-index: 1;
   padding: var(--spacing-8) var(--spacing-6);
 }
 
-.about-page__container {
-  max-width: 1200px;
+.privacy-page__container {
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.about-page__header {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--spacing-12);
-  align-items: center;
-  margin-bottom: var(--spacing-16);
-
-  @include respond-to('tablet') {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-8);
-  }
-}
-
-.about-page__header-text {
+.privacy-page__header {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-16);
 }
 
-.about-page__title {
+.privacy-page__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.privacy-page__title {
   font-family: var(--font-family-secondary);
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: var(--font-weight-light);
@@ -59,94 +53,69 @@
   color: var(--text-primary);
 }
 
-.about-page__subtitle {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
+.privacy-page__subtitle {
+  font-size: 1rem;
   color: var(--text-secondary);
   margin: 0;
+  font-style: italic;
 }
 
 .page-header__image-container {
-  min-height: 300px;
+  min-height: 200px;
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @include respond-to('tablet') {
-    min-height: 200px;
-  }
 }
 
-.about-page__body {
+.privacy-page__body {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-16);
+  gap: var(--spacing-12);
 }
 
-.about-page__section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-6);
-}
-
-.about-page__section--alt {
-  background-color: var(--bg-secondary);
-  padding: var(--spacing-10);
-  border-radius: var(--radius-lg);
-}
-
-.about-page__section-title {
-  font-family: var(--font-family-secondary);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: var(--font-weight-regular);
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.about-page__text-columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-6);
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-
-  p {
-    margin: 0;
-  }
-}
-
-.about-page__text-block {
-  max-width: 70ch;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.about-page__values-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.privacy-page__section {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 }
 
-.about-page__value-item {
-  font-size: 1.125rem;
+.privacy-page__section-title {
+  font-family: var(--font-family-primary);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.privacy-page__text-block {
+  max-width: 75ch;
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--text-secondary);
-  padding-left: var(--spacing-6);
-  position: relative;
+  margin: 0;
 
-  &::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
+  ul {
+    margin: var(--spacing-3) 0;
+    padding-left: var(--spacing-6);
+
+    li {
+      margin-bottom: var(--spacing-2);
+    }
+  }
+
+  p + p {
+    margin-top: var(--spacing-4);
+  }
+
+  a {
     color: var(--color-secondary);
-    font-weight: bold;
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-secondary-hover);
+    }
   }
 
   strong {
@@ -155,11 +124,12 @@
   }
 }
 
-.about-page__section--cta {
+.privacy-page__section--cta {
   text-align: center;
   padding: var(--spacing-12) var(--spacing-6);
   background-color: var(--bg-secondary);
   border-radius: var(--radius-lg);
+  margin-top: var(--spacing-8);
 
   p {
     font-size: 1.125rem;
@@ -168,7 +138,7 @@
   }
 }
 
-.about-page__actions {
+.privacy-page__actions {
   display: flex;
   gap: var(--spacing-4);
   justify-content: center;
