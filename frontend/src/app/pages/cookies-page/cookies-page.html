@@ -11,22 +11,50 @@
           <p class="cookies-page__subtitle">Última actualización: Enero 2026</p>
         </div>
         <div class="page-header__image-container">
-          <!-- Placeholder para imagen -->
+          <img src="assets/cookies-nobg.png" alt="Ilustración de cookies" class="cookies-page__header-image" />
         </div>
       </div>
 
       <div class="cookies-page__body">
         <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Introducción</h2>
+          <p class="cookies-page__text-block">
+            En cumplimiento con lo establecido en el artículo 22.2 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI), y en concordancia con el Reglamento General de Protección de Datos (RGPD) UE 2016/679 y la Ley Orgánica 3/2018 de Protección de Datos Personales y Garantía de los Derechos Digitales (LOPDGDD), Desp[i]ensa informa sobre el uso de cookies en este sitio web.
+          </p>
+          <p class="cookies-page__text-block">
+            Esta política tiene como objetivo informarte de manera clara y precisa sobre las cookies que utilizamos, su finalidad, duración, y los terceros que tienen acceso a ellas, así como sobre tus derechos en relación con su uso.
+          </p>
+        </section>
+
+        <section class="cookies-page__section">
           <h2 class="cookies-page__section-title">¿Qué son las cookies?</h2>
           <p class="cookies-page__text-block">
-            Las cookies son pequeños archivos de texto que los sitios web almacenan en tu dispositivo cuando los visitas. Se utilizan ampliamente para hacer que los sitios web funcionen de manera más eficiente, proporcionar información a los propietarios del sitio y mejorar tu experiencia de usuario.
+            Las cookies son pequeños archivos de texto que los sitios web almacenan en tu dispositivo (ordenador, tablet o móvil) cuando los visitas. Se utilizan ampliamente para hacer que los sitios web funcionen de manera más eficiente, proporcionar información a los propietarios del sitio y mejorar tu experiencia de usuario.
           </p>
+          <p class="cookies-page__text-block">
+            Las cookies pueden contener información variada, como preferencias de usuario, datos de sesión, o información que permite identificar patrones de navegación. Es importante señalar que las cookies en sí mismas no pueden ejecutar programas ni transmitir virus a tu dispositivo.
+          </p>
+        </section>
+
+        <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Base legal para el uso de cookies</h2>
+          <p class="cookies-page__text-block">
+            La base legal para el tratamiento de datos mediante cookies se fundamenta en:
+          </p>
+          <ul class="cookies-page__text-block">
+            <li><strong>Consentimiento del usuario:</strong> para cookies no esenciales, según el artículo 6.1.a del RGPD</li>
+            <li><strong>Interés legítimo:</strong> para cookies estrictamente necesarias que permiten la prestación del servicio solicitado por el usuario</li>
+            <li><strong>Obligación legal:</strong> cumplimiento de la LSSI y normativa de protección de datos vigente</li>
+          </ul>
         </section>
 
         <section class="cookies-page__section">
           <h2 class="cookies-page__section-title">¿Cómo utilizamos las cookies?</h2>
           <p class="cookies-page__text-block">
-            En Desp[i]ensa utilizamos cookies para diversos propósitos, como recordar tus preferencias, analizar cómo usas nuestro sitio y mejorar nuestros servicios. A continuación, detallamos los tipos de cookies que utilizamos:
+            En Desp[i]ensa utilizamos cookies para diversos propósitos, como recordar tus preferencias, mantener tu sesión de usuario activa, analizar cómo usas nuestro sitio y mejorar nuestros servicios. Solicitamos tu consentimiento explícito antes de instalar cookies no esenciales en tu dispositivo, tal como exige la legislación española.
+          </p>
+          <p class="cookies-page__text-block">
+            El consentimiento que otorgas es libre, específico, informado e inequívoco, pudiendo revocarlo en cualquier momento a través de las opciones de configuración que ponemos a tu disposición.
           </p>
         </section>
 
@@ -34,29 +62,56 @@
           <h2 class="cookies-page__section-title">Tipos de cookies que utilizamos</h2>
 
           <div class="cookies-page__cookie-type">
-            <h3 class="cookies-page__cookie-type-title">1. Cookies estrictamente necesarias</h3>
+            <h3 class="cookies-page__cookie-type-title">1. Cookies estrictamente necesarias (técnicas)</h3>
             <p class="cookies-page__text-block">
-              Estas cookies son esenciales para que el sitio web funcione correctamente. Sin ellas, no podrías utilizar funciones básicas como iniciar sesión o gestionar tu carrito de recetas.
+              Estas cookies son esenciales para que el sitio web funcione correctamente y permiten la navegación por el sitio y el uso de sus funciones básicas. Sin ellas, no podrías utilizar funciones básicas como iniciar sesión o gestionar tu carrito de recetas. Estas cookies están exceptuadas de la obligación de obtener consentimiento previo según la normativa vigente, aunque informamos de su uso.
+            </p>
+            <p class="cookies-page__text-block">
+              <strong>Finalidad específica:</strong>
             </p>
             <ul class="cookies-page__text-block">
-              <li><strong>Sesión de usuario:</strong> mantienen tu sesión activa mientras navegas.</li>
-              <li><strong>Seguridad:</strong> protegen contra ataques maliciosos y accesos no autorizados.</li>
-              <li><strong>Preferencias de cookies:</strong> recuerdan tus opciones sobre cookies.</li>
+              <li><strong>Sesión de usuario:</strong> mantienen tu sesión activa mientras navegas por el sitio, evitando que tengas que autenticarte en cada página</li>
+              <li><strong>Autenticación:</strong> identifican al usuario registrado y permiten el acceso a áreas privadas del sitio</li>
+              <li><strong>Seguridad:</strong> protegen contra ataques maliciosos como Cross-Site Request Forgery (CSRF) y accesos no autorizados</li>
+              <li><strong>Preferencias de cookies:</strong> recuerdan tus opciones sobre el banner de cookies para no solicitarlo repetidamente</li>
+              <li><strong>Equilibrio de carga:</strong> distribuyen las solicitudes del servidor para optimizar el rendimiento del sitio</li>
             </ul>
             <p class="cookies-page__text-block">
-              <em>Duración: sesión o hasta 1 año.</em>
+              <strong>Cookies específicas:</strong>
+            </p>
+            <ul class="cookies-page__text-block">
+              <li><code>session_id</code> - Token de sesión del usuario</li>
+              <li><code>auth_token</code> - Token de autenticación</li>
+              <li><code>csrf_token</code> - Token de protección CSRF</li>
+              <li><code>cookies_consent</code> - Almacena tus preferencias de cookies</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              <em>Duración: sesión (se eliminan al cerrar el navegador) o hasta 1 año para cookies de recordar preferencias.</em>
             </p>
           </div>
 
           <div class="cookies-page__cookie-type">
             <h3 class="cookies-page__cookie-type-title">2. Cookies de funcionalidad</h3>
             <p class="cookies-page__text-block">
-              Estas cookies permiten que el sitio recuerde las opciones que has elegido y proporcionan características mejoradas y más personalizadas.
+              Estas cookies permiten que el sitio recuerde las opciones que has elegido (como tu idioma o región) y proporcionan características mejoradas y más personalizadas. Mejoran tu experiencia al recordar tus configuraciones preferidas, evitando que tengas que reconfigurarlas en cada visita.
+            </p>
+            <p class="cookies-page__text-block">
+              <strong>Finalidad específica:</strong>
             </p>
             <ul class="cookies-page__text-block">
-              <li><strong>Preferencias de tema:</strong> recuerdan si prefieres modo claro u oscuro.</li>
-              <li><strong>Idioma:</strong> almacenan tu idioma preferido.</li>
-              <li><strong>Ingredientes favoritos:</strong> guardan tus ingredientes de despensa.</li>
+              <li><strong>Preferencias de tema:</strong> recuerdan si prefieres modo claro u oscuro para la interfaz</li>
+              <li><strong>Idioma:</strong> almacenan tu idioma preferido para mostrar el contenido en el idioma correcto</li>
+              <li><strong>Ingredientes favoritos:</strong> guardan tus ingredientes de despensa y productos favoritos</li>
+              <li><strong>Configuración de usuario:</strong> mantienen tus preferencias personalizadas de visualización y organización</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              <strong>Cookies específicas:</strong>
+            </p>
+            <ul class="cookies-page__text-block">
+              <li><code>theme_preference</code> - Preferencia de tema visual</li>
+              <li><code>lang</code> - Idioma seleccionado</li>
+              <li><code>pantry_items</code> - Ingredientes guardados en la despensa</li>
+              <li><code>display_settings</code> - Configuraciones de visualización</li>
             </ul>
             <p class="cookies-page__text-block">
               <em>Duración: hasta 1 año.</em>
@@ -64,31 +119,69 @@
           </div>
 
           <div class="cookies-page__cookie-type">
-            <h3 class="cookies-page__cookie-type-title">3. Cookies analíticas</h3>
+            <h3 class="cookies-page__cookie-type-title">3. Cookies analíticas y de medición</h3>
             <p class="cookies-page__text-block">
-              Estas cookies nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web, proporcionando información sobre las áreas visitadas, el tiempo de permanencia y cualquier problema encontrado.
+              Estas cookies nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web, proporcionando información sobre las áreas visitadas, el tiempo de permanencia, las páginas más consultadas y cualquier problema encontrado (como mensajes de error). La información recopilada es anónima y se utiliza únicamente para fines estadísticos con el objetivo de mejorar el funcionamiento del sitio.
+            </p>
+            <p class="cookies-page__text-block">
+              <strong>Finalidad específica:</strong>
             </p>
             <ul class="cookies-page__text-block">
-              <li><strong>Google Analytics:</strong> analiza el tráfico y comportamiento de usuarios.</li>
-              <li><strong>Métricas de uso:</strong> miden el rendimiento de funcionalidades.</li>
+              <li><strong>Google Analytics:</strong> analiza el tráfico web, patrones de comportamiento de usuarios y rendimiento del sitio</li>
+              <li><strong>Métricas de uso:</strong> miden el rendimiento de funcionalidades específicas y detectan áreas de mejora</li>
+              <li><strong>Análisis de conversión:</strong> ayudan a comprender qué recetas y funcionalidades son más populares</li>
+              <li><strong>Detección de errores:</strong> identifican problemas técnicos y errores de navegación</li>
             </ul>
             <p class="cookies-page__text-block">
-              <em>Duración: hasta 2 años.</em>
+              <strong>Responsable:</strong> Google LLC (EE.UU.) - Transferencias internacionales protegidas mediante cláusulas contractuales tipo aprobadas por la Comisión Europea.
+            </p>
+            <p class="cookies-page__text-block">
+              <strong>Cookies específicas:</strong>
+            </p>
+            <ul class="cookies-page__text-block">
+              <li><code>_ga</code> - Distingue usuarios únicos</li>
+              <li><code>_gid</code> - Distingue usuarios únicos (duración más corta)</li>
+              <li><code>_gat</code> - Limita la tasa de solicitudes</li>
+              <li><code>analytics_session</code> - Métricas de sesión interna</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              <em>Duración: desde 1 minuto hasta 2 años, según el tipo de cookie.</em>
             </p>
           </div>
 
           <div class="cookies-page__cookie-type">
-            <h3 class="cookies-page__cookie-type-title">4. Cookies de marketing y redes sociales</h3>
+            <h3 class="cookies-page__cookie-type-title">4. Cookies de marketing, publicidad y redes sociales</h3>
             <p class="cookies-page__text-block">
-              Estas cookies son utilizadas por terceros para mostrar anuncios más relevantes y permitir compartir contenido en redes sociales.
+              Estas cookies son utilizadas por nosotros y por terceros para mostrar anuncios más relevantes basados en tus intereses, limitar el número de veces que ves un anuncio y medir la efectividad de las campañas publicitarias. También permiten compartir contenido en redes sociales y conocer cómo interactúas con dicho contenido.
+            </p>
+            <p class="cookies-page__text-block">
+              <strong>Finalidad específica:</strong>
             </p>
             <ul class="cookies-page__text-block">
-              <li><strong>Facebook Pixel:</strong> permite integración con Facebook.</li>
-              <li><strong>Google Ads:</strong> personaliza anuncios basados en tus intereses.</li>
-              <li><strong>Botones de redes sociales:</strong> facilitan compartir contenido.</li>
+              <li><strong>Facebook Pixel:</strong> permite integración con Facebook, medir conversiones y crear audiencias personalizadas para publicidad</li>
+              <li><strong>Google Ads:</strong> personaliza anuncios basados en tus intereses y comportamiento de navegación</li>
+              <li><strong>Botones de redes sociales:</strong> facilitan compartir contenido en plataformas como Facebook, Twitter/X, Instagram y Pinterest</li>
+              <li><strong>Remarketing:</strong> muestran anuncios relevantes en otros sitios web que visitas</li>
             </ul>
             <p class="cookies-page__text-block">
-              <em>Duración: hasta 2 años.</em>
+              <strong>Responsables externos:</strong>
+            </p>
+            <ul class="cookies-page__text-block">
+              <li>Meta Platforms (Facebook, Instagram)</li>
+              <li>Google LLC (Google Ads, YouTube)</li>
+              <li>Twitter/X Corp.</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              <strong>Cookies específicas:</strong>
+            </p>
+            <ul class="cookies-page__text-block">
+              <li><code>_fbp</code> - Facebook Pixel para seguimiento</li>
+              <li><code>fr</code> - Cookie de publicidad de Facebook</li>
+              <li><code>IDE</code> - Cookie de publicidad de Google</li>
+              <li><code>_gcl_au</code> - Google Ads conversion tracking</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              <em>Duración: desde 90 días hasta 2 años, según el proveedor.</em>
             </p>
           </div>
         </section>
@@ -96,50 +189,291 @@
         <section class="cookies-page__section">
           <h2 class="cookies-page__section-title">Cookies de terceros</h2>
           <p class="cookies-page__text-block">
-            Algunos de nuestros socios externos también establecen cookies cuando visitas Desp[i]ensa. Estos terceros incluyen:
+            Algunos de nuestros socios externos también establecen cookies cuando visitas Desp[i]ensa. Estas cookies de terceros están sujetas a las políticas de privacidad de sus respectivos responsables. A continuación, identificamos los principales terceros y las finalidades de sus cookies:
           </p>
-          <ul class="cookies-page__text-block">
-            <li><strong>Google:</strong> Analytics, autenticación (Google Sign-In), y servicios de publicidad.</li>
-            <li><strong>Facebook:</strong> autenticación (Facebook Login) y píxel de seguimiento.</li>
-            <li><strong>Twitter/X:</strong> integración de contenido social.</li>
-          </ul>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Google LLC</h3>
+            <ul class="cookies-page__text-block">
+              <li><strong>Google Analytics:</strong> medición y análisis del tráfico web</li>
+              <li><strong>Google Sign-In:</strong> autenticación de usuarios mediante cuenta de Google</li>
+              <li><strong>Google Ads:</strong> servicios de publicidad y remarketing</li>
+              <li><strong>YouTube:</strong> reproducción de vídeos incrustados</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              Política de privacidad: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy</a>
+            </p>
+          </div>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Meta Platforms (Facebook/Instagram)</h3>
+            <ul class="cookies-page__text-block">
+              <li><strong>Facebook Login:</strong> autenticación de usuarios mediante cuenta de Facebook</li>
+              <li><strong>Facebook Pixel:</strong> seguimiento de conversiones y publicidad personalizada</li>
+              <li><strong>Botones sociales:</strong> integración con Facebook e Instagram</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              Política de privacidad: <a href="https://www.facebook.com/privacy/explanation" target="_blank" rel="noopener noreferrer">https://www.facebook.com/privacy/explanation</a>
+            </p>
+          </div>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Twitter/X Corp.</h3>
+            <ul class="cookies-page__text-block">
+              <li><strong>Integración social:</strong> compartir contenido en Twitter/X</li>
+              <li><strong>Widgets embebidos:</strong> visualización de contenido de Twitter/X</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              Política de privacidad: <a href="https://twitter.com/privacy" target="_blank" rel="noopener noreferrer">https://twitter.com/privacy</a>
+            </p>
+          </div>
+
           <p class="cookies-page__text-block">
-            Estas cookies están sujetas a las políticas de privacidad de los respectivos terceros. Te recomendamos revisar sus políticas para más información.
+            Te recomendamos revisar las políticas de privacidad de estos terceros para conocer en detalle cómo tratan tu información personal y qué derechos puedes ejercer frente a ellos.
           </p>
         </section>
 
         <section class="cookies-page__section">
-          <h2 class="cookies-page__section-title">Cómo gestionar las cookies</h2>
+          <h2 class="cookies-page__section-title">Cómo gestionar y controlar las cookies</h2>
           <p class="cookies-page__text-block">
-            Puedes controlar y gestionar las cookies de varias maneras:
+            Tienes derecho a decidir si aceptas o rechazas las cookies. Puedes ejercer tus derechos sobre las cookies de varias maneras:
+          </p>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Panel de configuración de cookies</h3>
+            <p class="cookies-page__text-block">
+              Al acceder a nuestro sitio por primera vez, se muestra un banner de cookies que te permite:
+            </p>
+            <ul class="cookies-page__text-block">
+              <li>Aceptar todas las cookies</li>
+              <li>Rechazar las cookies no esenciales</li>
+              <li>Configurar tus preferencias de manera granular por categorías</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              Puedes modificar tus preferencias en cualquier momento accediendo a la configuración de tu cuenta o haciendo clic en el enlace "Configuración de cookies" disponible en el pie de página del sitio.
+            </p>
+          </div>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Configuración del navegador</h3>
+            <p class="cookies-page__text-block">
+              La mayoría de navegadores web permiten controlar las cookies a través de sus ajustes de configuración. Puedes configurar tu navegador para:
+            </p>
+            <ul class="cookies-page__text-block">
+              <li>Bloquear todas las cookies</li>
+              <li>Aceptar solo cookies de sitios de confianza</li>
+              <li>Eliminar cookies existentes</li>
+              <li>Recibir una notificación cada vez que se instale una cookie</li>
+            </ul>
+            <p class="cookies-page__text-block">
+              A continuación, te indicamos cómo gestionar las cookies en los navegadores más populares:
+            </p>
+
+            <ul class="cookies-page__text-block">
+              <li>
+                <strong>Google Chrome:</strong>
+                <ol class="cookies-page__text-block">
+                  <li>Haz clic en el menú de tres puntos (⋮) en la esquina superior derecha</li>
+                  <li>Selecciona "Configuración" → "Privacidad y seguridad" → "Cookies y otros datos de sitios"</li>
+                  <li>Configura tus preferencias o consulta la <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">guía oficial de Chrome</a></li>
+                </ol>
+              </li>
+              <li>
+                <strong>Mozilla Firefox:</strong>
+                <ol class="cookies-page__text-block">
+                  <li>Haz clic en el menú de tres líneas (☰) en la esquina superior derecha</li>
+                  <li>Selecciona "Configuración" → "Privacidad y seguridad" → sección "Cookies y datos del sitio"</li>
+                  <li>Configura tus preferencias o consulta la <a href="https://support.mozilla.org/es/kb/proteccion-de-rastreo-mejorada-en-firefox-para-esc" target="_blank" rel="noopener noreferrer">guía oficial de Firefox</a></li>
+                </ol>
+              </li>
+              <li>
+                <strong>Microsoft Edge:</strong>
+                <ol class="cookies-page__text-block">
+                  <li>Haz clic en el menú de tres puntos (…) en la esquina superior derecha</li>
+                  <li>Selecciona "Configuración" → "Cookies y permisos del sitio" → "Cookies y datos del sitio"</li>
+                  <li>Configura tus preferencias o consulta la <a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">guía oficial de Edge</a></li>
+                </ol>
+              </li>
+              <li>
+                <strong>Safari (macOS e iOS):</strong>
+                <ol class="cookies-page__text-block">
+                  <li>En Mac: Safari → "Preferencias" → "Privacidad"</li>
+                  <li>En iPhone/iPad: "Ajustes" → "Safari" → "Privacidad y seguridad"</li>
+                  <li>Configura tus preferencias o consulta la <a href="https://support.apple.com/es-es/HT201265" target="_blank" rel="noopener noreferrer">guía oficial de Safari</a></li>
+                </ol>
+              </li>
+              <li>
+                <strong>Opera:</strong>
+                <ol class="cookies-page__text-block">
+                  <li>Haz clic en "Configuración" en el menú principal</li>
+                  <li>Selecciona "Privacidad y seguridad" → "Cookies y otros datos de sitios"</li>
+                  <li>Configura tus preferencias o consulta la <a href="https://help.opera.com/en/latest/web-preferences/#cookies" target="_blank" rel="noopener noreferrer">guía oficial de Opera</a></li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Herramientas de exclusión específicas</h3>
+            <p class="cookies-page__text-block">
+              Algunos servicios de terceros ofrecen herramientas específicas para desactivar su seguimiento:
+            </p>
+            <ul class="cookies-page__text-block">
+              <li>
+                <strong>Google Analytics:</strong> puedes instalar el complemento de inhabilitación del navegador visitando
+                <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">esta página de Google</a>
+              </li>
+              <li>
+                <strong>Publicidad personalizada de Google:</strong> gestiona tus preferencias en
+                <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Configuración de anuncios de Google</a>
+              </li>
+              <li>
+                <strong>Facebook:</strong> configura tus preferencias de publicidad en
+                <a href="https://www.facebook.com/ads/preferences" target="_blank" rel="noopener noreferrer">Preferencias de anuncios de Facebook</a>
+              </li>
+              <li>
+                <strong>Your Online Choices:</strong> portal europeo donde puedes gestionar cookies publicitarias de múltiples empresas en
+                <a href="https://www.youronlinechoices.com/es/" target="_blank" rel="noopener noreferrer">www.youronlinechoices.com</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="cookies-page__cookie-type">
+            <h3 class="cookies-page__cookie-type-title">Navegación privada o de incógnito</h3>
+            <p class="cookies-page__text-block">
+              Todos los navegadores modernos ofrecen un modo de navegación privada que no guarda el historial ni las cookies después de cerrar la ventana:
+            </p>
+            <ul class="cookies-page__text-block">
+              <li><strong>Chrome:</strong> Ctrl+Mayús+N (Windows) o ⌘+Mayús+N (Mac)</li>
+              <li><strong>Firefox:</strong> Ctrl+Mayús+P (Windows) o ⌘+Mayús+P (Mac)</li>
+              <li><strong>Edge:</strong> Ctrl+Mayús+N (Windows) o ⌘+Mayús+N (Mac)</li>
+              <li><strong>Safari:</strong> ⌘+Mayús+N</li>
+            </ul>
+          </div>
+
+          <p class="cookies-page__text-block">
+            <strong>Importante:</strong> Ten en cuenta que bloquear o eliminar cookies puede afectar la funcionalidad del sitio y tu experiencia de usuario. Algunas funciones, como mantener la sesión iniciada o recordar tus preferencias, pueden no funcionar correctamente si las cookies están deshabilitadas.
+          </p>
+        </section>
+
+        <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Transferencias internacionales de datos</h2>
+          <p class="cookies-page__text-block">
+            Algunos de los terceros que utilizan cookies pueden estar ubicados fuera del Espacio Económico Europeo (EEE), principalmente en Estados Unidos. En estos casos, nos aseguramos de que se implementen garantías adecuadas para proteger tu información personal, tales como:
           </p>
           <ul class="cookies-page__text-block">
-            <li><strong>Configuración del navegador:</strong> la mayoría de navegadores permiten bloquear o eliminar cookies. Consulta la sección de ayuda de tu navegador.</li>
-            <li><strong>Herramientas de exclusión:</strong> puedes desactivar Google Analytics visitando <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">esta página</a>.</li>
-            <li><strong>Configuración de privacidad:</strong> ajusta tus preferencias de cookies en la configuración de tu cuenta (próximamente).</li>
+            <li>Cláusulas contractuales tipo aprobadas por la Comisión Europea</li>
+            <li>Certificaciones de privacidad reconocidas internacionalmente</li>
+            <li>Decisiones de adecuación de la Comisión Europea sobre protección de datos</li>
           </ul>
           <p class="cookies-page__text-block">
-            Ten en cuenta que bloquear o eliminar cookies puede afectar la funcionalidad del sitio y tu experiencia de usuario.
+            Puedes obtener más información sobre estas garantías contactando con nosotros a través de los canales indicados en la sección "Contacto".
           </p>
+        </section>
+
+        <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Tus derechos</h2>
+          <p class="cookies-page__text-block">
+            En relación con el tratamiento de tus datos personales a través de cookies, tienes derecho a:
+          </p>
+          <ul class="cookies-page__text-block">
+            <li><strong>Acceso:</strong> solicitar información sobre qué cookies se han instalado y qué datos se han recopilado</li>
+            <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos</li>
+            <li><strong>Supresión:</strong> solicitar la eliminación de tus datos (derecho al olvido)</li>
+            <li><strong>Limitación:</strong> solicitar la limitación del tratamiento de tus datos</li>
+            <li><strong>Portabilidad:</strong> recibir tus datos en un formato estructurado y de uso común</li>
+            <li><strong>Oposición:</strong> oponerte al tratamiento de tus datos para fines específicos</li>
+            <li><strong>Revocación del consentimiento:</strong> retirar tu consentimiento en cualquier momento sin que ello afecte a la licitud del tratamiento previo</li>
+            <li><strong>Reclamación:</strong> presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD) si consideras que se han vulnerado tus derechos</li>
+          </ul>
+          <p class="cookies-page__text-block">
+            Para ejercer cualquiera de estos derechos, puedes <a routerLink="/contacto">contactarnos</a> a través de nuestro formulario de contacto o enviar un correo electrónico identificándote adecuadamente y especificando el derecho que deseas ejercer.
+          </p>
+          <p class="cookies-page__text-block">
+            Si no estás satisfecho con la respuesta, tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD):
+          </p>
+          <ul class="cookies-page__text-block">
+            <li><strong>Sede electrónica:</strong> <a href="https://sedeagpd.gob.es" target="_blank" rel="noopener noreferrer">https://sedeagpd.gob.es</a></li>
+            <li><strong>Dirección postal:</strong> C/ Jorge Juan, 6, 28001 Madrid</li>
+            <li><strong>Teléfono:</strong> 901 100 099 / 91 266 35 17</li>
+          </ul>
+        </section>
+
+        <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Período de conservación</h2>
+          <p class="cookies-page__text-block">
+            Las cookies se conservarán durante los plazos indicados en cada categoría. Una vez transcurrido el período de validez, las cookies se eliminarán automáticamente. Los períodos de conservación son:
+          </p>
+          <ul class="cookies-page__text-block">
+            <li><strong>Cookies de sesión:</strong> se eliminan al cerrar el navegador</li>
+            <li><strong>Cookies técnicas persistentes:</strong> hasta 1 año</li>
+            <li><strong>Cookies de funcionalidad:</strong> hasta 1 año</li>
+            <li><strong>Cookies analíticas:</strong> desde 1 minuto hasta 2 años</li>
+            <li><strong>Cookies de marketing:</strong> desde 90 días hasta 2 años</li>
+          </ul>
+          <p class="cookies-page__text-block">
+            Estos plazos se establecen considerando el principio de minimización de datos y se revisan periódicamente para garantizar que no se conservan datos durante más tiempo del necesario.
+          </p>
+        </section>
+
+        <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Seguridad de los datos</h2>
+          <p class="cookies-page__text-block">
+            Implementamos medidas técnicas y organizativas apropiadas para proteger los datos personales recopilados a través de cookies contra el acceso no autorizado, la pérdida, el uso indebido o la alteración. Estas medidas incluyen:
+          </p>
+          <ul class="cookies-page__text-block">
+            <li>Cifrado de datos en tránsito mediante protocolos HTTPS/SSL</li>
+            <li>Almacenamiento seguro con cifrado en reposo</li>
+            <li>Controles de acceso estrictos y autenticación multifactor</li>
+            <li>Auditorías de seguridad periódicas</li>
+            <li>Formación continua del personal en materia de protección de datos</li>
+          </ul>
         </section>
 
         <section class="cookies-page__section">
           <h2 class="cookies-page__section-title">Cambios en esta política</h2>
           <p class="cookies-page__text-block">
-            Podemos actualizar esta política de cookies ocasionalmente para reflejar cambios en las cookies que utilizamos o por otras razones operativas, legales o regulatorias. Revisa esta página periódicamente para estar al tanto de cualquier cambio.
+            Podemos actualizar esta política de cookies ocasionalmente para reflejar cambios en las cookies que utilizamos, en nuestras prácticas de información, o por otras razones operativas, legales o regulatorias.
+          </p>
+          <p class="cookies-page__text-block">
+            Cuando realicemos cambios significativos en esta política, te informaremos mediante un aviso destacado en nuestro sitio web o, si corresponde, mediante comunicación directa por correo electrónico. La fecha de la última actualización se indica al inicio de este documento.
+          </p>
+          <p class="cookies-page__text-block">
+            Te recomendamos revisar esta página periódicamente para estar al tanto de cualquier cambio y comprender cómo protegemos tu información.
           </p>
         </section>
 
         <section class="cookies-page__section">
-          <h2 class="cookies-page__section-title">Más información</h2>
+          <h2 class="cookies-page__section-title">Información adicional y legislación aplicable</h2>
           <p class="cookies-page__text-block">
-            Si tienes alguna pregunta sobre cómo utilizamos las cookies, consulta nuestra <a routerLink="/politica-privacidad">Política de Privacidad</a> o <a routerLink="/contacto">contáctanos</a>.
+            Esta política de cookies se rige por la legislación española y europea en materia de protección de datos y servicios de la sociedad de la información, incluyendo:
+          </p>
+          <ul class="cookies-page__text-block">
+            <li>Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo (RGPD)</li>
+            <li>Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD)</li>
+            <li>Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI)</li>
+            <li>Directrices 05/2020 del Comité Europeo de Protección de Datos sobre consentimiento</li>
+          </ul>
+        </section>
+
+        <section class="cookies-page__section">
+          <h2 class="cookies-page__section-title">Más información y contacto</h2>
+          <p class="cookies-page__text-block">
+            Si tienes alguna pregunta sobre cómo utilizamos las cookies, necesitas ejercer tus derechos, o deseas obtener más información sobre el tratamiento de tus datos personales, puedes:
+          </p>
+          <ul class="cookies-page__text-block">
+            <li>Consultar nuestra <a routerLink="/politica-privacidad">Política de Privacidad</a> completa</li>
+            <li>Revisar nuestros <a routerLink="/terminos-condiciones">Términos y Condiciones</a></li>
+            <li><a routerLink="/contacto">Contactarnos</a> directamente a través de nuestro formulario</li>
+          </ul>
+          <p class="cookies-page__text-block">
+            Nos comprometemos a responder a tus consultas en el plazo máximo de un mes desde la recepción de tu solicitud, pudiendo ampliarse dos meses más en casos complejos, informándote debidamente de la ampliación.
           </p>
         </section>
 
         <section class="cookies-page__section cookies-page__section--cta">
           <h2 class="cookies-page__section-title">¿Necesitas ayuda?</h2>
-          <p>Estamos aquí para resolver cualquier duda sobre cookies y privacidad.</p>
+          <p class="cookies-page__text-block">Estamos aquí para resolver cualquier duda sobre cookies y privacidad.</p>
           <div class="cookies-page__actions">
             <app-button variant="primary" routerLink="/contacto">Contactar</app-button>
             <app-button variant="secondary" routerLink="/">Volver al inicio</app-button>
@@ -149,4 +483,3 @@
     </div>
   </div>
 </div>
-

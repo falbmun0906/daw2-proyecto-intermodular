@@ -4,6 +4,30 @@
   position: relative;
   background-color: var(--bg-primary);
   min-height: 100vh;
+
+  ul {
+    list-style-type: disc;
+    list-style-position: outside;
+    padding-left: 1.5em; // o 40px
+    margin-left: 0;
+
+    li {
+      display: list-item;
+      margin-bottom: 0.5em;
+    }
+  }
+
+  ol {
+    list-style-type: decimal;
+    list-style-position: outside;
+    padding-left: 1.5em;
+    margin-left: 0;
+
+    li {
+      display: list-item;
+      margin-bottom: 0.5em;
+    }
+  }
 }
 
 .cookies-page__overlay {
@@ -19,6 +43,7 @@
   filter: var(--svg-overlay-color);
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
+
 
 .cookies-page__content {
   position: relative;
@@ -61,9 +86,7 @@
 }
 
 .page-header__image-container {
-  min-height: 200px;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: var(--radius-lg);
+  min-width: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,10 +128,10 @@
 }
 
 .cookies-page__text-block {
-  max-width: 75ch;
   font-size: 1rem;
   line-height: 1.7;
-  color: var(--text-secondary);
+  color: var(--text-primary);
+  text-align: justify;
   margin: 0;
 
   ul {
@@ -147,14 +170,15 @@
 .cookies-page__section--cta {
   text-align: center;
   padding: var(--spacing-12) var(--spacing-6);
-  background-color: var(--bg-secondary);
+  background-color: var(--surface-base);
   border-radius: var(--radius-lg);
   margin-top: var(--spacing-8);
 
   p {
     font-size: 1.125rem;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     margin: 0 0 var(--spacing-6) 0;
+    text-align: center;
   }
 }
 
