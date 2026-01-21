@@ -39,6 +39,17 @@ export class BreadcrumbService {
       .subscribe(() => {
         const breadcrumbs: Breadcrumb[] = [];
         this.buildBreadcrumbs(this.route.root, '', breadcrumbs);
+
+        // Si no hay breadcrumbs construidos, significa que estamos en una ruta que no tiene data.breadcrumb
+        // En ese caso, simplemente mostrar Inicio
+        if (breadcrumbs.length === 0) {
+          breadcrumbs.push({ label: 'Inicio', url: '/home' });
+        }
+        // Si el primer breadcrumb no es Inicio, prepend Inicio
+        else if (!breadcrumbs[0].url.includes('home')) {
+          breadcrumbs.unshift({ label: 'Inicio', url: '/home' });
+        }
+
         this._breadcrumbs$.next(breadcrumbs);
         console.log('🍞 Breadcrumbs actualizados:', breadcrumbs);
       });
