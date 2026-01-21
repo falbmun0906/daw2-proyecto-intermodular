@@ -2,7 +2,6 @@
 
 .dashboard {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -14,13 +13,8 @@
   flex: 1;
 
   // LOGICA DE MARGEN SIEMPRE VISIBLE
-  margin-left: 280px; // Coincide con sidebar expandido
   transition: margin-left var(--transition-slow) var(--transition-easing);
   z-index: 1;
-
-  &--sidebar-collapsed {
-    margin-left: 80px; // Coincide con sidebar colapsado
-  }
 
   @include respond-to(md) {
     padding: var(--spacing-4);
