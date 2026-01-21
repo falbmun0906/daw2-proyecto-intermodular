@@ -429,7 +429,7 @@
 .kitchen-control {
   min-height: 600px;
   position: relative;
-  background: url('../../../assets/cta-image.png') center/cover;
+  background: url("../../../assets/cta-image.png") center/cover;
   @include flex-layout(row, flex-start, center, 0);
   padding: var(--spacing-16);
   z-index: 1;

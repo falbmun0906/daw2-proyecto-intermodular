@@ -101,6 +101,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
+            "dir": "dist/frontend/browser",
             "buildTarget": "frontend:build:production",
             "baseHref": "/daw2-proyecto-intermodular/"
           }
