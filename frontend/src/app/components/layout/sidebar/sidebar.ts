@@ -1,6 +1,15 @@
 import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, Renderer2, OnChanges, SimpleChanges, AfterViewInit, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Icon } from '../../shared/icon/icon';
+
+interface SidebarItem {
+  id: string;
+  label: string;
+  icon: string;
+  route: string;
+  active: boolean;
+}
 
 /**
  * Sidebar Component
@@ -13,19 +22,20 @@ import { CommonModule } from '@angular/common';
  */
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, Icon],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
 export class Sidebar implements OnChanges, AfterViewInit {
-  @Input() isOpen: boolean = false;
-  @Input() activeRoute: string = '';
-  @Output() close = new EventEmitter<void>();
+  @Input() isCollapsed: boolean = false;
+  @Input() items: SidebarItem[] = [];
+  @Output() toggle = new EventEmitter<void>();
+  @Output() itemClick = new EventEmitter<string>();
 
   // CRITERIO 1.1: @ViewChild para acceso seguro al DOM
   @ViewChild('sidebarElement', { static: false }) sidebarElement!: ElementRef;
 
-  private isMobile: boolean = false;
+  isMobile: boolean = false;
 
   constructor(private renderer: Renderer2) {}
 
@@ -42,7 +52,7 @@ export class Sidebar implements OnChanges, AfterViewInit {
       this.renderer.setAttribute(
         this.sidebarElement.nativeElement,
         'aria-hidden',
-        (!this.isOpen).toString()
+        (this.isCollapsed && this.isMobile).toString()
       );
     }
   }
@@ -55,8 +65,8 @@ export class Sidebar implements OnChanges, AfterViewInit {
   onResize(): void {
     this.checkIfMobile();
 
-    // Si cambiamos a desktop y el sidebar está abierto, resetear overflow del body
-    if (!this.isMobile && !this.isOpen) {
+    // Si cambiamos a desktop, resetear overflow del body
+    if (!this.isMobile) {
       this.renderer.setStyle(document.body, 'overflow', '');
     }
   }
@@ -70,9 +80,9 @@ export class Sidebar implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     // CRITERIO 1.2: Renderer2 para prevenir scroll del body (NO usar nativeElement.style)
-    if (changes['isOpen']) {
-      if (this.isOpen) {
-        // Prevenir scroll del body cuando el sidebar está abierto (en mobile)
+    if (changes['isCollapsed']) {
+      // Solo bloquear scroll en mobile cuando NO está colapsado (visible)
+      if (this.isMobile && !this.isCollapsed) {
         this.renderer.setStyle(document.body, 'overflow', 'hidden');
 
         // Actualizar aria-hidden
@@ -83,8 +93,8 @@ export class Sidebar implements OnChanges, AfterViewInit {
         // Restaurar scroll del body
         this.renderer.setStyle(document.body, 'overflow', '');
 
-        // Actualizar aria-hidden
-        if (this.sidebarElement) {
+        // Actualizar aria-hidden solo en mobile
+        if (this.sidebarElement && this.isMobile) {
           this.renderer.setAttribute(this.sidebarElement.nativeElement, 'aria-hidden', 'true');
         }
       }
@@ -92,11 +102,18 @@ export class Sidebar implements OnChanges, AfterViewInit {
   }
 
   onClose() {
-    this.close.emit();
+    this.toggle.emit();
   }
 
-  onLinkClick() {
-    // Cerrar sidebar en mobile al hacer click en un enlace
-    this.close.emit();
+  onLinkClick(itemId: string) {
+    this.itemClick.emit(itemId);
+    // En mobile, cerrar sidebar después de hacer click
+    if (this.isMobile) {
+      this.toggle.emit();
+    }
+  }
+
+  onToggle() {
+    this.toggle.emit();
   }
 }

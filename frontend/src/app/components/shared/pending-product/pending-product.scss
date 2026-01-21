@@ -1,25 +1,50 @@
 @use '../../../../styles/01-tools/mixins' as *;
 
 .pending-product {
+  @include flex-layout(column, space-between, stretch);
   border-radius: var(--radius-lg);
   padding: var(--spacing-5);
-  text-align: center;
+  min-height: 200px;
   box-shadow: var(--shadow-md);
+}
+
+.pending-product__content {
+  margin-bottom: var(--spacing-4);
 }
 
 .pending-product__name {
   font-family: var(--font-family-primary);
-  font-size: var(--font-h4-size);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-h5-size);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-main);
-  margin: 0 0 var(--spacing-3) 0;
+  margin: 0 0 var(--spacing-2) 0;
 }
 
 .pending-product__urgency,
 .pending-product__days {
   font-family: var(--font-family-primary);
-  font-size: var(--font-sm-size);
+  font-size: var(--font-body-size);
   color: var(--color-text-main);
   margin: var(--spacing-1) 0;
+}
+
+.pending-product__done-btn {
+  @include flex-layout(row, center, center, var(--spacing-2));
+  padding: var(--spacing-3) var(--spacing-6);
+  background: white;
+  border: 2px solid var(--color-success-dark);
+  border-radius: var(--radius-md);
+  color: var(--color-success-dark);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  align-self: flex-start;
+
+  &:hover {
+    background: var(--color-success-dark);
+    color: white;
+  }
 }
 

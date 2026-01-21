@@ -1,31 +1,16 @@
 <div class="dashboard">
-  <aside class="dashboard__sidebar" [class.dashboard__sidebar--collapsed]="sidebarCollapsed">
-    <h2 class="dashboard__sidebar-title">Mi cocina</h2>
 
-    <nav class="dashboard__nav">
-      @for (item of sidebarItems; track item.id) {
-        <app-button
-          [variant]="item.active ? 'secondary' : 'ghost'"
-          size="md"
-          class="dashboard__nav-item"
-          (buttonClick)="onNavItemClick(item.id)">
-          {{ item.icon }} {{ item.label }}
-        </app-button>
-      }
-    </nav>
+  <app-sidebar
+    [isCollapsed]="sidebarCollapsed"
+    [items]="sidebarItems"
+    (toggle)="toggleSidebar()"
+    (itemClick)="onNavItemClick($event)">
+  </app-sidebar>
 
-    <app-button
-      variant="ghost"
-      size="sm"
-      class="dashboard__sidebar-toggle"
-      (buttonClick)="toggleSidebar()"
-      [attr.aria-label]="sidebarCollapsed ? 'Expandir menú' : 'Contraer menú'">
-      {{ sidebarCollapsed ? '→' : '←' }}
-    </app-button>
-  </aside>
+  <main class="dashboard__content" [class.dashboard__content--sidebar-collapsed]="sidebarCollapsed">
+    <div class="dashboard__bg-pattern"></div>
 
-  <main class="dashboard__content">
-    <section class="today-meals">
+    <section class="dashboard__section dashboard__meals">
       @for (meal of todayMeals; track meal.id; let isFirst = $first) {
         <app-meal-card
           [time]="meal.time"
@@ -39,44 +24,63 @@
       }
     </section>
 
-    <section class="pending-actions">
-      <h2 class="pending-actions__title">¡Tienes acciones pendientes!</h2>
+    <section class="dashboard__section dashboard__pending">
+      <div class="dashboard__section-header">
+        <h2 class="dashboard__section-title">¡Tienes acciones pendientes!</h2>
 
-      <div class="pending-actions__grid">
-        @for (product of pendingProducts; track product.name) {
-          <app-pending-product
-            [name]="product.name"
-            [urgency]="product.urgency"
-            [daysRemaining]="product.daysRemaining"
-            [color]="product.color"
-          />
-        }
+        <div class="dashboard__carousel-controls">
+          <button
+            class="dashboard__carousel-btn"
+            (click)="prevCarousel()"
+            [disabled]="currentCarouselIndex === 0"
+            aria-label="Anterior">
+            <app-icon name="caret-left"></app-icon>
+          </button>
+          <button
+            class="dashboard__carousel-btn"
+            (click)="nextCarousel()"
+            [disabled]="!canGoNext()"
+            aria-label="Siguiente">
+            <app-icon name="caret-right"></app-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="dashboard__carousel">
+        <div
+          class="dashboard__carousel-track"
+          [style.transform]="getCarouselTransform()">
+          @for (product of visiblePendingProducts; track product.id) {
+            <div class="dashboard__carousel-slide">
+              <app-pending-product
+                [name]="product.name"
+                [urgency]="product.urgency"
+                [daysRemaining]="product.daysRemaining"
+                [color]="product.color"
+                (markDone)="onMarkProductDone(product.id)">
+              </app-pending-product>
+            </div>
+          }
+        </div>
       </div>
     </section>
 
-    <section class="shopping-list">
-      <h2 class="shopping-list__title">Tu lista de la compra</h2>
+    <section class="dashboard__section dashboard__shopping">
+      <h2 class="dashboard__section-title">Tu lista de la compra</h2>
 
-      <div class="shopping-list__toolbar">
+      <div class="dashboard__search">
         <app-form-input
           type="text"
-          placeholder="Buscar ingrediente"
-          [icon]="'🔍'"
+          placeholder="Buscar ingrediente..."
+          icon="magnifying-glass"
+          variant="search"
           [(ngModel)]="searchQuery"
-          (input)="onSearch()"
-          class="shopping-list__search form-input--search"
+          class="dashboard__search-input"
         />
-
-        <app-button
-          variant="ghost"
-          size="sm"
-          (buttonClick)="onFilter()">
-          Filtrar
-        </app-button>
       </div>
 
-      <div class="shopping-list__grid">
-        @for (item of shoppingList; track item.id) {
+      <div class="dashboard__shopping-grid">
+        @for (item of filteredShoppingList; track item.id) {
           <app-shopping-item
             [name]="item.name"
             [quantity]="item.quantity"
@@ -85,22 +89,15 @@
         }
       </div>
 
-      <div class="shopping-list__actions">
+      <div class="dashboard__shopping-actions">
         <app-button
           variant="secondary"
           size="md"
+          icon="plus"
           (buttonClick)="onAddProduct()">
-          ➕ Añadir producto
-        </app-button>
-
-        <app-button
-          variant="ghost"
-          size="md"
-          (buttonClick)="onShareList()">
-          Compartir
+          Añadir producto
         </app-button>
       </div>
     </section>
   </main>
 </div>
-

@@ -1,6 +1,15 @@
 <article class="pending-product" [style.background-color]="color">
-  <h4 class="pending-product__name">{{ name }}</h4>
-  <p class="pending-product__urgency">Urgencia: {{ urgency }}</p>
-  <p class="pending-product__days">{{ daysRemaining }} días restantes</p>
+  <div class="pending-product__content">
+    <h4 class="pending-product__name">{{ name }}</h4>
+    <p class="pending-product__urgency">Urgencia: {{ urgency }}</p>
+    <p class="pending-product__days">{{ daysRemaining }} días</p>
+  </div>
+  <button
+    class="pending-product__done-btn"
+    (click)="onMarkDone()"
+    aria-label="Marcar como hecho">
+    <app-icon name="check"></app-icon>
+    Hecho
+  </button>
 </article>
 

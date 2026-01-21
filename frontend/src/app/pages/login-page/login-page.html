@@ -1,7 +1,10 @@
 <div class="login-page">
   <div class="login-page__content">
     <div class="login-page__form-container">
-      <app-login-form></app-login-form>
+      <app-login-form
+        (submitForm)="onSubmit($event)"
+        (cancel)="onCancel()">
+      </app-login-form>
     </div>
 
     <div class="login-page__image-container">
