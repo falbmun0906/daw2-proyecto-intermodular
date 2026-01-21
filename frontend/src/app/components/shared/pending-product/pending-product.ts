@@ -6,7 +6,7 @@ import {Button} from '../button/button';
 @Component({
   selector: 'app-pending-product',
   standalone: true,
-  imports: [CommonModule, Icon, Button],
+  imports: [CommonModule, Icon],
   templateUrl: './pending-product.html',
   styleUrl: './pending-product.scss'
 })
