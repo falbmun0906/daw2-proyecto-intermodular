@@ -1,5 +1,9 @@
-<aside class="app-sidebar" [class.app-sidebar--collapsed]="isCollapsed">
-<div class="app-sidebar__header">
+<aside
+  class="app-sidebar"
+  [class.app-sidebar--collapsed]="isCollapsed"
+  #sidebarElement>
+
+  <div class="app-sidebar__header">
     <h2 class="app-sidebar__title">Mi cocina</h2>
   </div>
 
@@ -25,12 +29,3 @@
     <app-icon [name]="isCollapsed ? 'caret-right' : 'caret-left'"></app-icon>
   </button>
 </aside>
-
-<!-- Overlay para cerrar sidebar en mobile -->
-<div
-  class="app-sidebar-overlay"
-  [class.app-sidebar-overlay--visible]="!isCollapsed && isMobile"
-  (click)="onClose()"
-  aria-hidden="true"
-></div>
-

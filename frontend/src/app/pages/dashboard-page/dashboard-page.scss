@@ -8,15 +8,24 @@
 
 .dashboard__content {
   padding: var(--spacing-8);
-  margin-left: 280px; // Sidebar expandido
+  background: var(--bg-color, white);
+  position: relative;
+  overflow-y: auto;
+  flex: 1;
+
+  // LOGICA DE MARGEN SIEMPRE VISIBLE
+  margin-left: 280px; // Coincide con sidebar expandido
   transition: margin-left var(--transition-slow) var(--transition-easing);
+  z-index: 1;
 
   &--sidebar-collapsed {
-    margin-left: 80px; // Sidebar colapsado
+    margin-left: 80px; // Coincide con sidebar colapsado
   }
 
   @include respond-to(md) {
-    margin-left: 0; // En mobile el sidebar flota por encima, el margen es 0
+    padding: var(--spacing-4);
+    // IMPORTANTE: En móvil NO ponemos margin-left: 0,
+    // porque el sidebar de 80px sigue ahí ocupando espacio.
   }
 }
 
@@ -25,22 +34,20 @@
   top: 0;
   right: 0;
   bottom: 0;
-  left: 280px; // Por defecto expandido
+  pointer-events: none;
+  z-index: 0;
   background-image: url('/assets/bg-form-1.svg');
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: 50%;
   opacity: 0.05;
-  pointer-events: none;
-  z-index: 0;
-  transition: left var(--transition-slow);
+
+  // Sincronizar el fondo
+  left: 280px;
+  transition: left var(--transition-slow) var(--transition-easing);
 
   .dashboard__content--sidebar-collapsed & {
-    left: 80px; // Colapsado
-  }
-
-  @include respond-to(md) {
-    left: 0;
+    left: 80px;
   }
 }
 
