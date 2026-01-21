@@ -1,29 +1,69 @@
-<main class="about-page">
-  <div class="about-page__background"></div>
+<div class="about-page">
+  <div class="about-page__overlay"></div>
 
-  <div class="about-page__container">
-    <!-- Titulo simple -->
-    <section class="about-page__hero">
-      <h1 class="about-page__title">La pizza está a punto de salir...</h1>
-    </section>
+  <div class="about-page__content">
+    <app-breadcrumbs></app-breadcrumbs>
 
-    <!-- Horno -->
-    <section class="about-page__oven">
-      <div class="oven">
-        <div class="oven__door">
-          <div class="oven__window">
-            <div class="oven__flame-container">
-              <div class="flame"></div>
-              <div class="flame"></div>
-              <div class="flame"></div>
-            </div>
-          </div>
+    <div class="about-page__container">
+      <div class="about-page__header">
+        <div class="about-page__header-text">
+          <h1 class="about-page__title">Acerca de nosotros</h1>
+          <p class="about-page__subtitle">Transformando despensas en experiencias culinarias</p>
         </div>
-        <div class="oven__temp">
-          <span class="oven__temp-text">{{ ovenTemperature | number:'1.0-0' }}°C</span>
+        <div class="hero__logo-container">
+          <div class="hero__logo-blob"></div>
+          <h1 class="hero__logo-text">Desp[i]lensa</h1>
         </div>
       </div>
-    </section>
+
+      <div class="about-page__body">
+        <section class="about-page__section">
+          <h2 class="about-page__section-title">Nuestra historia</h2>
+          <div class="about-page__text-columns">
+            <p>
+              Desp[i]ensa nació de una idea simple pero poderosa: ¿y si pudiéramos ayudar a las personas a cocinar deliciosas recetas con lo que ya tienen en casa?
+            </p>
+            <p>
+              Fundada en 2026, nuestra plataforma conecta a amantes de la cocina con recetas personalizadas basadas en los ingredientes disponibles en su despensa, reduciendo el desperdicio alimentario y fomentando la creatividad culinaria.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-page__section about-page__section--alt">
+          <h2 class="about-page__section-title">Nuestra misión</h2>
+          <p class="about-page__text-block">
+            Facilitar el acceso a recetas deliciosas y sostenibles, ayudando a cada persona a aprovechar al máximo los ingredientes que tiene, reducir el desperdicio alimentario y descubrir nuevas formas de disfrutar la cocina casera.
+          </p>
+        </section>
+
+        <section class="about-page__section">
+          <h2 class="about-page__section-title">Nuestros valores</h2>
+          <ul class="about-page__values-list">
+            <li class="about-page__value-item">
+              <strong>Sostenibilidad:</strong> Reducimos el desperdicio alimentario aprovechando cada ingrediente.
+            </li>
+            <li class="about-page__value-item">
+              <strong>Creatividad:</strong> Inspiramos a cocinar con lo que tienes, sin límites.
+            </li>
+            <li class="about-page__value-item">
+              <strong>Comunidad:</strong> Conectamos a personas apasionadas por la cocina casera.
+            </li>
+            <li class="about-page__value-item">
+              <strong>Accesibilidad:</strong> Hacemos que cocinar sea fácil y divertido para todos.
+            </li>
+          </ul>
+        </section>
+
+        <section class="about-page__section about-page__section--cta">
+          <h2 class="about-page__section-title">Únete a nuestra comunidad</h2>
+          <p>Descubre cómo transformar tu despensa en platos increíbles.</p>
+          <div class="about-page__actions">
+            <app-button variant="primary" routerLink="/registro">Crear cuenta</app-button>
+            <app-button variant="secondary" routerLink="/recetas">Ver recetas</app-button>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
-</main>
+</div>
 

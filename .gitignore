@@ -1,2 +1,4 @@
 /.oculto/
 /.idea/
+
+.env

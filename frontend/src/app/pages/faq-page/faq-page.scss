@@ -1,0 +1,134 @@
+@use '../../../styles/01-tools/mixins' as *;
+
+.faq-page {
+  position: relative;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+}
+
+.faq-page__overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('../../../assets/main-bg-form.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: var(--svg-overlay-opacity);
+  pointer-events: none;
+  z-index: 0;
+  filter: var(--svg-overlay-color);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.faq-page__content {
+  position: relative;
+  z-index: 1;
+  padding: var(--spacing-8) var(--spacing-6);
+}
+
+.faq-page__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-page__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.faq-page__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.faq-page__title {
+  font-family: var(--font-family-secondary);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: var(--font-weight-light);
+  margin: 0;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.faq-page__subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.page-header__image-container {
+  min-height: 200px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-12);
+
+}
+
+.faq-page__header-image {
+  height: auto;
+}
+
+.faq-page__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.faq-page__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.faq-page__section-title {
+  font-family: var(--font-family-primary);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.faq-page__intro {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin: 0;
+
+  a {
+    color: var(--color-secondary);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-secondary-hover);
+    }
+  }
+}
+
+.faq-page__section--cta {
+  text-align: center;
+  padding: var(--spacing-12) var(--spacing-6);
+  background-color: var(--bg-dark);
+  border-radius: var(--radius-lg);
+
+  h2 {
+    color: var(--color-neutral-white);
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: var(--color-neutral-white);
+    margin: 0 0 var(--spacing-6) 0;
+  }
+}
+
+.faq-page__actions {
+  display: flex;
+  gap: var(--spacing-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+

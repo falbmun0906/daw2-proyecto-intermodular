@@ -1,35 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Button } from '../../components/shared/button/button';
+import { Breadcrumbs } from '../../components/shared/breadcrumbs/breadcrumbs';
 
 @Component({
   selector: 'app-about-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink, Button, Breadcrumbs],
   templateUrl: './about-page.html',
-  styleUrl: './about-page.scss'
+  styleUrls: ['./about-page.scss']
 })
-export class AboutPage implements OnInit {
-  ovenTemperature = 0;
-  private interval: any;
-
-  ngOnInit(): void {
-    this.animateOvenTemperature();
-  }
-
-  private animateOvenTemperature(): void {
-    let temp = 0;
-    this.interval = setInterval(() => {
-      if (temp < 200) {
-        temp += Math.random() * 12;
-        this.ovenTemperature = Math.min(temp, 200);
-      }
-    }, 400);
-  }
-
-  ngOnDestroy(): void {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-  }
-}
-
+export class AboutPage {}

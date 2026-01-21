@@ -1,0 +1,1083 @@
+[
+  {
+    "nombre": "Paella Valenciana",
+    "descripcion": "La paella más auténtica de Valencia, elaborada con pollo, conejo y garrofón. Este plato icónico combina el sabor del sofrito tradicional con el arroz bomba perfectamente cocinado al fuego de leña. El secreto está en conseguir el socarrat, esa capa dorada y crujiente del fondo que hace única a cada paella.",
+    "tiempoPreparacion": 90,
+    "porciones": 6,
+    "dificultad": "ALTA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1534080564583-6be75777b70a",
+    "ingredientes": [
+      {"nombre": "Arroz Bomba", "cantidad": 400, "unidad": "gramos", "categoria": "Cereales/Granos"},
+      {"nombre": "Pollo", "cantidad": 500, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Conejo", "cantidad": 400, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Garrofón", "cantidad": 200, "unidad": "gramos", "categoria": "Legumbres"},
+      {"nombre": "Judía Verde", "cantidad": 200, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"},
+      {"nombre": "Azafrán", "cantidad": 0.5, "unidad": "gramos", "categoria": "Especias"},
+      {"nombre": "Romero Fresco", "cantidad": 2, "unidad": "ramitas", "categoria": "Hierbas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Calentar aceite de oliva en la paellera y dorar el pollo y conejo troceados hasta que estén bien sellados por todos los lados.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Añadir las judías verdes cortadas y el garrofón, rehogar durante 5 minutos removiendo constantemente.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Rallar el tomate e incorporarlo junto con el pimentón, cocinar hasta que el tomate se concentre y pierda el agua.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Cubrir con agua o caldo, añadir el romero y cocer a fuego medio-alto durante 20 minutos hasta que las carnes estén tiernas.", "tiempoMinutos": 20},
+      {"orden": 5, "descripcion": "Incorporar el arroz distribuyéndolo uniformemente, añadir el azafrán y rectificar de sal. Mantener fuego fuerte durante 10 minutos.", "tiempoMinutos": 10},
+      {"orden": 6, "descripcion": "Bajar el fuego y cocinar otros 8 minutos hasta que el arroz esté en su punto. Dejar reposar 5 minutos antes de servir.", "tiempoMinutos": 13},
+      {"orden": 7, "descripcion": "Verificar el socarrat levantando ligeramente el arroz del fondo. Debe estar dorado y crujiente sin quemarse.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Gazpacho Andaluz",
+    "descripcion": "La sopa fría más refrescante del verano mediterráneo, elaborada con tomates maduros, pepino, pimiento y el toque especial del ajo y vinagre de Jerez. Esta receta ancestral es un concentrado de vitaminas y sabor que se sirve bien frío, perfecta para los días calurosos. Su textura sedosa y su intenso color rojo son el resultado de ingredientes frescos de la huerta andaluza.",
+    "tiempoPreparacion": 20,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGANO", "SIN_GLUTEN", "BAJO_EN_CALORIAS", "CRUDO", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1",
+    "ingredientes": [
+      {"nombre": "Tomate Maduro", "cantidad": 1000, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Pepino", "cantidad": 200, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Verde", "cantidad": 150, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Pan Duro", "cantidad": 100, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Vinagre de Jerez", "cantidad": 3, "unidad": "cucharadas", "categoria": "Condimentos"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Lavar y trocear los tomates, eliminando el pedúnculo. Pelar el pepino y cortarlo en trozos grandes.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Cortar el pimiento verde en cuartos, retirar las semillas y las venas blancas. Pelar los dientes de ajo.", "tiempoMinutos": 3},
+      {"orden": 3, "descripcion": "Remojar el pan duro en agua durante 5 minutos hasta que esté bien hidratado, luego escurrirlo ligeramente.", "tiempoMinutos": 5},
+      {"orden": 4, "descripcion": "Colocar todos los ingredientes en la batidora junto con sal, aceite de oliva virgen extra y el vinagre de Jerez.", "tiempoMinutos": 2},
+      {"orden": 5, "descripcion": "Triturar a máxima potencia durante 3-4 minutos hasta conseguir una textura completamente lisa y homogénea.", "tiempoMinutos": 4},
+      {"orden": 6, "descripcion": "Refrigerar en la nevera durante al menos 2 horas. Servir bien frío con picatostes y verduras troceadas como guarnición.", "tiempoMinutos": 1}
+    ]
+  },
+  {
+    "nombre": "Pulpo a Feira",
+    "descripcion": "El plato gallego por excelencia, también conocido como pulpo a la gallega. Tierno pulpo cocido a la perfección, servido sobre patata cachelo y aliñado con aceite de oliva, pimentón dulce y picante, y sal gorda. La tradición manda que se sirva en plato de madera, cortado con tijeras y espolvoreado generosamente. Un manjar que requiere paciencia en la cocción para lograr esa textura suave que se deshace en la boca.",
+    "tiempoPreparacion": 75,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "ALTO_EN_PROTEINA", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1559737558-2f5a35f4523b",
+    "ingredientes": [
+      {"nombre": "Pulpo Congelado", "cantidad": 1500, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Patata", "cantidad": 600, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 2, "unidad": "cucharaditas", "categoria": "Especias"},
+      {"nombre": "Pimentón Picante", "cantidad": 0.5, "unidad": "cucharadita", "categoria": "Especias"},
+      {"nombre": "Sal Gorda", "cantidad": 1, "unidad": "cucharada", "categoria": "Condimentos"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Poner a hervir una olla grande con abundante agua. Cuando hierva, asustar el pulpo sumergiéndolo y sacándolo tres veces seguidas.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Introducir completamente el pulpo y cocer durante 45-50 minutos dependiendo del tamaño, hasta que esté tierno al pincharlo.", "tiempoMinutos": 50},
+      {"orden": 3, "descripcion": "Mientras el pulpo cuece, pelar las patatas y cortarlas en rodajas gruesas de aproximadamente 2 cm.", "tiempoMinutos": 5},
+      {"orden": 4, "descripcion": "Cocer las patatas en agua con sal durante 20 minutos hasta que estén tiernas pero firmes.", "tiempoMinutos": 20},
+      {"orden": 5, "descripcion": "Sacar el pulpo del agua y dejarlo reposar 5 minutos. Cortar con tijeras en rodajas de 1 cm de grosor.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Colocar las patatas en el plato de madera, disponer encima el pulpo y espolvorear con los pimentones, sal gorda y aceite de oliva virgen extra generosamente.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Cocido Madrileño",
+    "descripcion": "El plato de cuchara más emblemático de Madrid, un guiso contundente que se sirve en tres vuelcos tradicionales. Primero la sopa con fideos, después los garbanzos con las verduras, y por último las carnes variadas. Esta comida completa combina proteínas, verduras y legumbres en un caldo aromático que reconforta el cuerpo y el alma. Perfecto para los días fríos de invierno, es la expresión máxima de la cocina castellana de aprovechamiento.",
+    "tiempoPreparacion": 180,
+    "porciones": 6,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd",
+    "ingredientes": [
+      {"nombre": "Garbanzos", "cantidad": 500, "unidad": "gramos", "categoria": "Legumbres"},
+      {"nombre": "Morcillo de Ternera", "cantidad": 400, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Gallina", "cantidad": 300, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Tocino", "cantidad": 150, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Chorizo", "cantidad": 200, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Morcilla", "cantidad": 200, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Zanahoria", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Repollo", "cantidad": 400, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Patata", "cantidad": 400, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Fideos", "cantidad": 100, "unidad": "gramos", "categoria": "Pastas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Poner en remojo los garbanzos la noche anterior con agua fría y una pizca de bicarbonato para ablandarlos.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "En una olla grande, colocar los garbanzos escurridos, el morcillo, la gallina, el tocino y cubrir con abundante agua fría.", "tiempoMinutos": 10},
+      {"orden": 3, "descripcion": "Llevar a ebullición y espumar constantemente durante los primeros 20 minutos para obtener un caldo limpio y transparente.", "tiempoMinutos": 20},
+      {"orden": 4, "descripcion": "Reducir el fuego y cocer a fuego lento durante 2 horas, añadiendo agua caliente si es necesario para mantener el nivel.", "tiempoMinutos": 120},
+      {"orden": 5, "descripcion": "Incorporar el chorizo, la morcilla, las zanahorias peladas enteras y las patatas peladas. Cocer 30 minutos más.", "tiempoMinutos": 30},
+      {"orden": 6, "descripcion": "Añadir el repollo cortado en trozos grandes y cocinar otros 15 minutos hasta que todas las verduras estén tiernas.", "tiempoMinutos": 15},
+      {"orden": 7, "descripcion": "Retirar todos los ingredientes sólidos. Colar el caldo y cocer los fideos en él durante 5 minutos. Servir en tres vuelcos.", "tiempoMinutos": 10}
+    ]
+  },
+  {
+    "nombre": "Crema Catalana",
+    "descripcion": "El postre tradicional catalán por excelencia, una crema suave y aromática coronada con una capa crujiente de azúcar caramelizado. Aromatizada con canela y cáscara de limón, esta delicia cremosa se quema en el último momento con una pala de hierro al rojo vivo o un soplete. La diferencia con la crème brûlée francesa está en sus ingredientes y técnica, siendo la versión catalana más ligera y perfumada. Se sirve tradicionalmente en cazuelas de barro individuales el día de Sant Josep.",
+    "tiempoPreparacion": 50,
+    "porciones": 6,
+    "dificultad": "MEDIA",
+    "etiquetas": ["VEGETARIANO", "POSTRES_SALUDABLES", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1587314168485-3236d6710814",
+    "ingredientes": [
+      {"nombre": "Leche Entera", "cantidad": 1000, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Yema de Huevo", "cantidad": 8, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 150, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Maicena", "cantidad": 40, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Canela en Rama", "cantidad": 1, "unidad": "unidades", "categoria": "Especias"},
+      {"nombre": "Limón", "cantidad": 1, "unidad": "unidades", "categoria": "Frutas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Calentar la leche con la canela en rama y la piel del limón (solo la parte amarilla, sin lo blanco) hasta que hierva. Retirar del fuego y dejar infusionar 10 minutos.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Batir las yemas con el azúcar en un bol hasta que blanqueen y doblen su volumen, incorporando aire a la mezcla.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Añadir la maicena a las yemas batidas y mezclar hasta integrar completamente sin grumos.", "tiempoMinutos": 3},
+      {"orden": 4, "descripcion": "Colar la leche infusionada para retirar la canela y el limón. Verter un poco de leche tibia sobre las yemas mientras se remueve constantemente.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Incorporar la mezcla de yemas a la leche en la cazuela y cocinar a fuego medio-bajo, removiendo sin parar con varillas hasta que espese.", "tiempoMinutos": 12},
+      {"orden": 6, "descripcion": "Cuando la crema cubra el dorso de una cuchara y tenga consistencia de natillas, retirar inmediatamente del fuego.", "tiempoMinutos": 2},
+      {"orden": 7, "descripcion": "Verter en cazuelitas de barro individuales y dejar enfriar. Refrigerar al menos 3 horas hasta que cuaje completamente.", "tiempoMinutos": 3},
+      {"orden": 8, "descripcion": "Antes de servir, espolvorear azúcar sobre la superficie y caramelizar con soplete o pala de hierro hasta formar una costra crujiente.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Pisto Manchego",
+    "descripcion": "El pisto manchego es un sofrito de verduras de la huerta que representa la esencia de la cocina humilde castellana. Tomates maduros, pimientos verdes y rojos, calabacín y cebolla se cocinan lentamente hasta conseguir una textura melosa y un sabor concentrado. Aunque similar al ratatouille francés, el pisto tiene su propia personalidad gracias al corte de las verduras y su punto de cocción. Se puede servir solo, con huevo frito encima o como acompañamiento de carnes.",
+    "tiempoPreparacion": 60,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGANO", "SIN_GLUTEN", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5",
+    "ingredientes": [
+      {"nombre": "Tomate Maduro", "cantidad": 600, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Rojo", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Verde", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Calabacín", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Picar finamente la cebolla y los ajos. Cortar los pimientos en tiras después de limpiarlos de semillas y venas.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "Cortar el calabacín en dados medianos. Escaldar los tomates, pelarlos y picarlos en trozos irregulares.", "tiempoMinutos": 10},
+      {"orden": 3, "descripcion": "En una sartén amplia con aceite de oliva, pochar la cebolla y el ajo a fuego suave hasta que estén transparentes.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Añadir los pimientos cortados y cocinar durante 15 minutos removiendo ocasionalmente hasta que empiecen a ablandarse.", "tiempoMinutos": 15},
+      {"orden": 5, "descripcion": "Incorporar el calabacín y seguir cocinando otros 10 minutos hasta que esté tierno pero no deshecho.", "tiempoMinutos": 10},
+      {"orden": 6, "descripcion": "Agregar el tomate picado, sal y una pizca de azúcar. Cocinar a fuego medio-bajo hasta que el tomate se reduzca y concentre.", "tiempoMinutos": 20},
+      {"orden": 7, "descripcion": "Rectificar de sal y dejar reposar unos minutos antes de servir. El pisto mejora de sabor al día siguiente.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Fabada Asturiana",
+    "descripcion": "La fabada es el plato más contundente y representativo de la gastronomía asturiana. Este guiso de fabes blancas se enriquece con compango tradicional: chorizo, morcilla y tocino que aportan sabor y grasa al caldo. La cocción lenta y paciente es fundamental para que las judías queden cremosas por dentro pero enteras. El secreto está en el punto de sal, la calidad de los embutidos asturianos y en no remover excesivamente para evitar que se rompan las fabes. Un plato de invierno que alimenta y reconforta.",
+    "tiempoPreparacion": 150,
+    "porciones": 6,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1604908177725-471c0d45e069",
+    "ingredientes": [
+      {"nombre": "Fabes Blancas", "cantidad": 500, "unidad": "gramos", "categoria": "Legumbres"},
+      {"nombre": "Chorizo Asturiano", "cantidad": 200, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Morcilla Asturiana", "cantidad": 200, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Tocino", "cantidad": 150, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Lacón", "cantidad": 150, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Azafrán", "cantidad": 0.2, "unidad": "gramos", "categoria": "Especias"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Poner las fabes en remojo la noche anterior con agua fría abundante para que se hidraten completamente.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Escurrir las fabes y colocarlas en una olla con agua fría cubriendo 5 cm por encima. Añadir el azafrán.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Llevar a ebullición y cuando hierva, añadir un vaso de agua fría para cortar el hervor. Repetir esta operación dos veces más.", "tiempoMinutos": 15},
+      {"orden": 4, "descripcion": "Incorporar el tocino, el lacón y los ajos pelados enteros. Cocer a fuego muy suave durante 90 minutos sin remover.", "tiempoMinutos": 90},
+      {"orden": 5, "descripcion": "Añadir el chorizo y la morcilla con cuidado. Continuar la cocción otros 30 minutos manteniendo un hervor muy lento.", "tiempoMinutos": 30},
+      {"orden": 6, "descripcion": "Comprobar que las fabes están tiernas y cremosas por dentro. Salar con precaución ya que los embutidos aportan sal.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Retirar del fuego y dejar reposar 10 minutos antes de servir. Sacar los embutidos y carnes, cortarlos y disponerlos sobre las fabes.", "tiempoMinutos": 10}
+    ]
+  },
+  {
+    "nombre": "Salmorejo Cordobés",
+    "descripcion": "El salmorejo es la crema fría cordobesa por excelencia, más espesa y untuosa que el gazpacho. Elaborada únicamente con tomates maduros de piel fina, pan, ajo y aceite de oliva virgen extra, su textura aterciopelada se consigue gracias a una proporción perfecta de ingredientes y un triturado prolongado. Se sirve tradicionalmente con virutas de jamón serrano y huevo duro picado por encima. Su color anaranjado intenso y su sabor equilibrado entre dulce y ácido lo convierten en un entrante refrescante ideal para el verano andaluz.",
+    "tiempoPreparacion": 25,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["SIN_GLUTEN", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1603046891726-36bfd957f955",
+    "ingredientes": [
+      {"nombre": "Tomate Maduro", "cantidad": 1200, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Pan Blanco Duro", "cantidad": 200, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Ajo", "cantidad": 1, "unidad": "diente", "categoria": "Vegetales"},
+      {"nombre": "Huevo", "cantidad": 2, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Jamón Serrano", "cantidad": 100, "unidad": "gramos", "categoria": "Embutidos"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Lavar los tomates y cortarlos en cuartos. Si tienen mucha piel o no están muy maduros, escaldarlos para pelarlos fácilmente.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Remojar el pan duro en agua durante 5 minutos hasta que esté completamente hidratado pero no empapado.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Cocer los huevos en agua hirviendo durante 10 minutos. Enfriarlos en agua con hielo, pelarlos y reservar.", "tiempoMinutos": 12},
+      {"orden": 4, "descripcion": "En la batidora, colocar los tomates troceados, el pan escurrido, el ajo pelado, sal y aceite de oliva virgen extra abundante.", "tiempoMinutos": 3},
+      {"orden": 5, "descripcion": "Triturar a máxima potencia durante 5-7 minutos hasta conseguir una crema completamente lisa, homogénea y sin grumos.", "tiempoMinutos": 7},
+      {"orden": 6, "descripcion": "Refrigerar durante al menos 2 horas. Servir bien frío decorado con huevo duro picado y virutas de jamón serrano por encima.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Bacalao al Pilpil",
+    "descripcion": "El bacalao al pil pil es una de las joyas de la gastronomía vasca, un plato aparentemente sencillo pero que requiere técnica y paciencia. El secreto está en conseguir la emulsión perfecta entre el aceite de oliva y la gelatina que suelta el bacalao desalado al cocinarse. El movimiento circular constante de la cazuela de barro sobre el fuego crea esa salsa espesa, brillante y ligada que envuelve los lomos de bacalao. El nombre proviene del sonido que hace la salsa al borbotear. Se acompaña tradicionalmente con guindillas y ajos confitados.",
+    "tiempoPreparacion": 45,
+    "porciones": 4,
+    "dificultad": "ALTA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "ALTO_EN_PROTEINA", "KETO"],
+    "imagenUrl": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2",
+    "ingredientes": [
+      {"nombre": "Bacalao Desalado", "cantidad": 800, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Ajo", "cantidad": 6, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Guindilla", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Cortar el bacalao en lomos o tacos regulares de tamaño similar. Secar bien con papel de cocina para eliminar el exceso de agua.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Pelar los ajos y cortarlos en láminas finas. Limpiar las guindillas retirando las semillas si no se quiere mucho picante.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "En una cazuela de barro con aceite de oliva, confitar los ajos a fuego muy suave hasta que estén dorados. Añadir las guindillas al final.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Retirar los ajos y guindillas, reservar. En el mismo aceite a fuego suave, colocar los trozos de bacalao con la piel hacia arriba.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Cocinar el bacalao durante 3-4 minutos. Retirar la cazuela del fuego y dar vueltas circulares para comenzar la emulsión.", "tiempoMinutos": 4},
+      {"orden": 6, "descripcion": "Volver al fuego muy suave y continuar moviendo la cazuela en círculos amplios y constantes hasta que la salsa ligue y espese.", "tiempoMinutos": 12},
+      {"orden": 7, "descripcion": "La salsa debe quedar blanca, espesa y cremosa cubriendo el bacalao. Dar la vuelta a los lomos, dejar reposar y servir con los ajos y guindillas.", "tiempoMinutos": 4}
+    ]
+  },
+  {
+    "nombre": "Torrijas Tradicionales",
+    "descripcion": "Las torrijas son el dulce tradicional de Semana Santa en toda España, aunque cada región tiene su variante. Pan del día anterior empapado en leche aromatizada con canela y limón, rebozado en huevo y frito hasta conseguir un exterior dorado y crujiente con un interior tierno y jugoso. El toque final de azúcar y canela o un baño en almíbar las convierte en un postre irresistible. Aunque se asocian con la Cuaresma, su delicioso sabor hace que se preparen durante todo el año. La clave está en usar buen pan y controlar la temperatura del aceite.",
+    "tiempoPreparacion": 40,
+    "porciones": 6,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGETARIANO", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1612809124737-e0d4e18ba1b0",
+    "ingredientes": [
+      {"nombre": "Pan del Día Anterior", "cantidad": 400, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Leche Entera", "cantidad": 500, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Huevo", "cantidad": 4, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 100, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Canela en Rama", "cantidad": 1, "unidad": "unidades", "categoria": "Especias"},
+      {"nombre": "Limón", "cantidad": 1, "unidad": "unidades", "categoria": "Frutas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Cortar el pan en rebanadas de unos 2-3 cm de grosor. Si está muy fresco, dejarlo secar unas horas o tostarlo ligeramente.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Calentar la leche con la canela en rama, la cáscara de limón y la mitad del azúcar hasta que hierva. Retirar y dejar infusionar 10 minutos.", "tiempoMinutos": 15},
+      {"orden": 3, "descripcion": "Colar la leche aromatizada para retirar la canela y el limón. Verter en un recipiente amplio y dejar entibiar.", "tiempoMinutos": 3},
+      {"orden": 4, "descripcion": "Sumergir cada rebanada de pan en la leche durante 1-2 minutos por cada lado hasta que esté bien empapada pero sin deshacerse.", "tiempoMinutos": 8},
+      {"orden": 5, "descripcion": "Batir los huevos en un plato hondo. Pasar cada rebanada empapada por el huevo batido cubriendo bien toda la superficie.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Freír en aceite de oliva caliente hasta que estén doradas por ambos lados. Escurrir sobre papel absorbente.", "tiempoMinutos": 12},
+      {"orden": 7, "descripcion": "Espolvorear con azúcar mezclado con canela molida mientras están calientes, o sumergirlas en almíbar según preferencia.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Croquetas de Jamón",
+    "descripcion": "Las croquetas caseras son uno de los pilares de la gastronomía española, con una bechamel cremosa y sedosa en el interior y un rebozado crujiente en el exterior. El secreto está en la proporción perfecta de harina, mantequilla y leche, y en el reposo en frío antes de freír. El jamón serrano aporta ese sabor intenso y característico que las hace irresistibles. Cada familia tiene su receta y su técnica, pero todas coinciden en que deben estar doradas uniformemente y servirse bien calientes para que el interior esté fundente.",
+    "tiempoPreparacion": 120,
+    "porciones": 8,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "COMIDA_RAPIDA_SALUDABLE"],
+    "imagenUrl": "https://images.unsplash.com/photo-1618164435735-413d3b066c9a",
+    "ingredientes": [
+      {"nombre": "Jamón Serrano", "cantidad": 300, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Leche Entera", "cantidad": 1000, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Harina", "cantidad": 120, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Mantequilla", "cantidad": 100, "unidad": "gramos", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Huevo", "cantidad": 3, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Pan Rallado", "cantidad": 200, "unidad": "gramos", "categoria": "Panadería"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Picar finamente el jamón serrano. En una cazuela grande, derretir la mantequilla a fuego medio sin que llegue a dorarse.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Añadir la harina de golpe y remover enérgicamente con varillas durante 2-3 minutos hasta formar un roux dorado.", "tiempoMinutos": 3},
+      {"orden": 3, "descripcion": "Incorporar la leche poco a poco sin dejar de remover para evitar grumos. Cocinar removiendo constantemente hasta obtener una bechamel espesa.", "tiempoMinutos": 15},
+      {"orden": 4, "descripcion": "Agregar el jamón picado, mezclar bien y cocinar 5 minutos más. La masa debe despegarse de las paredes de la cazuela.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Extender la masa en una bandeja forrada con film transparente, cubrir y refrigerar al menos 4 horas o toda la noche.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Con las manos húmedas, formar cilindros de masa. Pasar por harina, huevo batido y pan rallado. Refrigerar 30 minutos más.", "tiempoMinutos": 25},
+      {"orden": 7, "descripcion": "Freír en aceite abundante a 180°C hasta que estén doradas y crujientes. Escurrir sobre papel absorbente y servir inmediatamente.", "tiempoMinutos": 12}
+    ]
+  },
+  {
+    "nombre": "Marmitako Vasco",
+    "descripcion": "El marmitako es un guiso marinero tradicional del País Vasco y Cantabria que los pescadores preparaban a bordo de sus embarcaciones. Su protagonista es el bonito del norte, pescado en las costas cantábricas durante el verano. Se cocina con patatas en un caldo concentrado de pimientos choriceros, tomate y cebolla que aporta un sabor profundo e intenso. El nombre viene de la marmita o cazuela donde se preparaba. Es fundamental no remover demasiado para que las patatas no se rompan y el bonito quede jugoso y en su punto.",
+    "tiempoPreparacion": 55,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "ALTO_EN_PROTEINA", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1562967916-5baa0c2f5900",
+    "ingredientes": [
+      {"nombre": "Bonito del Norte", "cantidad": 600, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Patata", "cantidad": 600, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Choricero", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Verde", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Hidratar los pimientos choriceros en agua caliente durante 20 minutos. Raspar la carne interior con una cuchara y reservar.", "tiempoMinutos": 20},
+      {"orden": 2, "descripcion": "Picar finamente la cebolla y el pimiento verde. Rallar el tomate o picarlo muy fino tras pelarlo.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En una cazuela con aceite de oliva, pochar la cebolla y el pimiento verde a fuego medio hasta que estén transparentes.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Añadir el tomate rallado y la carne de los pimientos choriceros. Cocinar hasta que el tomate se reduzca y concentre.", "tiempoMinutos": 8},
+      {"orden": 5, "descripcion": "Pelar y cortar las patatas en trozos irregulares de tamaño medio. Incorporarlas al sofrito y cubrir con agua o caldo de pescado.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Cocer las patatas a fuego medio durante 15-20 minutos moviéndolas suavemente sin remover para que suelten almidón y espese el caldo.", "tiempoMinutos": 20},
+      {"orden": 7, "descripcion": "Cuando las patatas estén casi hechas, añadir el bonito cortado en tacos. Cocinar 3-4 minutos sin que se deshaga. Dejar reposar antes de servir.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Migas Extremeñas",
+    "descripcion": "Las migas son un plato humilde de aprovechamiento que se ha convertido en todo un símbolo de la gastronomía rural española. El pan duro se transforma en un plato contundente y sabroso gracias a la técnica del remojo y el trabajo paciente en la sartén. En Extremadura se preparan con panceta, chorizo y pimientos, creando una mezcla de texturas crujientes por fuera y tiernas por dentro. Se acompañan tradicionalmente con uvas o melón para contrastar sabores. Es un plato de pastor que requiere maña y experiencia para conseguir el punto perfecto de humedad y tostado.",
+    "tiempoPreparacion": 50,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+    "ingredientes": [
+      {"nombre": "Pan Duro", "cantidad": 500, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Panceta", "cantidad": 200, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Chorizo", "cantidad": 150, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Pimiento Rojo", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 4, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Cortar el pan en rebanadas y desmenuzarlo en trozos pequeños. Rociar con agua poco a poco y dejar reposar tapado durante 2 horas.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Cortar la panceta en dados y el chorizo en rodajas. Picar los ajos finamente y cortar el pimiento en tiras.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En una sartén grande, dorar la panceta a fuego medio hasta que suelte su grasa. Añadir el chorizo y seguir friendo.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Incorporar el ajo y el pimiento. Rehogar hasta que el pimiento esté tierno, removiendo ocasionalmente.", "tiempoMinutos": 8},
+      {"orden": 5, "descripcion": "Añadir el pan remojado y escurrido. Trabajar con una espátula de madera, removiendo constantemente a fuego medio.", "tiempoMinutos": 20},
+      {"orden": 6, "descripcion": "Seguir removiendo hasta que las migas queden sueltas, doradas y con textura crujiente por fuera. Ajustar de sal.", "tiempoMinutos": 15},
+      {"orden": 7, "descripcion": "Servir calientes acompañadas de uvas frescas, melón o pimientos fritos según preferencia tradicional.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Escalivada Catalana",
+    "descripcion": "La escalivada es una preparación tradicional catalana de verduras asadas que captura la esencia del huerto mediterráneo. Berenjenas, pimientos rojos y cebollas se asan lentamente sobre las brasas o en el horno hasta que sus pieles se chamuscan y su interior se vuelve tierno y ahumado. Una vez peladas y cortadas en tiras, se aliñan simplemente con aceite de oliva virgen extra y sal. Este plato versátil puede servirse como entrante frío, acompañamiento de carnes o pescados, o como base para montaditos. Su sabor ahumado y dulce es inconfundible.",
+    "tiempoPreparacion": 70,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGANO", "SIN_GLUTEN", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1608897013039-887f21d8c804",
+    "ingredientes": [
+      {"nombre": "Berenjena", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Rojo", "cantidad": 3, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Precalentar el horno a 200°C. Lavar todas las verduras y secarlas bien sin pelarlas ni cortarlas.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Colocar las verduras enteras en una bandeja de horno con un chorrito de aceite. Asar durante 50-60 minutos, dándoles la vuelta ocasionalmente.", "tiempoMinutos": 60},
+      {"orden": 3, "descripcion": "Las verduras están listas cuando la piel esté chamuscada y arrugada, y cedan fácilmente al presionarlas.", "tiempoMinutos": 2},
+      {"orden": 4, "descripcion": "Introducir las verduras asadas en una bolsa de plástico o taparlas con film durante 10 minutos para que suden y se pelen fácilmente.", "tiempoMinutos": 10},
+      {"orden": 5, "descripcion": "Pelar todas las verduras en caliente, retirando pieles, semillas y pedúnculos. Trabajar sobre un plato para recoger todo el jugo.", "tiempoMinutos": 15},
+      {"orden": 6, "descripcion": "Cortar las verduras en tiras irregulares y disponerlas en una fuente. Picar finamente el ajo crudo.", "tiempoMinutos": 8},
+      {"orden": 7, "descripcion": "Aliñar con aceite de oliva virgen extra abundante, el ajo picado, sal y los jugos de las verduras. Dejar reposar antes de servir.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Arroz Negro",
+    "descripcion": "El arroz negro es un plato espectacular de la costa mediterránea que debe su intenso color a la tinta de calamar o sepia. Este arroz meloso concentra todo el sabor del mar en cada grano, con un intenso sabor yodado característico. La clave está en preparar un buen sofrito con cebolla, tomate y ajo, y usar un caldo de pescado casero que aporte profundidad. Se sirve tradicionalmente con alioli aparte, cuya cremosidad contrasta perfectamente con la intensidad del arroz. Aunque puede parecer intimidante por su color oscuro, es un plato relativamente sencillo que impresiona.",
+    "tiempoPreparacion": 65,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1617093727343-374698b1b08d",
+    "ingredientes": [
+      {"nombre": "Arroz Bomba", "cantidad": 320, "unidad": "gramos", "categoria": "Cereales/Granos"},
+      {"nombre": "Sepia", "cantidad": 500, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Calamar", "cantidad": 300, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Tinta de Calamar", "cantidad": 8, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 3, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Limpiar la sepia y los calamares, reservando las bolsas de tinta si las tienen. Cortar en trozos medianos.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Picar finamente la cebolla y el ajo. Rallar el tomate tras pelarlo o picarlo muy fino.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En una paella o cazuela amplia, sofreír la sepia y los calamares en aceite de oliva hasta que se doren ligeramente. Reservar.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "En el mismo aceite, pochar la cebolla y el ajo a fuego medio hasta que estén transparentes y tiernos.", "tiempoMinutos": 8},
+      {"orden": 5, "descripcion": "Añadir el tomate rallado y cocinar hasta que se reduzca completamente. Devolver la sepia y los calamares.", "tiempoMinutos": 10},
+      {"orden": 6, "descripcion": "Diluir la tinta de calamar en un poco de caldo caliente. Incorporar al sofrito junto con el resto del caldo. Llevar a ebullición.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Añadir el arroz, distribuir uniformemente y cocinar a fuego fuerte 10 minutos, luego a fuego suave otros 8 minutos sin remover.", "tiempoMinutos": 18},
+      {"orden": 8, "descripcion": "Dejar reposar tapado 5 minutos antes de servir. El arroz debe quedar meloso. Acompañar con alioli.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Rabo de Toro",
+    "descripcion": "El rabo de toro es un guiso contundente y sabroso, originario de Córdoba y muy ligado a la tradición taurina española. Esta carne gelatinosa y llena de sabor requiere una cocción larga y paciente para que se vuelva tierna y se deshaga en la boca. El secreto está en el estofado con vino tinto, que junto con las verduras y especias, crea una salsa espesa y aromática. Tradicionalmente se servía aprovechando la carne de las reses lidiadas, convirtiéndose en un plato festivo. Su textura melosa y su sabor profundo lo hacen inolvidable.",
+    "tiempoPreparacion": 180,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1595777216562-2d8d5a2f0f8e",
+    "ingredientes": [
+      {"nombre": "Rabo de Toro", "cantidad": 1200, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Zanahoria", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 4, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Vino Tinto", "cantidad": 500, "unidad": "ml", "categoria": "Bebidas"},
+      {"nombre": "Hoja de Laurel", "cantidad": 2, "unidad": "unidades", "categoria": "Hierbas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Limpiar el rabo de toro, cortarlo en trozos por las articulaciones y sazonar generosamente con sal y pimienta.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "En una cazuela grande, dorar los trozos de rabo en aceite de oliva caliente hasta que estén bien sellados por todos los lados. Reservar.", "tiempoMinutos": 15},
+      {"orden": 3, "descripcion": "Picar finamente las cebollas, zanahorias, ajos y tomates. En la misma cazuela, sofreír todas las verduras hasta que estén tiernas.", "tiempoMinutos": 15},
+      {"orden": 4, "descripcion": "Devolver la carne a la cazuela, añadir el vino tinto, las hojas de laurel y cubrir con agua o caldo hasta tapar la carne.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Llevar a ebullición, tapar y cocinar a fuego muy lento durante 2 horas y media, removiendo ocasionalmente y añadiendo líquido si es necesario.", "tiempoMinutos": 150},
+      {"orden": 6, "descripcion": "La carne debe estar tan tierna que se desprenda del hueso fácilmente. Retirar los trozos y colar la salsa.", "tiempoMinutos": 10},
+      {"orden": 7, "descripcion": "Reducir la salsa a fuego medio hasta conseguir la consistencia deseada. Devolver la carne y calentar antes de servir.", "tiempoMinutos": 15}
+    ]
+  },
+  {
+    "nombre": "Patatas Bravas",
+    "descripcion": "Las patatas bravas son una de las tapas más icónicas de los bares españoles, especialmente en Madrid y Barcelona. Patatas cortadas en dados irregulares, fritas hasta quedar crujientes por fuera y tiernas por dentro, se sirven bañadas en salsa brava, una mezcla picante de tomate, pimentón y cayena. Algunas versiones añaden alioli por encima para suavizar el picante. El nombre viene precisamente de lo picante de la salsa. Cada bar tiene su receta secreta de salsa brava, lo que ha generado debates apasionados sobre cuál es la auténtica.",
+    "tiempoPreparacion": 50,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["VEGANO", "SIN_GLUTEN", "PICANTE", "COMIDA_RAPIDA_SALUDABLE"],
+    "imagenUrl": "https://images.unsplash.com/photo-1598103442097-8b74394b95c6",
+    "ingredientes": [
+      {"nombre": "Patata", "cantidad": 800, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 3, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"},
+      {"nombre": "Pimentón Picante", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"},
+      {"nombre": "Cayena", "cantidad": 0.5, "unidad": "cucharadita", "categoria": "Especias"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Pelar las patatas y cortarlas en dados irregulares de unos 3 cm. Secarlas bien con papel de cocina.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "Para la salsa brava, picar finamente la cebolla y el ajo. Rallar los tomates tras escaldarlos y pelarlos.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "Sofreír la cebolla y el ajo en aceite de oliva hasta que estén dorados. Añadir los pimentones y la cayena, remover rápidamente.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Incorporar el tomate rallado, sal y una pizca de azúcar. Cocinar a fuego medio hasta que espese y se concentre.", "tiempoMinutos": 20},
+      {"orden": 5, "descripcion": "Triturar la salsa hasta que quede lisa y homogénea. Probar y ajustar el picante según preferencia.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Freír las patatas en aceite abundante muy caliente en dos tandas: primero a 150°C hasta que estén tiernas, luego a 180°C hasta dorarlas.", "tiempoMinutos": 25},
+      {"orden": 7, "descripcion": "Escurrir sobre papel absorbente, salar y servir inmediatamente con la salsa brava caliente por encima.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Merluza en Salsa Verde",
+    "descripcion": "La merluza en salsa verde es un clásico de la cocina vasca que combina la delicadeza del pescado blanco con la frescura del perejil y el sabor del mar que aportan las almejas. La salsa se prepara en la misma cazuela donde se cocina el pescado, emulsionando el aceite con el jugo que sueltan la merluza y las almejas, creando una salsa ligera pero llena de sabor. El movimiento suave de la cazuela es fundamental para conseguir que ligue perfectamente. Se sirve en la misma cazuela de barro, humeante y con ese aroma inconfundible a ajo y perejil fresco.",
+    "tiempoPreparacion": 40,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1580959375944-2c73efe986d5",
+    "ingredientes": [
+      {"nombre": "Merluza", "cantidad": 800, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Almeja", "cantidad": 300, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Ajo", "cantidad": 4, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Perejil Fresco", "cantidad": 1, "unidad": "manojo", "categoria": "Hierbas"},
+      {"nombre": "Guisante", "cantidad": 150, "unidad": "gramos", "categoria": "Legumbres"},
+      {"nombre": "Harina", "cantidad": 1, "unidad": "cucharada", "categoria": "Harinas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Poner las almejas en agua con sal durante 30 minutos para que suelten la arena. Lavar bien y escurrir.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Cortar la merluza en rodajas o lomos. Secar con papel de cocina y salpimentar ligeramente.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Pelar y laminar finamente los ajos. Picar abundante perejil fresco, reservando algunas hojas enteras para decorar.", "tiempoMinutos": 5},
+      {"orden": 4, "descripcion": "En una cazuela de barro con aceite de oliva, dorar los ajos laminados a fuego suave sin que se quemen. Retirar y reservar.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "En el mismo aceite, añadir la harina y remover para formar un roux ligero. Incorporar el perejil picado y los guisantes.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Colocar las rodajas de merluza en la cazuela, añadir agua o caldo de pescado justo para cubrir. Mover la cazuela en círculos.", "tiempoMinutos": 8},
+      {"orden": 7, "descripcion": "Cuando empiece a ligar la salsa, añadir las almejas. Cocinar hasta que se abran y la salsa esté trabada. Servir con los ajos por encima.", "tiempoMinutos": 7}
+    ]
+  },
+  {
+    "nombre": "Callos a la Madrileña",
+    "descripcion": "Los callos a la madrileña son uno de los platos de casquería más emblemáticos de la capital española. Este guiso de tripas de ternera requiere una preparación laboriosa pero el resultado es un plato contundente, aromático y lleno de matices. Los callos se cocinan durante horas con morro, pata de ternera y chorizo hasta conseguir una textura gelatinosa y tierna. La salsa, condimentada con pimentón, cayena y especias, envuelve cada trozo en un caldo espeso y sabroso. Es un plato de invierno que se sirve bien caliente, perfecto para combatir el frío.",
+    "tiempoPreparacion": 240,
+    "porciones": 6,
+    "dificultad": "ALTA",
+    "etiquetas": ["CARNE", "PICANTE", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1609501676725-7186f017a4b7",
+    "ingredientes": [
+      {"nombre": "Callos de Ternera", "cantidad": 1000, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Morro de Ternera", "cantidad": 300, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Pata de Ternera", "cantidad": 300, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Chorizo", "cantidad": 200, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Morcilla", "cantidad": 150, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 2, "unidad": "cucharaditas", "categoria": "Especias"},
+      {"nombre": "Cayena", "cantidad": 0.5, "unidad": "cucharadita", "categoria": "Especias"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Limpiar bien los callos, morro y pata bajo agua fría. Blanquear en agua hirviendo durante 10 minutos y escurrir.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Cortar los callos y el morro en trozos de tamaño similar. Trocear la pata de ternera en pedazos medianos.", "tiempoMinutos": 15},
+      {"orden": 3, "descripcion": "En una olla grande, cubrir los callos, morro y pata con agua fría. Cocinar a fuego lento durante 2 horas hasta que estén tiernos.", "tiempoMinutos": 120},
+      {"orden": 4, "descripcion": "Mientras tanto, picar finamente la cebolla y rallar el tomate. Sofreír en aceite hasta que la cebolla esté dorada.", "tiempoMinutos": 15},
+      {"orden": 5, "descripcion": "Añadir el tomate, el pimentón y la cayena al sofrito. Cocinar hasta que el tomate se concentre.", "tiempoMinutos": 10},
+      {"orden": 6, "descripcion": "Incorporar el sofrito a la olla con los callos. Añadir el chorizo y la morcilla. Cocinar 45 minutos más a fuego lento.", "tiempoMinutos": 45},
+      {"orden": 7, "descripcion": "Comprobar que todo esté tierno y la salsa espesa. Ajustar de sal y picante. Dejar reposar antes de servir.", "tiempoMinutos": 10}
+    ]
+  },
+  {
+    "nombre": "Pimientos del Piquillo Rellenos",
+    "descripcion": "Los pimientos del piquillo rellenos son un plato elegante y refinado originario de Navarra. Estos pequeños pimientos rojos asados y pelados a mano tienen un sabor dulce y ligeramente ahumado que los hace únicos. El relleno tradicional puede ser de carne, bacalao o marisco, siempre envuelto en una salsa que complementa sin tapar el sabor del pimiento. La presentación es importante, ya que cada pimiento se rellena cuidadosamente y se napa con la salsa antes de gratinar ligeramente. Es un plato sofisticado perfecto para ocasiones especiales.",
+    "tiempoPreparacion": 60,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN"],
+    "imagenUrl": "https://images.unsplash.com/photo-1606923829579-0cb981a83e2e",
+    "ingredientes": [
+      {"nombre": "Pimiento del Piquillo", "cantidad": 16, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Carne Picada de Ternera", "cantidad": 400, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Nata Líquida", "cantidad": 200, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Picar finamente la cebolla y los ajos. Rallar o picar muy fino los tomates tras pelarlos.", "tiempoMinutos": 8},
+      {"orden": 2, "descripcion": "En una sartén, sofreír la cebolla y el ajo hasta que estén transparentes. Añadir la carne picada y dorar bien.", "tiempoMinutos": 12},
+      {"orden": 3, "descripcion": "Incorporar el tomate rallado y cocinar hasta que se evapore el líquido. Salpimentar y reservar el relleno para que se enfríe.", "tiempoMinutos": 15},
+      {"orden": 4, "descripcion": "Escurrir bien los pimientos del piquillo. Rellenar cada uno cuidadosamente con la mezcla de carne sin romperlos.", "tiempoMinutos": 15},
+      {"orden": 5, "descripcion": "Colocar los pimientos rellenos en una fuente de horno. Batir los jugos de la lata con la nata líquida.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Verter la salsa de nata sobre los pimientos y hornear a 180°C durante 15 minutos hasta que la salsa burbujee.", "tiempoMinutos": 15},
+      {"orden": 7, "descripcion": "Opcionalmente, gratinar bajo el grill los últimos 2 minutos. Servir caliente con la salsa por encima.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Ajo Blanco Malagueño",
+    "descripcion": "El ajo blanco es una sopa fría milenaria de origen andalusí, anterior incluso al gazpacho. Esta crema blanca sedosa se elabora con almendras crudas, ajo, pan y aceite de oliva, creando una textura aterciopelada y un sabor suave pero intenso. A diferencia del gazpacho, no lleva tomate, lo que le da ese característico color marfil. Se sirve tradicionalmente con uvas moscatel o melón, creando un contraste dulce-salado fascinante. Es especialmente popular en Málaga durante los meses de verano, siendo refrescante y nutritivo a partes iguales.",
+    "tiempoPreparacion": 25,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGANO", "CRUDO", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd",
+    "ingredientes": [
+      {"nombre": "Almendra Cruda", "cantidad": 200, "unidad": "gramos", "categoria": "Frutos Secos"},
+      {"nombre": "Pan Blanco Duro", "cantidad": 100, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Vinagre de Jerez", "cantidad": 2, "unidad": "cucharadas", "categoria": "Condimentos"},
+      {"nombre": "Uva", "cantidad": 200, "unidad": "gramos", "categoria": "Frutas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Poner las almendras crudas en remojo con agua hirviendo durante 10 minutos para poder pelarlas fácilmente.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "Pelar las almendras retirando la piel marrón. Remojar el pan en agua fría durante 5 minutos y escurrirlo.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En el vaso de la batidora, colocar las almendras peladas, el pan escurrido, los ajos pelados, sal y el vinagre de Jerez.", "tiempoMinutos": 3},
+      {"orden": 4, "descripcion": "Añadir agua fría y empezar a triturar. Ir incorporando aceite de oliva en hilo mientras se bate para emulsionar.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Continuar triturando hasta conseguir una crema completamente lisa y sedosa. Añadir más agua si queda demasiado espeso.", "tiempoMinutos": 7},
+      {"orden": 6, "descripcion": "Rectificar de sal y vinagre según gusto. Refrigerar durante al menos 2 horas antes de servir bien frío.", "tiempoMinutos": 2},
+      {"orden": 7, "descripcion": "Servir en cuencos individuales decorado con uvas moscatel peladas y sin pepitas, o taquitos de melón.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Suquet de Pescado",
+    "descripcion": "El suquet es un guiso marinero tradicional de la costa catalana, especialmente de los pueblos pesqueros del Maresme. Este plato humilde aprovechaba el pescado de roca y los restos del día, cocinándolos en una salsa espesa de patata, ajo, tomate y almendras. La palabra suquet viene de su en catalán, que significa jugo, haciendo referencia al caldo concentrado que lo caracteriza. El majado de ajo y almendras tostadas aporta cuerpo y sabor a la salsa, mientras las patatas absorben todos los sabores del mar. Es un plato reconfortante que sabe a tradición marinera.",
+    "tiempoPreparacion": 70,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62",
+    "ingredientes": [
+      {"nombre": "Rape", "cantidad": 400, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Sepia", "cantidad": 300, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Gamba", "cantidad": 200, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Patata", "cantidad": 400, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 3, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 4, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Almendra Tostada", "cantidad": 30, "unidad": "gramos", "categoria": "Frutos Secos"},
+      {"nombre": "Perejil Fresco", "cantidad": 1, "unidad": "manojo", "categoria": "Hierbas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Cortar el rape en medallones y la sepia en trozos. Pelar las gambas reservando las cabezas y cáscaras para el caldo.", "tiempoMinutos": 12},
+      {"orden": 2, "descripcion": "Hacer un caldo de pescado con las cabezas y cáscaras de las gambas. Cocer durante 20 minutos y colar.", "tiempoMinutos": 20},
+      {"orden": 3, "descripcion": "Pelar y cortar las patatas en rodajas gruesas. Rallar el tomate tras pelarlo.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "En una cazuela de barro, sofreír dos ajos laminados. Añadir el tomate rallado y cocinar hasta que se reduzca.", "tiempoMinutos": 10},
+      {"orden": 5, "descripcion": "Incorporar las patatas, cubrir con el caldo de pescado y cocinar 15 minutos hasta que las patatas estén tiernas.", "tiempoMinutos": 15},
+      {"orden": 6, "descripcion": "Mientras tanto, hacer un majado en el mortero con los ajos restantes, las almendras tostadas, perejil y una pizca de sal.", "tiempoMinutos": 8},
+      {"orden": 7, "descripcion": "Añadir el pescado y las gambas a la cazuela. Incorporar el majado diluido en un poco de caldo. Cocinar 8 minutos más.", "tiempoMinutos": 10},
+      {"orden": 8, "descripcion": "El suquet debe quedar caldoso pero no aguado. Rectificar de sal y servir inmediatamente en la misma cazuela.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Empanada Gallega",
+    "descripcion": "La empanada gallega es mucho más que un simple pastel de masa: es un símbolo de la gastronomía gallega que admite infinidad de rellenos. La masa se elabora tradicionalmente con harina de trigo, aceite de oliva y vino blanco, resultando en una textura hojaldrada y crujiente. El relleno clásico es de atún, pero también son populares los de carne, bacalao o zamburiñas. Se hornea hasta que la superficie queda dorada y brillante. Es perfecta para llevar de excursión, celebraciones o como plato principal. Cada familia gallega tiene su receta transmitida de generación en generación.",
+    "tiempoPreparacion": 90,
+    "porciones": 6,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO"],
+    "imagenUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+    "ingredientes": [
+      {"nombre": "Harina", "cantidad": 500, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Atún en Conserva", "cantidad": 400, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Rojo", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Huevo", "cantidad": 2, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Vino Blanco", "cantidad": 100, "unidad": "ml", "categoria": "Bebidas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Para la masa, mezclar la harina con sal, aceite de oliva, vino blanco y agua tibia. Amasar hasta conseguir una masa lisa y elástica.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Dividir la masa en dos partes desiguales (una más grande para la base). Dejar reposar tapada durante 30 minutos.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Picar finamente las cebollas, pimientos y tomate. Sofreír en aceite de oliva hasta que las verduras estén muy tiernas.", "tiempoMinutos": 20},
+      {"orden": 4, "descripcion": "Añadir el atún escurrido y desmenuzado al sofrito. Cocinar 5 minutos más. Dejar enfriar completamente.", "tiempoMinutos": 10},
+      {"orden": 5, "descripcion": "Estirar la masa más grande y forrar una bandeja de horno engrasada, dejando que sobresalga por los bordes.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Distribuir el relleno uniformemente. Colocar huevo duro en rodajas sobre el relleno si se desea.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Estirar la segunda masa y cubrir el relleno. Sellar los bordes replegándolos y hacer chimeneas para que salga el vapor.", "tiempoMinutos": 8},
+      {"orden": 8, "descripcion": "Pintar con huevo batido y hornear a 180°C durante 40 minutos hasta que esté dorada. Dejar reposar antes de cortar.", "tiempoMinutos": 45}
+    ]
+  },
+  {
+    "nombre": "Lechazo Asado",
+    "descripcion": "El lechazo asado es el plato más emblemático de Castilla y León, especialmente de las provincias de Burgos, Segovia y Valladolid. Se trata de cordero lechal de menos de un mes alimentado exclusivamente con leche materna, lo que le da una carne extremadamente tierna y delicada. Se asa en horno de leña dentro de una cazuela de barro con solo agua, sal y manteca, sin más condimentos para no enmascarar su sabor puro. La piel queda crujiente mientras la carne se deshace en la boca. Es tradición partirlo con el borde de un plato para demostrar su ternura. Un plato de celebración y domingos especiales.",
+    "tiempoPreparacion": 90,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1574672280600-4accfa5b6f98",
+    "ingredientes": [
+      {"nombre": "Lechazo", "cantidad": 2000, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Manteca de Cerdo", "cantidad": 50, "unidad": "gramos", "categoria": "Grasas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Limpiar el lechazo y trocearlo en cuartos. Secar bien con papel de cocina para que la piel quede crujiente.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "Salpimentar generosamente los trozos de lechazo por todos los lados, prestando especial atención a la piel.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Colocar los trozos en una cazuela de barro con la piel hacia arriba. Untar con manteca de cerdo.", "tiempoMinutos": 5},
+      {"orden": 4, "descripcion": "Añadir un dedo de agua al fondo de la cazuela para que no se queme y mantenga la humedad durante el asado.", "tiempoMinutos": 2},
+      {"orden": 5, "descripcion": "Precalentar el horno a 200°C. Introducir la cazuela y asar durante 60 minutos, controlando que no se seque.", "tiempoMinutos": 60},
+      {"orden": 6, "descripcion": "Bajar la temperatura a 180°C y continuar asando otros 20 minutos hasta que la piel esté dorada y crujiente.", "tiempoMinutos": 20},
+      {"orden": 7, "descripcion": "Dejar reposar 5 minutos antes de servir. La carne debe estar tan tierna que se pueda partir con el borde de un plato.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Ensaladilla Rusa",
+    "descripcion": "La ensaladilla rusa es una de las tapas más populares de los bares españoles, aunque su origen sea extranjero. Esta ensalada fría combina patatas y verduras cocidas con atún, todo ligado con mayonesa casera que le da cremosidad. El secreto está en cortar todas las verduras en dados pequeños y uniformes, y en la calidad de la mayonesa. Cada bar tiene su versión particular, algunos añaden gambas o huevo duro. Se sirve bien fría, a menudo decorada con pimientos del piquillo o aceitunas. Es perfecta como aperitivo o guarnición.",
+    "tiempoPreparacion": 45,
+    "porciones": 6,
+    "dificultad": "BAJA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "COMIDA_RAPIDA_SALUDABLE"],
+    "imagenUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+    "ingredientes": [
+      {"nombre": "Patata", "cantidad": 600, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Zanahoria", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Guisante", "cantidad": 200, "unidad": "gramos", "categoria": "Legumbres"},
+      {"nombre": "Atún en Conserva", "cantidad": 200, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Huevo", "cantidad": 3, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Mayonesa", "cantidad": 300, "unidad": "gramos", "categoria": "Condimentos"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Cocer las patatas enteras con piel en agua con sal durante 20-25 minutos hasta que estén tiernas pero firmes.", "tiempoMinutos": 25},
+      {"orden": 2, "descripcion": "Cocer las zanahorias peladas enteras en agua con sal durante 15 minutos hasta que estén tiernas al pincharlas.", "tiempoMinutos": 15},
+      {"orden": 3, "descripcion": "Cocer los huevos en agua hirviendo durante 10 minutos. Enfriar en agua con hielo, pelar y reservar.", "tiempoMinutos": 12},
+      {"orden": 4, "descripcion": "Cocer los guisantes en agua con sal durante 5 minutos si son frescos, o según indicaciones si son congelados.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Pelar las patatas y zanahorias cocidas. Cortar todo en dados pequeños y uniformes de medio centímetro aproximadamente.", "tiempoMinutos": 15},
+      {"orden": 6, "descripcion": "En un bol grande, mezclar las verduras cortadas, los guisantes escurridos y el atún desmenuzado. Picar dos huevos y añadir.", "tiempoMinutos": 8},
+      {"orden": 7, "descripcion": "Incorporar la mayonesa y mezclar suavemente hasta que todo esté bien ligado. Refrigerar al menos 2 horas antes de servir.", "tiempoMinutos": 5},
+      {"orden": 8, "descripcion": "Decorar con el huevo duro restante en rodajas y aceitunas o pimientos del piquillo. Servir bien frío.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Cordero al Chilindron",
+    "descripcion": "El cordero al chilindrón es un guiso tradicional aragonés que también se prepara en La Rioja y Navarra. El chilindrón es la salsa a base de pimientos rojos, tomate, cebolla y ajo que baña la carne de cordero. Esta preparación transforma el cordero en un plato jugoso y aromático, donde la carne se cocina lentamente hasta que está tierna y se impregna de todos los sabores de la salsa. El pimentón y el vino tinto aportan profundidad al guiso. Es un plato reconfortante de la España interior, perfecto para reuniones familiares.",
+    "tiempoPreparacion": 100,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1558030089-6984f6845aff",
+    "ingredientes": [
+      {"nombre": "Cordero", "cantidad": 1000, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Pimiento Rojo", "cantidad": 4, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 4, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 4, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"},
+      {"nombre": "Vino Tinto", "cantidad": 200, "unidad": "ml", "categoria": "Bebidas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Trocear el cordero en piezas medianas. Salpimentar y dorar en aceite de oliva caliente hasta que esté bien sellado. Reservar.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Picar la cebolla y los ajos finamente. Cortar los pimientos en tiras tras limpiarlos de semillas. Rallar los tomates.", "tiempoMinutos": 12},
+      {"orden": 3, "descripcion": "En la misma cazuela, sofreír la cebolla y el ajo hasta que estén dorados y transparentes.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Añadir las tiras de pimiento rojo y cocinar durante 10 minutos hasta que empiecen a ablandarse.", "tiempoMinutos": 10},
+      {"orden": 5, "descripcion": "Incorporar el tomate rallado y el pimentón. Cocinar hasta que el tomate se reduzca y pierda el agua.", "tiempoMinutos": 12},
+      {"orden": 6, "descripcion": "Devolver el cordero a la cazuela, añadir el vino tinto y un poco de agua si es necesario. Tapar y cocinar a fuego lento.", "tiempoMinutos": 45},
+      {"orden": 7, "descripcion": "El cordero debe quedar tierno y la salsa espesa y concentrada. Rectificar de sal y servir caliente.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Tarta de Santiago",
+    "descripcion": "La tarta de Santiago es el dulce más emblemático de Galicia, con denominación de origen protegida. Esta tarta de almendra se caracteriza por su textura húmeda y densa, su sabor intenso a almendra y su decoración con la cruz de Santiago espolvoreada con azúcar glas. Su receta es sencilla pero el resultado es espectacular: almendra molida, azúcar, huevos y ralladura de limón, sin harina. El origen del postre se remonta al menos al siglo XVI y está íntimamente ligado a la tradición del Camino de Santiago. Cada bocado es pura almendra concentrada.",
+    "tiempoPreparacion": 60,
+    "porciones": 8,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGETARIANO", "SIN_GLUTEN", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1578985545062-69928b1d9587",
+    "ingredientes": [
+      {"nombre": "Almendra Molida", "cantidad": 250, "unidad": "gramos", "categoria": "Frutos Secos"},
+      {"nombre": "Azúcar", "cantidad": 250, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Huevo", "cantidad": 5, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Limón", "cantidad": 1, "unidad": "unidades", "categoria": "Frutas"},
+      {"nombre": "Canela Molida", "cantidad": 0.5, "unidad": "cucharadita", "categoria": "Especias"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Precalentar el horno a 180°C. Engrasar un molde redondo de 24 cm y forrarlo con papel de horno.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Separar las claras de las yemas. Batir las yemas con el azúcar hasta que la mezcla blanquee y doble su volumen.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "Añadir la almendra molida, la ralladura de limón y la canela a las yemas batidas. Mezclar bien hasta integrar.", "tiempoMinutos": 5},
+      {"orden": 4, "descripcion": "Batir las claras a punto de nieve firme con una pizca de sal hasta que formen picos duros.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Incorporar las claras a la mezcla de almendra con movimientos envolventes suaves para no bajar las claras.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Verter la masa en el molde preparado y hornear durante 35-40 minutos hasta que esté dorada y al insertar un palillo salga limpio.", "tiempoMinutos": 40},
+      {"orden": 7, "descripcion": "Dejar enfriar completamente en el molde. Desmoldar y espolvorear con azúcar glas usando una plantilla con la cruz de Santiago.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Patatas a la Riojana",
+    "descripcion": "Las patatas a la riojana son un guiso humilde pero lleno de sabor, originario de La Rioja. Las patatas se cocinan en un caldo aromático con chorizo riojano que aporta su grasa y pimentón, creando un plato caldoso y reconfortante. Los pimientos choriceros son fundamentales para conseguir ese sabor característico y el color rojizo del guiso. Es un plato de cuchara perfecto para el invierno, que mejora si se prepara con antelación. La textura debe ser cremosa, con las patatas en su punto y el caldo ligeramente espeso por el almidón.",
+    "tiempoPreparacion": 50,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN"],
+    "imagenUrl": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d",
+    "ingredientes": [
+      {"nombre": "Patata", "cantidad": 800, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Chorizo Riojano", "cantidad": 200, "unidad": "gramos", "categoria": "Embutidos"},
+      {"nombre": "Pimiento Choricero", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Hidratar los pimientos choriceros en agua caliente durante 20 minutos. Raspar la pulpa interior con una cuchara y reservar.", "tiempoMinutos": 20},
+      {"orden": 2, "descripcion": "Picar finamente la cebolla y los ajos. Cortar el chorizo en rodajas de medio centímetro.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "En una cazuela de barro, sofreír la cebolla y el ajo en aceite de oliva hasta que estén transparentes.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Añadir el chorizo y dorar ligeramente. Incorporar el pimentón y remover rápidamente para que no se queme.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Agregar la pulpa de los pimientos choriceros y las patatas peladas y cascadas en trozos irregulares.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Cubrir con agua o caldo, salar y cocinar a fuego medio durante 25-30 minutos, moviendo la cazuela ocasionalmente.", "tiempoMinutos": 30},
+      {"orden": 7, "descripcion": "Las patatas deben estar tiernas y el caldo ligeramente ligado por el almidón. Dejar reposar antes de servir.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Chipirones en su Tinta",
+    "descripcion": "Los chipirones en su tinta son un clásico de la cocina vasca y del norte de España que destaca por su intenso sabor marino. Pequeños calamares se cocinan en su propia tinta, creando una salsa oscura, espesa y llena de matices yodados. El sofrito de cebolla, ajo y tomate se combina con la tinta para conseguir una textura sedosa que envuelve los chipirones tiernos. Se sirve tradicionalmente con arroz blanco que absorbe la salsa. Es un plato que puede parecer intimidante por su color negro intenso, pero su sabor delicado enamora a quien lo prueba.",
+    "tiempoPreparacion": 55,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1559737558-2f5a35f4523b",
+    "ingredientes": [
+      {"nombre": "Chipirón", "cantidad": 800, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Tinta de Calamar", "cantidad": 8, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 3, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Limpiar los chipirones separando el cuerpo de los tentáculos, retirando la pluma interior y reservando las bolsas de tinta si las tienen.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Picar finamente la cebolla y los ajos. Rallar el tomate tras pelarlo.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En una cazuela amplia, sofreír la cebolla y el ajo en aceite de oliva a fuego medio hasta que estén muy tiernos y dorados.", "tiempoMinutos": 12},
+      {"orden": 4, "descripcion": "Añadir el tomate rallado y cocinar hasta que se evapore todo el líquido y el tomate esté concentrado.", "tiempoMinutos": 10},
+      {"orden": 5, "descripcion": "Incorporar los chipirones limpios y rehogar durante 5 minutos hasta que cambien de color.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Diluir la tinta de calamar en un poco de vino blanco o caldo de pescado. Añadir a la cazuela junto con más caldo.", "tiempoMinutos": 3},
+      {"orden": 7, "descripcion": "Cocinar a fuego lento durante 20-25 minutos hasta que los chipirones estén tiernos y la salsa espesa y brillante.", "tiempoMinutos": 25},
+      {"orden": 8, "descripcion": "Rectificar de sal y servir caliente acompañado de arroz blanco hervido que contrasta perfectamente con la salsa negra.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Coca de San Juan",
+    "descripcion": "La coca de San Juan es un dulce tradicional catalán que se prepara especialmente para la noche de San Juan, la noche más corta del año. Esta masa dulce similar a un brioche se cubre con frutas confitadas, piñones y azúcar, creando un postre festivo y vistoso. La textura es esponjosa y aromática gracias a la ralladura de limón y el anís. Existen versiones tanto dulces como saladas, pero la dulce es la más popular para esta celebración. Se comparte en familia y con amigos durante las hogueras de San Juan, acompañada de cava o moscatel.",
+    "tiempoPreparacion": 120,
+    "porciones": 8,
+    "dificultad": "MEDIA",
+    "etiquetas": ["VEGETARIANO", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1509440159596-0249088772ff",
+    "ingredientes": [
+      {"nombre": "Harina", "cantidad": 500, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Huevo", "cantidad": 3, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 150, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Mantequilla", "cantidad": 100, "unidad": "gramos", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Leche Entera", "cantidad": 100, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Fruta Confitada", "cantidad": 100, "unidad": "gramos", "categoria": "Frutas"},
+      {"nombre": "Piñón", "cantidad": 50, "unidad": "gramos", "categoria": "Frutos Secos"},
+      {"nombre": "Limón", "cantidad": 1, "unidad": "unidades", "categoria": "Frutas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Calentar la leche y disolver en ella la mantequilla cortada en trozos. Dejar entibiar.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "En un bol grande, batir los huevos con el azúcar hasta que blanqueen. Añadir la ralladura de limón.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Incorporar la leche con mantequilla a los huevos batidos, mezclando bien hasta integrar completamente.", "tiempoMinutos": 3},
+      {"orden": 4, "descripcion": "Añadir la harina tamizada poco a poco, amasando hasta conseguir una masa lisa y elástica. Dejar reposar tapada 1 hora.", "tiempoMinutos": 15},
+      {"orden": 5, "descripcion": "Estirar la masa con el rodillo sobre una bandeja de horno engrasada, formando un rectángulo de 1 cm de grosor.", "tiempoMinutos": 10},
+      {"orden": 6, "descripcion": "Decorar la superficie con las frutas confitadas cortadas en trozos y los piñones. Dejar leudar 30 minutos tapada.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Pintar con huevo batido y espolvorear azúcar por encima. Hornear a 180°C durante 25-30 minutos hasta que esté dorada.", "tiempoMinutos": 30},
+      {"orden": 8, "descripcion": "Dejar enfriar completamente antes de cortar. Se puede espolvorear con más azúcar glas antes de servir.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Secreto Ibérico",
+    "descripcion": "El secreto ibérico es un corte premium del cerdo ibérico que se ha popularizado enormemente en la última década. Esta pieza magra pero intensamente veteada de grasa se encuentra entre la paletilla y el lomo, de ahí su nombre de secreto. Su preparación ideal es a la plancha o parrilla, dejándolo jugoso por dentro y dorado por fuera. La infiltración de grasa le confiere una textura mantecosa y un sabor intenso característico del cerdo ibérico de bellota. Se sirve cortado en lonchas finas, ligeramente rosado, y necesita muy poco más que sal y un buen aceite de oliva.",
+    "tiempoPreparacion": 25,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN", "KETO", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1588168333986-5078d3ae3976",
+    "ingredientes": [
+      {"nombre": "Secreto Ibérico", "cantidad": 600, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Pimiento del Padrón", "cantidad": 200, "unidad": "gramos", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Sacar el secreto ibérico de la nevera 30 minutos antes de cocinarlo para que alcance temperatura ambiente.", "tiempoMinutos": 2},
+      {"orden": 2, "descripcion": "Limpiar la pieza retirando cualquier exceso de grasa superficial o nervios. Secar bien con papel de cocina.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Salpimentar generosamente por ambos lados. Machacar los ajos con piel en un mortero para aromatizar.", "tiempoMinutos": 3},
+      {"orden": 4, "descripcion": "Calentar una plancha o sartén a fuego muy alto hasta que esté bien caliente. Añadir un chorrito mínimo de aceite.", "tiempoMinutos": 3},
+      {"orden": 5, "descripcion": "Marcar el secreto 2-3 minutos por cada lado a fuego fuerte para sellarlo. Debe quedar dorado por fuera y rosado por dentro.", "tiempoMinutos": 6},
+      {"orden": 6, "descripcion": "Retirar y dejar reposar tapado con papel de aluminio durante 5 minutos para que los jugos se redistribuyan.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Mientras reposa, saltear los pimientos de Padrón en la misma plancha con los ajos machacados y sal gorda.", "tiempoMinutos": 5},
+      {"orden": 8, "descripcion": "Cortar el secreto en lonchas finas en sentido contrario a la fibra. Servir con los pimientos y un chorrito de aceite de oliva virgen extra.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Albóndigas en Salsa",
+    "descripcion": "Las albóndigas en salsa son uno de los platos caseros más queridos de la gastronomía española, presente en prácticamente todas las regiones con sus variantes. Estas pequeñas bolas de carne picada mezclada con pan, huevo y especias se fríen primero para sellarlas y luego se cocinan en una rica salsa de tomate casera. El secreto está en conseguir albóndigas jugosas y tiernas, sin que queden duras o secas. Cada familia tiene su receta secreta, algunas añaden vino, otras verduras picadas en la carne. Se sirven en cazuela de barro, humeantes y con mucho pan para mojar.",
+    "tiempoPreparacion": 60,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "ALTO_EN_PROTEINA", "COMIDA_RAPIDA_SALUDABLE"],
+    "imagenUrl": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba",
+    "ingredientes": [
+      {"nombre": "Carne Picada de Ternera", "cantidad": 400, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Carne Picada de Cerdo", "cantidad": 200, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Pan Rallado", "cantidad": 80, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Huevo", "cantidad": 1, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Perejil Fresco", "cantidad": 1, "unidad": "manojo", "categoria": "Hierbas"},
+      {"nombre": "Tomate", "cantidad": 4, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Harina", "cantidad": 50, "unidad": "gramos", "categoria": "Harinas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "En un bol grande, mezclar las carnes picadas con pan rallado, huevo, ajo picado, perejil, sal y pimienta. Amasar bien.", "tiempoMinutos": 8},
+      {"orden": 2, "descripcion": "Dejar reposar la mezcla en la nevera durante 15 minutos para que se compacte y sea más fácil formar las albóndigas.", "tiempoMinutos": 15},
+      {"orden": 3, "descripcion": "Con las manos húmedas, formar bolas del tamaño de una nuez. Pasarlas ligeramente por harina.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Freír las albóndigas en aceite caliente hasta que estén doradas por todos los lados. Reservar sobre papel absorbente.", "tiempoMinutos": 12},
+      {"orden": 5, "descripcion": "Para la salsa, picar finamente la cebolla y rallar los tomates. Sofreír la cebolla en el mismo aceite hasta que esté transparente.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Añadir el tomate rallado, sal, una pizca de azúcar y cocinar hasta que la salsa se reduzca y espese.", "tiempoMinutos": 15},
+      {"orden": 7, "descripcion": "Incorporar las albóndigas a la salsa, añadir un poco de caldo o agua y cocinar a fuego lento durante 15 minutos.", "tiempoMinutos": 15},
+      {"orden": 8, "descripcion": "Las albóndigas deben quedar jugosas y la salsa espesa. Rectificar de sal y servir caliente con pan para mojar.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Arroz con Leche",
+    "descripcion": "El arroz con leche es el postre tradicional por excelencia de la cocina casera española, especialmente popular en Asturias. Este dulce cremoso se elabora cociendo arroz en leche con azúcar, canela y cáscara de limón hasta conseguir una textura sedosa y untuosa. El secreto está en la cocción lenta y paciente, removiendo frecuentemente para que el arroz suelte su almidón y la preparación quede melosa. Se sirve frío o tibio, espolvoreado con canela molida y opcionalmente con azúcar quemada por encima. Es un postre reconfortante que evoca recuerdos de infancia y tradición familiar.",
+    "tiempoPreparacion": 50,
+    "porciones": 6,
+    "dificultad": "BAJA",
+    "etiquetas": ["VEGETARIANO", "SIN_GLUTEN", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1563805042-7684c019e1cb",
+    "ingredientes": [
+      {"nombre": "Arroz Redondo", "cantidad": 150, "unidad": "gramos", "categoria": "Cereales/Granos"},
+      {"nombre": "Leche Entera", "cantidad": 1000, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 120, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Canela en Rama", "cantidad": 1, "unidad": "unidades", "categoria": "Especias"},
+      {"nombre": "Limón", "cantidad": 1, "unidad": "unidades", "categoria": "Frutas"},
+      {"nombre": "Canela Molida", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Poner a hervir agua en una cazuela. Añadir el arroz y la piel del limón (solo la parte amarilla). Cocer durante 5 minutos y escurrir.", "tiempoMinutos": 8},
+      {"orden": 2, "descripcion": "En la misma cazuela limpia, calentar la leche con la canela en rama y la corteza de limón hasta que hierva.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Añadir el arroz precocido a la leche hirviendo. Bajar el fuego al mínimo y cocinar removiendo frecuentemente.", "tiempoMinutos": 30},
+      {"orden": 4, "descripcion": "Cuando el arroz esté tierno y haya absorbido gran parte de la leche, incorporar el azúcar y mezclar bien.", "tiempoMinutos": 3},
+      {"orden": 5, "descripcion": "Continuar cocinando otros 5-10 minutos removiendo constantemente hasta conseguir una textura cremosa y melosa.", "tiempoMinutos": 10},
+      {"orden": 6, "descripcion": "Retirar la canela en rama y la piel de limón. El arroz con leche debe quedar caldoso, ya que espesará al enfriarse.", "tiempoMinutos": 2},
+      {"orden": 7, "descripcion": "Verter en una fuente o en recipientes individuales. Dejar enfriar y espolvorear con canela molida antes de servir.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Churros con Chocolate",
+    "descripcion": "Los churros con chocolate son el desayuno o merienda más emblemático de España, especialmente popular los fines de semana y festivos. Estos cilindros de masa frita crujientes por fuera y tiernos por dentro se mojan en chocolate espeso y caliente, creando una combinación irresistible. La masa lleva solo harina, agua, sal y a veces un toque de aceite. El chocolate debe ser espeso, casi como una natilla, preparado con cacao puro y maicena. Esta tradición española se disfruta en churrerías centenarias o en casa, siendo un ritual social que une generaciones. El contraste de texturas y temperaturas es lo que los hace únicos.",
+    "tiempoPreparacion": 45,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["VEGETARIANO", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1543773726-15f7e2f5a5b2",
+    "ingredientes": [
+      {"nombre": "Harina", "cantidad": 250, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Chocolate Negro", "cantidad": 200, "unidad": "gramos", "categoria": "Dulces"},
+      {"nombre": "Leche Entera", "cantidad": 500, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 100, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Maicena", "cantidad": 20, "unidad": "gramos", "categoria": "Harinas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Para la masa de churros, hervir 250 ml de agua con una pizca de sal y una cucharada de aceite.", "tiempoMinutos": 5},
+      {"orden": 2, "descripcion": "Cuando hierva, retirar del fuego y añadir la harina de golpe. Remover enérgicamente con cuchara de madera hasta formar una masa.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Dejar enfriar la masa unos minutos hasta que se pueda manejar. Introducir en una manga pastelera con boquilla rizada.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Para el chocolate, calentar la leche con el chocolate troceado removiendo hasta que se derrita completamente.", "tiempoMinutos": 8},
+      {"orden": 5, "descripcion": "Diluir la maicena en un poco de leche fría. Añadir al chocolate caliente junto con el azúcar y cocinar removiendo hasta que espese.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Calentar aceite abundante a 180°C. Presionar la manga formando churros de 10-15 cm directamente sobre el aceite.", "tiempoMinutos": 15},
+      {"orden": 7, "descripcion": "Freír hasta que estén dorados y crujientes, unos 2-3 minutos por lado. Escurrir sobre papel absorbente.", "tiempoMinutos": 10},
+      {"orden": 8, "descripcion": "Espolvorear los churros con azúcar mientras están calientes. Servir inmediatamente con el chocolate espeso bien caliente.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Huevos Rotos",
+    "descripcion": "Los huevos rotos o estrellados son un plato aparentemente sencillo que se ha convertido en todo un clásico de la gastronomía madrileña. Patatas fritas caseras cortadas en cuadrados irregulares se coronan con huevos fritos de yemas líquidas que al romperse crean una salsa natural. La versión más popular incluye jamón ibérico, aunque también se preparan con chorizo, morcilla o pimientos. El secreto está en conseguir patatas crujientes, huevos con las claras cuajadas pero yemas líquidas, y el punto justo de sal. Es un plato de taberna que requiere técnica pese a su aparente simplicidad.",
+    "tiempoPreparacion": 35,
+    "porciones": 2,
+    "dificultad": "MEDIA",
+    "etiquetas": ["SIN_GLUTEN", "ALTO_EN_PROTEINA", "COMIDA_RAPIDA_SALUDABLE"],
+    "imagenUrl": "https://images.unsplash.com/photo-1525351484163-7529414344d8",
+    "ingredientes": [
+      {"nombre": "Patata", "cantidad": 500, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Huevo", "cantidad": 4, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Jamón Ibérico", "cantidad": 100, "unidad": "gramos", "categoria": "Embutidos"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Pelar las patatas y cortarlas en cuadrados irregulares de unos 2-3 cm. Lavarlas y secarlas muy bien con papel de cocina.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "Calentar abundante aceite de oliva a fuego medio-alto. Freír las patatas en dos tandas para que no se amontonen.", "tiempoMinutos": 20},
+      {"orden": 3, "descripcion": "Primero a temperatura media durante 10 minutos hasta que estén tiernas, luego subir el fuego para que queden crujientes y doradas.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Escurrir las patatas sobre papel absorbente y salar generosamente mientras están calientes. Mantener calientes.", "tiempoMinutos": 2},
+      {"orden": 5, "descripcion": "En una sartén limpia con un poco de aceite muy caliente, freír los huevos de uno en uno o de dos en dos.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Los huevos deben quedar con las claras bien cuajadas y las yemas completamente líquidas. Retirar con cuidado.", "tiempoMinutos": 3},
+      {"orden": 7, "descripcion": "Disponer las patatas fritas en platos individuales o en una fuente. Colocar las lonchas de jamón ibérico sobre las patatas.", "tiempoMinutos": 2},
+      {"orden": 8, "descripcion": "Coronar con los huevos fritos. Servir inmediatamente para que los comensales rompan los huevos y mezclen con las patatas.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Salpicón de Marisco",
+    "descripcion": "El salpicón de marisco es una ensalada fría refrescante y elegante típica de las costas gallegas y cantábricas. Este plato combina mariscos variados cocidos y picados finamente con cebolla, pimiento y tomate, todo aliñado con aceite de oliva virgen extra y vinagre. Es perfecto para el verano por su frescura y porque concentra todo el sabor del mar en cada bocado. La calidad de los mariscos es fundamental, y aunque tradicionalmente se usaban restos del marisco cocido, hoy se prepara con los mejores productos. Se sirve bien frío como entrante o plato principal ligero.",
+    "tiempoPreparacion": 40,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62",
+    "ingredientes": [
+      {"nombre": "Gamba", "cantidad": 300, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Mejillón", "cantidad": 300, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Pulpo Cocido", "cantidad": 200, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Verde", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Rojo", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Cocer las gambas en agua hirviendo con sal durante 2-3 minutos. Enfriar en agua con hielo, pelar y reservar.", "tiempoMinutos": 8},
+      {"orden": 2, "descripcion": "Cocer los mejillones al vapor hasta que se abran. Desechar los que no abran. Extraer la carne y reservar.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "Cortar el pulpo cocido en trozos pequeños. Picar las gambas en trozos de tamaño similar a los mejillones.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Picar muy finamente la cebolla. Cortar los pimientos en brunoise (dados muy pequeños y uniformes).", "tiempoMinutos": 10},
+      {"orden": 5, "descripcion": "Escaldar los tomates, pelarlos y picarlos en dados pequeños, eliminando las semillas y el exceso de agua.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "En un bol grande, mezclar todos los mariscos con las verduras picadas. Mezclar con cuidado para no romper los mariscos.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Aliñar con aceite de oliva virgen extra, vinagre de vino blanco, sal y perejil picado. Mezclar suavemente.", "tiempoMinutos": 3},
+      {"orden": 8, "descripcion": "Refrigerar durante al menos 2 horas antes de servir para que los sabores se integren. Servir bien frío.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Porrusalda Vasca",
+    "descripcion": "La porrusalda es una sopa tradicional vasca humilde pero reconfortante, cuyo ingrediente principal es el puerro. Este potaje combina puerros, patatas, zanahoria y bacalao desalado en un caldo ligero pero lleno de sabor. Es un plato de cuaresma que aprovechaba productos de la huerta junto con bacalao, el pescado conservado por excelencia. La textura debe ser caldosa, con las patatas parcialmente deshechas que espesan ligeramente el caldo. Es perfecto para los días fríos, nutritivo y reconfortante, representando la cocina vasca más tradicional y sencilla.",
+    "tiempoPreparacion": 50,
+    "porciones": 4,
+    "dificultad": "BAJA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "BAJO_EN_CALORIAS"],
+    "imagenUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd",
+    "ingredientes": [
+      {"nombre": "Puerro", "cantidad": 3, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Patata", "cantidad": 600, "unidad": "gramos", "categoria": "Vegetales"},
+      {"nombre": "Zanahoria", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Bacalao Desalado", "cantidad": 300, "unidad": "gramos", "categoria": "Pescados/Mariscos"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Limpiar los puerros cortando la parte verde oscura. Lavar bien y cortar en rodajas de 1 cm aproximadamente.", "tiempoMinutos": 8},
+      {"orden": 2, "descripcion": "Pelar las patatas y cortarlas en trozos irregulares. Pelar las zanahorias y cortarlas en rodajas gruesas.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En una cazuela con aceite de oliva, pochar los puerros a fuego medio durante 10 minutos hasta que estén tiernos.", "tiempoMinutos": 10},
+      {"orden": 4, "descripcion": "Añadir las patatas y zanahorias. Cubrir con agua o caldo de verduras y cocinar a fuego medio durante 20 minutos.", "tiempoMinutos": 20},
+      {"orden": 5, "descripcion": "Cuando las patatas estén casi hechas, incorporar el bacalao desalado cortado en trozos medianos.", "tiempoMinutos": 3},
+      {"orden": 6, "descripcion": "Cocinar 5-8 minutos más hasta que el bacalao esté en su punto. No debe cocerse demasiado para que no se deshaga.", "tiempoMinutos": 8},
+      {"orden": 7, "descripcion": "Rectificar de sal con cuidado ya que el bacalao aporta salinidad. Servir caliente con un chorrito de aceite de oliva virgen extra.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Flan de Huevo",
+    "descripcion": "El flan de huevo es el postre tradicional español por excelencia, presente en todos los menús del día y celebraciones familiares. Esta natilla cuajada al baño maría tiene una textura suave y sedosa, coronada con caramelo líquido que aporta un contraste amargo-dulce perfecto. La receta se basa en huevos, leche, azúcar y vainilla, ingredientes humildes que se transforman en un postre elegante. El secreto está en la cocción suave al baño maría para evitar que quede poroso. Se sirve frío, desmoldado, dejando que el caramelo bañe toda la superficie.",
+    "tiempoPreparacion": 70,
+    "porciones": 6,
+    "dificultad": "MEDIA",
+    "etiquetas": ["VEGETARIANO", "SIN_GLUTEN", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1587314168485-3236d6710814",
+    "ingredientes": [
+      {"nombre": "Huevo", "cantidad": 5, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Leche Entera", "cantidad": 500, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 150, "unidad": "gramos", "categoria": "Endulzantes"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Preparar el caramelo poniendo 100 g de azúcar en un cazo a fuego medio. Dejar que se derrita sin remover hasta que esté dorado.", "tiempoMinutos": 8},
+      {"orden": 2, "descripcion": "Verter el caramelo líquido en el molde de flan, girándolo para que cubra bien el fondo y las paredes. Dejar enfriar.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Calentar la leche con un trozo de piel de limón o vaina de vainilla hasta que hierva. Retirar y dejar entibiar.", "tiempoMinutos": 8},
+      {"orden": 4, "descripcion": "Batir los huevos con los 50 g de azúcar restantes hasta que estén bien integrados pero sin hacer espuma.", "tiempoMinutos": 5},
+      {"orden": 5, "descripcion": "Colar la leche tibia sobre los huevos batidos, removiendo suavemente para mezclar sin incorporar aire.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Verter la mezcla en el molde caramelizado. Colocar en una bandeja honda con agua caliente hasta la mitad del molde.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Hornear al baño maría a 160°C durante 45-50 minutos hasta que esté cuajado pero aún tiemble ligeramente en el centro.", "tiempoMinutos": 50},
+      {"orden": 8, "descripcion": "Dejar enfriar a temperatura ambiente y refrigerar mínimo 4 horas. Desmoldar pasando un cuchillo por los bordes y volcando sobre un plato.", "tiempoMinutos": 5}
+    ]
+  },
+  {
+    "nombre": "Pochas con Almejas",
+    "descripcion": "Las pochas con almejas son un plato delicado que combina las judías blancas frescas navarras con el sabor yodado de las almejas. Las pochas son alubias blancas que se recogen antes de que maduren completamente, por lo que son tiernas y cremosas. Se cocinan con un sofrito suave de verduras y al final se añaden las almejas que aportan su jugo marino. Es un guiso ligero pero lleno de matices, muy apreciado en Navarra y el País Vasco durante la corta temporada de pochas frescas en verano y otoño. El contraste entre la textura mantecosa de las judías y las almejas es exquisito.",
+    "tiempoPreparacion": 65,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["PESCADO", "SIN_GLUTEN", "BAJO_EN_CALORIAS", "DIETA_MEDITERRANEA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1547592166-23ac45744acd",
+    "ingredientes": [
+      {"nombre": "Pochas Frescas", "cantidad": 500, "unidad": "gramos", "categoria": "Legumbres"},
+      {"nombre": "Almeja", "cantidad": 400, "unidad": "gramos", "categoria": "Pescados/Mariscos"},
+      {"nombre": "Cebolla Blanca", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Zanahoria", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Pimiento Verde", "cantidad": 1, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 2, "unidad": "dientes", "categoria": "Vegetales"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Desgranar las pochas si vienen en vaina. Lavar bien y reservar. Poner las almejas en agua con sal durante 30 minutos.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "Picar finamente la cebolla, el pimiento verde, la zanahoria y el ajo para hacer un sofrito fino.", "tiempoMinutos": 8},
+      {"orden": 3, "descripcion": "En una cazuela de barro, sofreír todas las verduras en aceite de oliva a fuego muy suave durante 15 minutos.", "tiempoMinutos": 15},
+      {"orden": 4, "descripcion": "Añadir las pochas al sofrito, cubrir con agua o caldo de verduras y cocinar a fuego lento durante 30-35 minutos.", "tiempoMinutos": 35},
+      {"orden": 5, "descripcion": "Las pochas deben quedar tiernas y cremosas, con el caldo ligeramente espeso. Añadir agua caliente si se reduce demasiado.", "tiempoMinutos": 5},
+      {"orden": 6, "descripcion": "Cuando las pochas estén en su punto, incorporar las almejas bien lavadas y cocinar hasta que se abran, unos 5 minutos.", "tiempoMinutos": 8},
+      {"orden": 7, "descripcion": "Retirar del fuego inmediatamente cuando se abran las almejas. Dejar reposar 5 minutos para que se integren los sabores.", "tiempoMinutos": 5},
+      {"orden": 8, "descripcion": "Rectificar de sal con cuidado por la salinidad de las almejas. Servir en cazuela de barro con perejil fresco picado.", "tiempoMinutos": 2}
+    ]
+  },
+  {
+    "nombre": "Caldereta de Cordero",
+    "descripcion": "La caldereta de cordero es un guiso tradicional de Extremadura y Castilla-La Mancha que concentra todo el sabor de la carne en una salsa espesa y aromática. El cordero se cocina lentamente con vino blanco, pimientos, tomate y un toque de pimentón, creando un plato contundente y reconfortante. El nombre viene del caldero o cazuela de hierro donde tradicionalmente se cocinaba. El secreto está en dorar bien la carne primero y luego dejarla cocinar a fuego muy lento hasta que esté tierna. El hígado de cordero machacado al final aporta cuerpo y un sabor característico a la salsa.",
+    "tiempoPreparacion": 110,
+    "porciones": 4,
+    "dificultad": "MEDIA",
+    "etiquetas": ["CARNE", "SIN_GLUTEN", "ALTO_EN_PROTEINA"],
+    "imagenUrl": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba",
+    "ingredientes": [
+      {"nombre": "Cordero", "cantidad": 1000, "unidad": "gramos", "categoria": "Carnes"},
+      {"nombre": "Pimiento Rojo", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Cebolla Blanca", "cantidad": 2, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Tomate", "cantidad": 3, "unidad": "unidades", "categoria": "Vegetales"},
+      {"nombre": "Ajo", "cantidad": 6, "unidad": "dientes", "categoria": "Vegetales"},
+      {"nombre": "Pimentón Dulce", "cantidad": 1, "unidad": "cucharadita", "categoria": "Especias"},
+      {"nombre": "Vino Blanco", "cantidad": 200, "unidad": "ml", "categoria": "Bebidas"},
+      {"nombre": "Hoja de Laurel", "cantidad": 2, "unidad": "unidades", "categoria": "Hierbas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Trocear el cordero en piezas medianas. Salpimentar generosamente y dorar en aceite de oliva caliente hasta sellarlo bien. Reservar.", "tiempoMinutos": 15},
+      {"orden": 2, "descripcion": "Picar la cebolla, los pimientos y el tomate. Machacar 4 dientes de ajo en un mortero con sal.", "tiempoMinutos": 10},
+      {"orden": 3, "descripcion": "En la misma cazuela, sofreír la cebolla picada hasta que esté transparente. Añadir los pimientos y cocinar 10 minutos.", "tiempoMinutos": 15},
+      {"orden": 4, "descripcion": "Incorporar el tomate picado, el pimentón y los ajos machacados. Cocinar hasta que el tomate se reduzca.", "tiempoMinutos": 12},
+      {"orden": 5, "descripcion": "Devolver el cordero a la cazuela, añadir el vino blanco, las hojas de laurel y cubrir con agua. Llevar a ebullición.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Bajar el fuego al mínimo, tapar y cocinar durante 60-70 minutos hasta que el cordero esté muy tierno.", "tiempoMinutos": 70},
+      {"orden": 7, "descripcion": "La salsa debe quedar espesa y concentrada. Si está muy líquida, retirar la carne y reducir el caldo a fuego fuerte.", "tiempoMinutos": 10},
+      {"orden": 8, "descripcion": "Rectificar de sal y servir bien caliente. Opcionalmente decorar con perejil picado y acompañar con pan para mojar.", "tiempoMinutos": 3}
+    ]
+  },
+  {
+    "nombre": "Leche Frita",
+    "descripcion": "La leche frita es un postre tradicional castellano que transforma la leche en un dulce crujiente por fuera y cremoso por dentro. Se elabora una crema espesa con leche, azúcar, harina y aromas de canela y limón, que se deja enfriar hasta solidificar. Luego se corta en porciones, se rebozan en huevo y pan rallado, y se fríen hasta quedar doradas. El resultado es sorprendente: un exterior crujiente que contrasta con un interior sedoso y dulce. Se espolvorea con azúcar y canela antes de servir. Es un postre de aprovechamiento que se ha convertido en un clásico de la repostería española.",
+    "tiempoPreparacion": 90,
+    "porciones": 6,
+    "dificultad": "MEDIA",
+    "etiquetas": ["VEGETARIANO", "POSTRES_SALUDABLES"],
+    "imagenUrl": "https://images.unsplash.com/photo-1551024601-bec78aea704b",
+    "ingredientes": [
+      {"nombre": "Leche Entera", "cantidad": 1000, "unidad": "ml", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Azúcar", "cantidad": 150, "unidad": "gramos", "categoria": "Endulzantes"},
+      {"nombre": "Harina", "cantidad": 120, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Maicena", "cantidad": 40, "unidad": "gramos", "categoria": "Harinas"},
+      {"nombre": "Huevo", "cantidad": 3, "unidad": "unidades", "categoria": "Lácteos/Huevos"},
+      {"nombre": "Pan Rallado", "cantidad": 150, "unidad": "gramos", "categoria": "Panadería"},
+      {"nombre": "Canela en Rama", "cantidad": 1, "unidad": "unidades", "categoria": "Especias"},
+      {"nombre": "Limón", "cantidad": 1, "unidad": "unidades", "categoria": "Frutas"}
+    ],
+    "pasos": [
+      {"orden": 1, "descripcion": "Calentar 750 ml de leche con la canela en rama y la piel de limón hasta que hierva. Retirar del fuego y dejar infusionar.", "tiempoMinutos": 10},
+      {"orden": 2, "descripcion": "En un bol, mezclar la harina, maicena y azúcar. Añadir los 250 ml de leche fría restantes y batir hasta que no haya grumos.", "tiempoMinutos": 5},
+      {"orden": 3, "descripcion": "Colar la leche infusionada caliente y verterla sobre la mezcla de harina, removiendo constantemente.", "tiempoMinutos": 3},
+      {"orden": 4, "descripcion": "Llevar todo a una cazuela y cocinar a fuego medio-bajo sin dejar de remover hasta que espese como una bechamel muy densa.", "tiempoMinutos": 15},
+      {"orden": 5, "descripcion": "Verter la crema en una bandeja rectangular engrasada, extender uniformemente con 2-3 cm de grosor. Dejar enfriar y refrigerar 3 horas.", "tiempoMinutos": 8},
+      {"orden": 6, "descripcion": "Una vez solidificada, cortar en cuadrados o rectángulos de tamaño uniforme.", "tiempoMinutos": 5},
+      {"orden": 7, "descripcion": "Pasar cada porción por harina, luego por huevo batido y finalmente por pan rallado. Repetir el rebozado para mejor cobertura.", "tiempoMinutos": 15},
+      {"orden": 8, "descripcion": "Freír en aceite abundante caliente hasta que estén doradas. Escurrir y espolvorear con azúcar mezclado con canela molida. Servir tibias.", "tiempoMinutos": 12}
+    ]
+  }
+]

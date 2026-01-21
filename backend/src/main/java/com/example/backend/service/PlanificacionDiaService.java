@@ -136,7 +136,7 @@ public class PlanificacionDiaService {
                     .id(dia.getReceta().getId())
                     .nombre(dia.getReceta().getNombre())
                     .descripcion(dia.getReceta().getDescripcion())
-                    .instrucciones(dia.getReceta().getInstrucciones())
+                    .imagenUrl(dia.getReceta().getImagenUrl())
                     .tiempoPreparacion(dia.getReceta().getTiempoPreparacion())
                     .porciones(dia.getReceta().getPorciones())
                     .fechaCreacion(dia.getReceta().getFechaCreacion())

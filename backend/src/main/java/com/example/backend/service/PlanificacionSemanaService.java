@@ -112,7 +112,7 @@ public class PlanificacionSemanaService {
                                 .id(pd.getReceta().getId())
                                 .nombre(pd.getReceta().getNombre())
                                 .descripcion(pd.getReceta().getDescripcion())
-                                .instrucciones(pd.getReceta().getInstrucciones())
+                                .imagenUrl(pd.getReceta().getImagenUrl())
                                 .tiempoPreparacion(pd.getReceta().getTiempoPreparacion())
                                 .porciones(pd.getReceta().getPorciones())
                                 .fechaCreacion(pd.getReceta().getFechaCreacion())

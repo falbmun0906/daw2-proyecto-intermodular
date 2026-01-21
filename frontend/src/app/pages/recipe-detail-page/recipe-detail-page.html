@@ -77,7 +77,7 @@
       <article class="recipe-step">
         <div class="recipe-step__header">
           <h3 class="recipe-step__title">Paso {{ step.stepNumber }} de {{ step.totalSteps }}</h3>
-          <app-badge variant="info" size="sm">{{ step.duration }}</app-badge>
+          <app-badge variant="info" size="sm" class="recipe-step__badge">{{ step.duration }}</app-badge>
         </div>
         <p class="recipe-step__description">{{ step.description }}</p>
       </article>

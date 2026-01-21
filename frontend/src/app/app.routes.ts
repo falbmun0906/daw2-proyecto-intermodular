@@ -4,6 +4,11 @@ import { LoginPage } from './pages/login-page/login-page';
 import { RegisterPage } from './pages/register-page/register-page';
 import { StyleGuidePage } from './pages/style-guide-page/style-guide-page';
 import { AboutPage } from './pages/about-page/about-page';
+import { TermsPage } from './pages/terms-page/terms-page';
+import { PrivacyPage } from './pages/privacy-page/privacy-page';
+import { CookiesPage } from './pages/cookies-page/cookies-page';
+import { FaqPage } from './pages/faq-page/faq-page';
+import { ContactPage } from './pages/contact-page/contact-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
 import { ProductListComponent } from './features/products/components/product-list';
 import { ProductDetailComponent } from './features/products/components/product-detail';
@@ -98,16 +103,60 @@ export const routes: Routes = [
     data: { breadcrumb: 'Registro' }
   },
 
-  // Guía de estilos (solo desarrollo)
+  // Gua de estilos (solo desarrollo)
   {
     path: 'style-guide',
     component: StyleGuidePage,
-    data: { breadcrumb: 'Guía de Estilos' }
+    data: { breadcrumb: 'Gua de Estilos' }
   },
 
-  // ========== RUTA WILDCARD 404 (ÚLTIMA) ==========
+  // ========== PÁGINAS INSTITUCIONALES ==========
 
-  // Página 404 - Debe ir SIEMPRE al final
+  // Acerca de nosotros
+  {
+    path: 'acerca-de',
+    component: AboutPage,
+    data: { breadcrumb: 'Acerca de nosotros' }
+  },
+
+  // Términos y condiciones
+  {
+    path: 'terminos-condiciones',
+    component: TermsPage,
+    data: { breadcrumb: 'Términos y condiciones' }
+  },
+
+  // Política de privacidad
+  {
+    path: 'politica-privacidad',
+    component: PrivacyPage,
+    data: { breadcrumb: 'Política de privacidad' }
+  },
+
+  // Política de cookies
+  {
+    path: 'politica-cookies',
+    component: CookiesPage,
+    data: { breadcrumb: 'Política de Cookies' }
+  },
+
+  // Preguntas frecuentes
+  {
+    path: 'faq',
+    component: FaqPage,
+    data: { breadcrumb: 'Preguntas frecuentes' }
+  },
+
+  // Contacto
+  {
+    path: 'contacto',
+    component: ContactPage,
+    data: { breadcrumb: 'Contacto' }
+  },
+
+  // ========== RUTA WILDCARD 404 (šLTIMA) ==========
+
+  // Pgina 404 - Debe ir SIEMPRE al final
   {
     path: '**',
     component: NotFoundPage

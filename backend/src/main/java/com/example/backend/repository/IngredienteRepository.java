@@ -53,6 +53,15 @@ public interface IngredienteRepository extends JpaRepository<Ingrediente, Long> 
     Page<Ingrediente> findByCategoria(String categoria, Pageable pageable);
 
     /**
+     * Busca un ingrediente por su nombre exacto.
+     * Nota: Este método distingue entre mayúsculas y minúsculas según la colación de la DB.
+     *
+     * @param nombre Nombre exacto del ingrediente.
+     * @return Un Optional que contiene el ingrediente si se encuentra.
+     */
+    Optional<Ingrediente> findByNombre(String nombre);
+
+    /**
      * Verifica si existe un ingrediente con el nombre exacto (case-insensitive).
      *
      * @param nombre nombre exacto del ingrediente
