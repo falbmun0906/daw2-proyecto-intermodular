@@ -1,30 +1,12 @@
 <div class="planner">
-  <aside class="planner__sidebar" [class.planner__sidebar--collapsed]="sidebarCollapsed">
-    <h2 class="planner__sidebar-title">Mi cocina</h2>
+  <app-sidebar
+    [isCollapsed]="sidebarCollapsed"
+    [items]="sidebarItems"
+    (toggle)="toggleSidebar()"
+    (itemClick)="onNavItemClick($event)">
+  </app-sidebar>
 
-    <nav class="planner__nav">
-      @for (item of sidebarItems; track item.id) {
-        <app-button
-          [variant]="item.active ? 'secondary' : 'ghost'"
-          size="md"
-          class="planner__nav-item"
-          (buttonClick)="onNavItemClick(item.id)">
-          {{ item.icon }} {{ item.label }}
-        </app-button>
-      }
-    </nav>
-
-    <app-button
-      variant="ghost"
-      size="sm"
-      class="planner__sidebar-toggle"
-      (buttonClick)="toggleSidebar()"
-      [attr.aria-label]="sidebarCollapsed ? 'Expandir menú' : 'Contraer menú'">
-      {{ sidebarCollapsed ? '→' : '←' }}
-    </app-button>
-  </aside>
-
-  <main class="planner__content">
+  <main class="planner__content" [class.planner__content--sidebar-collapsed]="sidebarCollapsed">
     <section class="planner__calendar-section">
       <h1 class="planner__calendar-title">Mi calendario de comidas</h1>
 
@@ -73,9 +55,10 @@
         <app-form-input
           type="text"
           placeholder="Buscar plan"
-          [icon]="'🔍'"
+          icon="search"
+          variant="search"
           [(ngModel)]="searchQuery"
-          (input)="onSearch()"
+          (inputChange)="onSearch()"
           class="planner__search form-input--search"
         />
 
@@ -100,4 +83,3 @@
     </section>
   </main>
 </div>
-

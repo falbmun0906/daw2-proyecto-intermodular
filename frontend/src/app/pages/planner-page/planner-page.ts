@@ -5,6 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { Button } from '../../components/shared/button/button';
 import { FormInput } from '../../components/shared/form-input/form-input';
 import { MealPlanCard } from '../../components/shared/meal-plan-card/meal-plan-card';
+import { Sidebar } from '../../components/layout/sidebar/sidebar';
+
+interface SidebarNavItem {
+  id: string;
+  label: string;
+  icon: string;
+  route: string;
+  active: boolean;
+}
 
 interface CalendarDay {
   date: number;
@@ -19,17 +28,10 @@ interface MealPlan {
   tags: string[];
 }
 
-interface SidebarNavItem {
-  id: string;
-  label: string;
-  icon: string;
-  active: boolean;
-}
-
 @Component({
   selector: 'app-planner-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, Button, FormInput, MealPlanCard],
+  imports: [CommonModule, RouterModule, FormsModule, Button, FormInput, MealPlanCard, Sidebar],
   templateUrl: './planner-page.html',
   styleUrl: './planner-page.scss'
 })
@@ -38,10 +40,10 @@ export class PlannerPage {
   sidebarCollapsed: boolean = false;
 
   sidebarItems: SidebarNavItem[] = [
-    { id: 'resumen', label: 'Resumen', icon: '', active: false },
-    { id: 'despensa', label: 'Despensa', icon: '', active: false },
-    { id: 'planificador', label: 'Planificador', icon: '', active: true },
-    { id: 'lista', label: 'Lista', icon: '', active: false }
+    { id: 'resumen', label: 'Resumen', icon: 'house', route: '/dashboard', active: true },
+    { id: 'despensa', label: 'Despensa', icon: 'package', route: '/despensa', active: false },
+    { id: 'planificador', label: 'Planificador', icon: 'calendar', route: '/planificador', active: false },
+    { id: 'lista', label: 'Lista de la compra', icon: 'shopping-cart', route: '/dashboard', active: false }
   ];
 
   calendarDays: CalendarDay[] = [
@@ -88,7 +90,6 @@ export class PlannerPage {
   }
 
   onNavItemClick(itemId: string): void {
-    this.sidebarItems.forEach(item => item.active = item.id === itemId);
     console.log('Navigate to:', itemId);
   }
 
@@ -122,4 +123,3 @@ export class PlannerPage {
     return 'calendar-day--no-meals';
   }
 }
-
