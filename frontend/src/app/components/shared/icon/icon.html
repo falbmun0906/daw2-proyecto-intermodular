@@ -12,7 +12,12 @@
     [attr.width]="size"
     [attr.height]="size"
     [attr.alt]="name"
-    [class]="'icon ' + (hasSolidWhite ? 'icon--solid-white' : hasSolidBlack ? 'icon--solid-black' : 'icon--phosphor')"
+    [ngClass]="{
+      'icon': true,
+      'icon--solid-white': hasSolidWhite,
+      'icon--solid-black': hasSolidBlack,
+      'icon--phosphor': !hasSolidWhite && !hasSolidBlack
+    }"
   />
 }
 

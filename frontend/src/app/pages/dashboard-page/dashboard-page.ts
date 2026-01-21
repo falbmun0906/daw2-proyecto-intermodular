@@ -116,12 +116,12 @@ export class DashboardPage {
 
   private updateVisibleSlides(): void {
     const width = window.innerWidth;
-    if (width < 640) {
-      this.visibleSlides = 1;
+    if (width < 768) {
+      this.visibleSlides = 1; // Móvil: carousel de 1 item
     } else if (width < 1024) {
-      this.visibleSlides = 2;
+      this.visibleSlides = 2; // Tablet: mostrar todos (grid de 2)
     } else {
-      this.visibleSlides = 3;
+      this.visibleSlides = 3; // Desktop: mostrar todos (grid de 3)
     }
   }
 
@@ -133,20 +133,41 @@ export class DashboardPage {
   }
 
   get visiblePendingProducts() {
-    return this.pendingProducts.filter(p => !p.completed);
+    const products = this.pendingProducts.filter(p => !p.completed);
+
+    // En móvil (< 768px), mostrar todos
+    if (window.innerWidth < 768) {
+      return products;
+    }
+
+    // En desktop/tablet, mantener lógica de carousel
+    return products;
   }
 
   getCarouselTransform(): string {
+    // Solo aplicar transform en móvil
+    if (window.innerWidth >= 769) {
+      return 'translateX(0)';
+    }
+
     const slideWidth = 100 / this.visibleSlides;
     const translateX = -(this.currentCarouselIndex * slideWidth);
     return `translateX(${translateX}%)`;
   }
 
   getMaxCarouselIndex(): number {
+    // Solo en móvil hay carousel
+    if (window.innerWidth >= 769) {
+      return 0;
+    }
     return Math.max(0, this.visiblePendingProducts.length - this.visibleSlides);
   }
 
   canGoNext(): boolean {
+    // Solo en móvil
+    if (window.innerWidth >= 769) {
+      return false;
+    }
     return this.currentCarouselIndex < this.getMaxCarouselIndex();
   }
 
@@ -189,5 +210,9 @@ export class DashboardPage {
 
   onAddProduct(): void {
     console.log('Add product to shopping list');
+  }
+
+  onSearch(): void {
+    console.log('Search:', this.searchQuery);
   }
 }

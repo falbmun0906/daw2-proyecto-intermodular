@@ -66,16 +66,19 @@
     </section>
 
     <section class="dashboard__section dashboard__shopping">
-      <h2 class="dashboard__section-title">Tu lista de la compra</h2>
+      <div class="dashboard__section-header">
+        <h2 class="dashboard__section-title">Tu lista de la compra</h2>
+      </div>
 
       <div class="dashboard__search">
         <app-form-input
           type="text"
           placeholder="Buscar ingrediente..."
-          icon="magnifying-glass"
+          icon="search"
           variant="search"
           [(ngModel)]="searchQuery"
-          class="dashboard__search-input"
+          (inputChange)="onSearch()"
+          class="dashboard__search-input form-input--search"
         />
       </div>
 

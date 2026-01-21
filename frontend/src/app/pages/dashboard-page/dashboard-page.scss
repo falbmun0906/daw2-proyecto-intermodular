@@ -3,46 +3,27 @@
 .dashboard {
   display: flex;
   min-height: 100vh;
+  position: relative;
+  background-color: var(--bg-primary);
+}
+
+.dashboard__overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg-form-1.svg');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: bottom right;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .dashboard__content {
-  padding: var(--spacing-8);
-  background: var(--bg-color, white);
   position: relative;
   overflow-y: auto;
   flex: 1;
-
-  // LOGICA DE MARGEN SIEMPRE VISIBLE
-  transition: margin-left var(--transition-slow) var(--transition-easing);
   z-index: 1;
-
-  @include respond-to(md) {
-    padding: var(--spacing-4);
-    // IMPORTANTE: En móvil NO ponemos margin-left: 0,
-    // porque el sidebar de 80px sigue ahí ocupando espacio.
-  }
-}
-
-.dashboard__bg-pattern {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: url('/assets/bg-form-1.svg');
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  background-size: 50%;
-  opacity: 0.05;
-
-  // Sincronizar el fondo
-  left: 280px;
-  transition: left var(--transition-slow) var(--transition-easing);
-
-  .dashboard__content--sidebar-collapsed & {
-    left: 80px;
-  }
 }
 
 .dashboard__section {
@@ -86,6 +67,10 @@
   }
 }
 
+.dashboard__pending, .dashboard__shopping {
+  padding: var(--spacing-6);
+}
+
 /* =========================
  * MEALS SECTION (Cards de recetas)
  * ========================= */
@@ -93,7 +78,6 @@
 .dashboard__meals {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--spacing-6);
 
   @include respond-to(lg) {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -101,11 +85,6 @@
 
   @include respond-to(md) {
     grid-template-columns: 1fr;
-    gap: var(--spacing-5);
-  }
-
-  @include respond-to(sm) {
-    gap: var(--spacing-4);
   }
 }
 
@@ -125,13 +104,20 @@
 
 .dashboard__carousel-btn {
   @include flex-layout(row, center, center);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   background: var(--color-primary-light);
   border: 1px solid var(--color-primary);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-base);
+
+  &:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+  }
 
   &:hover:not(:disabled) {
     background: var(--color-secondary-light);
@@ -143,9 +129,8 @@
     cursor: not-allowed;
   }
 
-  @include respond-to(sm) {
-    width: 44px;
-    height: 44px;
+  &[aria-disabled="true"] {
+    pointer-events: none;
   }
 }
 
@@ -157,17 +142,51 @@
 
 .dashboard__carousel-track {
   display: flex;
-  gap: var(--spacing-4);
+  gap: clamp(0.75rem, 2vw, 1rem);
   transition: transform var(--transition-slow) var(--transition-easing);
 
-  @include respond-to(md) {
-    gap: var(--spacing-3);
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
 .dashboard__carousel-slide {
   flex: 0 0 auto;
-  width: calc(33.333% - var(--spacing-4) * 2 / 3);
+
+  // Desktop: 3 columnas
+  width: calc(33.333% - clamp(0.75rem, 2vw, 1rem) * 2 / 3);
+
+  // Tablet: 2 columnas
+  @include respond-to(lg) {
+    width: calc(50% - clamp(0.75rem, 2vw, 1rem) / 2);
+  }
+
+  // Móvil: 1 columna (full width)
+  @include respond-to(md) {
+    width: 100%;
+  }
+}
+
+// Ocultar carousel en móvil y mostrar como grid
+@include respond-to(md) {
+  .dashboard__carousel {
+    overflow: visible;
+  }
+
+  .dashboard__carousel-track {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+    transform: none !important; // Desactivar transformación en móvil
+  }
+
+  .dashboard__carousel-slide {
+    width: 100%;
+  }
+
+  .dashboard__carousel-controls {
+    display: none; // Ocultar controles en móvil
+  }
 }
 
 /* =========================
