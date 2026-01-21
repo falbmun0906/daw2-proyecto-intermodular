@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Icon } from '../icon/icon';
+import {Button} from '../button/button';
 
 @Component({
   selector: 'app-pending-product',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Icon],
   templateUrl: './pending-product.html',
   styleUrl: './pending-product.scss'
 })
@@ -13,6 +15,12 @@ export class PendingProduct {
   @Input() urgency: 'Alta' | 'Media' | 'Baja' = 'Baja';
   @Input() daysRemaining: number = 0;
   @Input() color: string = '#E6E6FA';
+  @Output() markDone = new EventEmitter<void>();
+
+  onMarkDone() {
+    this.markDone.emit();
+  }
+
 }
 
 

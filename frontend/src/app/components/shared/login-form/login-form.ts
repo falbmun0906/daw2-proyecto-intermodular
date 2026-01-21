@@ -6,7 +6,6 @@ import { FormInput } from '../form-input/form-input';
 import { FormCheckbox } from '../form-checkbox/form-checkbox';
 import { Button } from '../button/button';
 import { ToastService } from '../../../services/toast.service';
-import { LoadingService } from '../../../services/loading.service';
 
 /**
  * LoginForm Component
@@ -36,14 +35,13 @@ export class LoginForm implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private toastService: ToastService,
-    private loadingService: LoadingService
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: [false]
     });
   }
@@ -76,7 +74,10 @@ export class LoginForm implements OnInit {
       event.preventDefault();
     }
 
+    console.log('📝 LoginForm.onSubmit() called, form valid:', this.loginForm.valid);
+
     if (this.loginForm.invalid) {
+      console.log('❌ Formulario inválido, errores:', this.loginForm.errors);
       this.loginForm.markAllAsTouched();
       this.toastService.error('Por favor, corrige los errores del formulario');
       return;
@@ -84,15 +85,11 @@ export class LoginForm implements OnInit {
 
     this.isSubmitting = true;
     this.generalError = '';
-    this.loadingService.show();
 
-    // Simular login
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.loadingService.hide();
-      this.toastService.success('Inicio de sesión exitoso');
-      this.submitForm.emit(this.loginForm.value);
-    }, 1500);
+    console.log('✅ Emitiendo submitForm con datos:', this.loginForm.value);
+    // El delay será manejado por authService.loginWithCredentials en login-page
+    // que devuelve un Observable con delay(1000)
+    this.submitForm.emit(this.loginForm.value);
   }
 
   /**
@@ -111,6 +108,14 @@ export class LoginForm implements OnInit {
   }
 
   onFieldFocus(): void {
+    this.generalError = '';
+  }
+
+  /**
+   * Resetea el estado del formulario (llamado desde el parent después de login)
+   */
+  resetFormState(): void {
+    this.isSubmitting = false;
     this.generalError = '';
   }
 }

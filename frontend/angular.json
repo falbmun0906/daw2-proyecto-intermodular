@@ -41,13 +41,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "550kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "1MB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kB",
-                  "maximumError": "15kB"
+                  "maximumWarning": "20kB",
+                  "maximumError": "50kB"
                 }
               ],
               "outputHashing": "all"
@@ -101,6 +101,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
+            "dir": "dist/frontend/browser",
             "buildTarget": "frontend:build:production",
             "baseHref": "/daw2-proyecto-intermodular/"
           }

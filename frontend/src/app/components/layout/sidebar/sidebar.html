@@ -1,70 +1,45 @@
-<aside class="app-sidebar" [class.app-sidebar--open]="isOpen" aria-label="Navegación secundaria">
-  <h2 class="app-sidebar__title">Mi cocina</h2>
+<aside
+  class="app-sidebar"
+  [class.app-sidebar--collapsed]="isCollapsed"
+  #sidebarElement>
 
-  <nav class="app-sidebar__nav" aria-label="Menú de Mi cocina">
-    <ul class="app-sidebar__nav-list">
-      <li class="app-sidebar__nav-item">
+  <div class="app-sidebar__header">
+    <h2 class="app-sidebar__title">Mi cocina</h2>
+  </div>
+
+  <hr class="app-sidebar__divider">
+
+  <nav class="app-sidebar__nav">
+    @for (item of items; track item.id) {
+      @if (item.id === 'lista') {
+        <button
+          class="app-sidebar__nav-button"
+          [class.app-sidebar__nav-button--active]="item.active"
+          (click)="onNavToShoppingList()">
+          <span class="app-sidebar__nav-indent"></span>
+          <app-icon [name]="item.icon" class="app-sidebar__nav-icon"></app-icon>
+          <span class="app-sidebar__nav-text">{{ item.label }}</span>
+        </button>
+      } @else {
         <a
-          class="app-sidebar__nav-link"
-          [class.app-sidebar__nav-link--active]="activeRoute === 'resumen'"
-          routerLink="/mi-cocina/resumen"
-          (click)="onLinkClick()"
-        >
-          <span class="app-sidebar__nav-icon" aria-hidden="true">📊</span>
-          Resumen
+          [routerLink]="item.route"
+          class="app-sidebar__nav-button"
+          [class.app-sidebar__nav-button--active]="item.active"
+          (click)="onLinkClick(item.id)">
+          <span class="app-sidebar__nav-indent"></span>
+          <app-icon [name]="item.icon" class="app-sidebar__nav-icon"></app-icon>
+          <span class="app-sidebar__nav-text">{{ item.label }}</span>
         </a>
-      </li>
-      <li class="app-sidebar__nav-item">
-        <a
-          class="app-sidebar__nav-link"
-          [class.app-sidebar__nav-link--active]="activeRoute === 'despensa'"
-          routerLink="/mi-cocina/despensa"
-          (click)="onLinkClick()"
-        >
-          <span class="app-sidebar__nav-icon" aria-hidden="true">🏪</span>
-          Despensa
-        </a>
-      </li>
-      <li class="app-sidebar__nav-item">
-        <a
-          class="app-sidebar__nav-link"
-          [class.app-sidebar__nav-link--active]="activeRoute === 'planificador'"
-          routerLink="/mi-cocina/planificador"
-          (click)="onLinkClick()"
-        >
-          <span class="app-sidebar__nav-icon" aria-hidden="true">📅</span>
-          Planificador
-        </a>
-      </li>
-      <li class="app-sidebar__nav-item">
-        <a
-          class="app-sidebar__nav-link"
-          [class.app-sidebar__nav-link--active]="activeRoute === 'lista'"
-          routerLink="/mi-cocina/lista"
-          (click)="onLinkClick()"
-        >
-          <span class="app-sidebar__nav-icon" aria-hidden="true">📝</span>
-          Lista
-        </a>
-      </li>
-    </ul>
+      }
+    }
   </nav>
 
+  <hr class="app-sidebar__divider app-sidebar__divider--bottom">
+
   <button
-    class="app-sidebar__close-button"
-    type="button"
-    (click)="onClose()"
-    aria-label="Cerrar menú lateral"
-  >
-    ←
+    class="app-sidebar__toggle"
+    (click)="onToggle()"
+    [attr.aria-label]="isCollapsed ? 'Abrir menú' : 'Cerrar menú'">
+    <app-icon [name]="isCollapsed ? 'caret-right' : 'caret-left'"></app-icon>
   </button>
 </aside>
-
-<!-- Overlay para cerrar sidebar en mobile -->
-<div
-  class="app-sidebar-overlay"
-  [class.app-sidebar-overlay--visible]="isOpen"
-  (click)="onClose()"
-  aria-hidden="true"
-></div>
-

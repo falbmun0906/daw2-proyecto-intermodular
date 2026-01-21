@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, AfterViewInit, Renderer2, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service';
+import { AuthService } from '../../../services/auth.service';
 
 /**
  * Header Component
@@ -18,17 +19,18 @@ import { ThemeService } from '../../../services/theme.service';
   styleUrl: './header.scss',
 })
 export class Header implements AfterViewInit {
+  @Input() variant: 'default' | 'dashboard' = 'default';
   isMenuOpen = false;
+
+  private themeService = inject(ThemeService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private elementRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
 
   // CRITERIO 1.1: @ViewChild para acceso seguro al elemento del menú
   @ViewChild('menuContainer', { static: false }) menuContainer!: ElementRef;
 
-  constructor(
-    private elementRef: ElementRef,
-    private themeService: ThemeService,
-    private router: Router,
-    private renderer: Renderer2
-  ) {}
 
   /**
    * CRITERIO 1.1: ngAfterViewInit - Acceso seguro a ViewChild después de inicialización
@@ -112,14 +114,23 @@ export class Header implements AfterViewInit {
   }
 
   onMiDespensaClick(): void {
-    const isLoggedIn = localStorage.getItem('userToken') || sessionStorage.getItem('userToken');
-
-    if (isLoggedIn) {
-      this.router.navigate(['/mi-cocina']);
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
     } else {
       this.router.navigate(['/login']);
     }
 
     this.closeMenu();
+  }
+
+  getNavLinks() {
+    if (this.variant === 'dashboard') {
+      return [
+        { label: 'Inicio', routerLink: '/home' },
+        { label: 'Notificaciones', routerLink: '/dashboard' },
+        { label: 'Perfil', routerLink: '/perfil' }
+      ];
+    }
+    return [];
   }
 }

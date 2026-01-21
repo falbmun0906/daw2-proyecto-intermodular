@@ -1,162 +1,180 @@
-/* =========================
- * Sidebar Component (app-sidebar)
- * ========================= */
-
 @use '../../../../styles/01-tools/mixins.scss' as *;
 
 .app-sidebar {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 250px;
-  min-height: 100vh;
-  padding: var(--spacing-8);
-  background-color: var(--color-text-main);
-  color: var(--color-neutral-white);
-  box-shadow: var(--shadow-lg);
-  position: fixed;
-  top: 0;
-  left: -100%;
-  z-index: 200;
-  transition: left var(--transition-base) var(--transition-easing);
+  width: 280px;
+  min-height: 100%;
+  background: var(--bg-secondary);
+  padding-top: var(--spacing-6);
+  transition: width var(--transition-slow) var(--transition-easing);
 
-  @include respond-to(lg) {
-    position: static;
-    left: 0;
+  &--collapsed {
+    width: 80px;
+
+    .app-sidebar__header {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .app-sidebar__divider {
+      display: none;
+    }
+
+    .app-sidebar__nav-button {
+      justify-content: center;
+      padding: var(--spacing-3);
+    }
+
+    .app-sidebar__nav-text,
+    .app-sidebar__nav-indent {
+      display: none;
+    }
+
+    .app-sidebar__toggle {
+      justify-content: center;
+      padding: var(--spacing-4);
+    }
   }
 
-  /* Modificador cuando el sidebar está abierto (mobile) */
-  &--open {
-    left: 0;
+  // En móvil: SIEMPRE estrecho y ocultar toggle
+  @media (max-width: 768px) {
+    width: 80px;
+
+    .app-sidebar__header {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .app-sidebar__divider {
+      display: none;
+    }
+
+    .app-sidebar__nav-button {
+      justify-content: center;
+      padding: var(--spacing-3);
+    }
+
+    .app-sidebar__nav-text,
+    .app-sidebar__nav-indent {
+      display: none;
+    }
+
+    .app-sidebar__toggle {
+      display: none;
+    }
   }
 }
 
-/* Título del sidebar */
+.app-sidebar__header {
+  padding: 0 var(--spacing-6) 0 var(--spacing-7);
+  transition: opacity var(--transition-slow);
+  flex-shrink: 0;
+}
+
 .app-sidebar__title {
   font-family: var(--font-family-primary);
-  font-size: var(--font-h3-size);
+  font-size: var(--font-h5-size);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-neutral-white);
-  margin: 0 0 var(--spacing-8) 0;
-  padding-bottom: var(--spacing-6);
-  border-bottom: var(--border-width-thin) solid rgba(255, 255, 255, 0.2);
-  text-align: center;
-}
-
-/* Lista de navegación del sidebar */
-.app-sidebar__nav {
-  flex-grow: 1;
-}
-
-.app-sidebar__nav-list {
-  @include flex-layout(column, flex-start, stretch, var(--spacing-4));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.app-sidebar__nav-item {
+  color: var(--text-primary, var(--color-text-main));
   margin: 0;
 }
 
-.app-sidebar__nav-link {
-  @include flex-layout(row, flex-start, center, var(--spacing-4));
-  padding: var(--spacing-4) var(--spacing-6);
-  background-color: var(--color-primary-light);
-  color: var(--color-text-main);
-  text-decoration: none;
-  border-radius: var(--radius-md);
-  font-family: var(--font-family-primary);
-  font-size: var(--font-h4-size);
-  font-weight: var(--font-weight-medium);
-  transition: background-color var(--transition-base) var(--transition-easing),
-              transform var(--transition-fast) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
-
-  &:hover {
-    background-color: var(--color-secondary);
-    transform: translateX(4px);
-    box-shadow: var(--shadow-md);
-  }
-
-  &:active {
-    transform: translateX(2px);
-  }
-
-  @include focus-ring(var(--color-secondary));
-
-  /* Modificador para link activo */
-  &--active {
-    background-color: var(--color-secondary);
-    font-weight: var(--font-weight-semibold);
-    box-shadow: var(--shadow-sm);
-  }
-}
-
-/* Iconos dentro de los enlaces */
-.app-sidebar__nav-icon {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  font-size: var(--font-h4-size);
-
-  /* Si usas iconos SVG, aplicar fill según el contexto */
-  fill: currentColor;
-}
-
-/* Botón de cierre para mobile */
-.app-sidebar__close-button {
-  position: absolute;
-  bottom: var(--spacing-8);
-  right: var(--spacing-8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: var(--spacing-2);
-  background-color: var(--color-primary);
+.app-sidebar__divider {
   border: none;
-  border-radius: var(--radius-full);
-  color: var(--color-neutral-white);
-  font-size: var(--font-h4-size);
-  cursor: pointer;
-  transition: background-color var(--transition-base) var(--transition-easing),
-              transform var(--transition-fast) var(--transition-easing);
+  border-top: 1px solid var(--color-primary-light);
+  margin: var(--spacing-4) var(--spacing-6);
+  transition: margin var(--transition-slow);
+  flex-shrink: 0;
 
-  &:hover {
-    background-color: var(--color-primary-hover);
-    transform: rotate(90deg);
-  }
-
-  &:active {
-    transform: rotate(90deg) scale(0.95);
-  }
-
-  @include focus-ring(var(--color-secondary));
-
-  @include respond-to(lg) {
-    display: none;
+  &--bottom {
+    margin-top: var(--spacing-4);
+    margin-bottom: 0;
   }
 }
 
-/* Overlay para cerrar el sidebar en mobile */
+.app-sidebar__nav {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-2));
+  padding: 0 var(--spacing-4);
+  flex-shrink: 0;
+}
+
+.app-sidebar__nav-button {
+  @include flex-layout(row, flex-start, center, var(--spacing-3));
+  background: transparent;
+  border: none;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+  position: relative;
+  width: 100%;
+  text-align: left;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--color-primary-dark);
+    color: var(--text-primary, var(--color-text-main));
+  }
+
+  &--active {
+    background: var(--color-primary-dark);
+    color: var(--color-text-main);
+
+    .app-sidebar__nav-indent {
+      opacity: 1;
+    }
+  }
+}
+
+.app-sidebar__nav-indent {
+  width: 4px;
+  height: 24px;
+  background: var(--color-secondary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+.app-sidebar__nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.app-sidebar__toggle {
+  @include flex-layout(row, center, center);
+  background: transparent;
+  border: none;
+  padding: var(--spacing-4);
+  cursor: pointer;
+  color: var(--text-secondary, var(--color-neutral-gray));
+  transition: all var(--transition-base);
+  width: 100%;
+  flex-shrink: 0;
+
+
+  &:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: -2px;
+  }
+
+  app-icon,
+  .icon {
+    filter: none !important;
+  }
+}
+
 .app-sidebar-overlay {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 199;
-
-  &--visible {
-    display: block;
-  }
-
-  @include respond-to(lg) {
-    display: none !important;
-  }
 }
-

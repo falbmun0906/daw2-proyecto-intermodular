@@ -10,6 +10,9 @@ import { CookiesPage } from './pages/cookies-page/cookies-page';
 import { FaqPage } from './pages/faq-page/faq-page';
 import { ContactPage } from './pages/contact-page/contact-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
+import { DashboardPage } from './pages/dashboard-page/dashboard-page';
+import { PantryPage } from './pages/pantry-page/pantry-page';
+import { PlannerPage } from './pages/planner-page/planner-page';
 import { ProductListComponent } from './features/products/components/product-list';
 import { ProductDetailComponent } from './features/products/components/product-detail';
 import { ProductFormComponent } from './features/products/components/product-form';
@@ -33,6 +36,27 @@ export const routes: Routes = [
     path: 'home',
     component: HomePage,
     data: { breadcrumb: 'Inicio' }
+  },
+
+  // 1.5. Dashboard - Mi cocina (área de usuario)
+  {
+    path: 'dashboard',
+    component: DashboardPage,
+    data: { breadcrumb: 'Dashboard' }
+  },
+
+  // 1.6. Despensa - Gestión de alimentos
+  {
+    path: 'despensa',
+    component: PantryPage,
+    data: { breadcrumb: 'Mi Despensa' }
+  },
+
+  // 1.7. Planificador - Planificación de comidas
+  {
+    path: 'planificador',
+    component: PlannerPage,
+    data: { breadcrumb: 'Planificador de Comidas' }
   },
 
   // 2. Productos - CRUD completo
