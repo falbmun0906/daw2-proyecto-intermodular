@@ -27,23 +27,6 @@
     <section class="dashboard__section dashboard__pending">
       <div class="dashboard__section-header">
         <h2 class="dashboard__section-title">¡Tienes acciones pendientes!</h2>
-
-        <div class="dashboard__carousel-controls">
-          <button
-            class="dashboard__carousel-btn"
-            (click)="prevCarousel()"
-            [disabled]="currentCarouselIndex === 0"
-            aria-label="Anterior">
-            <app-icon name="caret-left"></app-icon>
-          </button>
-          <button
-            class="dashboard__carousel-btn"
-            (click)="nextCarousel()"
-            [disabled]="!canGoNext()"
-            aria-label="Siguiente">
-            <app-icon name="caret-right"></app-icon>
-          </button>
-        </div>
       </div>
 
       <div class="dashboard__carousel">
