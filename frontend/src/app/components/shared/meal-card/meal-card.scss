@@ -9,6 +9,10 @@
   padding: var(--spacing-6);
   @include flex-layout(column, flex-end, flex-start, 0);
 
+  /* Container Queries: componente responde a su contenedor */
+  container-type: inline-size;
+  container-name: meal-card;
+
   &--primary {
     min-height: 350px;
   }
@@ -63,5 +67,43 @@
 
 .meal-card__view-btn {
   margin-left: auto;
+}
+
+/* =========================
+ * Container Queries
+ * Adaptaciones basadas en el tamaño del contenedor padre
+ * ========================= */
+
+/* Contenedor pequeño (< 300px): compactar espaciado */
+@container meal-card (max-width: 300px) {
+  .meal-card {
+    padding: var(--spacing-4);
+  }
+
+  .meal-card__title {
+    font-size: calc(var(--font-h3-size) * 0.85);
+  }
+
+  .meal-card__time {
+    font-size: calc(var(--font-xs-size) * 0.9);
+  }
+}
+
+/* Contenedor mediano (300px - 400px): ajustes moderados */
+@container meal-card (min-width: 300px) and (max-width: 400px) {
+  .meal-card__title {
+    font-size: calc(var(--font-h3-size) * 0.95);
+  }
+}
+
+/* Contenedor grande (> 400px): layout expandido */
+@container meal-card (min-width: 400px) {
+  .meal-card {
+    padding: var(--spacing-8);
+  }
+
+  .meal-card__title {
+    font-size: var(--font-h2-size);
+  }
 }
 
