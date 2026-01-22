@@ -14,6 +14,10 @@
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition-base), transform var(--transition-base);
 
+  /* Container Queries: componente responde a su contenedor */
+  container-type: inline-size;
+  container-name: ingredient-card;
+
   &:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
@@ -107,5 +111,82 @@
 
   @media (max-width: 480px) {
     font-size: clamp(0.9375rem, 3vw, 1rem);
+  }
+}
+
+/* =========================
+ * Container Queries
+ * Adaptaciones basadas en el tamaño del contenedor padre
+ * ========================= */
+
+/* Contenedor muy pequeño (< 200px): layout vertical compacto */
+@container ingredient-card (max-width: 200px) {
+  .ingredient-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    text-align: center;
+    padding: var(--spacing-3);
+    gap: var(--spacing-2);
+  }
+
+  .ingredient-card__image {
+    height: 80px;
+    max-width: 80px;
+    margin: 0 auto;
+  }
+
+  .ingredient-card__info {
+    align-items: center;
+  }
+
+  .ingredient-card__name {
+    font-size: var(--font-sm-size);
+  }
+
+  .ingredient-card__quantity {
+    font-size: var(--font-xs-size);
+  }
+}
+
+/* Contenedor pequeño (200px - 250px): layout horizontal compacto */
+@container ingredient-card (min-width: 200px) and (max-width: 250px) {
+  .ingredient-card {
+    grid-template-columns: 80px 1fr;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+  }
+
+  .ingredient-card__image {
+    height: 80px;
+  }
+
+  .ingredient-card__name {
+    font-size: var(--font-sm-size);
+  }
+
+  .ingredient-card__quantity {
+    font-size: var(--font-xs-size);
+  }
+}
+
+/* Contenedor grande (> 300px): layout expandido */
+@container ingredient-card (min-width: 300px) {
+  .ingredient-card {
+    grid-template-columns: 120px 1fr;
+    gap: var(--spacing-6);
+    padding: var(--spacing-6);
+    max-width: 350px;
+  }
+
+  .ingredient-card__image {
+    height: 120px;
+  }
+
+  .ingredient-card__name {
+    font-size: var(--font-h4-size);
+  }
+
+  .ingredient-card__quantity {
+    font-size: var(--font-lg-size);
   }
 }
