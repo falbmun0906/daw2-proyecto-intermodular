@@ -97,6 +97,11 @@ export class Button {
       classes.push('button--with-icon');
     }
 
+    // Animación hover para variantes principales y CTA
+    if (this.variant === 'primary' || this.variant === 'cta') {
+      classes.push('button-hover-lift');
+    }
+
     return classes.join(' ');
   }
 

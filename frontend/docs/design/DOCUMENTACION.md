@@ -48,7 +48,7 @@ Este uso de proximidad reduce la carga cognitiva y ayuda a identificar bloques f
 <img width="1245" height="287" alt="proximidad-espacios-2" src="https://github.com/user-attachments/assets/a090ba46-18b7-43bb-924e-fccb711b60c1" />
 <br><br/>
 
-**Repetición** 
+**Repetición**
 
 Se repiten patrones visuales de forma consistente: los componentes comparten la misma paleta de colores, tipografía base, radios de borde y sombras, de forma que una tarjeta, un botón o un bloque de contenido se reconocen como parte del mismo sistema.
 
@@ -278,7 +278,7 @@ $breakpoints: (
 // Uso:
 .component {
   padding: var(--spacing-4);
-  
+
   @include respond-to(md) {
     padding: var(--spacing-8);
   }
@@ -348,7 +348,7 @@ Define la estructura común de todos los botones, permitiendo que las variantes 
   color: $color;
   cursor: pointer;
   transition: background-color var(--transition-base) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
+  box-shadow var(--transition-base) var(--transition-easing);
 }
 ```
 
@@ -532,7 +532,7 @@ h1: "Iniciar sesión" / "Registro"
 ```html
 <form class="login-form">
   <h1 class="login-form__title">Iniciar sesión</h1>
-  
+
   <fieldset class="login-form__fieldset">
     <legend class="visually-hidden">Credenciales de acceso</legend>
     <!-- campos del formulario -->
@@ -610,14 +610,14 @@ El componente `app-form-input` es la base de todos los formularios y garantiza l
   <label class="form-input__label" [for]="inputId">
     {{ label }}
     @if (required) {
-      <span class="form-input__required" aria-label="Campo requerido">*</span>
+    <span class="form-input__required" aria-label="Campo requerido">*</span>
     }
   </label>
 
   <!-- Wrapper del input con icono opcional -->
   <div class="form-input__wrapper">
     @if (icon) {
-      <span class="form-input__icon" aria-hidden="true">{{ icon }}</span>
+    <span class="form-input__icon" aria-hidden="true">{{ icon }}</span>
     }
 
     <input
@@ -639,17 +639,17 @@ El componente `app-form-input` es la base de todos los formularios y garantiza l
 
   <!-- Texto de ayuda -->
   @if (helpText && !hasError) {
-    <p class="form-input__help-text" [id]="inputId + '-help'">
-      {{ helpText }}
-    </p>
+  <p class="form-input__help-text" [id]="inputId + '-help'">
+    {{ helpText }}
+  </p>
   }
 
   <!-- Mensaje de error -->
   @if (hasError && errorMessage) {
-    <p class="form-input__error-message" [id]="inputId + '-error'" role="alert">
-      <span class="form-input__message-icon" aria-hidden="true">⚠️</span>
-      {{ errorMessage }}
-    </p>
+  <p class="form-input__error-message" [id]="inputId + '-error'" role="alert">
+    <span class="form-input__message-icon" aria-hidden="true">⚠️</span>
+    {{ errorMessage }}
+  </p>
   }
 </div>
 ```
@@ -715,7 +715,7 @@ inputId: string = `form-input-${++FormInput.idCounter}`;
   <!-- Opciones adicionales -->
   <div class="login-form__options">
     <label class="login-form__checkbox-label">
-      <input type="checkbox" name="rememberMe" class="login-form__checkbox" 
+      <input type="checkbox" name="rememberMe" class="login-form__checkbox"
              [(ngModel)]="formData.rememberMe" />
       <span>Recuérdame</span>
     </label>
@@ -723,20 +723,20 @@ inputId: string = `form-input-${++FormInput.idCounter}`;
 
   <!-- Mensaje de error general -->
   @if (generalError) {
-    <div class="login-form__error" role="alert">
-      <span aria-hidden="true">⚠️</span>
-      {{ generalErrorMessage }}
-    </div>
+  <div class="login-form__error" role="alert">
+    <span aria-hidden="true">⚠️</span>
+    {{ generalErrorMessage }}
+  </div>
   }
 
   <!-- Botón de envío con texto descriptivo -->
   <div class="login-form__actions">
-    <button type="submit" class="login-form__button" 
+    <button type="submit" class="login-form__button"
             [disabled]="!loginFormRef.valid || isSubmitting">
       @if (isSubmitting) {
-        <span>Iniciando sesión...</span>
+      <span>Iniciando sesión...</span>
       } @else {
-        <span>Iniciar sesión</span>
+      <span>Iniciar sesión</span>
       }
     </button>
   </div>
@@ -797,8 +797,8 @@ Los botones son el elemento más versátil de la interfaz y cuentan con múltipl
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: background-color var(--transition-base) var(--transition-easing),
-              transform var(--transition-fast) var(--transition-easing),
-              box-shadow var(--transition-base) var(--transition-easing);
+  transform var(--transition-fast) var(--transition-easing),
+  box-shadow var(--transition-base) var(--transition-easing);
 
   @include focus-ring(var(--color-info-dark));
 
@@ -840,18 +840,18 @@ Cada botón soporta estados visuales mediante transiciones suaves:
 **Ejemplo de uso en componente:**
 
 ```html
-<app-button 
-  variant="primary" 
-  size="md" 
+<app-button
+  variant="primary"
+  size="md"
   icon="🔍"
   iconPosition="left"
   (buttonClick)="onSearch()">
   Buscar receta
 </app-button>
 
-<app-button 
-  variant="danger" 
-  size="sm" 
+<app-button
+  variant="danger"
+  size="sm"
   [disabled]="isDeleting"
   (buttonClick)="onDelete()">
   Eliminar
@@ -912,17 +912,17 @@ Los modales son componentes de overlay que centran contenido sobre el resto de l
 **Estructura semántica:**
 
 ```html
-<app-modal 
+<app-modal
   [isOpen]="showModal"
   title="Confirmar acción"
   size="md"
   [closeOnEscape]="true"
   (closed)="onModalClosed()">
-  
+
   <div class="modal-content">
     <p>¿Estás seguro de que deseas continuar?</p>
   </div>
-  
+
   <div class="modal-footer">
     <app-button variant="ghost" (buttonClick)="closeModal()">
       Cancelar
@@ -994,8 +994,8 @@ Las pestañas permiten agrupar contenido relacionado sin expandir la altura de l
   { id: 'pasos', label: 'Pasos', icon: '👨‍🍳' },
   { id: 'info', label: 'Info nutricional', icon: '📊' }
 ]"
-[activeTabId]="activeTab"
-(tabChanged)="onTabChanged($event)">
+          [activeTabId]="activeTab"
+          (tabChanged)="onTabChanged($event)">
 </app-tabs>
 
 <div *ngIf="activeTab === 'ingredientes'">
@@ -1025,7 +1025,7 @@ export class ToastService {
   show(message: string, type: ToastType, duration = 5000): void {
     const toast = { id: ++this.idCounter, message, type, duration };
     this.toastsSubject.next([...this.toastsSubject.getValue(), toast]);
-    
+
     if (duration > 0) {
       setTimeout(() => this.dismiss(toast.id), duration);
     }
@@ -1088,7 +1088,7 @@ export class ThemeService {
       this.currentTheme = savedTheme as Theme;
     } else {
       // Detectar preferencia del sistema
-      this.currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches 
+      this.currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark' : 'regular';
     }
     this.applyTheme(this.currentTheme);
@@ -1616,16 +1616,16 @@ Según Can I Use, el soporte actual es del **89%** de navegadores globalmente (e
 ### Componentes adicionales candidatos para Container Queries (futuro):
 
 1. **`.data-table` (Tabla de datos):**
-   - Podría colapsar columnas o cambiar a vista de tarjetas según el ancho del contenedor
-   - Útil en modales o sidebars de diferentes tamaños
+  - Podría colapsar columnas o cambiar a vista de tarjetas según el ancho del contenedor
+  - Útil en modales o sidebars de diferentes tamaños
 
 2. **`.card` (Tarjeta genérica):**
-   - Cambiar entre layout vertical/horizontal según espacio
-   - Mostrar/ocultar información secundaria según tamaño
+  - Cambiar entre layout vertical/horizontal según espacio
+  - Mostrar/ocultar información secundaria según tamaño
 
 3. **`.form-input` (Campos de formulario):**
-   - Ajustar label de inline a block según espacio
-   - Adaptar tamaño de iconos y padding
+  - Ajustar label de inline a block según espacio
+  - Adaptar tamaño de iconos y padding
 
 ## 4.4 Adaptaciones principales
 
@@ -1707,54 +1707,54 @@ Las tarjetas cambian su densidad según el espacio disponible, utilizando CSS Gr
 ### Páginas con diseño responsive completo:
 
 1. **Home Page (`/`)**
-   - Hero con Bento Grid responsive (3×2 desktop, 2×3 mobile)
-   - Secciones de "Tendencias" y "Recetas populares" con grids adaptables
-   - Call-to-action centrado con tipografía fluida
+  - Hero con Bento Grid responsive (3×2 desktop, 2×3 mobile)
+  - Secciones de "Tendencias" y "Recetas populares" con grids adaptables
+  - Call-to-action centrado con tipografía fluida
 
 2. **Recipes Page (`/recetas`)**
-   - Layout de dos columnas en desktop (filtros + listado)
-   - Filtros colapsables en modal para mobile
-   - Grid de tarjetas con `auto-fit` (1-4 columnas según viewport)
+  - Layout de dos columnas en desktop (filtros + listado)
+  - Filtros colapsables en modal para mobile
+  - Grid de tarjetas con `auto-fit` (1-4 columnas según viewport)
 
 3. **Recipe Detail Page (`/recetas/:id`)**
-   - Layout de una columna en mobile con imagen hero
-   - Dos columnas en desktop (ingredientes + pasos de preparación)
-   - Tabs para cambiar entre secciones en mobile
+  - Layout de una columna en mobile con imagen hero
+  - Dos columnas en desktop (ingredientes + pasos de preparación)
+  - Tabs para cambiar entre secciones en mobile
 
 4. **Login Page (`/login`)**
-   - Formulario centrado con ancho máximo de 400px
-   - Padding adaptado según viewport
-   - Botones fullwidth en mobile, inline en desktop
+  - Formulario centrado con ancho máximo de 400px
+  - Padding adaptado según viewport
+  - Botones fullwidth en mobile, inline en desktop
 
 5. **Register Page (`/registro`)**
-   - Similar a login, formulario centrado responsive
-   - Campos de formulario con validación visual
-   - Adaptación de espaciado vertical
+  - Similar a login, formulario centrado responsive
+  - Campos de formulario con validación visual
+  - Adaptación de espaciado vertical
 
 6. **Style Guide Page (`/style-guide`)**
-   - Componentes mostrados en grids responsivos
-   - Secciones colapsables en mobile mediante acordeones
-   - Código de ejemplo con scroll horizontal en mobile
+  - Componentes mostrados en grids responsivos
+  - Secciones colapsables en mobile mediante acordeones
+  - Código de ejemplo con scroll horizontal en mobile
 
 7. **About Page (`/acerca`)**
-   - Contenido de texto con ancho máximo para legibilidad
-   - Imágenes responsive con `srcset` (pendiente implementación completa)
-   - Secciones apiladas verticalmente en mobile
+  - Contenido de texto con ancho máximo para legibilidad
+  - Imágenes responsive con `srcset` (pendiente implementación completa)
+  - Secciones apiladas verticalmente en mobile
 
 8. **FAQ Page (`/faq`)**
-   - Acordeones fullwidth en mobile
-   - Dos columnas de acordeones en desktop
-   - Espaciado adaptado según viewport
+  - Acordeones fullwidth en mobile
+  - Dos columnas de acordeones en desktop
+  - Espaciado adaptado según viewport
 
 9. **Contact Page (`/contacto`)**
-   - Formulario con layout responsive similar a login/registro
-   - Campos adaptan su ancho según viewport
-   - Mapa (si se implementa) ocupa 100% en mobile, 50% en desktop
+  - Formulario con layout responsive similar a login/registro
+  - Campos adaptan su ancho según viewport
+  - Mapa (si se implementa) ocupa 100% en mobile, 50% en desktop
 
 10. **Privacy Policy / Terms Pages (`/privacidad`, `/terminos`)**
-    - Contenido de texto con max-width para legibilidad
-    - Tipografía escalada mediante `clamp()`
-    - Espaciado vertical generoso en desktop, reducido en mobile
+  - Contenido de texto con max-width para legibilidad
+  - Tipografía escalada mediante `clamp()`
+  - Espaciado vertical generoso en desktop, reducido en mobile
 
 ### Páginas pendientes de optimización responsive:
 
@@ -2186,7 +2186,7 @@ Aunque actualmente las imágenes están en un tamaño estándar (~800px), el pro
 
 **Planificación futura:**
 - **Small (400px):** Para móviles y thumbnails
-- **Medium (800px):** Para tablets y desktop estándar  
+- **Medium (800px):** Para tablets y desktop estándar
 - **Large (1200px):** Para pantallas Retina y 4K
 
 **Ejemplo de implementación futura:**
@@ -2562,7 +2562,7 @@ Las propiedades CSS se procesan en diferentes etapas del rendering pipeline del 
 }
 ```
 
-**Propiedades animadas:** 
+**Propiedades animadas:**
 - `opacity` (GPU-accelerated)
 - `transform: translateY()` (GPU-accelerated)
 
@@ -2630,7 +2630,7 @@ Las propiedades CSS se procesan en diferentes etapas del rendering pipeline del 
 }
 ```
 
-**Propiedades animadas:** 
+**Propiedades animadas:**
 - `opacity`
 - `transform: translateX()`
 
@@ -2692,7 +2692,7 @@ Las propiedades CSS se procesan en diferentes etapas del rendering pipeline del 
 }
 ```
 
-**Propiedades animadas:** 
+**Propiedades animadas:**
 - `opacity`
 - `transform: translateY()`
 
@@ -2894,35 +2894,35 @@ Todas las animaciones decorativas respetan la preferencia del usuario:
 **Tareas pendientes para conseguir nota 10:**
 
 1. **Generar múltiples tamaños de imágenes (5+ imágenes principales)**
-   - [ ] Crear versión 400px (small) de cada imagen en AVIF, WebP, JPG
-   - [ ] Crear versión 800px (medium) de cada imagen en AVIF, WebP, JPG
-   - [ ] Crear versión 1200px (large) de cada imagen en AVIF, WebP, JPG
-   - [ ] Usar Squoosh para mantener calidad óptima
-   - **Estimación:** 1-2 horas
-   - **Impacto:** RA3.f (1.90%)
+  - [ ] Crear versión 400px (small) de cada imagen en AVIF, WebP, JPG
+  - [ ] Crear versión 800px (medium) de cada imagen en AVIF, WebP, JPG
+  - [ ] Crear versión 1200px (large) de cada imagen en AVIF, WebP, JPG
+  - [ ] Usar Squoosh para mantener calidad óptima
+  - **Estimación:** 1-2 horas
+  - **Impacto:** RA3.f (1.90%)
 
 2. **Implementar `<picture>` + `srcset` + `sizes` en componentes**
-   - [ ] Actualizar `meal-card.html` con elemento `<picture>` completo
-   - [ ] Actualizar `ingredient-card.html` con `srcset` responsive
-   - [ ] Implementar en hero images de home page
-   - [ ] Añadir atributos `width` y `height` para prevenir CLS
-   - [ ] Validar con Lighthouse que se sirven los tamaños correctos
-   - **Estimación:** 2 horas
-   - **Impacto:** RA3.f (1.90%), RA4.a (2.81%), RA4.e (2.81%)
+  - [ ] Actualizar `meal-card.html` con elemento `<picture>` completo
+  - [ ] Actualizar `ingredient-card.html` con `srcset` responsive
+  - [ ] Implementar en hero images de home page
+  - [ ] Añadir atributos `width` y `height` para prevenir CLS
+  - [ ] Validar con Lighthouse que se sirven los tamaños correctos
+  - **Estimación:** 2 horas
+  - **Impacto:** RA3.f (1.90%), RA4.a (2.81%), RA4.e (2.81%)
 
 3. **Completar `loading="lazy"` en todas las imágenes**
-   - [ ] Auditar todas las imágenes del proyecto
-   - [ ] Aplicar `loading="lazy"` a imágenes below the fold
-   - [ ] Mantener `loading="eager"` solo en hero images
-   - **Estimación:** 30 minutos
-   - **Impacto:** RA3.f, RA4.e
+  - [ ] Auditar todas las imágenes del proyecto
+  - [ ] Aplicar `loading="lazy"` a imágenes below the fold
+  - [ ] Mantener `loading="eager"` solo en hero images
+  - **Estimación:** 30 minutos
+  - **Impacto:** RA3.f, RA4.e
 
 4. **Completar estructura ITCSS (Opcional para 10)**
-   - [ ] Crear carpeta `05-components/` con estilos compartidos de componentes
-   - [ ] Crear carpeta `06-utilities/` con clases de utilidad
-   - [ ] Validar CSS con W3C Validator y corregir errores
-   - **Estimación:** 1 hora
-   - **Impacto:** RA2.j (2.75%)
+  - [ ] Crear carpeta `05-components/` con estilos compartidos de componentes
+  - [ ] Crear carpeta `06-utilities/` con clases de utilidad
+  - [ ] Validar CSS con W3C Validator y corregir errores
+  - **Estimación:** 1 hora
+  - **Impacto:** RA2.j (2.75%)
 
 **Recursos:**
 - Squoosh: https://squoosh.app/
@@ -3777,57 +3777,57 @@ npx angular-cli-ghpages --dir=dist/frontend/browser
 **Problemas conocidos:**
 
 1. **⚠️ Backend no implementado:**
-   - **Impacto:** La aplicación no puede persistir datos reales ni consumir API
-   - **Solución futura:** Implementar backend con Spring Boot + PostgreSQL
+  - **Impacto:** La aplicación no puede persistir datos reales ni consumir API
+  - **Solución futura:** Implementar backend con Spring Boot + PostgreSQL
 
 2. **⚠️ Autenticación simulada:**
-   - **Impacto:** Login/Register solo validan frontend, no hay sesiones reales
-   - **Solución futura:** Implementar JWT authentication con guards funcionales
+  - **Impacto:** Login/Register solo validan frontend, no hay sesiones reales
+  - **Solución futura:** Implementar JWT authentication con guards funcionales
 
 3. **⚠️ Imágenes no optimizadas completamente:**
-   - **Impacto:** Falta implementar `<picture>`, `srcset`, múltiples tamaños
-   - **Solución futura:** Generar 3 tamaños (400px, 800px, 1200px) en AVIF/WebP/JPG
+  - **Impacto:** Falta implementar `<picture>`, `srcset`, múltiples tamaños
+  - **Solución futura:** Generar 3 tamaños (400px, 800px, 1200px) en AVIF/WebP/JPG
 
 4. **⚠️ Deep linking en GitHub Pages:**
-   - **Solución temporal:** Usar `404.html` que redirija a `index.html`
-   - **Solución futura:** Configurar servidor con rewrite rules o usar HashLocationStrategy
+  - **Solución temporal:** Usar `404.html` que redirija a `index.html`
+  - **Solución futura:** Configurar servidor con rewrite rules o usar HashLocationStrategy
 
 5. **⚠️ Safari - `backdrop-filter` parcial:**
-   - **Impacto:** Efecto blur no funciona en Safari < 15.4
-   - **Solución:** Fallback con background sólido ya implementado
+  - **Impacto:** Efecto blur no funciona en Safari < 15.4
+  - **Solución:** Fallback con background sólido ya implementado
 
 **Mejoras futuras planificadas:**
 
 1. **Optimización de imágenes avanzada:**
-   - Generar múltiples tamaños automáticamente
-   - Implementar `<picture>` con srcset
-   - Lazy loading en todas las imágenes below the fold
-   - Image CDN (Cloudinary, ImageKit)
+  - Generar múltiples tamaños automáticamente
+  - Implementar `<picture>` con srcset
+  - Lazy loading en todas las imágenes below the fold
+  - Image CDN (Cloudinary, ImageKit)
 
 2. **Testing automatizado:**
-   - Unit tests con Jasmine/Karma
-   - E2E tests con Cypress/Playwright
-   - Visual regression testing
-   - Coverage > 80%
+  - Unit tests con Jasmine/Karma
+  - E2E tests con Cypress/Playwright
+  - Visual regression testing
+  - Coverage > 80%
 
 3. **Accesibilidad (WCAG 2.1 AA):**
-   - Auditoría completa con Lighthouse/axe
-   - Navegación por teclado mejorada
-   - Screen reader testing
-   - Contraste de colores optimizado
+  - Auditoría completa con Lighthouse/axe
+  - Navegación por teclado mejorada
+  - Screen reader testing
+  - Contraste de colores optimizado
 
 4. **Performance:**
-   - Lazy loading de rutas (ya implementado)
-   - Lazy loading de imágenes (pendiente)
-   - Service Worker para PWA
-   - Optimización de bundle size (<500 KB)
+  - Lazy loading de rutas (ya implementado)
+  - Lazy loading de imágenes (pendiente)
+  - Service Worker para PWA
+  - Optimización de bundle size (<500 KB)
 
 6. **Features adicionales:**
-   - Sistema de favoritos
-   - Comentarios y valoraciones de recetas
-   - Lista de compras inteligente
-   - Notificaciones push
-   - Modo offline (PWA)
+  - Sistema de favoritos
+  - Comentarios y valoraciones de recetas
+  - Lista de compras inteligente
+  - Notificaciones push
+  - Modo offline (PWA)
 
 ### Resumen de cumplimiento de requisitos:
 

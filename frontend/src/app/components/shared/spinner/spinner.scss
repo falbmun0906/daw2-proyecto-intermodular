@@ -24,6 +24,7 @@
     border-top-color: #fff;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    will-change: transform;
   }
 
   &__text {
@@ -33,9 +34,4 @@
   }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
