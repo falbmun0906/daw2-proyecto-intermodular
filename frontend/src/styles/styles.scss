@@ -1,4 +1,3 @@
-
 /*
 Importar todo en orden
 
@@ -23,6 +22,8 @@ Importante: Este orden es crítico. Las variables primero, luego mixins, luego r
 @use '04-layout/layout';
 
 /* 05 - Components: Componentes de UI (se importan automáticamente desde Angular) */
+@use '05-components/animations';
+@use '05-components/component-animations';
 
 /* 06 - Utilities: Clases de utilidad */
 /* @use '06-utilities/utilities'; */

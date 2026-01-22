@@ -123,7 +123,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 7,
       title: 'Sopa de tomate',
-      imageUrl: 'assets/recipes/soup.png',
+      imageUrl: 'assets/recipes/soup.avif',
       rating: 4.5,
       category: 'Almuerzo',
       time: '20 min',
@@ -132,7 +132,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 8,
       title: 'Pechuga de pollo a la mostaza',
-      imageUrl: 'assets/recipes/chicken.png',
+      imageUrl: 'assets/recipes/chicken.avif',
       rating: 5,
       category: 'Cena',
       time: '30 min',
@@ -141,7 +141,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 9,
       title: 'Tiramisú',
-      imageUrl: 'assets/recipes/tiramisu.png',
+      imageUrl: 'assets/recipes/tiramisu.avif',
       rating: 4.8,
       category: 'Postre',
       time: '45 min',
@@ -150,7 +150,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 10,
       title: 'Ramen casero',
-      imageUrl: 'assets/recipes/ramen.png',
+      imageUrl: 'assets/recipes/ramen.webp',
       rating: 4.5,
       category: 'Almuerzo',
       time: '40 min',
@@ -159,7 +159,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 11,
       title: 'Salmón al horno',
-      imageUrl: 'assets/recipes/salmon.png',
+      imageUrl: 'assets/recipes/salmon.webp',
       rating: 5,
       category: 'Cena',
       time: '35 min',
@@ -168,7 +168,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 12,
       title: 'Brownies de chocolate',
-      imageUrl: 'assets/recipes/brownies.png',
+      imageUrl: 'assets/recipes/brownies.avif',
       rating: 4.8,
       category: 'Postre',
       time: '50 min',
@@ -177,7 +177,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 13,
       title: 'Tacos al pastor',
-      imageUrl: 'assets/recipes/tacos.png',
+      imageUrl: 'assets/recipes/tacos.webp',
       rating: 4.5,
       category: 'Almuerzo',
       time: '25 min',
@@ -186,7 +186,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 14,
       title: 'Filete con salsa de champiñones',
-      imageUrl: 'assets/recipes/steak.png',
+      imageUrl: 'assets/recipes/steak.avif',
       rating: 5,
       category: 'Cena',
       time: '40 min',
@@ -195,7 +195,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 15,
       title: 'Macarons de frambuesa',
-      imageUrl: 'assets/recipes/macarons.png',
+      imageUrl: 'assets/recipes/macarons.avif',
       rating: 4.8,
       category: 'Postre',
       time: '90 min',
