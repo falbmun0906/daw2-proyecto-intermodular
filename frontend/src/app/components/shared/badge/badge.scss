@@ -15,6 +15,12 @@
   border-radius: var(--radius-md);
   transition: background-color var(--transition-fast) var(--transition-easing),
               color var(--transition-fast) var(--transition-easing);
+
+  /* Container Queries: ocultar badge en contenedores muy pequeños */
+  @container (max-width: 200px) {
+    font-size: var(--font-xs-size);
+    padding: var(--spacing-1) var(--spacing-2);
+  }
 }
 
 /* Tamaños (modificadores BEM) */

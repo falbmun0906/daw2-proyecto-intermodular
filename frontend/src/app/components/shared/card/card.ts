@@ -131,10 +131,132 @@ export class Card {
   }
 
   /**
+   * Genera srcset para mobile (solo pequeña)
+   * Igual que en el hero
+   */
+  get computedSmallWebp(): string {
+    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
+      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+      return `assets/recipes/${fileName}-small.webp`;
+    }
+    return '';
+  }
+
+  /**
+   * Genera srcset para desktop (mediana y grande con 1.5x)
+   * Igual que en el hero
+   */
+  get computedLargeWebp(): string {
+    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
+      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+      return `assets/recipes/${fileName}-medium.webp, assets/recipes/${fileName}-large.webp 1.5x`;
+    }
+    return '';
+  }
+
+  /**
+   * Genera srcset automáticamente para imágenes de recetas
+   * Si no se proporciona imageSrcset, intenta generarlo del imageUrl
+   *
+   * NOTA: Asume que las variantes existen siguiendo la convención:
+   * original: assets/recipes/nombre.png
+   * variantes: assets/recipes/nombre-{small,medium,large}.webp
+   */
+  get computedSrcset(): string {
+    if (this.imageSrcset) {
+      return this.imageSrcset;
+    }
+
+    // Si es una imagen de receta, generar srcset automáticamente
+    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
+      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+
+      return `
+        assets/recipes/${fileName}-small.webp 400w,
+        assets/recipes/${fileName}-medium.webp 600w,
+        assets/recipes/${fileName}-large.webp 800w
+      `.trim().replace(/\s+/g, ' ');
+    }
+
+    return '';
+  }
+
+  /**
+   * Genera URL optimizada para src (fallback)
+   *
+   * Usa versión MEDIUM como fallback (balance entre calidad y tamaño)
+   * El navegador elegirá la correcta según viewport usando srcset+sizes
+   */
+  get computedSrc(): string {
+    // Si el imageUrl es una receta, usa la versión optimizada en WebP (medium como fallback)
+    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
+      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+      return `assets/recipes/${fileName}-medium.webp`;
+    }
+
+    // Si no, usa el URL original
+    return this.imageUrl;
+  }
+
+  /**
+   * Genera sizes automáticamente
+   *
+   * IMPORTANTE: sizes debe permitir que el navegador elija entre small, medium y large
+   * según el ANCHO REAL de la tarjeta en cada viewport
+   *
+   * Mapeo de breakpoints a ancho real de tarjeta:
+   * - Mobile pequeño (≤480px): 90vw (full width menos márgenes) → ~360px → small
+   * - Mobile (481-768px): 48vw (casi mitad) → ~360px → small
+   * - Tablet pequeña (769-1024px): 32vw (tercio) → ~310px → small/medium
+   * - Tablet grande (1025-1200px): 24vw (cuarto) → ~290px → small/medium
+   * - Desktop (>1200px): 22vw (poco menos de cuarto) → ~260px → small
+   *
+   * El navegador elegirá automáticamente:
+   * - 360px viewport → 400w descriptor (small)
+   * - 500px viewport → 600w descriptor (medium)
+   * - 600px+ viewport → 800w descriptor (large)
+   */
+  get computedSizes(): string {
+    return this.imageSizes || '(max-width: 480px) 90vw, (max-width: 768px) 48vw, (max-width: 1024px) 32vw, (max-width: 1200px) 24vw, 22vw';
+  }
+
+  /**
+   * Genera background-image URL optimizado
+   * Usa versión MEDIUM como fallback
+   */
+  get computedBackgroundImage(): string {
+    if (!this.imageUrl) return 'none';
+
+    // Si es imagen de receta, intenta WebP (medium como fallback)
+    if (this.imageUrl.includes('/recipes/')) {
+      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
+      return `url(assets/recipes/${fileName}-medium.webp)`;
+    }
+
+    return `url(${this.imageUrl})`;
+  }
+
+  /**
    * Maneja el click en la card
    */
   onCardClick(): void {
     this.cardClick.emit();
+  }
+
+  /**
+   * Maneja el error de carga de imagen
+   * Si la variante WebP no existe, carga el original PNG
+   */
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+
+    // Si estamos intentando cargar una variante WebP y falló
+    if (img.src.includes('-large.webp') || img.src.includes('-medium.webp') || img.src.includes('-small.webp')) {
+      // Fallback: cargar el PNG original
+      img.src = this.imageUrl;
+      img.srcset = ''; // Limpiar srcset para no intentar variantes que no existen
+      img.sizes = '';
+    }
   }
 
   /**

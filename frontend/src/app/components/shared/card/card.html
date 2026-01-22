@@ -3,20 +3,33 @@
   (click)="onCardClick()"
   [attr.role]="cardClick.observers.length > 0 ? 'button' : null"
   [attr.tabindex]="cardClick.observers.length > 0 ? 0 : null"
-  [style.background-image]="imageUrl ? 'url(' + imageUrl + ')' : 'none'"
   class="card__image-bg"
 >
   <!-- Imagen de fondo (oculta, solo para lazy loading) -->
   @if (imageUrl) {
-    <img
-      class="card__image"
-      [src]="imageUrl"
-      [srcset]="imageSrcset"
-      [sizes]="imageSizes"
-      [alt]="imageAlt || title"
-      loading="lazy"
-      aria-hidden="true"
-    />
+    <picture class="card__picture">
+      <!-- Mobile: imagen pequeña -->
+      <source
+        media="(max-width: 768px)"
+        [srcset]="computedSmallWebp"
+        type="image/webp" />
+
+      <!-- Desktop: imagen mediana/grande -->
+      <source
+        media="(min-width: 769px)"
+        [srcset]="computedLargeWebp"
+        type="image/webp" />
+
+      <!-- Fallback: medium como src -->
+      <img
+        class="card__image"
+        [src]="computedSrc"
+        [alt]="imageAlt || title"
+        (error)="onImageError($event)"
+        loading="lazy"
+        aria-hidden="true"
+      />
+    </picture>
   }
 
   <!-- SVG decorativo (card-form) que va encima de la imagen -->

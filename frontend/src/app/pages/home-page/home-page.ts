@@ -141,7 +141,7 @@ export class HomePage implements AfterViewInit {
     {
       id: 9,
       title: 'Tiramisú',
-      imageUrl: 'assets/recipes/tiramisu.avif',
+      imageUrl: 'assets/recipes/brownies.avif',
       rating: 4.8,
       category: 'Postre',
       time: '45 min',

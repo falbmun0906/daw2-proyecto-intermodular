@@ -5,9 +5,9 @@ const path = require('path');
 const assetsDir = path.join(__dirname, 'src', 'assets');
 const recipeDir = path.join(assetsDir, 'recipes');
 
-// Imágenes de recetas (todas las que ya fueron optimizadas)
+// Imágenes de recetas (todas las que fueron optimizadas)
 const recipeImages = fs.readdirSync(recipeDir)
-  .filter(file => /\.(png|jpg|jpeg)$/i.test(file));
+  .filter(file => /\.(png|jpg|jpeg)$/i.test(file) && !file.includes('-small') && !file.includes('-medium') && !file.includes('-large') && !file.includes('-optimized'));
 
 async function generateRecipeVariants() {
   console.log('Generando variantes responsivas para imágenes de recetas...\n');
@@ -20,15 +20,10 @@ async function generateRecipeVariants() {
   ];
 
   for (const image of recipeImages) {
-    const inputPath = path.join(recipeDir, `${image.replace(/\.[^/.]+$/, '')}-optimized.png`);
-
-    if (!fs.existsSync(inputPath)) {
-      console.log(`⚠ Saltando ${image} - versión optimizada no encontrada`);
-      continue;
-    }
-
+    const inputPath = path.join(recipeDir, image);
     const baseName = path.parse(image).name;
-    console.log(`Procesando receta: ${image}`);
+
+    console.log(`Procesando: ${image}`);
 
     // Generar WebP en múltiples tamaños
     for (const size of sizes) {
@@ -44,24 +39,10 @@ async function generateRecipeVariants() {
       console.log(`  ✓ ${outputFileName} (${(stats.size / 1024).toFixed(2)} KB)`);
     }
 
-    // Generar AVIF en múltiples tamaños
-    for (const size of sizes) {
-      const outputFileName = `${baseName}${size.suffix}.avif`;
-      const outputPath = path.join(recipeDir, outputFileName);
-
-      await sharp(inputPath)
-        .resize(size.width, null, { withoutEnlargement: true })
-        .avif({ quality: 75 })
-        .toFile(outputPath);
-
-      const stats = fs.statSync(outputPath);
-      console.log(`  ✓ ${outputFileName} (${(stats.size / 1024).toFixed(2)} KB)`);
-    }
-
     console.log('');
   }
 
-  console.log('✓ Generación de variantes completada para imágenes de recetas!');
+  console.log('✓ Generación de variantes completada!');
 }
 
 generateRecipeVariants().catch(err => {
