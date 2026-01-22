@@ -1,4 +1,4 @@
-<img width="2536" height="1266" alt="dashboard-light" src="https://github.com/user-attachments/assets/fb15669c-c12a-4bbd-b422-c0feea6926de" /># Sección 1: Arquitectura CSS y comunicación visual
+# Sección 1: Arquitectura CSS y comunicación visual
 
 ## Introducción: Modificación de etiquetas HTML mediante CSS
 
@@ -1305,7 +1305,7 @@ Cada vez que se añade un nuevo componente o se modifica uno existente:
 Esta práctica garantiza que la guía de estilo siempre refleja el estado actual de la interfaz y sirve como fuente de verdad para los componentes disponibles.
 ---
 
-# **FASE 4: DISEÑO RESPONSIVE Y LAYOUTS COMPLETOS**
+# **Seccion 4: Diseño responsive y layouts completos**
 
 ## **Introducción**
 La Fase 4 representa el salto cualitativo de la aplicación desde una colección de componentes aislados hacia un producto digital cohesivo y multidispositivo. El objetivo central ha sido garantizar que la experiencia de usuario de **Desp[i]lensa** sea igualmente fluida y funcional en un smartphone de gama baja que en una estación de trabajo con pantalla panorámica.
@@ -1450,7 +1450,7 @@ Para verificar la consistencia del diseño, se ha realizado un proceso de testin
 
 ---
 
-# **FASE 5: OPTIMIZACIÓN MULTIMEDIA**
+# **Sección 5: Optimización multimedia**
 
 ## **Introducción**
 La optimización multimedia en **Desp[i]lensa** no ha sido un proceso meramente estético, sino una necesidad técnica para garantizar la competitividad de la plataforma. El peso total de los activos visuales representaba el mayor cuello de botella en el tiempo de carga inicial.
@@ -1551,7 +1551,7 @@ Para mantener una interfaz fluida (60 FPS), hemos seguido la regla estricta de *
 
 ---
 
-# **FASE 6: TEMAS Y MODO OSCURO**
+# **Sección 6: Temas y modo oscuro**
 
 ## **Introducción**
 En esta fase, he dotado a **Desp[i]lensa** de un sistema de temas dinámico y persistente. Mi objetivo principal no ha sido solo estético, sino también funcional: el modo oscuro reduce la fatiga visual en condiciones de poca luz y mejora la accesibilidad para usuarios con sensibilidad lumínica.
@@ -1631,7 +1631,7 @@ Para validar que mi sistema de **CSS Custom Properties** funciona correctamente 
 
 ---
 
-# **FASE 7: APLICACIÓN COMPLETA Y DESPLIEGUE**
+# **Sección 7: Aplicación completa y despliegue**
 
 ## **Introducción**
 He culminado el desarrollo de **Desp[i]lensa**, logrando integrar un sistema de diseño complejo con una arquitectura de aplicación Angular robusta. En esta fase final, he consolidado todos los módulos y he realizado el despliegue en un entorno de producción público.
@@ -1738,7 +1738,6 @@ Para certificar que el producto entregado es de alta fidelidad, presento las cap
 <img width="510" height="1116" alt="mobile-receta" src="https://github.com/user-attachments/assets/1e1d6c36-57ce-4d95-bccc-27f515b0d295" />
 
 ---
-
 
 ## **7.7 Problemas conocidos y mejoras futuras**
 
