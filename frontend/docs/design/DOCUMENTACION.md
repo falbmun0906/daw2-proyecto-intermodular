@@ -1,4 +1,4 @@
-# Sección 1: Arquitectura CSS y comunicación visual
+<img width="2536" height="1266" alt="dashboard-light" src="https://github.com/user-attachments/assets/fb15669c-c12a-4bbd-b422-c0feea6926de" /># Sección 1: Arquitectura CSS y comunicación visual
 
 ## Introducción: Modificación de etiquetas HTML mediante CSS
 
@@ -1430,26 +1430,23 @@ Se han desarrollado y adaptado de forma integral las siguientes páginas, asegur
 
 Para verificar la consistencia del diseño, se ha realizado un proceso de testing exhaustivo en los cinco viewports requeridos. A continuación, se describen las capturas que evidencian la adaptabilidad:
 
-### **Vista: Home Page (Hero y Grids)**
-*   **Desktop (1280px):** Se observa el grid de imágenes de 3 columnas con el logo blob centrado perfectamente. Los márgenes laterales son amplios (`layout-container`).
-*   **Tablet (768px):** El grid se reajusta a 2 columnas y el botón CTA ("Inspírate") ocupa una posición más prominente.
-*   **Mobile (375px):** Las imágenes se apilan verticalmente para mantener la legibilidad y el área de contacto de los botones aumenta a un mínimo de 44px.
+<img width="2533" height="1262" alt="desktop-home" src="https://github.com/user-attachments/assets/96e72c79-0409-409a-bec7-a942c7518a3f" />
 
-**(Adjunta captura comparativa 1: Home Page en los tres dispositivos señalados)**
+<img width="632" height="846" alt="tablet-home" src="https://github.com/user-attachments/assets/dfbc850a-17c6-41f7-9544-504e07e1b294" />
 
-### **Vista: Catálogo de Recetas (Filtros y Listado)**
-*   **Desktop (1280px):** Sidebar de filtros fijo a la izquierda (`position: sticky`) mientras se hace scroll por las recetas.
-*   **Tablet (768px):** El listado de recetas pasa de un layout horizontal de tarjeta a uno vertical para optimizar el espacio.
-*   **Mobile (375px):** Los filtros se ocultan bajo un botón de "Filtrar" para dejar todo el ancho de pantalla a las imágenes de los platos.
+<img width="511" height="1108" alt="mobile-home" src="https://github.com/user-attachments/assets/e69ba341-a172-4b0b-b03d-1432565901f9" />
 
-**(Adjunta captura comparativa 2: Recipes Page mostrando el cambio del sidebar de filtros)**
+<img width="2532" height="1265" alt="desktop" src="https://github.com/user-attachments/assets/4c164c24-b89e-4090-9e8e-8a72b4b74f8c" />
 
-### **Vista: Mi Cocina (Dashboard y Sidebar)**
-*   **Desktop (1280px):** Sidebar expandido con nombres de secciones ("Resumen", "Despensa", etc.).
-*   **Tablet (768px):** El sidebar se colapsa automáticamente a una franja estrecha con iconos, ganando espacio para la visualización de datos.
-*   **Mobile (375px):** Interfaz limpia sin sidebar; la navegación se integra en el menú superior del sitio.
+<img width="632" height="847" alt="tablet-receta" src="https://github.com/user-attachments/assets/688c07e8-025f-49a4-8041-7061fe2c0580" />
 
-**(Adjunta captura comparativa 3: User Area demostrando los tres estados del Sidebar)**
+<img width="510" height="1116" alt="mobile-receta" src="https://github.com/user-attachments/assets/f1ffb460-8da0-46ac-ba8c-e07bc4644913" />
+
+<img width="2531" height="1261" alt="desktop-cookies" src="https://github.com/user-attachments/assets/bfb108a4-035b-4012-88a1-821ffda59c5f" />
+
+<img width="632" height="847" alt="tablet-cookies" src="https://github.com/user-attachments/assets/59ebe573-5165-4d03-a28a-beb9d2b71f40" />
+
+<img width="512" height="1113" alt="mobile-cookies" src="https://github.com/user-attachments/assets/1d59f576-df39-480a-b764-1e9645a1cc80" />
 
 ---
 
@@ -1620,23 +1617,17 @@ private applyTheme(theme: Theme): void {
 
 Para validar que mi sistema de **CSS Custom Properties** funciona correctamente en toda la jerarquía de componentes, he realizado pruebas comparativas en las vistas con mayor densidad de elementos. He puesto especial cuidado en que el contraste de los textos sobre los fondos oscuros cumpla con el ratio de accesibilidad para una lectura cómoda.
 
-### **Vista: Dashboard de Usuario**
-*   **Modo Claro:** Utilizo mi paleta de verdes suaves (`--color-primary-light`) que transmite frescura y limpieza.
-*   **Modo Oscuro:** Los fondos pasan a un tono gris profundo (`--color-primary-darker`) y los textos a un blanco roto para evitar el deslumbramiento. He aplicado un filtro de inversión a los iconos para que resalten sin perder su significado.
+<img width="2532" height="1262" alt="light-home" src="https://github.com/user-attachments/assets/87d4c02b-0e7d-4d2f-9a01-6e3d480a2674" />
 
-**(Adjunta captura comparativa 1: Dashboard en modo claro vs. modo oscuro)**
+<img width="2533" height="1263" alt="dark-home" src="https://github.com/user-attachments/assets/73ce188e-0d68-4c31-a116-ee79e5c56ebd" />
 
-### **Vista: Catálogo de Recetas**
-*   **Modo Claro:** Las tarjetas de recetas presentan sombras suaves (`--shadow-md`) sobre el fondo beige.
-*   **Modo Oscuro:** He reducido la intensidad de las sombras y he añadido un borde sutil a las tarjetas para que no se fundan con el fondo oscuro, manteniendo la tridimensionalidad de la interfaz.
+<img width="2532" height="1263" alt="light-receta" src="https://github.com/user-attachments/assets/2ca0d588-4183-4b90-85de-6c2f036554d2" />
 
-**(Adjunta captura comparativa 2: Listado de recetas en modo claro vs. modo oscuro)**
+<img width="2532" height="1263" alt="dark-receta" src="https://github.com/user-attachments/assets/7c1923cc-9704-4d99-b0ab-4e9052baf3c0" />
 
-### **Vista: Formulario de Registro**
-*   **Modo Claro:** Inputs con bordes definidos en gris azulado.
-*   **Modo Oscuro:** Los campos de entrada se oscurecen, pero el color de acento (amarillo `--color-secondary`) permanece vibrante, asegurando que los botones de acción sean el foco principal (Call to Action).
+<img width="2532" height="1262" alt="light-cookies" src="https://github.com/user-attachments/assets/7d960329-f9bc-4226-aa0c-9217d54d1783" />
 
-**(Adjunta captura comparativa 3: Página de registro en modo claro vs. modo oscuro)**
+<img width="2532" height="1263" alt="dark-cookies" src="https://github.com/user-attachments/assets/9938a135-d8f8-4aa6-beaf-fe3e18a7d6b8" />
 
 ---
 
@@ -1722,13 +1713,32 @@ Para la puesta en marcha de la aplicación, he optado por **GitHub Pages** debid
 
 Para certificar que el producto entregado es de alta fidelidad, presento las capturas finales que muestran la cohesión entre diseño, interactividad y optimización.
 
-*   **Home Page:** Muestra el bento-grid con las imágenes procesadas en AVIF y el botón CTA con animación de elevación.
-*   **Gestor de Despensa:** Visualización de la lista de productos simulada, donde se aprecia la consistencia de los componentes `Card` y `Badge`.
-*   **Área de Usuario:** Demostración del Sidebar en modo expandido y el sistema de navegación por rutas hijas funcionando.
+<img width="2536" height="1266" alt="dashboard-light" src="https://github.com/user-attachments/assets/f024c5f4-d9f7-4640-9951-800ebf743ed9" />
 
-**(Adjunta 3 capturas de pantalla de alta resolución de estas secciones clave para cerrar el documento visualmente)**
+<img width="2532" height="1266" alt="dashboard-dark" src="https://github.com/user-attachments/assets/e024a3a9-9c89-404e-affd-52d6f5ba5d00" />
+
+<img width="462" height="830" alt="dashboard-mobile-light" src="https://github.com/user-attachments/assets/efc3a75b-aa6c-4c58-9bd9-f7d9d644385f" />
+
+<img width="463" height="826" alt="dashboard-mobile-dark" src="https://github.com/user-attachments/assets/7c7f0e03-dd16-47ff-aaf2-b8be0539483d" />
+
+<img width="2532" height="1267" alt="login-light" src="https://github.com/user-attachments/assets/059fa387-4fe7-4b26-9712-dcb5eebe55d9" />
+
+<img width="2532" height="1266" alt="login-dark" src="https://github.com/user-attachments/assets/542ac80e-8cc6-4102-90d1-de4ac10ea485" />
+
+<img width="461" height="830" alt="login-mobile-light" src="https://github.com/user-attachments/assets/2572f744-1498-4fa3-a18e-a3ebf938d64e" />
+
+<img width="465" height="831" alt="login-mobile-dark" src="https://github.com/user-attachments/assets/44eb5110-cd28-46a1-a1ed-542183bb8e18" />
+
+<img width="2533" height="1262" alt="desktop-home" src="https://github.com/user-attachments/assets/3bbb7bab-7476-4648-93bb-fe9580e98216" />
+
+<img width="511" height="1108" alt="mobile-home" src="https://github.com/user-attachments/assets/307419b7-b4c2-4932-87f0-a83e71aead83" />
+
+<img width="2532" height="1263" alt="dark-receta" src="https://github.com/user-attachments/assets/cdf388b4-bda8-47ef-9422-4c736f0210c3" />
+
+<img width="510" height="1116" alt="mobile-receta" src="https://github.com/user-attachments/assets/1e1d6c36-57ce-4d95-bccc-27f515b0d295" />
 
 ---
+
 
 ## **7.7 Problemas conocidos y mejoras futuras**
 
