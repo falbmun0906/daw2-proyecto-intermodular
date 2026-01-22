@@ -32,6 +32,16 @@ export class Card {
   @Input() imageUrl: string = '';
 
   /**
+   * Srcset para la imagen responsive (ej: "image-small.webp 400w, image-large.webp 800w")
+   */
+  @Input() imageSrcset: string = '';
+
+  /**
+   * Sizes para la imagen responsive (ej: "(max-width: 768px) 100vw, 50vw")
+   */
+  @Input() imageSizes: string = '';
+
+  /**
    * Texto alternativo para la imagen
    */
   @Input() imageAlt: string = '';
