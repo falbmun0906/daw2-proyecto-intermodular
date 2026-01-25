@@ -3,9 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
+import { ProductsStore } from '../products.store';
 import { Product } from '../models/product';
 import { ToastService } from '../../../services/toast.service';
 
+/**
+ * TAREA 6.1: Componente de formulario que actualiza el store automáticamente
+ * tras crear/editar productos, evitando recargas de página
+ */
 @Component({
   selector: 'app-product-form',
   standalone: true,
@@ -19,6 +24,9 @@ export class ProductFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private toastService = inject(ToastService);
+
+  // TAREA 6.1: Inyectar el store para actualizar la lista automáticamente
+  private productsStore = inject(ProductsStore);
 
   isEditMode = signal<boolean>(false);
   productId = signal<string | null>(null);
@@ -70,8 +78,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   /**
-   * TAREA 5.5: Método save() que usa isSaving para deshabilitar botón
-   * y muestra mensajes de éxito/error con toasts
+   * TAREA 6.1: Método save() que actualiza el store automáticamente
+   * La lista de productos se actualiza sin recarga de página
+   * Los contadores se recalculan al instante
    */
   onSubmit(): void {
     this.submitted.set(true);
@@ -92,6 +101,9 @@ export class ProductFormComponent implements OnInit {
           this.isSaving.set(false);
           console.log('✅ Producto actualizado:', product);
 
+          // TAREA 6.1: Actualizar el store - La lista se actualiza automáticamente
+          this.productsStore.update(product);
+
           // TAREA 5.5: Toast de éxito
           this.toastService.success('Producto actualizado correctamente');
 
@@ -110,6 +122,9 @@ export class ProductFormComponent implements OnInit {
         next: (product) => {
           this.isSaving.set(false);
           console.log('✅ Producto creado:', product);
+
+          // TAREA 6.1: Agregar al store - La lista se actualiza automáticamente
+          this.productsStore.add(product);
 
           // TAREA 5.5: Toast de éxito
           this.toastService.success('Producto creado correctamente');

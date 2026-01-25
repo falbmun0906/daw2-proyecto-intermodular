@@ -64,14 +64,16 @@
           "builder": "@angular/build:dev-server",
           "options": {
             "port": 4200,
-            "open": false
+            "open": false,
+            "hmr": false
           },
           "configurations": {
             "production": {
               "buildTarget": "frontend:build:production"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "buildTarget": "frontend:build:development",
+              "hmr": false
             }
           },
           "defaultConfiguration": "development"
