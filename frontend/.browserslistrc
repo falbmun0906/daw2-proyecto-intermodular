@@ -1,0 +1,25 @@
+# FASE 7: Configuración de navegadores soportados (actualizado para soportar import.meta)
+# Este archivo le indica a Angular qué navegadores debe soportar
+
+# Navegadores modernos (últimas 2 versiones) - todos soportan import.meta
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# Versiones específicas MODERNAS (ES2022+) que soportan import.meta
+Chrome >= 91
+Firefox >= 89
+Safari >= 15
+Edge >= 91
+
+# No soportar IE (obsoleto y no soporta import.meta)
+not IE 11
+not IE_Mob 11
+
+# Navegadores con >0.2% de cuota de mercado
+> 0.2%
+
+# Navegadores aún mantenidos
+not dead
+

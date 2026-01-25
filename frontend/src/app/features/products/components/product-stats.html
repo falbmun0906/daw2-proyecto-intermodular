@@ -1,0 +1,143 @@
+<!-- TAREA 6.3: Template optimizado con todas las técnicas de rendimiento -->
+
+<div class="product-stats">
+  <div class="product-stats__header">
+    <h2>Estadísticas de Inventario</h2>
+
+    <div class="product-stats__controls">
+      <button
+        (click)="refreshStats()"
+        class="btn btn--secondary"
+        [disabled]="store.loading()"
+      >
+        🔄 Actualizar
+      </button>
+
+      <button
+        (click)="toggleAutoRefresh()"
+        class="btn"
+        [class.btn--primary]="autoRefreshEnabled()"
+        [class.btn--secondary]="!autoRefreshEnabled()"
+      >
+        {{ autoRefreshEnabled() ? '⏸️ Pausar' : '▶️ Auto' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- OPTIMIZACIÓN 3: Signals - No necesita async pipe -->
+  @if (store.loading()) {
+    <div class="product-stats__loading">
+      <div class="spinner"></div>
+      <p>Actualizando estadísticas...</p>
+    </div>
+  }
+
+  <!-- Panel de estadísticas principales -->
+  <div class="stats-grid">
+    <!-- OPTIMIZACIÓN 4: Computed signals - recálculo eficiente -->
+    <div class="stat-card stat-card--primary">
+      <div class="stat-card__icon">📦</div>
+      <div class="stat-card__content">
+        <div class="stat-card__value">{{ totalCount() }}</div>
+        <div class="stat-card__label">Total Productos</div>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card--success">
+      <div class="stat-card__icon">💰</div>
+      <div class="stat-card__content">
+        <div class="stat-card__value">{{ totalValue() | currency:'EUR' }}</div>
+        <div class="stat-card__label">Valor Total</div>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card--info">
+      <div class="stat-card__icon">📊</div>
+      <div class="stat-card__content">
+        <div class="stat-card__value">{{ totalStock() }}</div>
+        <div class="stat-card__label">Unidades en Stock</div>
+      </div>
+    </div>
+
+    <div class="stat-card stat-card--warning">
+      <div class="stat-card__icon">💵</div>
+      <div class="stat-card__content">
+        <div class="stat-card__value">{{ averagePrice() | currency:'EUR' }}</div>
+        <div class="stat-card__label">Precio Promedio</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estadísticas por categoría -->
+  <div class="category-stats">
+    <h3>Estadísticas por Categoría</h3>
+
+    <!-- OPTIMIZACIÓN 5: TrackBy evita recrear DOM innecesariamente -->
+    @if (categoriesStats().length > 0) {
+      <div class="category-list">
+        @for (stat of categoriesStats(); track trackByCategory($index, stat)) {
+          <div class="category-item">
+            <div class="category-item__header">
+              <h4>{{ stat.category }}</h4>
+              <span class="badge">{{ stat.count }} productos</span>
+            </div>
+            <div class="category-item__stats">
+              <div class="stat-mini">
+                <span class="stat-mini__label">Valor total:</span>
+                <span class="stat-mini__value">{{ stat.totalValue | currency:'EUR' }}</span>
+              </div>
+              <div class="stat-mini">
+                <span class="stat-mini__label">Precio medio:</span>
+                <span class="stat-mini__value">{{ stat.averagePrice | currency:'EUR' }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="empty-message">No hay categorías disponibles</p>
+    }
+  </div>
+
+  <!-- Alertas de stock bajo -->
+  <!-- OPTIMIZACIÓN 4: Computed signal - solo se calcula cuando cambia products -->
+  @if (lowStockProducts().length > 0) {
+    <div class="low-stock-alert">
+      <div class="low-stock-alert__header">
+        <h3>⚠️ Alertas de Stock Bajo</h3>
+        <span class="badge badge--danger">{{ lowStockProducts().length }} productos</span>
+      </div>
+
+      <div class="low-stock-list">
+        <!-- OPTIMIZACIÓN 5: TrackBy con ID del producto -->
+        @for (product of lowStockProducts(); track trackById($index, product)) {
+          <div class="low-stock-item">
+            <div class="low-stock-item__info">
+              <strong>{{ product.name }}</strong>
+              <span class="category-badge">{{ product.category }}</span>
+            </div>
+            <div class="low-stock-item__stock">
+              <span class="stock-value stock-value--low">{{ product.stock }} unidades</span>
+              <span class="stock-price">{{ product.price | currency:'EUR' }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Info de última actualización -->
+  @if (lastRefresh()) {
+    <div class="product-stats__footer">
+      <p class="refresh-info">
+        Última actualización: {{ lastRefresh() | date:'short' }}
+      </p>
+      @if (autoRefreshEnabled()) {
+        <p class="auto-refresh-info">
+          ♻️ Auto-refresh activo cada {{ refreshInterval() }}s
+        </p>
+      }
+    </div>
+  }
+</div>
+

@@ -1,0 +1,97 @@
+<!-- TAREA 6.6: Template para notificaciones en tiempo real con WebSocket -->
+
+<div class="realtime-notifications">
+  <!-- Header con estado de conexión -->
+  <div class="notifications-header">
+    <h3>Notificaciones en Tiempo Real</h3>
+
+    <!-- TAREA 6.6: Indicador de estado de conexión -->
+    <div class="connection-status">
+      @if (connectionStatus() === 'connected') {
+        <span class="status-badge status-badge--connected">
+          🟢 Conectado
+        </span>
+      } @else if (connectionStatus() === 'reconnecting') {
+        <span class="status-badge status-badge--reconnecting">
+          🟡 Reconectando...
+        </span>
+      } @else {
+        <span class="status-badge status-badge--disconnected">
+          🔴 Desconectado
+        </span>
+      }
+    </div>
+  </div>
+
+  <!-- Badge de notificaciones sin leer -->
+  @if (unreadCount() > 0) {
+    <div class="unread-badge">
+      {{ unreadCount() }} notificación(es) sin leer
+    </div>
+  }
+
+  <!-- TAREA 6.6: Error de conexión -->
+  @if (error()) {
+    <div class="connection-error">
+      <p>{{ error() }}</p>
+      <button (click)="reconnect()" class="btn btn--sm btn--primary">
+        Reconectar
+      </button>
+    </div>
+  }
+
+  <!-- TAREA 6.6: Lista de notificaciones -->
+  @if (notifications().length > 0) {
+    <div class="notifications-list">
+      @for (notification of notifications(); track notification.id) {
+        <div
+          class="notification"
+          [class]="getSeverityClass(notification.severity)"
+          (click)="markAsRead(notification.id)"
+        >
+          <div class="notification__icon">
+            {{ getIcon(notification.severity) }}
+          </div>
+
+          <div class="notification__content">
+            <p class="notification__message">{{ notification.message }}</p>
+          </div>
+
+          <button
+            class="notification__close"
+            (click)="markAsRead(notification.id); $event.stopPropagation()"
+          >
+            ✕
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Botón limpiar todas -->
+    <div class="notifications-footer">
+      <button (click)="clearAll()" class="btn btn--sm btn--text">
+        🧹 Limpiar todas
+      </button>
+    </div>
+  }
+
+  <!-- TAREA 6.6: Estado vacío -->
+  @if (notifications().length === 0 && connectionStatus() === 'connected') {
+    <div class="empty-state">
+      <p>🔔 No hay notificaciones</p>
+      <p class="empty-state__subtitle">
+        Recibirás notificaciones automáticamente cuando haya cambios
+      </p>
+    </div>
+  }
+
+  <!-- Estado desconectado -->
+  @if (connectionStatus() === 'disconnected' && !error()) {
+    <div class="empty-state">
+      <p>🔌 WebSocket desconectado</p>
+      <button (click)="reconnect()" class="btn btn--primary">
+        Conectar
+      </button>
+    </div>
+  }
+</div>
