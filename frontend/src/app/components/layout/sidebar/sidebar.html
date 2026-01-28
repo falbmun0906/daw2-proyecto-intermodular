@@ -32,19 +32,21 @@
         </a>
       }
     }
+
+    <button
+      class="app-sidebar__nav-button"
+      (click)="onLogout()"
+      title="Cerrar sesión"
+      [attr.aria-label]="'Cerrar sesión'">
+      <span class="app-sidebar__nav-indent"></span>
+      <app-icon name="sign-out" class="app-sidebar__nav-icon"></app-icon>
+      <span class="app-sidebar__nav-text">Cerrar sesión</span>
+    </button>
   </nav>
 
-  <button
-    class="app-sidebar__logout-button"
-    (click)="onLogout()"
-    title="Cerrar sesión"
-    [attr.aria-label]="'Cerrar sesión'">
-    <span class="app-sidebar__nav-indent"></span>
-    <app-icon name="sign-out" class="app-sidebar__nav-icon"></app-icon>
-    <span class="app-sidebar__nav-text">Cerrar sesión</span>
-  </button>
-
   <hr class="app-sidebar__divider app-sidebar__divider--bottom">
+
+  <button
     class="app-sidebar__toggle"
     (click)="onToggle()"
     [attr.aria-label]="isCollapsed ? 'Abrir menú' : 'Cerrar menú'">
