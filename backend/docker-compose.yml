@@ -1,5 +1,29 @@
 version: '3.8'
 
+# ===============================================
+# CONFIGURACIÓN OPCIONAL - PostgreSQL Local
+# ===============================================
+# Este docker-compose es una ALTERNATIVA OPCIONAL a Neon.
+# El proyecto está configurado para usar Neon PostgreSQL Serverless por defecto.
+#
+# ¿Cuándo usar esto?
+# - Solo si NO quieres usar Neon
+# - Si necesitas desarrollo offline
+# - Si prefieres tener PostgreSQL local
+#
+# Para usar NEON (RECOMENDADO - más fácil):
+# 1. Crea una cuenta en https://neon.tech (gratis)
+# 2. Configura las variables de entorno en .env
+# 3. Ejecuta: ./mvnw spring-boot:run
+# 4. ¡Listo! (sin Docker, sin instalaciones)
+#
+# Para usar DOCKER LOCAL (esta configuración):
+# 1. Instala Docker Desktop
+# 2. Ejecuta: docker-compose up -d
+# 3. Configura .env con localhost:5432
+# 4. Consulta DOCKER_LOCAL_SETUP.md para más detalles
+# ===============================================
+
 services:
   postgres:
     image: postgres:16-alpine

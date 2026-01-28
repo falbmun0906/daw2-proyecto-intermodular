@@ -103,7 +103,6 @@ public class DataSeederConfig {
 
             } catch (Exception e) {
                 System.err.println("❌ ERROR durante el seeding: " + e.getMessage());
-                e.printStackTrace();
             }
         };
     }

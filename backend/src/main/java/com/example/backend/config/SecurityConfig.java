@@ -105,6 +105,9 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll() // Consola H2
                         .requestMatchers("/error").permitAll()
 
+                        // TEMPORAL: Permitir endpoints de admin en desarrollo (QUITAR EN PRODUCCIÓN)
+                        .requestMatchers("/api/admin/**").permitAll()
+
                         // Rutas de admin (solo ROLE_ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
                         // Permitir GET de recursos de usuario solo a usuarios autenticados (USER o ADMIN)

@@ -4,6 +4,8 @@ import com.example.backend.dto.RecetaCreateRequest;
 import com.example.backend.dto.RecetaDetailedResponse;
 import com.example.backend.dto.RecetaResponse;
 import com.example.backend.service.RecetaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -70,8 +72,10 @@ public class RecetaController {
      * @param minutos tiempo máximo de preparación
      * @return 200 OK con lista de recetas rápidas
      */
+    @Operation(summary = "Obtener recetas rápidas", description = "Listar recetas con tiempo de preparación menor o igual al especificado")
     @GetMapping("/rapidas")
-    public ResponseEntity<List<RecetaResponse>> obtenerRecetasRapidas(@RequestParam Integer minutos) {
+    public ResponseEntity<List<RecetaResponse>> obtenerRecetasRapidas(
+            @Parameter(description = "Tiempo máximo de preparación en minutos") @RequestParam Integer minutos) {
         List<RecetaResponse> recetas = recetaService.obtenerRecetasRapidas(minutos);
         return ResponseEntity.ok(recetas);
     }
@@ -83,8 +87,10 @@ public class RecetaController {
      * @param porciones número de porciones
      * @return 200 OK con lista de recetas
      */
+    @Operation(summary = "Filtrar por porciones", description = "Obtener recetas que rinden un número específico de porciones")
     @GetMapping("/porciones/{porciones}")
-    public ResponseEntity<List<RecetaResponse>> obtenerPorPorciones(@PathVariable Integer porciones) {
+    public ResponseEntity<List<RecetaResponse>> obtenerPorPorciones(
+            @Parameter(description = "Número de porciones") @PathVariable Integer porciones) {
         List<RecetaResponse> recetas = recetaService.obtenerPorPorciones(porciones);
         return ResponseEntity.ok(recetas);
     }
@@ -95,6 +101,7 @@ public class RecetaController {
      *
      * @return 200 OK con el total
      */
+    @Operation(summary = "Contar recetas", description = "Obtener el número total de recetas en el sistema")
     @GetMapping("/count")
     public ResponseEntity<Long> contar() {
         long total = recetaService.contar();
@@ -108,8 +115,10 @@ public class RecetaController {
      * @param id id de la receta
      * @return 200 OK con la receta detallada
      */
+    @Operation(summary = "Obtener receta por ID", description = "Obtener detalles completos de una receta incluyendo ingredientes y pasos")
     @GetMapping("/{id}")
-    public ResponseEntity<RecetaDetailedResponse> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<RecetaDetailedResponse> obtenerPorId(
+            @Parameter(description = "ID de la receta") @PathVariable Long id) {
         RecetaDetailedResponse response = recetaService.obtenerPorIdDetallado(id);
         return ResponseEntity.ok(response);
     }
@@ -122,10 +131,11 @@ public class RecetaController {
      * @param size tamaño de página (default 10)
      * @return 200 OK con página de recetas
      */
+    @Operation(summary = "Listar todas las recetas", description = "Obtener recetas con paginación")
     @GetMapping
     public ResponseEntity<Page<RecetaResponse>> obtenerTodas(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @Parameter(description = "Número de página") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Tamaño de página") @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<RecetaResponse> recetas = recetaService.obtenerTodas(pageable);
         return ResponseEntity.ok(recetas);
