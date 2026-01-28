@@ -52,15 +52,18 @@ public class Ingrediente {
     @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private List<RecetaIngrediente> recetas = new ArrayList<>();
 
     @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private List<DespensaItem> despensaItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private List<ListaItem> listaItems = new ArrayList<>();
 }

@@ -749,17 +749,16 @@ GRANT ALL PRIVILEGES ON DATABASE despiensa TO postgres;
 
 El proyecto utiliza variables de entorno para configuración sensible.
 
-#### Desarrollo
+#### Desarrollo con Neon (Recomendado)
 
 Crear archivo `.env` en la raíz del proyecto (copiar de `.env.example`):
 
 ```bash
-# Base de datos
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=despiensa
-DB_USER=postgres
-DB_PASSWORD=postgres
+# Neon Database (obtener desde https://console.neon.tech)
+NEON_DATABASE_URL=jdbc:postgresql://ep-your-project-123456.us-east-2.aws.neon.tech/neondb?sslmode=require
+NEON_DB_USER=your-neon-username
+NEON_DB_PASSWORD=your-neon-password
+DB_SSL_MODE=prefer
 
 # JWT
 JWT_SECRET=dGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25JblNwcmluZ0Jvb3Q=
@@ -768,18 +767,37 @@ JWT_SECRET=dGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25JblNwcmluZ0Jvb
 SPRING_PROFILES_ACTIVE=dev
 ```
 
-#### Producción
+#### Desarrollo con PostgreSQL Local (Docker o Manual)
+
+Si prefieres usar PostgreSQL local en lugar de Neon:
+
+```bash
+# PostgreSQL Local
+NEON_DATABASE_URL=jdbc:postgresql://localhost:5432/despiensa
+NEON_DB_USER=postgres
+NEON_DB_PASSWORD=postgres
+DB_SSL_MODE=disable
+
+# JWT
+JWT_SECRET=dGhpc0lzQVZlcnlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25JblNwcmluZ0Jvb3Q=
+
+# Perfil activo
+SPRING_PROFILES_ACTIVE=dev
+```
+
+#### Producción con Neon
 
 Usar variables de entorno del sistema o crear `.env.prod`:
 
 ```bash
-# IMPORTANTE: Cambiar estos valores en producción
-DB_HOST=tu-servidor-bd.com
-DB_PORT=5432
-DB_NAME=despiensa_prod
-DB_USER=usuario_produccion
-DB_PASSWORD=contraseña_segura_compleja
+# IMPORTANTE: Cambiar estos valores con tus credenciales reales de Neon
 
+# Neon Database (Production)
+NEON_DATABASE_URL=jdbc:postgresql://ep-production-project.region.aws.neon.tech/despiensa_prod?sslmode=require
+NEON_DB_USER=production_user
+NEON_DB_PASSWORD=secure_password_here
+
+# JWT (generar nuevo secreto para producción)
 JWT_SECRET=clave_jwt_muy_segura_generada_aleatoriamente
 SPRING_PROFILES_ACTIVE=prod
 ```
