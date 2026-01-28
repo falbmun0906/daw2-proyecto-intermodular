@@ -122,5 +122,16 @@ public interface DespensaItemRepository extends JpaRepository<DespensaItem, Long
      */
     @Query("SELECT CASE WHEN COUNT(di) > 0 THEN true ELSE false END FROM DespensaItem di WHERE di.usuario.id = :usuarioId AND di.ingrediente.id = :ingredienteId")
     boolean existsByUsuarioIdAndIngredienteId(@Param("usuarioId") Long usuarioId, @Param("ingredienteId") Long ingredienteId);
+
+    /**
+     * Obtiene items que caducan en los próximos días.
+     *
+     * @param usuarioId id del usuario
+     * @param fechaInicio fecha inicio del rango
+     * @param fechaFin fecha fin del rango
+     * @return lista de items que caducan en el rango
+     */
+    @Query("SELECT di FROM DespensaItem di WHERE di.usuario.id = :usuarioId AND di.fechaCaducidad IS NOT NULL AND di.fechaCaducidad BETWEEN :fechaInicio AND :fechaFin ORDER BY di.fechaCaducidad ASC")
+    List<DespensaItem> findByUsuarioIdAndFechaCaducidadBetween(@Param("usuarioId") Long usuarioId, @Param("fechaInicio") LocalDate fechaInicio, @Param("fechaFin") LocalDate fechaFin);
 }
 

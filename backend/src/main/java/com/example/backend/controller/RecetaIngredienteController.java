@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -86,6 +87,7 @@ public class RecetaIngredienteController {
      * @return 204 No Content
      */
     @DeleteMapping("/{ingredienteId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminarIngrediente(
             @PathVariable Long recetaId,
             @PathVariable Long ingredienteId) {

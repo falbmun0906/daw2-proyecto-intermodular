@@ -1,7 +1,10 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.CompartirListaRequest;
+import com.example.backend.dto.CompartirListaResponse;
 import com.example.backend.dto.ListaCompraCreateRequest;
 import com.example.backend.dto.ListaCompraResponse;
+import com.example.backend.service.CompartirListaService;
 import com.example.backend.service.ListaCompraService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ import java.util.List;
 public class ListaCompraController {
 
     private final ListaCompraService listaCompraService;
+    private final CompartirListaService compartirListaService;
 
     /**
      * Crea una nueva lista de compra.
@@ -120,6 +124,58 @@ public class ListaCompraController {
             @PathVariable Long usuarioId,
             @PathVariable Long listaId) {
         ListaCompraResponse response = listaCompraService.marcarComoComprada(usuarioId, listaId);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Obtiene el texto formateado de una lista de compra.
+     * GET /api/usuarios/{usuarioId}/listas/{listaId}/texto
+     *
+     * @param usuarioId id del usuario
+     * @param listaId id de la lista
+     * @return 200 OK con el texto de la lista
+     */
+    @GetMapping("/{listaId}/texto")
+    public ResponseEntity<String> obtenerTextoLista(
+            @PathVariable Long usuarioId,
+            @PathVariable Long listaId) {
+        String texto = compartirListaService.obtenerTextoLista(listaId);
+        return ResponseEntity.ok(texto);
+    }
+
+    /**
+     * Comparte una lista de compra por WhatsApp.
+     * POST /api/usuarios/{usuarioId}/listas/{listaId}/compartir/whatsapp
+     *
+     * @param usuarioId id del usuario
+     * @param listaId id de la lista
+     * @param request datos para compartir (teléfono opcional)
+     * @return 200 OK con la URL de WhatsApp y el mensaje
+     */
+    @PostMapping("/{listaId}/compartir/whatsapp")
+    public ResponseEntity<CompartirListaResponse> compartirPorWhatsApp(
+            @PathVariable Long usuarioId,
+            @PathVariable Long listaId,
+            @Valid @RequestBody CompartirListaRequest request) {
+        CompartirListaResponse response = compartirListaService.compartirPorWhatsApp(listaId, request);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Comparte una lista de compra por Telegram.
+     * POST /api/usuarios/{usuarioId}/listas/{listaId}/compartir/telegram
+     *
+     * @param usuarioId id del usuario
+     * @param listaId id de la lista
+     * @param request datos para compartir
+     * @return 200 OK con la URL de Telegram y el mensaje
+     */
+    @PostMapping("/{listaId}/compartir/telegram")
+    public ResponseEntity<CompartirListaResponse> compartirPorTelegram(
+            @PathVariable Long usuarioId,
+            @PathVariable Long listaId,
+            @Valid @RequestBody CompartirListaRequest request) {
+        CompartirListaResponse response = compartirListaService.compartirPorTelegram(listaId, request);
         return ResponseEntity.ok(response);
     }
 }

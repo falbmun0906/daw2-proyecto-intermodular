@@ -2,6 +2,7 @@ package com.example.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Clase principal de la aplicación Backend.
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * las variables de entorno desde el archivo .env gracias a spring-dotenv.
  */
 @SpringBootApplication
+@EnableScheduling
 public class BackendApplication {
 
     /**

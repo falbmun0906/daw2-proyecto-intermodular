@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
@@ -189,6 +190,7 @@ public class AdminController {
     @Operation(summary = "Eliminar todos los datos",
                description = "CUIDADO: Elimina todas las recetas, ingredientes y relaciones")
     @DeleteMapping("/delete-all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, String>> deleteAll() {
         try {
             long recetas = recetaRepo.count();

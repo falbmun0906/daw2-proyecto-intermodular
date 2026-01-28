@@ -2,13 +2,16 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.PlanificacionSemanaCreateRequest;
 import com.example.backend.dto.PlanificacionSemanaResponse;
+import com.example.backend.service.PdfGeneracionService;
 import com.example.backend.service.PlanificacionSemanaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ import java.util.List;
 public class PlanificacionSemanaController {
 
     private final PlanificacionSemanaService planificacionSemanaService;
+    private final PdfGeneracionService pdfGeneracionService;
 
     /**
      * Crea una nueva planificación semanal.
@@ -92,6 +96,51 @@ public class PlanificacionSemanaController {
             List<PlanificacionSemanaResponse> planificaciones = planificacionSemanaService.obtenerDelUsuario(usuarioId);
             return ResponseEntity.ok(planificaciones);
         }
+    }
+
+    /**
+     * Genera un PDF de una planificación semanal específica.
+     * GET /api/usuarios/{usuarioId}/planificaciones/{planificacionId}/pdf
+     *
+     * @param usuarioId id del usuario
+     * @param planificacionId id de la planificación
+     * @return 200 OK con el PDF generado
+     */
+    @GetMapping("/{planificacionId}/pdf")
+    public ResponseEntity<byte[]> generarPdf(
+            @PathVariable Long usuarioId,
+            @PathVariable Long planificacionId) {
+        byte[] pdfBytes = pdfGeneracionService.generarPdfPlanificacionSemanal(planificacionId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "planificacion_" + planificacionId + ".pdf");
+        headers.setContentLength(pdfBytes.length);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfBytes);
+    }
+
+    /**
+     * Genera un PDF con todas las planificaciones del usuario.
+     * GET /api/usuarios/{usuarioId}/planificaciones/pdf/todas
+     *
+     * @param usuarioId id del usuario
+     * @return 200 OK con el PDF generado
+     */
+    @GetMapping("/pdf/todas")
+    public ResponseEntity<byte[]> generarPdfTodasPlanificaciones(@PathVariable Long usuarioId) {
+        byte[] pdfBytes = pdfGeneracionService.generarPdfTodasPlanificaciones(usuarioId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "planificaciones_usuario_" + usuarioId + ".pdf");
+        headers.setContentLength(pdfBytes.length);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfBytes);
     }
 }
 

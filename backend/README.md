@@ -2,6 +2,58 @@
 
 API REST desarrollada con Spring Boot para la gestión de despensas, recetas y planificación de comidas. Permite a los usuarios gestionar sus ingredientes, explorar recetas, planificar menús semanales y generar listas de compra automáticas.
 
+## 🆕 Nuevas Funcionalidades Implementadas
+
+**Fecha:** 28/01/2026
+
+Se han implementado 4 nuevas funcionalidades principales:
+
+### 1. ✉️ Sistema de Notificaciones
+- Verificación automática diaria de ingredientes próximos a caducar
+- Notificaciones en tiempo real sobre caducidad de productos
+- API completa para gestión de notificaciones
+- Tabla: `notificacion` (v2)
+
+### 2. 🍳 Recomendaciones Inteligentes
+- Algoritmo que recomienda recetas basadas en ingredientes disponibles
+- Cálculo de porcentaje de coincidencia
+- Listado de ingredientes disponibles vs faltantes
+- Generación automática de notificaciones de recomendaciones
+
+### 3. 📱 Compartir Listas
+- Generación de URLs para WhatsApp y Telegram
+- Formato de mensaje optimizado con emojis
+- Compartir listas de compra con un solo click
+- Endpoints: `POST /api/usuarios/{id}/listas/{listaId}/compartir/whatsapp|telegram`
+
+### 4. 📄 Exportación a PDF
+- Generación profesional de PDFs con iText7
+- Diseño personalizado con colores corporativos
+- Exportación individual o completa de planificaciones semanales
+- Endpoints: `GET /api/usuarios/{id}/planificaciones/{planId}/pdf`
+
+### 5. 🔐 Usuario Admin y Control de Acceso
+- Usuario admin creado: `fran@despiensa.es` (crear vía registro y cambiar rol a ADMIN)
+- DELETE protegido para operaciones sensibles (solo ADMIN):
+  - ❌ RecetaIngredienteController (no se pueden borrar ingredientes de recetas)
+  - ❌ AdminController.deleteAll() (no se puede borrar todo)
+- DELETE permitido para usuarios normales:
+  - ✅ Eliminar items propios de despensa
+  - ✅ Eliminar items de listas de compra
+  - ✅ Eliminar notificaciones propias
+  - ✅ Eliminar días planificados propios
+  - ✅ Dejar de guardar recetas
+
+---
+
+## 📖 Documentación
+
+- [CREDENCIALES_ADMIN.md](./CREDENCIALES_ADMIN.md) - Acceso admin
+- [docs/NUEVAS_FUNCIONALIDADES.md](./docs/NUEVAS_FUNCIONALIDADES.md) - Documentación técnica
+- [docs/GUIA_FLYWAY_MIGRACIONES.md](./docs/GUIA_FLYWAY_MIGRACIONES.md) - Sistema de migraciones
+
+---
+
 ## Índice
 
 1. [Descripción del Proyecto](#descripción-del-proyecto)
@@ -62,6 +114,9 @@ API REST desarrollada con Spring Boot para la gestión de despensas, recetas y p
 - **Lombok**: Reducción de código boilerplate
 - **SpringDoc OpenAPI 2.8.13**: Documentación automática de la API (Swagger)
 - **Spring Dotenv**: Gestión de variables de entorno
+- **iText7 8.0.5**: Generación de PDFs profesionales
+- **Spring Mail**: Envío de notificaciones por email (configurado)
+- **Spring Scheduler**: Tareas programadas automáticas
 
 ### Bases de Datos Soportadas
 - **PostgreSQL**: Base de datos principal para producción
@@ -493,7 +548,39 @@ Response 200 OK:
 |--------|----------|-------------|------|
 | GET | `/api/listas-compra` | Listar listas del usuario | USER |
 | POST | `/api/listas-compra` | Crear lista de compra | USER |
-| GET | `/api/listas-compra/{id}` | Obtener lista con items | USER |
+
+#### Notificaciones (`/api/notificaciones`) - NUEVO
+
+| Método | Endpoint | Descripción | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/notificaciones` | Obtener todas las notificaciones | USER |
+| GET | `/api/notificaciones/no-leidas` | Obtener solo no leídas | USER |
+| GET | `/api/notificaciones/no-leidas/count` | Contar no leídas | USER |
+| PUT | `/api/notificaciones/{id}/marcar-leida` | Marcar como leída | USER |
+| PUT | `/api/notificaciones/marcar-todas-leidas` | Marcar todas como leídas | USER |
+| DELETE | `/api/notificaciones/{id}` | Eliminar notificación | USER |
+
+#### Recomendaciones (`/api/recomendaciones`) - NUEVO
+
+| Método | Endpoint | Descripción | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/recomendaciones?porcentajeMinimo=50` | Obtener recetas recomendadas | USER |
+| POST | `/api/recomendaciones/generar-notificaciones` | Generar notificaciones de recomendaciones | USER |
+
+#### Compartir Listas - NUEVO
+
+| Método | Endpoint | Descripción | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/usuarios/{id}/listas/{listaId}/texto` | Obtener texto formateado | USER |
+| POST | `/api/usuarios/{id}/listas/{listaId}/compartir/whatsapp` | Generar URL de WhatsApp | USER |
+| POST | `/api/usuarios/{id}/listas/{listaId}/compartir/telegram` | Generar URL de Telegram | USER |
+
+#### Planificaciones en PDF - NUEVO
+
+| Método | Endpoint | Descripción | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/usuarios/{id}/planificaciones/{planId}/pdf` | Descargar PDF de planificación | USER |
+| GET | `/api/usuarios/{id}/planificaciones/pdf/todas` | Descargar PDF con todas | USER |
 
 ### Códigos de Estado HTTP
 
@@ -645,16 +732,52 @@ El sistema define dos roles principales:
 
 #### ROLE_USER
 - Usuarios estándar registrados
-- Pueden gestionar su propia despensa
+- Pueden gestionar su propia despensa, listas y notificaciones
 - Pueden crear y guardar recetas
 - Pueden crear planificaciones y listas de compra
-- **No pueden eliminar recursos** (solo ADMIN)
+- **Pueden eliminar** solo sus propios recursos:
+  - ✅ Items de la despensa
+  - ✅ Items de listas de compra
+  - ✅ Notificaciones propias
+  - ✅ Días planificados propios
+  - ✅ Dejar de guardar recetas
 
 #### ROLE_ADMIN
 - Administradores del sistema
 - Todos los permisos de ROLE_USER
-- Pueden eliminar cualquier recurso (DELETE)
-- Pueden acceder a información de todos los usuarios
+- Pueden eliminar recursos sensibles:
+  - ✅ Ingredientes de recetas (RecetaIngredienteController)
+  - ✅ Todos los datos (deleteAll)
+- Acceso a información del sistema
+
+### Crear Usuario Admin
+
+Por defecto, se crea un usuario admin en la migración V3. Para crear un admin manualmente:
+
+1. **Regístrate como usuario normal:**
+```bash
+POST /api/auth/registro
+{
+  "email": "fran@despiensa.es",
+  "password": "fran123despiensa"
+}
+```
+
+2. **Actualiza el rol en Neon SQL Editor:**
+```sql
+UPDATE usuario 
+SET rol = 'ROLE_ADMIN'
+WHERE email = 'fran@despiensa.es';
+```
+
+3. **Login con permisos de admin:**
+```bash
+POST /api/auth/login
+{
+  "email": "fran@despiensa.es",
+  "password": "fran123despiensa"
+}
+```
 
 ### Seguridad de Endpoints
 
@@ -843,6 +966,11 @@ mvnw.cmd clean install
 ```bash
 ./mvnw spring-boot:run
 ```
+
+**Flyway ejecutará automáticamente:**
+- V1: Creación de tablas base (usuario, despensa, recetas, etc.)
+- V2: Tabla de notificaciones
+- V3: Usuario admin
 
 O compilar y ejecutar el JAR:
 

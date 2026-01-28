@@ -17,4 +17,3 @@ public class RecetaIngredienteResponse {
     private String unidad;
     private Boolean opcional;
 }
-
