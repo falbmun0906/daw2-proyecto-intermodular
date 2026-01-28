@@ -889,7 +889,10 @@ El proyecto incluye documentación automática de la API con **SpringDoc OpenAPI
 1. Ejecutar la aplicación
 2. Abrir navegador en: http://localhost:8080/swagger-ui/index.html
 
-(INSERTAR captura de Swagger UI mostrando los endpoints)
+<img width="1901" height="917" alt="swagger-despiensa-1" src="https://github.com/user-attachments/assets/2f15e43c-2111-45c3-9357-56b8102aa5ce" />
+
+<img width="1902" height="917" alt="swagger-despiensa-2" src="https://github.com/user-attachments/assets/b57fb5f5-c4d3-4183-aa3b-ee8657902bfa" />
+
 
 #### Características de la Documentación
 
