@@ -19,7 +19,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000';
+  private readonly baseUrl = 'http://localhost:8080/api';
 
   /**
    * GET request genérico
@@ -94,7 +94,6 @@ export class ApiService {
       }
     }
 
-    console.error('HTTP Error:', errorMessage, error);
     return throwError(() => new Error(errorMessage));
   }
 }

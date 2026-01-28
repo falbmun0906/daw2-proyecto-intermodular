@@ -8,7 +8,6 @@ import { Button } from '../button/button';
 import { passwordStrength, passwordMatch, telefono } from '../../../validators/custom.validators';
 import { ValidationService } from '../../../services/validation.service';
 import { ToastService } from '../../../services/toast.service';
-import { LoadingService } from '../../../services/loading.service';
 
 /**
  * RegisterForm Component
@@ -38,8 +37,7 @@ export class RegisterForm implements OnInit {
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService,
-    private toastService: ToastService,
-    private loadingService: LoadingService
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -132,20 +130,18 @@ export class RegisterForm implements OnInit {
 
     this.isSubmitting = true;
     this.generalError = '';
-    this.loadingService.show();
 
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.loadingService.hide();
-      this.toastService.success('Registro completado correctamente');
-      this.submitForm.emit(this.registerForm.value);
-    }, 1500);
+    this.submitForm.emit(this.registerForm.value);
+    // Emitir inmediatamente - el loading y delay lo maneja RegisterPage con el backend real
+    this.submitForm.emit(this.registerForm.value);
+    this.cancel.emit();
   }
 
-  onCancel(event?: MouseEvent): void {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.cancel.emit();
+  /**
+   * Resetea el estado del formulario (llamado desde el parent después de error)
+   */
+  resetFormState(): void {
+    this.isSubmitting = false;
+    this.generalError = '';
   }
 }

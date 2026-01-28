@@ -16,5 +16,6 @@ public class IngredienteResponse {
     private String categoria;
     private String unidadDefecto;
     private Integer caloriasPorUnidad;
+    private String imagenUrl;
 }
 

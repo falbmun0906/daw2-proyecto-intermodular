@@ -162,6 +162,45 @@ public class RecetaService {
     }
 
     /**
+     * Búsqueda avanzada de recetas con filtros múltiples.
+     * Filtra por dificultad, tiempo máximo de preparación y/o etiqueta de dieta.
+     *
+     * @param dificultad nivel de dificultad (BAJA, MEDIA, ALTA) - opcional
+     * @param tiempoMaximo tiempo máximo de preparación en minutos - opcional
+     * @param dieta etiqueta de dieta (VEGETARIANA, VEGANA, etc.) - opcional
+     * @return lista de recetas que cumplen los criterios
+     */
+    public List<RecetaResponse> filtrar(String dificultad, Integer tiempoMaximo, String dieta) {
+        List<Receta> recetas = recetaRepository.findAllOrderByFechaCreacionDesc();
+
+        // Filtrar por dificultad si se especifica
+        if (dificultad != null && !dificultad.isEmpty()) {
+            recetas = recetas.stream()
+                    .filter(r -> r.getDificultad() != null && r.getDificultad().equalsIgnoreCase(dificultad))
+                    .collect(Collectors.toList());
+        }
+
+        // Filtrar por tiempo máximo de preparación si se especifica
+        if (tiempoMaximo != null) {
+            recetas = recetas.stream()
+                    .filter(r -> r.getTiempoPreparacion() != null && r.getTiempoPreparacion() <= tiempoMaximo)
+                    .collect(Collectors.toList());
+        }
+
+        // Filtrar por etiqueta de dieta si se especifica
+        if (dieta != null && !dieta.isEmpty()) {
+            recetas = recetas.stream()
+                    .filter(r -> r.getEtiquetas() != null && r.getEtiquetas().stream()
+                            .anyMatch(etiqueta -> etiqueta.name().equalsIgnoreCase(dieta)))
+                    .collect(Collectors.toList());
+        }
+
+        return recetas.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Cuenta el número total de recetas.
      *
      * @return total de recetas

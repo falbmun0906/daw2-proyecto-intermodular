@@ -5,7 +5,7 @@ import { Badge } from '../../components/shared/badge/badge';
 import { Button } from '../../components/shared/button/button';
 import { Breadcrumbs } from '../../components/shared/breadcrumbs/breadcrumbs';
 import { IngredientCard } from '../../components/shared/ingredient-card/ingredient-card';
-import { Recipe } from '../../services/recipe.service';
+import { RecetaCompleta } from '../../models/receta.model';
 
 /**
  * RecipeDetailPage Component
@@ -35,7 +35,7 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
   private floatingMessages: HTMLElement[] = [];
 
   recipeId = signal<string | null>(null);
-  recipe = signal<Recipe | null>(null);
+  recipe = signal<RecetaCompleta | null>(null);
   loading = signal<boolean>(true);
   categoria = signal<string | null>(null);
   fragment = signal<string | null>(null);
@@ -54,28 +54,17 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
    * CRITERIO 1.1: ngAfterViewInit - Acceso seguro a ViewChild después de inicialización
    */
   ngAfterViewInit(): void {
-    // El contenedor ya está disponible aquí
-    if (this.recipeContainer) {
-      console.log('✅ Contenedor de receta inicializado');
-    }
+    // El contenedor ya está disponible
   }
 
-  /**
-   * TAREA 4.5 - Resolvers:
-   * Lee receta precargada desde route.data (resuelto por recipeResolver)
-   */
   ngOnInit(): void {
     this.route.data.subscribe(({ recipe }) => {
-      console.log('📦 RecipeDetailPage: Datos recibidos del resolver:', recipe);
-
       if (recipe) {
         this.recipe.set(recipe);
-        this.servings = recipe.servings || 4;
-        this.breadcrumbItems[2].label = recipe.title;
+        this.servings = recipe.porciones || 4;
+        this.breadcrumbItems[2].label = recipe.nombre;
         this.loading.set(false);
-        console.log('✅ Receta cargada:', recipe.title);
       } else {
-        console.warn('⚠️ No se recibió receta del resolver (error manejado)');
         this.loading.set(false);
       }
     });
@@ -110,22 +99,14 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  /**
-   * CRITERIO 1.3: ngOnDestroy - Limpieza de elementos creados dinámicamente
-   * Elimina todos los mensajes flotantes antes de destruir el componente
-   */
   ngOnDestroy(): void {
-    // CRITERIO 1.3: removeChild() para limpiar elementos dinámicos
     this.floatingMessages.forEach(element => {
       if (element.parentNode) {
         this.renderer.removeChild(element.parentNode, element);
       }
     });
 
-    // Limpiar el array
     this.floatingMessages = [];
-
-    console.log('🧹 RecipeDetailPage: Elementos dinámicos limpiados en ngOnDestroy');
   }
 
   decreaseServings(): void {
@@ -138,17 +119,9 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
     this.servings++;
   }
 
-  /**
-   * CRITERIO 1.3: Creación dinámica de elementos con createElement() y appendChild()
-   * Crea un mensaje flotante cuando se añaden ingredientes a la lista
-   */
   onAddToList(): void {
-    console.log('Añadir ingredientes a la lista');
-
-    // CRITERIO 1.3: createElement() - Crear elemento dinámicamente
     const floatingMsg = this.renderer.createElement('div');
 
-    // CRITERIO 1.2: Renderer2 - Aplicar estilos y clases
     this.renderer.addClass(floatingMsg, 'floating-message');
     this.renderer.addClass(floatingMsg, 'floating-message--success');
     this.renderer.setStyle(floatingMsg, 'position', 'fixed');
@@ -162,28 +135,20 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
     this.renderer.setStyle(floatingMsg, 'z-index', '1000');
     this.renderer.setStyle(floatingMsg, 'animation', 'slideInUp 0.3s ease-out');
 
-    // CRITERIO 1.3: Crear contenido de texto
     const textNode = this.renderer.createText('✓ Ingredientes añadidos a la lista');
     this.renderer.appendChild(floatingMsg, textNode);
-
-    // CRITERIO 1.3: appendChild() - Añadir al DOM
     this.renderer.appendChild(document.body, floatingMsg);
 
-    // Guardar referencia para limpieza en ngOnDestroy
     this.floatingMessages.push(floatingMsg);
 
-    // Auto-eliminar después de 3 segundos
     setTimeout(() => {
-      // Animación de salida
       this.renderer.setStyle(floatingMsg, 'animation', 'slideOutDown 0.3s ease-in');
 
       setTimeout(() => {
-        // CRITERIO 1.3: removeChild() - Eliminar del DOM
         if (floatingMsg.parentNode) {
           this.renderer.removeChild(floatingMsg.parentNode, floatingMsg);
         }
 
-        // Remover de array de referencias
         const index = this.floatingMessages.indexOf(floatingMsg);
         if (index > -1) {
           this.floatingMessages.splice(index, 1);
@@ -194,15 +159,14 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
 
   onRate(stars: number): void {
     this.userRating = stars;
-    console.log('Rating:', stars);
   }
 
   onAddToFavorites(): void {
-    console.log('Añadir a favoritos');
+    // TODO: Implementar funcionalidad de favoritos
   }
 
   onSave(): void {
-    console.log('Guardar receta');
+    // TODO: Implementar funcionalidad de guardar
   }
 }
 

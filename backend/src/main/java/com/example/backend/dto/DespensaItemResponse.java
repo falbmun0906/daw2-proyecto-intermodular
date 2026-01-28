@@ -18,6 +18,7 @@ public class DespensaItemResponse {
     private Float cantidadActual;
     private String unidad;
     private LocalDate fechaCaducidad;
+    private Long diasRestantes; // Días restantes hasta caducidad (calculado)
     private String ubicacion;
     private String estado;
 }

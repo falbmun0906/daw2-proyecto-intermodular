@@ -4,9 +4,9 @@ import { HttpInterceptorFn } from '@angular/common/http';
  * Interceptor de autenticación
  *
  * Añade headers comunes a todas las peticiones HTTP:
- * - Content-Type: application/json
+ * - Content-Type: application/json (solo si no es FormData)
  * - X-App-Client: Angular-DWEC (identificador de la aplicación)
- * - Authorization: Bearer <token> (si existe token en localStorage)
+ * - Authorization: Bearer <token> (si existe token en sessionStorage)
  *
  * @example
  * // Configuración en app.config.ts
@@ -15,13 +15,16 @@ import { HttpInterceptorFn } from '@angular/common/http';
  * )
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // Obtener token del localStorage (si existe)
-  const token = localStorage.getItem('token');
+  // Obtener token del sessionStorage (si existe)
+  const token = sessionStorage.getItem('token');
 
   // Clonar la petición y añadir headers
-  let headers = req.headers
-    .set('Content-Type', 'application/json')
-    .set('X-App-Client', 'Angular-DWEC');
+  let headers = req.headers.set('X-App-Client', 'Angular-DWEC');
+
+  // Solo añadir Content-Type si no es FormData (para upload de archivos)
+  if (!(req.body instanceof FormData)) {
+    headers = headers.set('Content-Type', 'application/json');
+  }
 
   // Si hay token, añadir header de Authorization
   if (token) {

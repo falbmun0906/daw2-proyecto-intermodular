@@ -252,7 +252,17 @@ public class DespensaItemService {
                 .categoria(item.getIngrediente().getCategoria())
                 .unidadDefecto(item.getIngrediente().getUnidadDefecto())
                 .caloriasPorUnidad(item.getIngrediente().getCaloriasPorUnidad())
+                .imagenUrl(item.getIngrediente().getImagenUrl())
                 .build();
+
+        // Calcular días restantes hasta caducidad
+        Long diasRestantes = null;
+        if (item.getFechaCaducidad() != null) {
+            diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(
+                LocalDate.now(),
+                item.getFechaCaducidad()
+            );
+        }
 
         return DespensaItemResponse.builder()
                 .id(item.getId())
@@ -260,6 +270,7 @@ public class DespensaItemService {
                 .cantidadActual(item.getCantidadActual())
                 .unidad(item.getUnidad())
                 .fechaCaducidad(item.getFechaCaducidad())
+                .diasRestantes(diasRestantes)
                 .ubicacion(item.getUbicacion().name())
                 .estado(item.getEstado().name())
                 .build();

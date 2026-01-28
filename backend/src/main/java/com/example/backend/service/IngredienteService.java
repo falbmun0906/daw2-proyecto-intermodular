@@ -41,6 +41,7 @@ public class IngredienteService {
                 .categoria(request.getCategoria())
                 .unidadDefecto(request.getUnidadDefecto())
                 .caloriasPorUnidad(request.getCaloriasPorUnidad())
+                .imagenUrl(request.getImagenUrl())
                 .build();
 
         Ingrediente saved = ingredienteRepository.save(ingrediente);
@@ -190,6 +191,7 @@ public class IngredienteService {
                 .categoria(ingrediente.getCategoria())
                 .unidadDefecto(ingrediente.getUnidadDefecto())
                 .caloriasPorUnidad(ingrediente.getCaloriasPorUnidad())
+                .imagenUrl(ingrediente.getImagenUrl())
                 .build();
     }
 }

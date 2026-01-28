@@ -24,5 +24,9 @@ public class IngredienteCreateRequest {
 
     @Min(value = 0, message = "Las calorías no pueden ser negativas")
     private Integer caloriasPorUnidad;
+
+
+    @Size(max = 500, message = "La URL de la imagen no puede exceder 500 caracteres")
+    private String imagenUrl;
 }
 
