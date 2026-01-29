@@ -93,6 +93,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Rutas públicas (sin autenticación)
                         .requestMatchers("/api/auth/**").permitAll()
+                        // Imágenes estáticas (públicas)
+                        .requestMatchers("/images/**").permitAll()
                         // Swagger/OpenAPI (permitir todas las rutas relacionadas)
                         .requestMatchers(
                                 "/swagger-ui/**",

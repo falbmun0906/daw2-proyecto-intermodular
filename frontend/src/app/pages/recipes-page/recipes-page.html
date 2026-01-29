@@ -36,11 +36,11 @@
         </div>
       } @else {
         <div class="recipes-page__list">
-          @for (recipe of paginatedRecipes; track recipe.id) {
+          @for (recipe of recipes(); track recipe.id) {
             <app-card
               variant="horizontal"
               [title]="recipe.nombre"
-              [imageUrl]="recipe.imagenUrl || 'assets/recipes/default.jpg'"
+              [imageUrl]="getRecipeImageUrl(recipe)"
               [time]="recipe.tiempoPreparacion + ' min'"
               [difficulty]="recipe.dificultad"
               actionText="Ver receta"

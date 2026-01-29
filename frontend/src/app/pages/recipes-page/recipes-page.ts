@@ -8,7 +8,7 @@ import { RecipesHero } from '../../components/shared/recipes-hero/recipes-hero';
 import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Receta } from '../../models/receta.model';
+import { Receta, PageResponse } from '../../models/receta.model';
 
 interface FilterGroup {
   title: string;
@@ -31,7 +31,7 @@ interface FilterOption {
 })
 export class RecipesPage implements OnInit {
   private navigationService = inject(NavigationService);
-  private recipeService = inject(RecipeService);
+  recipeService = inject(RecipeService); // Público para usar en template
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -47,7 +47,7 @@ export class RecipesPage implements OnInit {
   searchQuery: string = '';
   currentPage: number = 1;
   totalPages: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 5; // 5 recetas por página
   totalItems: number = 0;
 
   // Filtros basados en el backend - TipoDieta enum y dificultad
@@ -110,6 +110,8 @@ export class RecipesPage implements OnInit {
 
       if (page) {
         this.currentPage = parseInt(page, 10);
+      } else {
+        this.currentPage = 1;
       }
 
       if (q) {
@@ -119,7 +121,7 @@ export class RecipesPage implements OnInit {
       // Restaurar estado de filtros desde URL
       this.restoreFiltersFromUrl(dificultad, tiempoMaximo, dieta);
 
-      // Cargar recetas con filtros
+      // Cargar recetas con filtros o paginación
       this.loadRecipes(dificultad, tiempoMaximo, dieta, q);
     });
   }
@@ -133,6 +135,8 @@ export class RecipesPage implements OnInit {
           opt.checked = opt.id === tiempoMaximo;
         } else if (group.key === 'dieta' && dieta) {
           opt.checked = dieta.split(',').includes(opt.id);
+        } else {
+          opt.checked = false;
         }
       });
     });
@@ -141,13 +145,21 @@ export class RecipesPage implements OnInit {
   private loadRecipes(dificultad?: string | null, tiempoMaximo?: string | null, dieta?: string | null, nombre?: string | null): void {
     this.isLoading.set(true);
 
-    // Si hay búsqueda por nombre
+    // Si hay búsqueda por nombre, usar endpoint de búsqueda
     if (nombre) {
-      this.recipeService.buscarPorNombre(nombre).subscribe({
-        next: (recetas) => {
-          this.recipes.set(recetas);
-          this.totalItems = recetas.length;
-          this.totalPages = Math.ceil(recetas.length / this.pageSize);
+      this.recipeService.buscarPorNombre(nombre, this.currentPage - 1, this.pageSize).subscribe({
+        next: (response) => {
+          if (Array.isArray(response)) {
+            // Respuesta sin paginación
+            this.recipes.set(response);
+            this.totalItems = response.length;
+            this.totalPages = Math.ceil(response.length / this.pageSize);
+          } else {
+            // Respuesta paginada
+            this.recipes.set(response.content);
+            this.totalItems = response.totalElements;
+            this.totalPages = response.totalPages;
+          }
           this.isLoading.set(false);
         },
         error: (err) => {
@@ -158,14 +170,16 @@ export class RecipesPage implements OnInit {
       return;
     }
 
-    // Si hay filtros activos
+    // Si hay filtros activos, usar endpoint de filtros
     if (dificultad || tiempoMaximo || dieta) {
       const tiempo = tiempoMaximo ? parseInt(tiempoMaximo, 10) : undefined;
       this.recipeService.filtrar(dificultad || undefined, tiempo, dieta || undefined).subscribe({
         next: (recetas) => {
-          this.recipes.set(recetas);
+          // Paginación en cliente para filtros (el backend no soporta paginación en filtrar)
           this.totalItems = recetas.length;
           this.totalPages = Math.ceil(recetas.length / this.pageSize);
+          const start = (this.currentPage - 1) * this.pageSize;
+          this.recipes.set(recetas.slice(start, start + this.pageSize));
           this.isLoading.set(false);
         },
         error: (err) => {
@@ -176,12 +190,12 @@ export class RecipesPage implements OnInit {
       return;
     }
 
-    // Cargar todas las recetas
-    this.recipeService.getAllRecipes().subscribe({
-      next: (recetas) => {
-        this.recipes.set(recetas);
-        this.totalItems = recetas.length;
-        this.totalPages = Math.ceil(recetas.length / this.pageSize);
+    // Sin filtros: usar endpoint paginado del backend
+    this.recipeService.getRecipesPaginated(this.currentPage - 1, this.pageSize).subscribe({
+      next: (response) => {
+        this.recipes.set(response.content);
+        this.totalItems = response.totalElements;
+        this.totalPages = response.totalPages;
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -191,12 +205,15 @@ export class RecipesPage implements OnInit {
     });
   }
 
-  get paginatedRecipes(): Receta[] {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.recipes().slice(start, start + this.pageSize);
+  /**
+   * Obtiene la URL de imagen para una receta (tamaño medium para cards)
+   */
+  getRecipeImageUrl(receta: Receta): string {
+    return this.recipeService.getImageUrls(receta.imagenUrl).medium;
   }
 
   onSearch(): void {
+    this.currentPage = 1;
     const activeFilters = this.getActiveFilters();
     this.navigationService.navigateWithFullExtras(
       ['/recetas'],
@@ -238,7 +255,6 @@ export class RecipesPage implements OnInit {
   onFilterChange(groupIndex: number, optionIndex: number): void {
     this.filters[groupIndex].options[optionIndex].checked =
       !this.filters[groupIndex].options[optionIndex].checked;
-    console.log('Filter changed:', this.filters[groupIndex].options[optionIndex]);
 
     // Aplicar filtros navegando con queryParams
     this.applyFilters();
@@ -254,9 +270,9 @@ export class RecipesPage implements OnInit {
       {
         queryParams: {
           ...activeFilters,
+          q: undefined, // Limpiar búsqueda al aplicar filtros
           page: 1
-        },
-        queryParamsHandling: 'merge'
+        }
       }
     );
   }
@@ -269,17 +285,11 @@ export class RecipesPage implements OnInit {
    * Navega al detalle de una receta usando el servicio de navegación
    */
   onViewRecipe(id: number): void {
-    console.log('View recipe:', id);
-    // Ejemplo de navegación con parámetros de ruta
     this.navigationService.goToRecipeDetail(id);
-
-    // Ejemplo de navegación con fragment (scroll a sección específica)
-    // this.navigationService.goToRecipeSection(id, 'ingredientes');
   }
 
   onPageChange(page: number): void {
     this.currentPage = page;
-    console.log('Page changed:', page);
 
     // Actualizar queryParams con la nueva página
     this.navigationService.navigateWithFullExtras(

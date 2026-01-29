@@ -4,6 +4,30 @@
  * IMPORTANTE: Usa los nombres de campos del backend (Java/Spring Boot)
  */
 
+/**
+ * Respuesta paginada genérica de Spring Boot
+ */
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number; // página actual (0-based)
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+}
+
+/**
+ * Modelo de imagen responsive con múltiples tamaños
+ */
+export interface ImagenResponsive {
+  small: string;   // -small.webp (thumbnail, 150px)
+  medium: string;  // -medium.webp (card, 400px)
+  large: string;   // -large.webp (detalle, 800px)
+  original?: string;
+}
+
 export interface Receta {
   id: number;
   nombre: string;
