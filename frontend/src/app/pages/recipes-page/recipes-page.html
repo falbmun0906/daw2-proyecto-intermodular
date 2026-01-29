@@ -12,16 +12,16 @@
 
   <div class="recipes-page__container">
     <aside class="recipes-page__filters">
-      @for (filterGroup of filters; track filterGroup.title) {
+      @for (filterGroup of filters; track filterGroup.title; let groupIdx = $index) {
         <div class="filter-group">
           <h3 class="filter-group__title">{{ filterGroup.title }}</h3>
           <div class="filter-group__options">
-            @for (option of filterGroup.options; track option.id; let i = $index) {
+            @for (option of filterGroup.options; track option.id; let optIdx = $index) {
               <app-form-checkbox
                 [label]="option.label"
                 [name]="option.id"
                 [(ngModel)]="option.checked"
-                (checkboxChange)="onFilterChange($index, i)"
+                (checkboxChange)="onFilterChange(groupIdx, optIdx)"
               />
             }
           </div>
@@ -30,26 +30,39 @@
     </aside>
 
     <div class="recipes-page__content">
-      <div class="recipes-page__list">
-        @for (recipe of recipes; track recipe.id) {
-          <app-card
-            variant="horizontal"
-            [title]="recipe.title"
-            [imageUrl]="recipe.imageUrl"
-            [rating]="recipe.rating"
-            actionText="Ver receta"
-            (actionClick)="onViewRecipe(recipe.id)"
-            (saveClick)="onSaveRecipe(recipe.id)"
+      @if (isLoading()) {
+        <div class="recipes-page__loading">
+          <p>Cargando recetas...</p>
+        </div>
+      } @else {
+        <div class="recipes-page__list">
+          @for (recipe of paginatedRecipes; track recipe.id) {
+            <app-card
+              variant="horizontal"
+              [title]="recipe.nombre"
+              [imageUrl]="recipe.imagenUrl || 'assets/recipes/default.jpg'"
+              [time]="recipe.tiempoPreparacion + ' min'"
+              [difficulty]="recipe.dificultad"
+              actionText="Ver receta"
+              (actionClick)="onViewRecipe(recipe.id!)"
+              (saveClick)="onSaveRecipe(recipe.id!)"
+            />
+          } @empty {
+            <p class="recipes-page__empty">No se encontraron recetas con los filtros seleccionados.</p>
+          }
+        </div>
+
+        @if (totalPages > 1) {
+          <app-pagination
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            [totalItems]="totalItems"
+            [itemsPerPage]="pageSize"
+            (pageChanged)="onPageChange($event)"
+            class="recipes-page__pagination"
           />
         }
-      </div>
-
-      <app-pagination
-        [currentPage]="currentPage"
-        [totalPages]="totalPages"
-        (pageChanged)="onPageChange($event)"
-        class="recipes-page__pagination"
-      />
+      }
     </div>
   </div>
 </main>

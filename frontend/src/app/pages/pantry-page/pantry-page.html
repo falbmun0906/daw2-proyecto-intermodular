@@ -1,35 +1,19 @@
 <div class="pantry">
-  <aside class="pantry__sidebar" [class.pantry__sidebar--collapsed]="sidebarCollapsed">
-    <h2 class="pantry__sidebar-title">Mi cocina</h2>
+  <app-sidebar
+    [isCollapsed]="sidebarCollapsed()"
+    [items]="sidebarItems"
+    (toggle)="toggleSidebar()"
+    (itemClick)="onNavItemClick($event)">
+  </app-sidebar>
 
-    <nav class="pantry__nav">
-      @for (item of sidebarItems; track item.id) {
-        <app-button
-          [variant]="item.active ? 'secondary' : 'ghost'"
-          size="md"
-          class="pantry__nav-item"
-          (buttonClick)="onNavItemClick(item.id)">
-          {{ item.icon }} {{ item.label }}
-        </app-button>
-      }
-    </nav>
+  <main class="pantry__content" [class.pantry__content--sidebar-collapsed]="sidebarCollapsed()">
+    <div class="pantry__bg-pattern"></div>
 
-    <app-button
-      variant="ghost"
-      size="sm"
-      class="pantry__sidebar-toggle"
-      (buttonClick)="toggleSidebar()"
-      [attr.aria-label]="sidebarCollapsed ? 'Expandir menú' : 'Contraer menú'">
-      {{ sidebarCollapsed ? '→' : '←' }}
-    </app-button>
-  </aside>
-
-  <main class="pantry__content">
-    <section class="pantry__header">
+    <section class="pantry__section pantry__header">
       <div class="pantry__locations">
         @for (location of pantryLocations; track location.id) {
           <app-button
-            [variant]="location.active ? 'secondary' : 'ghost'"
+            [variant]="location.active ? 'secondary' : 'primary'"
             size="sm"
             (buttonClick)="onLocationChange(location.id)">
             {{ location.name }}
@@ -38,80 +22,267 @@
       </div>
 
       <div class="pantry__actions">
-        <app-button variant="secondary" size="md" (buttonClick)="onAddProduct()">
+        <app-button variant="secondary" size="md" icon="plus" (buttonClick)="onAddProduct()">
           Añadir producto
         </app-button>
-        <app-button variant="secondary" size="md" (buttonClick)="onCreatePantry()">
+        <app-button variant="primary" size="md" icon="house-line" (buttonClick)="onCreatePantry()">
           Nueva despensa
         </app-button>
       </div>
     </section>
 
-    <section class="pantry__section">
-      <h2 class="pantry__section-title">Nevera</h2>
-
-      <div class="pantry__toolbar">
+    <section class="pantry__section pantry__search-section">
+      <div class="pantry__search">
         <app-form-input
           type="text"
-          placeholder="Buscar ingrediente"
-          [icon]="'🔍'"
-          [(ngModel)]="searchQueryFridge"
-          (input)="onSearchFridge()"
-          class="pantry__search form-input--search"
+          placeholder="Buscar en toda la despensa..."
+          icon="search"
+          variant="search"
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+          (inputChange)="onSearch()"
+          class="pantry__search-input form-input--search"
         />
+      </div>
+    </section>
 
-        <app-button variant="ghost" size="sm" (buttonClick)="onFilterFridge()">
-          Filtrar
-        </app-button>
+    <!-- Nevera -->
+    <section class="pantry__section pantry__zone">
+      <div class="pantry__section-header">
+        <h2 class="pantry__section-title">
+          <app-icon name="snowflake" [size]="24" class="pantry__section-icon"></app-icon>
+          Nevera
+        </h2>
+        <span class="pantry__item-count">{{ fridgeItems().length }} productos</span>
       </div>
 
       <div class="pantry__grid">
-        @for (item of fridgeItems; track item.id) {
-          <app-card
-            variant="vertical"
-            [title]="item.name"
-            class="pantry-item">
-            <p class="pantry-item__detail">Uds: {{ item.units }}</p>
-            <p class="pantry-item__detail">Cantidad inicial: {{ item.initialQuantity }}</p>
-            <p class="pantry-item__detail">Añadido: {{ item.dateAdded }}</p>
-            <p class="pantry-item__detail">Caducidad: {{ item.expirationDate }}</p>
-          </app-card>
+        @for (item of fridgeItems(); track item.id) {
+          <div class="pantry-item" [class]="getStatusClass(item.estado)">
+            <div class="pantry-item__header">
+              <span class="pantry-item__name">{{ item.ingrediente.nombre }}</span>
+              <span class="pantry-item__status">{{ getStatusLabel(item.estado) }}</span>
+            </div>
+            <div class="pantry-item__details">
+              <p class="pantry-item__detail">
+                <app-icon name="package" [size]="14"></app-icon>
+                {{ item.cantidadActual }} {{ item.unidad }}
+              </p>
+              <p class="pantry-item__detail">
+                <app-icon name="calendar" [size]="14"></app-icon>
+                Caduca: {{ item.fechaCaducidad }}
+              </p>
+              @if (item.diasRestantes !== null) {
+                <p class="pantry-item__detail pantry-item__days">
+                  {{ item.diasRestantes }} días restantes
+                </p>
+              }
+            </div>
+          </div>
+        } @empty {
+          <p class="pantry__empty">No hay productos en la nevera</p>
         }
       </div>
     </section>
 
-    <section class="pantry__section">
-      <h2 class="pantry__section-title">Alacena</h2>
-
-      <div class="pantry__toolbar">
-        <app-form-input
-          type="text"
-          placeholder="Buscar ingrediente"
-          [icon]="'🔍'"
-          [(ngModel)]="searchQueryCupboard"
-          (input)="onSearchCupboard()"
-          class="pantry__search form-input--search"
-        />
-
-        <app-button variant="ghost" size="sm" (buttonClick)="onFilterCupboard()">
-          Filtrar
-        </app-button>
+    <!-- Congelador -->
+    <section class="pantry__section pantry__zone">
+      <div class="pantry__section-header">
+        <h2 class="pantry__section-title">
+          <app-icon name="thermometer" [size]="24" class="pantry__section-icon"></app-icon>
+          Congelador
+        </h2>
+        <span class="pantry__item-count">{{ freezerItems().length }} productos</span>
       </div>
 
       <div class="pantry__grid">
-        @for (item of cupboardItems; track item.id) {
-          <app-card
-            variant="vertical"
-            [title]="item.name"
-            class="pantry-item">
-            <p class="pantry-item__detail">Uds: {{ item.units }}</p>
-            <p class="pantry-item__detail">Cantidad inicial: {{ item.initialQuantity }}</p>
-            <p class="pantry-item__detail">Añadido: {{ item.dateAdded }}</p>
-            <p class="pantry-item__detail">Caducidad: {{ item.expirationDate }}</p>
-          </app-card>
+        @for (item of freezerItems(); track item.id) {
+          <div class="pantry-item" [class]="getStatusClass(item.estado)">
+            <div class="pantry-item__header">
+              <span class="pantry-item__name">{{ item.ingrediente.nombre }}</span>
+              <span class="pantry-item__status">{{ getStatusLabel(item.estado) }}</span>
+            </div>
+            <div class="pantry-item__details">
+              <p class="pantry-item__detail">
+                <app-icon name="package" [size]="14"></app-icon>
+                {{ item.cantidadActual }} {{ item.unidad }}
+              </p>
+              <p class="pantry-item__detail">
+                <app-icon name="calendar" [size]="14"></app-icon>
+                Caduca: {{ item.fechaCaducidad }}
+              </p>
+            </div>
+          </div>
+        } @empty {
+          <p class="pantry__empty">No hay productos en el congelador</p>
+        }
+      </div>
+    </section>
+
+    <!-- Alacena/Despensa -->
+    <section class="pantry__section pantry__zone">
+      <div class="pantry__section-header">
+        <h2 class="pantry__section-title">
+          <app-icon name="archive" [size]="24" class="pantry__section-icon"></app-icon>
+          Alacena
+        </h2>
+        <span class="pantry__item-count">{{ pantryItems().length }} productos</span>
+      </div>
+
+      <div class="pantry__grid">
+        @for (item of pantryItems(); track item.id) {
+          <div class="pantry-item" [class]="getStatusClass(item.estado)">
+            <div class="pantry-item__header">
+              <span class="pantry-item__name">{{ item.ingrediente.nombre }}</span>
+              <span class="pantry-item__status">{{ getStatusLabel(item.estado) }}</span>
+            </div>
+            <div class="pantry-item__details">
+              <p class="pantry-item__detail">
+                <app-icon name="package" [size]="14"></app-icon>
+                {{ item.cantidadActual }} {{ item.unidad }}
+              </p>
+              <p class="pantry-item__detail">
+                <app-icon name="calendar" [size]="14"></app-icon>
+                Caduca: {{ item.fechaCaducidad }}
+              </p>
+            </div>
+          </div>
+        } @empty {
+          <p class="pantry__empty">No hay productos en la alacena</p>
+        }
+      </div>
+    </section>
+
+    <!-- Especias -->
+    <section class="pantry__section pantry__zone">
+      <div class="pantry__section-header">
+        <h2 class="pantry__section-title">
+          <app-icon name="fire" [size]="24" class="pantry__section-icon"></app-icon>
+          Especias
+        </h2>
+        <span class="pantry__item-count">{{ spicesItems().length }} productos</span>
+      </div>
+
+      <div class="pantry__grid">
+        @for (item of spicesItems(); track item.id) {
+          <div class="pantry-item" [class]="getStatusClass(item.estado)">
+            <div class="pantry-item__header">
+              <span class="pantry-item__name">{{ item.ingrediente.nombre }}</span>
+              <span class="pantry-item__status">{{ getStatusLabel(item.estado) }}</span>
+            </div>
+            <div class="pantry-item__details">
+              <p class="pantry-item__detail">
+                <app-icon name="package" [size]="14"></app-icon>
+                {{ item.cantidadActual }} {{ item.unidad }}
+              </p>
+              <p class="pantry-item__detail">
+                <app-icon name="calendar" [size]="14"></app-icon>
+                Caduca: {{ item.fechaCaducidad }}
+              </p>
+            </div>
+          </div>
+        } @empty {
+          <p class="pantry__empty">No hay especias</p>
         }
       </div>
     </section>
   </main>
 </div>
 
+<!-- Modal: Añadir producto -->
+<app-modal
+  [isOpen]="isAddProductModalOpen()"
+  title="Añadir producto a la despensa"
+  size="md"
+  (closed)="onCloseAddProductModal()">
+
+  <div class="modal-form">
+    <div class="modal-form__field">
+      <label class="modal-form__label">Ingrediente</label>
+      <app-form-select
+        [options]="ingredienteOptions"
+        placeholder="Selecciona un ingrediente"
+        [ngModel]="selectedIngredienteId()?.toString() || ''"
+        (ngModelChange)="selectedIngredienteId.set($event ? +$event : null)">
+      </app-form-select>
+    </div>
+
+    <div class="modal-form__row">
+      <div class="modal-form__field">
+        <label class="modal-form__label">Cantidad</label>
+        <app-form-input
+          type="number"
+          [ngModel]="newProductCantidad()"
+          (ngModelChange)="newProductCantidad.set($event)"
+          placeholder="1">
+        </app-form-input>
+      </div>
+
+      <div class="modal-form__field">
+        <label class="modal-form__label">Unidad</label>
+        <app-form-input
+          type="text"
+          [ngModel]="newProductUnidad()"
+          (ngModelChange)="newProductUnidad.set($event)"
+          placeholder="unidad, kg, litros...">
+        </app-form-input>
+      </div>
+    </div>
+
+    <div class="modal-form__field">
+      <label class="modal-form__label">Fecha de caducidad</label>
+      <app-form-input
+        type="date"
+        [ngModel]="newProductFechaCaducidad()"
+        (ngModelChange)="newProductFechaCaducidad.set($event)">
+      </app-form-input>
+    </div>
+
+    <div class="modal-form__field">
+      <label class="modal-form__label">Ubicación</label>
+      <app-form-select
+        [options]="ubicacionOptions"
+        [ngModel]="newProductUbicacion()"
+        (ngModelChange)="newProductUbicacion.set($event)">
+      </app-form-select>
+    </div>
+  </div>
+
+  <div modal-footer class="modal-form__actions">
+    <app-button variant="secondary" (buttonClick)="onCloseAddProductModal()">
+      Cancelar
+    </app-button>
+    <app-button variant="primary" (buttonClick)="onSaveProduct()">
+      Guardar
+    </app-button>
+  </div>
+</app-modal>
+
+<!-- Modal: Crear nueva despensa -->
+<app-modal
+  [isOpen]="isCreatePantryModalOpen()"
+  title="Crear nueva despensa"
+  size="sm"
+  (closed)="onCloseCreatePantryModal()">
+
+  <div class="modal-form">
+    <div class="modal-form__field">
+      <label class="modal-form__label">Nombre de la despensa</label>
+      <app-form-input
+        type="text"
+        [ngModel]="newPantryName()"
+        (ngModelChange)="newPantryName.set($event)"
+        placeholder="Ej: Casa de verano">
+      </app-form-input>
+    </div>
+  </div>
+
+  <div modal-footer class="modal-form__actions">
+    <app-button variant="secondary" (buttonClick)="onCloseCreatePantryModal()">
+      Cancelar
+    </app-button>
+    <app-button variant="primary" (buttonClick)="onSaveNewPantry()">
+      Crear
+    </app-button>
+  </div>
+</app-modal>

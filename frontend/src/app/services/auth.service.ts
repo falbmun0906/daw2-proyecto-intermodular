@@ -124,8 +124,18 @@ export class AuthService {
   }
 
   /**
+   * Obtiene el ID del usuario actual
+   * @returns ID del usuario o null si no hay sesión
+   */
+  getCurrentUserId(): number | null {
+    const user = this._currentUser();
+    return user?.id ?? null;
+  }
+
+  /**
    * Obtiene el token JWT actual
    * @returns Token JWT o null si no hay sesión
+   */
   getToken(): string | null {
     return sessionStorage.getItem('token');
   }

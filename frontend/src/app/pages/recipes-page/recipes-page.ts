@@ -6,19 +6,13 @@ import { Pagination } from '../../components/shared/pagination/pagination';
 import { Card } from '../../components/shared/card/card';
 import { RecipesHero } from '../../components/shared/recipes-hero/recipes-hero';
 import { NavigationService } from '../../services/navigation.service';
+import { RecipeService } from '../../services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
-interface Recipe {
-  id: number;
-  title: string;
-  imageUrl: string;
-  rating: number;
-  ratingCount: number;
-  tags: string[];
-}
+import { Receta } from '../../models/receta.model';
 
 interface FilterGroup {
   title: string;
+  key: string;
   options: FilterOption[];
 }
 
@@ -36,15 +30,15 @@ interface FilterOption {
   styleUrl: './recipes-page.scss'
 })
 export class RecipesPage implements OnInit {
-  // Inyección del servicio de navegación
   private navigationService = inject(NavigationService);
+  private recipeService = inject(RecipeService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  // Mensaje de error desde el resolver (cuando falla la carga de una receta)
   errorMessage = signal<string | null>(null);
+  isLoading = signal<boolean>(false);
+  recipes = signal<Receta[]>([]);
 
-  // Configuración del hero
   breadcrumbItems = [
     { label: 'Inicio', url: '/' },
     { label: 'Recetas', url: '/recetas', isActive: true }
@@ -52,123 +46,157 @@ export class RecipesPage implements OnInit {
 
   searchQuery: string = '';
   currentPage: number = 1;
-  totalPages: number = 7;
+  totalPages: number = 1;
+  pageSize: number = 10;
+  totalItems: number = 0;
 
+  // Filtros basados en el backend - TipoDieta enum y dificultad
   filters: FilterGroup[] = [
     {
-      title: 'Disponible',
-      options: [
-        { id: 'in-pantry', label: 'En mi despensa', checked: false }
-      ]
-    },
-    {
       title: 'Dificultad',
+      key: 'dificultad',
       options: [
-        { id: 'easy', label: 'Fácil', checked: false },
-        { id: 'normal', label: 'Normal', checked: false },
-        { id: 'hard', label: 'Difícil', checked: false }
+        { id: 'BAJA', label: 'Fácil', checked: false },
+        { id: 'MEDIA', label: 'Media', checked: false },
+        { id: 'ALTA', label: 'Difícil', checked: false }
       ]
     },
     {
       title: 'Tiempo de preparación',
+      key: 'tiempoMaximo',
       options: [
-        { id: 'time-0-10', label: '0–10 minutos', checked: false },
-        { id: 'time-10-30', label: '10–30 minutos', checked: false },
-        { id: 'time-30-60', label: '30–60 minutos', checked: false },
-        { id: 'time-60-plus', label: 'Más de 60 minutos', checked: false }
+        { id: '15', label: 'Hasta 15 minutos', checked: false },
+        { id: '30', label: 'Hasta 30 minutos', checked: false },
+        { id: '60', label: 'Hasta 60 minutos', checked: false },
+        { id: '120', label: 'Hasta 2 horas', checked: false }
       ]
     },
     {
-      title: 'Restricciones o dietas',
+      title: 'Tipo de dieta',
+      key: 'dieta',
       options: [
-        { id: 'gluten-free', label: 'Sin gluten', checked: false },
-        { id: 'low-fat', label: 'Baja en grasas', checked: false },
-        { id: 'vegetarian', label: 'Vegetariana', checked: false },
-        { id: 'vegan', label: 'Vegana', checked: false }
+        { id: 'VEGANO', label: 'Vegano', checked: false },
+        { id: 'VEGETARIANO', label: 'Vegetariano', checked: false },
+        { id: 'SIN_GLUTEN', label: 'Sin Gluten', checked: false },
+        { id: 'KETO', label: 'Keto', checked: false },
+        { id: 'BAJO_EN_CARBOS', label: 'Bajo en Carbos', checked: false },
+        { id: 'ALTO_EN_PROTEINA', label: 'Alto en Proteína', checked: false },
+        { id: 'BAJO_EN_CALORIAS', label: 'Bajo en Calorías', checked: false },
+        { id: 'LACTOSA_FREE', label: 'Sin Lactosa', checked: false },
+        { id: 'DIETA_MEDITERRANEA', label: 'Mediterránea', checked: false }
       ]
-    },
-    {
-      title: 'Ingredientes principales',
-      options: [
-        { id: 'eggs', label: 'Huevos', checked: false },
-        { id: 'chicken', label: 'Pollo', checked: false },
-        { id: 'pasta', label: 'Pasta', checked: false },
-        { id: 'vegetables', label: 'Vegetales', checked: false }
-      ]
-    }
-  ];
-
-  recipes: Recipe[] = [
-    {
-      id: 1,
-      title: 'Huevos fritos',
-      imageUrl: 'assets/recipes/eggs.jpg',
-      rating: 0,
-      ratingCount: 0,
-      tags: ['Rápida', 'Económica']
-    },
-    {
-      id: 2,
-      title: 'Huevos fritos',
-      imageUrl: 'assets/recipes/eggs.jpg',
-      rating: 0,
-      ratingCount: 0,
-      tags: ['Rápida', 'Económica']
-    },
-    {
-      id: 3,
-      title: 'Huevos fritos',
-      imageUrl: 'assets/recipes/eggs.jpg',
-      rating: 0,
-      ratingCount: 0,
-      tags: ['Rápida', 'Económica']
-    },
-    {
-      id: 4,
-      title: 'Huevos fritos',
-      imageUrl: 'assets/recipes/eggs.jpg',
-      rating: 0,
-      ratingCount: 0,
-      tags: ['Rápida', 'Económica']
     }
   ];
 
   /**
-   * ngOnInit: Lee queryParams de la URL y mensajes de error del resolver
-   * Ejemplo: /recetas?categoria=postres&dificultad=facil&page=2
+   * ngOnInit: Carga inicial de recetas y lectura de queryParams
    */
   ngOnInit(): void {
-    // Leer mensaje de error del resolver (si hubo error al cargar una receta)
+    // Leer mensaje de error del resolver
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state;
     if (state && state['error']) {
       this.errorMessage.set(state['error']);
-      console.warn('⚠️ Error desde resolver:', state['error']);
-
-      // Limpiar mensaje después de 5 segundos
       setTimeout(() => this.errorMessage.set(null), 5000);
     }
 
-    // Leer queryParams de la URL
+    // Leer queryParams y cargar recetas
     this.route.queryParamMap.subscribe(queryParams => {
-      const categoria = queryParams.get('categoria');
-      const dificultad = queryParams.get('dificultad');
       const page = queryParams.get('page');
+      const dificultad = queryParams.get('dificultad');
+      const tiempoMaximo = queryParams.get('tiempoMaximo');
+      const dieta = queryParams.get('dieta');
+      const q = queryParams.get('q');
 
-      console.log('Query params al cargar:', { categoria, dificultad, page });
-
-      // Aplicar filtros si vienen en la URL
       if (page) {
         this.currentPage = parseInt(page, 10);
       }
 
-      // Aquí podrías marcar los checkboxes según los filtros en la URL
+      if (q) {
+        this.searchQuery = q;
+      }
+
+      // Restaurar estado de filtros desde URL
+      this.restoreFiltersFromUrl(dificultad, tiempoMaximo, dieta);
+
+      // Cargar recetas con filtros
+      this.loadRecipes(dificultad, tiempoMaximo, dieta, q);
     });
   }
 
+  private restoreFiltersFromUrl(dificultad: string | null, tiempoMaximo: string | null, dieta: string | null): void {
+    this.filters.forEach(group => {
+      group.options.forEach(opt => {
+        if (group.key === 'dificultad' && dificultad) {
+          opt.checked = dificultad.split(',').includes(opt.id);
+        } else if (group.key === 'tiempoMaximo' && tiempoMaximo) {
+          opt.checked = opt.id === tiempoMaximo;
+        } else if (group.key === 'dieta' && dieta) {
+          opt.checked = dieta.split(',').includes(opt.id);
+        }
+      });
+    });
+  }
+
+  private loadRecipes(dificultad?: string | null, tiempoMaximo?: string | null, dieta?: string | null, nombre?: string | null): void {
+    this.isLoading.set(true);
+
+    // Si hay búsqueda por nombre
+    if (nombre) {
+      this.recipeService.buscarPorNombre(nombre).subscribe({
+        next: (recetas) => {
+          this.recipes.set(recetas);
+          this.totalItems = recetas.length;
+          this.totalPages = Math.ceil(recetas.length / this.pageSize);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Error buscando recetas:', err);
+          this.isLoading.set(false);
+        }
+      });
+      return;
+    }
+
+    // Si hay filtros activos
+    if (dificultad || tiempoMaximo || dieta) {
+      const tiempo = tiempoMaximo ? parseInt(tiempoMaximo, 10) : undefined;
+      this.recipeService.filtrar(dificultad || undefined, tiempo, dieta || undefined).subscribe({
+        next: (recetas) => {
+          this.recipes.set(recetas);
+          this.totalItems = recetas.length;
+          this.totalPages = Math.ceil(recetas.length / this.pageSize);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          console.error('Error filtrando recetas:', err);
+          this.isLoading.set(false);
+        }
+      });
+      return;
+    }
+
+    // Cargar todas las recetas
+    this.recipeService.getAllRecipes().subscribe({
+      next: (recetas) => {
+        this.recipes.set(recetas);
+        this.totalItems = recetas.length;
+        this.totalPages = Math.ceil(recetas.length / this.pageSize);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Error cargando recetas:', err);
+        this.isLoading.set(false);
+      }
+    });
+  }
+
+  get paginatedRecipes(): Receta[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.recipes().slice(start, start + this.pageSize);
+  }
+
   onSearch(): void {
-    console.log('Search:', this.searchQuery);
-    // Navegar con queryParams
     const activeFilters = this.getActiveFilters();
     this.navigationService.navigateWithFullExtras(
       ['/recetas'],
@@ -186,17 +214,24 @@ export class RecipesPage implements OnInit {
   /**
    * Obtiene los filtros activos para pasarlos como queryParams
    */
-  private getActiveFilters(): any {
-    const active: any = {};
+  private getActiveFilters(): Record<string, string | undefined> {
+    const active: Record<string, string | undefined> = {};
+
     this.filters.forEach(group => {
       const checkedOptions = group.options
         .filter(opt => opt.checked)
         .map(opt => opt.id);
 
       if (checkedOptions.length > 0) {
-        active[group.title.toLowerCase().replace(/\s+/g, '_')] = checkedOptions.join(',');
+        // Para tiempo, solo tomamos el primer valor (radio behavior)
+        if (group.key === 'tiempoMaximo') {
+          active[group.key] = checkedOptions[0];
+        } else {
+          active[group.key] = checkedOptions.join(',');
+        }
       }
     });
+
     return active;
   }
 

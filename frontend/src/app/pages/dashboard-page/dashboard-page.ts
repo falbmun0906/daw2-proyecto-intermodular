@@ -57,7 +57,7 @@ export class DashboardPage {
   visibleSlides: number = 3;
 
   sidebarItems: SidebarNavItem[] = [
-    { id: 'resumen', label: 'Resumen', icon: 'house', route: '/dashboard', active: true },
+    { id: 'resumen', label: 'Resumen', icon: 'lighthouse', route: '/dashboard', active: true },
     { id: 'despensa', label: 'Despensa', icon: 'package', route: '/despensa', active: false },
     { id: 'planificador', label: 'Planificador', icon: 'calendar', route: '/planificador', active: false },
     { id: 'lista', label: 'Lista de la compra', icon: 'shopping-cart', route: '/dashboard', active: false }
