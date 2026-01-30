@@ -233,11 +233,25 @@ public class RecetaService {
             receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
         }
 
+        // Generar las 3 URLs de imágenes a partir del nombre base
+        String imagenBase = receta.getImagenUrl(); // Ejemplo: "paella-valenciana"
+        String imagenUrlSmall = null;
+        String imagenUrlMedium = null;
+        String imagenUrlLarge = null;
+
+        if (imagenBase != null && !imagenBase.isEmpty()) {
+            imagenUrlSmall = imagenBase + "-small.webp";
+            imagenUrlMedium = imagenBase + "-medium.webp";
+            imagenUrlLarge = imagenBase + "-large.webp";
+        }
+
         return RecetaResponse.builder()
                 .id(receta.getId())
                 .nombre(receta.getNombre())
                 .descripcion(receta.getDescripcion())
-                .imagenUrl(receta.getImagenUrl())
+                .imagenUrlSmall(imagenUrlSmall)
+                .imagenUrlMedium(imagenUrlMedium)
+                .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
                 .fechaCreacion(receta.getFechaCreacion())
@@ -257,11 +271,25 @@ public class RecetaService {
             receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
         }
 
+        // Generar las 3 URLs de imágenes a partir del nombre base
+        String imagenBase = receta.getImagenUrl(); // Ejemplo: "paella-valenciana"
+        String imagenUrlSmall = null;
+        String imagenUrlMedium = null;
+        String imagenUrlLarge = null;
+
+        if (imagenBase != null && !imagenBase.isEmpty()) {
+            imagenUrlSmall = imagenBase + "-small.webp";
+            imagenUrlMedium = imagenBase + "-medium.webp";
+            imagenUrlLarge = imagenBase + "-large.webp";
+        }
+
         return RecetaDetailedResponse.builder()
                 .id(receta.getId())
                 .nombre(receta.getNombre())
                 .descripcion(receta.getDescripcion())
-                .imagenUrl(receta.getImagenUrl())
+                .imagenUrlSmall(imagenUrlSmall)
+                .imagenUrlMedium(imagenUrlMedium)
+                .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
                 .fechaCreacion(receta.getFechaCreacion())

@@ -163,11 +163,25 @@ public class RecetaUsuarioService {
      * @return DTO Response
      */
     private RecetaUsuarioResponse mapToResponse(RecetaUsuario recetaUsuario) {
+        // Generar las 3 URLs de imágenes a partir del nombre base
+        String imagenBase = recetaUsuario.getReceta().getImagenUrl();
+        String imagenUrlSmall = null;
+        String imagenUrlMedium = null;
+        String imagenUrlLarge = null;
+
+        if (imagenBase != null && !imagenBase.isEmpty()) {
+            imagenUrlSmall = imagenBase + "-small.webp";
+            imagenUrlMedium = imagenBase + "-medium.webp";
+            imagenUrlLarge = imagenBase + "-large.webp";
+        }
+
         RecetaResponse recetaResponse = RecetaResponse.builder()
                 .id(recetaUsuario.getReceta().getId())
                 .nombre(recetaUsuario.getReceta().getNombre())
                 .descripcion(recetaUsuario.getReceta().getDescripcion())
-                .imagenUrl(recetaUsuario.getReceta().getImagenUrl())
+                .imagenUrlSmall(imagenUrlSmall)
+                .imagenUrlMedium(imagenUrlMedium)
+                .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(recetaUsuario.getReceta().getTiempoPreparacion())
                 .porciones(recetaUsuario.getReceta().getPorciones())
                 .fechaCreacion(recetaUsuario.getReceta().getFechaCreacion())

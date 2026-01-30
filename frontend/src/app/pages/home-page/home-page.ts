@@ -1,11 +1,12 @@
-import { Component, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, ViewEncapsulation, ViewChild, ElementRef, AfterViewInit, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Card } from '../../components/shared/card/card';
 import { Button } from '../../components/shared/button/button';
 import { FormInput } from '../../components/shared/form-input/form-input';
 import { CarouselNavButton } from '../../components/shared/carousel-nav-button/carousel-nav-button';
+import { AuthService } from '../../services/auth.service';
 
 interface Recipe {
   id: number;
@@ -27,6 +28,9 @@ interface Recipe {
 })
 export class HomePage implements AfterViewInit {
   @ViewChild('carouselTrack') carouselTrack!: ElementRef;
+
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   newsletterEmail: string = '';
   private carouselScrollAmount = 600; // Scroll de 600px por click
@@ -204,7 +208,11 @@ export class HomePage implements AfterViewInit {
   ];
 
   onInspireClick(): void {
-    console.log('Inspirar clicked');
+    // Hacer scroll suave a la sección kitchen-control
+    const kitchenSection = document.getElementById('kitchen-control');
+    if (kitchenSection) {
+      kitchenSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
   onRecipeClick(id: number): void {
@@ -212,7 +220,13 @@ export class HomePage implements AfterViewInit {
   }
 
   onKitchenClick(): void {
-    console.log('Kitchen clicked');
+    // Si el usuario está logeado, ir al dashboard
+    // Si no está logeado, ir al registro
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/registro']);
+    }
   }
 
   onNewsletterSubmit(event: Event): void {

@@ -103,21 +103,42 @@ public class PlanificacionSemanaService {
     private PlanificacionSemanaResponse mapToResponse(PlanificacionSemana planificacion) {
         List<PlanificacionDiaResponse> dias = planificacion.getDias()
                 .stream()
-                .map(pd -> PlanificacionDiaResponse.builder()
-                        .id(pd.getId())
-                        .fecha(pd.getFecha())
-                        .tipoComida(pd.getTipoComida().name())
-                        .notas(pd.getNotas())
-                        .receta(pd.getReceta() != null ? com.example.backend.dto.RecetaResponse.builder()
+                .map(pd -> {
+                    com.example.backend.dto.RecetaResponse recetaResponse = null;
+                    if (pd.getReceta() != null) {
+                        // Generar las 3 URLs de imágenes a partir del nombre base
+                        String imagenBase = pd.getReceta().getImagenUrl();
+                        String imagenUrlSmall = null;
+                        String imagenUrlMedium = null;
+                        String imagenUrlLarge = null;
+
+                        if (imagenBase != null && !imagenBase.isEmpty()) {
+                            imagenUrlSmall = imagenBase + "-small.webp";
+                            imagenUrlMedium = imagenBase + "-medium.webp";
+                            imagenUrlLarge = imagenBase + "-large.webp";
+                        }
+
+                        recetaResponse = com.example.backend.dto.RecetaResponse.builder()
                                 .id(pd.getReceta().getId())
                                 .nombre(pd.getReceta().getNombre())
                                 .descripcion(pd.getReceta().getDescripcion())
-                                .imagenUrl(pd.getReceta().getImagenUrl())
+                                .imagenUrlSmall(imagenUrlSmall)
+                                .imagenUrlMedium(imagenUrlMedium)
+                                .imagenUrlLarge(imagenUrlLarge)
                                 .tiempoPreparacion(pd.getReceta().getTiempoPreparacion())
                                 .porciones(pd.getReceta().getPorciones())
                                 .fechaCreacion(pd.getReceta().getFechaCreacion())
-                                .build() : null)
-                        .build())
+                                .build();
+                    }
+
+                    return PlanificacionDiaResponse.builder()
+                            .id(pd.getId())
+                            .fecha(pd.getFecha())
+                            .tipoComida(pd.getTipoComida().name())
+                            .notas(pd.getNotas())
+                            .receta(recetaResponse)
+                            .build();
+                })
                 .collect(Collectors.toList());
 
         return PlanificacionSemanaResponse.builder()

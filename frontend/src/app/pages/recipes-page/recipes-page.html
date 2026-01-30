@@ -40,7 +40,9 @@
             <app-card
               variant="horizontal"
               [title]="recipe.nombre"
-              [imageUrl]="getRecipeImageUrl(recipe)"
+              [imagenUrlSmall]="recipe.imagenUrlSmall"
+              [imagenUrlMedium]="recipe.imagenUrlMedium"
+              [imagenUrlLarge]="recipe.imagenUrlLarge"
               [time]="recipe.tiempoPreparacion + ' min'"
               [difficulty]="recipe.dificultad"
               actionText="Ver receta"

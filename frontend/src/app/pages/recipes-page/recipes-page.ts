@@ -8,7 +8,7 @@ import { RecipesHero } from '../../components/shared/recipes-hero/recipes-hero';
 import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Receta, PageResponse } from '../../models/receta.model';
+import { Receta } from '../../models/receta.model';
 
 interface FilterGroup {
   title: string;
@@ -205,12 +205,6 @@ export class RecipesPage implements OnInit {
     });
   }
 
-  /**
-   * Obtiene la URL de imagen para una receta (tamaño medium para cards)
-   */
-  getRecipeImageUrl(receta: Receta): string {
-    return this.recipeService.getImageUrls(receta.imagenUrl).medium;
-  }
 
   onSearch(): void {
     this.currentPage = 1;

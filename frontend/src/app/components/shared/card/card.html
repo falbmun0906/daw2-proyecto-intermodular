@@ -6,7 +6,7 @@
   class="card__image-bg"
 >
   <!-- Imagen de fondo (oculta, solo para lazy loading) -->
-  @if (imageUrl) {
+  @if (imageUrl || imagenUrlSmall) {
     <picture class="card__picture">
       <!-- Mobile: imagen pequeña -->
       <source

@@ -18,7 +18,9 @@ public class RecetaResponse {
     private Long id;
     private String nombre;
     private String descripcion;
-    private String imagenUrl;
+    private String imagenUrlSmall;   // nombre_receta-small.webp
+    private String imagenUrlMedium;  // nombre_receta-medium.webp
+    private String imagenUrlLarge;   // nombre_receta-large.webp
     private Integer tiempoPreparacion;
     private Integer porciones;
     private String dificultad;

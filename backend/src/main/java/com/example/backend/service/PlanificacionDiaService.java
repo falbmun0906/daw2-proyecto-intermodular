@@ -132,11 +132,25 @@ public class PlanificacionDiaService {
     private PlanificacionDiaResponse mapToResponse(PlanificacionDia dia) {
         RecetaResponse recetaResponse = null;
         if (dia.getReceta() != null) {
+            // Generar las 3 URLs de imágenes a partir del nombre base
+            String imagenBase = dia.getReceta().getImagenUrl();
+            String imagenUrlSmall = null;
+            String imagenUrlMedium = null;
+            String imagenUrlLarge = null;
+
+            if (imagenBase != null && !imagenBase.isEmpty()) {
+                imagenUrlSmall = imagenBase + "-small.webp";
+                imagenUrlMedium = imagenBase + "-medium.webp";
+                imagenUrlLarge = imagenBase + "-large.webp";
+            }
+
             recetaResponse = RecetaResponse.builder()
                     .id(dia.getReceta().getId())
                     .nombre(dia.getReceta().getNombre())
                     .descripcion(dia.getReceta().getDescripcion())
-                    .imagenUrl(dia.getReceta().getImagenUrl())
+                    .imagenUrlSmall(imagenUrlSmall)
+                    .imagenUrlMedium(imagenUrlMedium)
+                    .imagenUrlLarge(imagenUrlLarge)
                     .tiempoPreparacion(dia.getReceta().getTiempoPreparacion())
                     .porciones(dia.getReceta().getPorciones())
                     .fechaCreacion(dia.getReceta().getFechaCreacion())

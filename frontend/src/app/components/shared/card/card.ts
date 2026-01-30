@@ -27,9 +27,24 @@ export class Card {
   @Input() variant: 'vertical' | 'carousel' | 'horizontal' | 'featured' = 'vertical';
 
   /**
-   * URL de la imagen de fondo
+   * URL de la imagen de fondo (deprecated - usar imagenUrlSmall, imagenUrlMedium, imagenUrlLarge)
    */
   @Input() imageUrl: string = '';
+
+  /**
+   * URL de la imagen pequeña (small.webp - para mobile y thumbnails)
+   */
+  @Input() imagenUrlSmall: string = '';
+
+  /**
+   * URL de la imagen mediana (medium.webp - para cards en desktop)
+   */
+  @Input() imagenUrlMedium: string = '';
+
+  /**
+   * URL de la imagen grande (large.webp - para detalles y pantallas grandes)
+   */
+  @Input() imagenUrlLarge: string = '';
 
   /**
    * Srcset para la imagen responsive (ej: "image-small.webp 400w, image-large.webp 800w")
@@ -132,9 +147,13 @@ export class Card {
 
   /**
    * Genera srcset para mobile (solo pequeña)
-   * Igual que en el hero
+   * Usa imagenUrlSmall si está disponible, sino fallback a imageUrl
    */
   get computedSmallWebp(): string {
+    if (this.imagenUrlSmall) {
+      return this.imagenUrlSmall;
+    }
+    // Fallback para compatibilidad con código antiguo
     if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
       return `assets/recipes/${fileName}-small.webp`;
@@ -144,9 +163,13 @@ export class Card {
 
   /**
    * Genera srcset para desktop (mediana y grande con 1.5x)
-   * Igual que en el hero
+   * Usa imagenUrlMedium e imagenUrlLarge si están disponibles
    */
   get computedLargeWebp(): string {
+    if (this.imagenUrlMedium && this.imagenUrlLarge) {
+      return `${this.imagenUrlMedium}, ${this.imagenUrlLarge} 1.5x`;
+    }
+    // Fallback para compatibilidad con código antiguo
     if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
       return `assets/recipes/${fileName}-medium.webp, assets/recipes/${fileName}-large.webp 1.5x`;
@@ -156,26 +179,22 @@ export class Card {
 
   /**
    * Genera srcset automáticamente para imágenes de recetas
-   * Si no se proporciona imageSrcset, intenta generarlo del imageUrl
-   *
-   * NOTA: Asume que las variantes existen siguiendo la convención:
-   * original: assets/recipes/nombre.png
-   * variantes: assets/recipes/nombre-{small,medium,large}.webp
+   * Usa las nuevas propiedades imagenUrlSmall, imagenUrlMedium, imagenUrlLarge si están disponibles
    */
   get computedSrcset(): string {
     if (this.imageSrcset) {
       return this.imageSrcset;
     }
 
-    // Si es una imagen de receta, generar srcset automáticamente
+    // Si tenemos las 3 URLs específicas, usarlas
+    if (this.imagenUrlSmall && this.imagenUrlMedium && this.imagenUrlLarge) {
+      return `${this.imagenUrlSmall} 400w, ${this.imagenUrlMedium} 600w, ${this.imagenUrlLarge} 800w`;
+    }
+
+    // Fallback para compatibilidad con código antiguo
     if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-
-      return `
-        assets/recipes/${fileName}-small.webp 400w,
-        assets/recipes/${fileName}-medium.webp 600w,
-        assets/recipes/${fileName}-large.webp 800w
-      `.trim().replace(/\s+/g, ' ');
+      return `assets/recipes/${fileName}-small.webp 400w, assets/recipes/${fileName}-medium.webp 600w, assets/recipes/${fileName}-large.webp 800w`;
     }
 
     return '';
@@ -183,18 +202,20 @@ export class Card {
 
   /**
    * Genera URL optimizada para src (fallback)
-   *
-   * Usa versión MEDIUM como fallback (balance entre calidad y tamaño)
-   * El navegador elegirá la correcta según viewport usando srcset+sizes
+   * Usa imagenUrlMedium como fallback (balance entre calidad y tamaño)
    */
   get computedSrc(): string {
-    // Si el imageUrl es una receta, usa la versión optimizada en WebP (medium como fallback)
+    // Si tenemos la URL mediana, usarla como fallback
+    if (this.imagenUrlMedium) {
+      return this.imagenUrlMedium;
+    }
+
+    // Fallback para compatibilidad con código antiguo
     if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
       return `assets/recipes/${fileName}-medium.webp`;
     }
 
-    // Si no, usa el URL original
     return this.imageUrl;
   }
 
@@ -222,12 +243,17 @@ export class Card {
 
   /**
    * Genera background-image URL optimizado
-   * Usa versión MEDIUM como fallback
+   * Usa imagenUrlMedium si está disponible, sino versión MEDIUM como fallback
    */
   get computedBackgroundImage(): string {
+    // Si tenemos la URL mediana, usarla
+    if (this.imagenUrlMedium) {
+      return `url(${this.imagenUrlMedium})`;
+    }
+
     if (!this.imageUrl) return 'none';
 
-    // Si es imagen de receta, intenta WebP (medium como fallback)
+    // Fallback para compatibilidad con código antiguo
     if (this.imageUrl.includes('/recipes/')) {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
       return `url(assets/recipes/${fileName}-medium.webp)`;

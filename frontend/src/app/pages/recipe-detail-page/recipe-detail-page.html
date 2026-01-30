@@ -9,7 +9,26 @@
   @if (!loading() && recipe()) {
     <section class="recipe-hero">
       <app-breadcrumbs [items]="breadcrumbItems" variant="hero"/>
-      <img [src]="recipe()!.imagenUrl" [alt]="recipe()!.nombre" class="recipe-hero__image" loading="eager" />
+      <picture class="recipe-hero__picture">
+        <!-- Mobile: imagen pequeña -->
+        <source
+          media="(max-width: 768px)"
+          [srcset]="recipe()!.imagenUrlSmall"
+          type="image/webp" />
+
+        <!-- Desktop: imagen mediana y grande -->
+        <source
+          media="(min-width: 769px)"
+          [srcset]="recipe()!.imagenUrlMedium + ', ' + recipe()!.imagenUrlLarge + ' 1.5x'"
+          type="image/webp" />
+
+        <!-- Fallback: medium como src -->
+        <img
+          [src]="recipe()!.imagenUrlMedium"
+          [alt]="recipe()!.nombre"
+          class="recipe-hero__image"
+          loading="eager" />
+      </picture>
 
       <div class="recipe-hero__info-blob">
         <h1 class="recipe-hero__title">{{ recipe()!.nombre }}</h1>

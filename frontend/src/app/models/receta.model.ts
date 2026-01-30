@@ -18,21 +18,13 @@ export interface PageResponse<T> {
   empty: boolean;
 }
 
-/**
- * Modelo de imagen responsive con múltiples tamaños
- */
-export interface ImagenResponsive {
-  small: string;   // -small.webp (thumbnail, 150px)
-  medium: string;  // -medium.webp (card, 400px)
-  large: string;   // -large.webp (detalle, 800px)
-  original?: string;
-}
-
 export interface Receta {
   id: number;
   nombre: string;
   descripcion: string;
-  imagenUrl: string;
+  imagenUrlSmall: string;   // nombre_receta-small.webp
+  imagenUrlMedium: string;  // nombre_receta-medium.webp
+  imagenUrlLarge: string;   // nombre_receta-large.webp
   tiempoPreparacion: number; // en minutos
   porciones: number;
   dificultad: 'BAJA' | 'MEDIA' | 'ALTA';
