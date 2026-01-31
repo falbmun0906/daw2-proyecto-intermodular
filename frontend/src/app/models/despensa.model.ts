@@ -16,7 +16,7 @@ export interface DespensaItem {
   unidad: string;
   fechaCaducidad: string; // ISO-8601 LocalDate
   diasRestantes: number | null; // Calculado en el backend
-  ubicacion: 'NEVERA' | 'CONGELADOR' | 'DESPENSA' | 'ESPECIAS';
+  ubicacion: string; // Ahora permite cualquier texto personalizado
   estado: 'OK' | 'PROXIMO_A_CADUCAR' | 'CADUCADO';
 }
 
@@ -28,7 +28,7 @@ export interface DespensaItemCreateRequest {
   cantidadActual: number;
   unidad: string;
   fechaCaducidad: string; // ISO-8601 format "YYYY-MM-DD"
-  ubicacion: 'NEVERA' | 'CONGELADOR' | 'DESPENSA' | 'ESPECIAS';
+  ubicacion: string; // Ahora permite cualquier texto personalizado
 }
 
 /**
@@ -38,7 +38,7 @@ export interface DespensaItemUpdateRequest {
   cantidadActual?: number;
   unidad?: string;
   fechaCaducidad?: string;
-  ubicacion?: 'NEVERA' | 'CONGELADOR' | 'DESPENSA' | 'ESPECIAS';
+  ubicacion?: string; // Ahora permite cualquier texto personalizado
   estado?: 'OK' | 'PROXIMO_A_CADUCAR' | 'CADUCADO';
 }
 

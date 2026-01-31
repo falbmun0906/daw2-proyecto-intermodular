@@ -55,17 +55,17 @@ export interface RecetaIngrediente {
   };
   cantidad: number;
   unidad: string;
-  esOpcional: boolean;
+  opcional: boolean;
 }
 
 /**
- * Paso de preparación de una receta
+ * Paso de preparación de una receta - Alineado con RecetaPasoResponse.java
  */
 export interface PasoReceta {
   id: number;
-  numeroPaso: number;
+  orden: number;
   descripcion: string;
-  duracionEstimada?: number; // en minutos
+  tiempoMinutos?: number;
 }
 
 /**

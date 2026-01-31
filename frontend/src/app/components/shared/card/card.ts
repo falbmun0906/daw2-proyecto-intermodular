@@ -92,6 +92,11 @@ export class Card {
   @Input() category: string = '';
 
   /**
+   * Etiquetas de la receta (ej: ["vegetariano", "sin gluten"])
+   */
+  @Input() tags: string[] = [];
+
+  /**
    * Texto del botón de acción
    */
   @Input() actionText: string = 'Ver receta';
@@ -150,6 +155,7 @@ export class Card {
    * Usa imagenUrlSmall si está disponible, sino fallback a imageUrl
    */
   get computedSmallWebp(): string {
+    // Si tenemos la URL completa desde el backend, usarla directamente
     if (this.imagenUrlSmall) {
       return this.imagenUrlSmall;
     }
@@ -158,7 +164,7 @@ export class Card {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
       return `assets/recipes/${fileName}-small.webp`;
     }
-    return '';
+    return this.imageUrl || '';
   }
 
   /**
@@ -166,6 +172,7 @@ export class Card {
    * Usa imagenUrlMedium e imagenUrlLarge si están disponibles
    */
   get computedLargeWebp(): string {
+    // Si tenemos las URLs completas desde el backend, usarlas directamente
     if (this.imagenUrlMedium && this.imagenUrlLarge) {
       return `${this.imagenUrlMedium}, ${this.imagenUrlLarge} 1.5x`;
     }
@@ -174,7 +181,7 @@ export class Card {
       const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
       return `assets/recipes/${fileName}-medium.webp, assets/recipes/${fileName}-large.webp 1.5x`;
     }
-    return '';
+    return this.imageUrl || '';
   }
 
   /**
@@ -296,5 +303,43 @@ export class Card {
     } else {
       this.actionClick.emit();
     }
+  }
+
+  /**
+   * Obtiene la variante del badge según la dificultad
+   */
+  getDifficultyVariant(): 'success' | 'warning' | 'error' {
+    const difficultyUpper = this.difficulty.toUpperCase();
+    if (difficultyUpper === 'BAJA') return 'success';
+    if (difficultyUpper === 'MEDIA') return 'warning';
+    if (difficultyUpper === 'ALTA') return 'error';
+    return 'warning'; // default
+  }
+
+  /**
+   * Obtiene el label traducido de la dificultad
+   */
+  getDifficultyLabel(): string {
+    const difficultyUpper = this.difficulty.toUpperCase();
+    if (difficultyUpper === 'BAJA') return 'Fácil';
+    if (difficultyUpper === 'MEDIA') return 'Media';
+    if (difficultyUpper === 'ALTA') return 'Difícil';
+    return this.difficulty;
+  }
+
+  /**
+   * Formatea una etiqueta para mostrarla de forma legible
+   * Ej: "DIETA_MEDITERRANEA" -> "Dieta Mediterránea"
+   */
+  formatTag(tag: string): string {
+    if (!tag) return '';
+
+    // Reemplazar guiones bajos por espacios y convertir a Title Case
+    return tag
+      .replace(/_/g, ' ')
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 }

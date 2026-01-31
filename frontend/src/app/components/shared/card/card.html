@@ -71,46 +71,38 @@
         </div>
       }
 
-      <!-- 3. Metadatos: badges y spans -->
+      <!-- 3. Metadatos: badges -->
       <div class="card__meta">
-        <!-- Categoría -->
-        @if (category) {
-          @if (variant === 'vertical') {
-            <app-badge variant="secondary" size="sm">
-              {{ category }}
-            </app-badge>
-          } @else {
-            <span class="card__category">{{ category }}</span>
-          }
-        }
-
         <!-- Tiempo de preparación -->
         @if (time) {
-          @if (variant === 'vertical' || variant === 'carousel') {
-            <app-badge variant="neutral" size="md">
-              <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
-              {{ time }}
-            </app-badge>
-          } @else {
-            <span class="card__time" aria-label="Tiempo de preparación">
+          <app-badge variant="info" size="sm">
             <app-icon class="card__meta-icon" name="schedule" [size]="16"></app-icon>
-              {{ time }}
-          </span>
-          }
+            {{ time }}
+          </app-badge>
         }
 
         <!-- Dificultad -->
         @if (difficulty) {
-          @if (variant === 'vertical' || variant === 'carousel') {
-            <app-badge variant="neutral" size="md">
-              <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
-              {{ difficulty }}
+          <app-badge
+            [variant]="getDifficultyVariant()"
+            size="sm">
+            {{ getDifficultyLabel() }}
+          </app-badge>
+        }
+
+        <!-- Categoría/Tipo de receta -->
+        @if (category) {
+          <app-badge variant="secondary" size="sm">
+            {{ category }}
+          </app-badge>
+        }
+
+        <!-- Etiquetas adicionales (primeras 2) -->
+        @if (tags && tags.length > 0) {
+          @for (tag of tags.slice(0, 2); track tag) {
+            <app-badge variant="neutral" size="sm">
+              {{ formatTag(tag) }}
             </app-badge>
-          } @else {
-            <span class="card__difficulty" aria-label="Dificultad">
-            <app-icon class="card__meta-icon" name="chart-bar" [size]="16"></app-icon>
-              {{ difficulty }}
-          </span>
           }
         }
       </div>

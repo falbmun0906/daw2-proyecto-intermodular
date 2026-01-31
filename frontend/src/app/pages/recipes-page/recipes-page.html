@@ -20,7 +20,7 @@
               <app-form-checkbox
                 [label]="option.label"
                 [name]="option.id"
-                [(ngModel)]="option.checked"
+                [ngModel]="option.checked"
                 (checkboxChange)="onFilterChange(groupIdx, optIdx)"
               />
             }
@@ -45,6 +45,7 @@
               [imagenUrlLarge]="recipe.imagenUrlLarge"
               [time]="recipe.tiempoPreparacion + ' min'"
               [difficulty]="recipe.dificultad"
+              [tags]="recipe.etiquetas || []"
               actionText="Ver receta"
               (actionClick)="onViewRecipe(recipe.id!)"
               (saveClick)="onSaveRecipe(recipe.id!)"

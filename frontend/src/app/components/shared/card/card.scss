@@ -20,7 +20,9 @@
   background-position: center;
   background-repeat: no-repeat;
   box-shadow: var(--shadow-md);
-  transition: box-shadow var(--transition-base) var(--transition-easing);
+  transition:
+    box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Container Queries: adaptar tarjeta según ancho del contenedor */
   container-type: inline-size;
@@ -29,7 +31,11 @@
     box-shadow: var(--shadow-lg);
 
     .card__image {
-      transform: scale(1.05);
+      transform: scale(1.08);
+    }
+
+    .card__decorative-bg {
+      opacity: 0.95;
     }
   }
 
@@ -83,6 +89,7 @@
   object-fit: cover;
   object-position: center;
   z-index: 0;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card__decorative-bg {

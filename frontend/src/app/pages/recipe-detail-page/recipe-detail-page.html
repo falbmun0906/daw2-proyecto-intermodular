@@ -36,7 +36,7 @@
         <div class="recipe-hero__tags">
           @for (tag of recipe()!.etiquetas; track tag; let i = $index) {
             <app-badge [variant]="i === 0 ? 'success' : 'neutral'" size="md">
-              {{ tag }}
+              {{ formatTag(tag) }}
             </app-badge>
           }
         </div>
@@ -85,9 +85,9 @@
         @for (paso of recipe()!.pasos; track paso.id) {
           <article class="recipe-step">
             <div class="recipe-step__header">
-              <h3 class="recipe-step__title">Paso {{ paso.numeroPaso }}</h3>
-              @if (paso.duracionEstimada) {
-                <app-badge variant="info" size="sm" class="recipe-step__badge">{{ paso.duracionEstimada }} min</app-badge>
+              <h3 class="recipe-step__title">Paso {{ paso.orden }}</h3>
+              @if (paso.tiempoMinutos) {
+                <app-badge variant="info" size="sm" class="recipe-step__badge">{{ paso.tiempoMinutos }} min</app-badge>
               }
             </div>
             <p class="recipe-step__description">{{ paso.descripcion }}</p>

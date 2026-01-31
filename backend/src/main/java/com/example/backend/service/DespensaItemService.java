@@ -51,7 +51,7 @@ public class DespensaItemService {
                 .cantidadActual(request.getCantidadActual())
                 .unidad(request.getUnidad())
                 .fechaCaducidad(request.getFechaCaducidad())
-                .ubicacion(DespensaItem.UbicacionDespensa.valueOf(request.getUbicacion()))
+                .ubicacion(request.getUbicacion())
                 .estado(determinarEstado(request.getFechaCaducidad()))
                 .build();
 
@@ -132,7 +132,7 @@ public class DespensaItemService {
      * Obtiene items por ubicación en la despensa.
      *
      * @param usuarioId id del usuario
-     * @param ubicacion la ubicación (NEVERA, CONGELADOR, etc.)
+     * @param ubicacion la ubicación (puede ser cualquier texto personalizado)
      * @return lista de items en esa ubicación
      */
     public List<DespensaItemResponse> obtenerPorUbicacion(Long usuarioId, String ubicacion) {
@@ -180,7 +180,7 @@ public class DespensaItemService {
             item.setEstado(determinarEstado(request.getFechaCaducidad()));
         }
         if (request.getUbicacion() != null) {
-            item.setUbicacion(DespensaItem.UbicacionDespensa.valueOf(request.getUbicacion()));
+            item.setUbicacion(request.getUbicacion());
         }
         if (request.getEstado() != null) {
             item.setEstado(DespensaItem.EstadoDespensaItem.valueOf(request.getEstado()));
@@ -271,7 +271,7 @@ public class DespensaItemService {
                 .unidad(item.getUnidad())
                 .fechaCaducidad(item.getFechaCaducidad())
                 .diasRestantes(diasRestantes)
-                .ubicacion(item.getUbicacion().name())
+                .ubicacion(item.getUbicacion())
                 .estado(item.getEstado().name())
                 .build();
     }

@@ -233,17 +233,11 @@ public class RecetaService {
             receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
         }
 
-        // Generar las 3 URLs de imágenes a partir del nombre base
-        String imagenBase = receta.getImagenUrl(); // Ejemplo: "paella-valenciana"
-        String imagenUrlSmall = null;
-        String imagenUrlMedium = null;
-        String imagenUrlLarge = null;
-
-        if (imagenBase != null && !imagenBase.isEmpty()) {
-            imagenUrlSmall = imagenBase + "-small.webp";
-            imagenUrlMedium = imagenBase + "-medium.webp";
-            imagenUrlLarge = imagenBase + "-large.webp";
-        }
+        // Generar las 3 URLs de imágenes basándose en el nombre de la receta (slug)
+        String slug = generarSlug(receta.getNombre());
+        String imagenUrlSmall = slug + "-small.webp";
+        String imagenUrlMedium = slug + "-medium.webp";
+        String imagenUrlLarge = slug + "-large.webp";
 
         return RecetaResponse.builder()
                 .id(receta.getId())
@@ -254,6 +248,7 @@ public class RecetaService {
                 .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
+                .dificultad(receta.getDificultad())
                 .fechaCreacion(receta.getFechaCreacion())
                 .etiquetas(etiquetasStr)
                 .build();
@@ -271,17 +266,11 @@ public class RecetaService {
             receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
         }
 
-        // Generar las 3 URLs de imágenes a partir del nombre base
-        String imagenBase = receta.getImagenUrl(); // Ejemplo: "paella-valenciana"
-        String imagenUrlSmall = null;
-        String imagenUrlMedium = null;
-        String imagenUrlLarge = null;
-
-        if (imagenBase != null && !imagenBase.isEmpty()) {
-            imagenUrlSmall = imagenBase + "-small.webp";
-            imagenUrlMedium = imagenBase + "-medium.webp";
-            imagenUrlLarge = imagenBase + "-large.webp";
-        }
+        // Generar las 3 URLs de imágenes basándose en el nombre de la receta (slug)
+        String slug = generarSlug(receta.getNombre());
+        String imagenUrlSmall = slug + "-small.webp";
+        String imagenUrlMedium = slug + "-medium.webp";
+        String imagenUrlLarge = slug + "-large.webp";
 
         return RecetaDetailedResponse.builder()
                 .id(receta.getId())
@@ -292,6 +281,7 @@ public class RecetaService {
                 .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
+                .dificultad(receta.getDificultad())
                 .fechaCreacion(receta.getFechaCreacion())
                 .ingredientes(receta.getIngredientes()
                         .stream()
@@ -320,6 +310,33 @@ public class RecetaService {
                         .collect(Collectors.toList()))
                 .etiquetas(etiquetasStr)
                 .build();
+    }
+
+    /**
+     * Genera un slug a partir del nombre de la receta.
+     * Convierte "Paella Valenciana" a "paella-valenciana".
+     * Elimina acentos y caracteres especiales.
+     *
+     * @param nombre nombre de la receta
+     * @return slug para usar en URLs de imágenes
+     */
+    private String generarSlug(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            return "default";
+        }
+
+        // Normalizar para eliminar acentos
+        String normalized = java.text.Normalizer.normalize(nombre, java.text.Normalizer.Form.NFD);
+        // Eliminar caracteres diacríticos (acentos)
+        String sinAcentos = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        // Convertir a minúsculas y reemplazar espacios por guiones
+        String slug = sinAcentos.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "") // Solo letras, números, espacios y guiones
+                .replaceAll("\\s+", "-")          // Espacios a guiones
+                .replaceAll("-+", "-")            // Múltiples guiones a uno solo
+                .replaceAll("^-|-$", "");         // Eliminar guiones al inicio/final
+
+        return slug.isEmpty() ? "default" : slug;
     }
 }
 

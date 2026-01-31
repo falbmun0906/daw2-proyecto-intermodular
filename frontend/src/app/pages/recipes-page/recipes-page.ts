@@ -247,8 +247,19 @@ export class RecipesPage implements OnInit {
   }
 
   onFilterChange(groupIndex: number, optionIndex: number): void {
-    this.filters[groupIndex].options[optionIndex].checked =
-      !this.filters[groupIndex].options[optionIndex].checked;
+    const group = this.filters[groupIndex];
+    const option = group.options[optionIndex];
+
+    // Para tiempo, comportamiento de radio (solo uno seleccionado)
+    if (group.key === 'tiempoMaximo') {
+      const wasChecked = option.checked;
+      group.options.forEach((opt, idx) => {
+        opt.checked = idx === optionIndex && !wasChecked;
+      });
+    } else {
+      // Para otros filtros, toggle normal
+      option.checked = !option.checked;
+    }
 
     // Aplicar filtros navegando con queryParams
     this.applyFilters();

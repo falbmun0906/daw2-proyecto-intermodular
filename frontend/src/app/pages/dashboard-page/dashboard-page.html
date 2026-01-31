@@ -11,41 +11,63 @@
     <div class="dashboard__bg-pattern"></div>
 
     <section class="dashboard__section dashboard__meals">
-      @for (meal of todayMeals; track meal.id; let isFirst = $first) {
-        <app-meal-card
-          [time]="meal.time"
-          [title]="meal.title"
-          [imageUrl]="meal.imageUrl"
-          [rating]="meal.rating"
-          [tags]="meal.tags"
-          [isPrimary]="isFirst"
-          (viewRecipe)="onViewRecipe(meal.id)"
-        />
+      @if (isLoading()) {
+        <div class="dashboard__loading">
+          <p>Cargando tus comidas de hoy...</p>
+        </div>
+      } @else if (todayMeals().length === 0) {
+        <div class="dashboard__empty">
+          <p>No tienes comidas planificadas para hoy.</p>
+          <app-button variant="secondary" size="sm" (buttonClick)="navigateToPlanificador()">
+            Planificar comidas
+          </app-button>
+        </div>
+      } @else {
+        @for (meal of todayMeals(); track meal.id; let isFirst = $first) {
+          <app-meal-card
+            [time]="meal.time"
+            [title]="meal.title"
+            [imageUrl]="meal.imagenUrlMedium || meal.imageUrl"
+            [rating]="meal.rating"
+            [tags]="meal.tags"
+            [isPrimary]="isFirst"
+            (viewRecipe)="onViewRecipe(meal.id)"
+          />
+        }
       }
     </section>
 
     <section class="dashboard__section dashboard__pending">
       <div class="dashboard__section-header">
-        <h2 class="dashboard__section-title">¡Tienes acciones pendientes!</h2>
+        @if (allPendingCompleted() || visiblePendingProducts.length === 0) {
+          <h2 class="dashboard__section-title dashboard__section-title--success">
+            <span class="dashboard__title-icon">✓</span>
+            Todo está en orden en la despensa
+          </h2>
+        } @else {
+          <h2 class="dashboard__section-title">¡Tienes acciones pendientes!</h2>
+        }
       </div>
 
-      <div class="dashboard__carousel">
-        <div
-          class="dashboard__carousel-track"
-          [style.transform]="getCarouselTransform()">
-          @for (product of visiblePendingProducts; track product.id) {
-            <div class="dashboard__carousel-slide">
-              <app-pending-product
-                [name]="product.name"
-                [urgency]="product.urgency"
-                [daysRemaining]="product.daysRemaining"
-                [color]="product.color"
-                (markDone)="onMarkProductDone(product.id)">
-              </app-pending-product>
-            </div>
-          }
+      @if (!allPendingCompleted() && visiblePendingProducts.length > 0) {
+        <div class="dashboard__carousel">
+          <div
+            class="dashboard__carousel-track"
+            [style.transform]="getCarouselTransform()">
+            @for (product of visiblePendingProducts; track product.id) {
+              <div class="dashboard__carousel-slide">
+                <app-pending-product
+                  [name]="product.name"
+                  [urgency]="product.urgency"
+                  [daysRemaining]="product.daysRemaining"
+                  [color]="product.color"
+                  (markDone)="onMarkProductDone(product.id)">
+                </app-pending-product>
+              </div>
+            }
+          </div>
         </div>
-      </div>
+      }
     </section>
 
     <section class="dashboard__section dashboard__shopping">

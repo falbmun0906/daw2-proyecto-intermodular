@@ -106,7 +106,7 @@
 }
 
 .app-sidebar__nav-button {
-  @include flex-layout(row, flex-start, center, var(--spacing-3));
+  @include flex-layout(row, flex-start, unset, var(--spacing-3));
   background: transparent;
   border: none;
   padding: var(--spacing-3) var(--spacing-4);

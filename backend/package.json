@@ -1,0 +1,21 @@
+{
+  "name": "despiensa-backend-image-processor",
+  "version": "1.0.0",
+  "description": "Script para procesar imágenes de recetas con Sharp",
+  "main": "scripts/generate-recipe-images.js",
+  "scripts": {
+    "generate-images": "node scripts/generate-recipe-images.js"
+  },
+  "keywords": [
+    "sharp",
+    "images",
+    "webp",
+    "recipes"
+  ],
+  "author": "Despiensa Team",
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.33.0"
+  }
+}
+

@@ -168,5 +168,19 @@ export class RecipeDetailPage implements OnInit, OnDestroy, AfterViewInit {
   onSave(): void {
     // TODO: Implementar funcionalidad de guardar
   }
+
+  /**
+   * Formatea una etiqueta para mostrarla de forma legible
+   * Ej: "DIETA_MEDITERRANEA" -> "Dieta Mediterránea"
+   */
+  formatTag(tag: string): string {
+    if (!tag) return '';
+    return tag
+      .replace(/_/g, ' ')
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
 }
 

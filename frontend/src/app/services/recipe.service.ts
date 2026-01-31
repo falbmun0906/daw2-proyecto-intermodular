@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { retry, map } from 'rxjs/operators';
 import { ApiService } from '../core/services/api.service';
 import { Receta, RecetaCompleta, RecetaCreateRequest, PageResponse } from '../models/receta.model';
 
@@ -22,10 +22,34 @@ export class RecipeService {
   private readonly imageBaseUrl = 'http://localhost:8080/images';
 
   /**
+   * Transforma las URLs de imágenes de una receta para que sean completas
+   */
+  private transformImageUrls<T extends Receta | RecetaCompleta>(receta: T): T {
+    if (!receta) return receta;
+
+    // Si las URLs ya son completas (empiezan con http), no hacer nada
+    if (receta.imagenUrlSmall?.startsWith('http')) {
+      return receta;
+    }
+
+    // Construir URLs completas
+    return {
+      ...receta,
+      imagenUrlSmall: receta.imagenUrlSmall ? `${this.imageBaseUrl}/recetas/${receta.imagenUrlSmall}` : '',
+      imagenUrlMedium: receta.imagenUrlMedium ? `${this.imageBaseUrl}/recetas/${receta.imagenUrlMedium}` : '',
+      imagenUrlLarge: receta.imagenUrlLarge ? `${this.imageBaseUrl}/recetas/${receta.imagenUrlLarge}` : ''
+    };
+  }
+
+  /**
    * GET /api/recetas?page=X&size=Y - Obtener recetas paginadas
    */
   getRecipesPaginated(page: number = 0, size: number = 5): Observable<PageResponse<Receta>> {
     return this.api.get<PageResponse<Receta>>(`${this.endpoint}?page=${page}&size=${size}`).pipe(
+      map(response => ({
+        ...response,
+        content: response.content.map(r => this.transformImageUrls(r))
+      })),
       retry(2)
     );
   }
@@ -35,6 +59,7 @@ export class RecipeService {
    */
   getAllRecipes(): Observable<Receta[]> {
     return this.api.get<Receta[]>(this.endpoint).pipe(
+      map(recetas => recetas.map(r => this.transformImageUrls(r))),
       retry(2)
     );
   }
@@ -45,15 +70,18 @@ export class RecipeService {
   getRecipeById(id: string | number): Observable<RecetaCompleta> {
     const recipeId = typeof id === 'string' ? parseInt(id, 10) : id;
     return this.api.get<RecetaCompleta>(`${this.endpoint}/${recipeId}`).pipe(
+      map(receta => this.transformImageUrls(receta)),
       retry(2)
     );
   }
 
   /**
-   * GET /api/recetas/:id/completa - Obtener receta con ingredientes y pasos
+   * GET /api/recetas/:id - Obtener receta con ingredientes y pasos
+   * Usa el mismo endpoint que getRecipeById (el backend devuelve la receta completa)
    */
   getRecipeComplete(id: number): Observable<RecetaCompleta> {
-    return this.api.get<RecetaCompleta>(`${this.endpoint}/${id}/completa`).pipe(
+    return this.api.get<RecetaCompleta>(`${this.endpoint}/${id}`).pipe(
+      map(receta => this.transformImageUrls(receta)),
       retry(2)
     );
   }
@@ -65,9 +93,18 @@ export class RecipeService {
     let query = `nombre=${encodeURIComponent(nombre)}`;
     if (page !== undefined && size !== undefined) {
       query += `&page=${page}&size=${size}`;
-      return this.api.get<PageResponse<Receta>>(`${this.endpoint}/buscar?${query}`).pipe(retry(2));
+      return this.api.get<PageResponse<Receta>>(`${this.endpoint}/buscar?${query}`).pipe(
+        map(response => ({
+          ...response,
+          content: response.content.map(r => this.transformImageUrls(r))
+        })),
+        retry(2)
+      );
     }
-    return this.api.get<Receta[]>(`${this.endpoint}/buscar?${query}`).pipe(retry(2));
+    return this.api.get<Receta[]>(`${this.endpoint}/buscar?${query}`).pipe(
+      map(recetas => recetas.map(r => this.transformImageUrls(r))),
+      retry(2)
+    );
   }
 
   /**
@@ -84,6 +121,7 @@ export class RecipeService {
     const query = params.length > 0 ? '?' + params.join('&') : '';
 
     return this.api.get<Receta[]>(`${this.endpoint}/filtrar${query}`).pipe(
+      map(recetas => recetas.map(r => this.transformImageUrls(r))),
       retry(2)
     );
   }

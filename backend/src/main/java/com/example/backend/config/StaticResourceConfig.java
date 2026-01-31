@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 /**
  * Configuración para servir archivos estáticos (imágenes).
  *
@@ -20,19 +23,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class StaticResourceConfig implements WebMvcConfigurer {
 
-    @Value("${app.images.path:./images/}")
+    @Value("${app.images.path:images/}")
     private String imagesPath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Obtener ruta absoluta del directorio de imágenes
+        Path absolutePath = Paths.get(imagesPath).toAbsolutePath();
+        String absolutePathStr = absolutePath.toUri().toString();
+
         // Servir imágenes desde carpeta externa
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:" + imagesPath)
+                .addResourceLocations(absolutePathStr)
                 .setCachePeriod(3600); // Cache de 1 hora
-
-        // También servir desde classpath para desarrollo
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("classpath:/static/images/")
-                .setCachePeriod(3600);
     }
 }
