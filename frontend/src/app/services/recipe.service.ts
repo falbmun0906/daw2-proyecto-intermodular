@@ -27,19 +27,68 @@ export class RecipeService {
   private transformImageUrls<T extends Receta | RecetaCompleta>(receta: T): T {
     if (!receta) return receta;
 
-    // Si las URLs ya son completas (empiezan con http), no hacer nada
-    if (receta.imagenUrlSmall?.startsWith('http')) {
-      return receta;
+    let transformed = receta;
+
+    // Transformar URLs de la receta si no son completas
+    if (!receta.imagenUrlSmall?.startsWith('http')) {
+      let slug = receta.imagenUrlSmall || '';
+
+      if (slug.includes('-small.webp') || slug.includes('-medium.webp') || slug.includes('-large.webp')) {
+        slug = slug.replace(/-small\.webp$/, '').replace(/-medium\.webp$/, '').replace(/-large\.webp$/, '');
+      }
+
+      if (!slug && (receta as any).imagenUrl) {
+        slug = (receta as any).imagenUrl;
+        if (slug.includes('-small.webp') || slug.includes('-medium.webp') || slug.includes('-large.webp')) {
+          slug = slug.replace(/-small\.webp$/, '').replace(/-medium\.webp$/, '').replace(/-large\.webp$/, '');
+        } else if (slug.includes('.')) {
+          slug = slug.replace(/\.[^/.]+$/, '');
+        }
+      }
+
+      if (slug) {
+        transformed = {
+          ...transformed,
+          imagenUrlSmall: `${this.imageBaseUrl}/recetas/${slug}-small.webp`,
+          imagenUrlMedium: `${this.imageBaseUrl}/recetas/${slug}-medium.webp`,
+          imagenUrlLarge: `${this.imageBaseUrl}/recetas/${slug}-large.webp`
+        };
+      }
     }
 
-    // Construir URLs completas
-    return {
-      ...receta,
-      imagenUrlSmall: receta.imagenUrlSmall ? `${this.imageBaseUrl}/recetas/${receta.imagenUrlSmall}` : '',
-      imagenUrlMedium: receta.imagenUrlMedium ? `${this.imageBaseUrl}/recetas/${receta.imagenUrlMedium}` : '',
-      imagenUrlLarge: receta.imagenUrlLarge ? `${this.imageBaseUrl}/recetas/${receta.imagenUrlLarge}` : ''
-    };
+    // Transformar URLs de ingredientes si es RecetaCompleta
+    if ('ingredientes' in transformed && transformed.ingredientes) {
+      transformed = {
+        ...transformed,
+        ingredientes: transformed.ingredientes.map(ri => {
+          if (!ri.ingrediente) return ri;
+
+          const ing = ri.ingrediente;
+          if (ing.imagenUrlSmall?.startsWith('http')) return ri;
+
+          let ingSlug = ing.imagenUrlSmall || ing.imagenUrl || '';
+          if (ingSlug.includes('-small.webp') || ingSlug.includes('-medium.webp') || ingSlug.includes('-large.webp')) {
+            ingSlug = ingSlug.replace(/-small\.webp$/, '').replace(/-medium\.webp$/, '').replace(/-large\.webp$/, '');
+          }
+
+          if (!ingSlug) return ri;
+
+          return {
+            ...ri,
+            ingrediente: {
+              ...ing,
+              imagenUrlSmall: `${this.imageBaseUrl}/ingredientes/${ingSlug}-small.webp`,
+              imagenUrlMedium: `${this.imageBaseUrl}/ingredientes/${ingSlug}-medium.webp`,
+              imagenUrlLarge: `${this.imageBaseUrl}/ingredientes/${ingSlug}-large.webp`
+            }
+          };
+        })
+      };
+    }
+
+    return transformed;
   }
+
 
   /**
    * GET /api/recetas?page=X&size=Y - Obtener recetas paginadas

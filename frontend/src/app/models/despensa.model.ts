@@ -2,16 +2,11 @@
  * Modelos de Despensa - Alineados con DespensaItemResponse.java
  */
 
+import { Ingrediente } from './ingrediente.model';
+
 export interface DespensaItem {
   id: number;
-  ingrediente: {
-    id: number;
-    nombre: string;
-    categoria: string;
-    unidadDefecto: string;
-    caloriasPorUnidad: number;
-    imagenUrl: string;
-  };
+  ingrediente: Ingrediente;
   cantidadActual: number;
   unidad: string;
   fechaCaducidad: string; // ISO-8601 LocalDate

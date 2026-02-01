@@ -246,6 +246,18 @@ public class DespensaItemService {
      * @return DTO Response
      */
     private DespensaItemResponse mapToResponse(DespensaItem item) {
+        // Generar URLs de imágenes del ingrediente
+        String ingSlug = item.getIngrediente().getImagenUrl();
+        String ingImagenUrlSmall = null;
+        String ingImagenUrlMedium = null;
+        String ingImagenUrlLarge = null;
+
+        if (ingSlug != null && !ingSlug.isEmpty()) {
+            ingImagenUrlSmall = ingSlug + "-small.webp";
+            ingImagenUrlMedium = ingSlug + "-medium.webp";
+            ingImagenUrlLarge = ingSlug + "-large.webp";
+        }
+
         var ingredienteResponse = com.example.backend.dto.IngredienteResponse.builder()
                 .id(item.getIngrediente().getId())
                 .nombre(item.getIngrediente().getNombre())
@@ -253,6 +265,9 @@ public class DespensaItemService {
                 .unidadDefecto(item.getIngrediente().getUnidadDefecto())
                 .caloriasPorUnidad(item.getIngrediente().getCaloriasPorUnidad())
                 .imagenUrl(item.getIngrediente().getImagenUrl())
+                .imagenUrlSmall(ingImagenUrlSmall)
+                .imagenUrlMedium(ingImagenUrlMedium)
+                .imagenUrlLarge(ingImagenUrlLarge)
                 .build();
 
         // Calcular días restantes hasta caducidad

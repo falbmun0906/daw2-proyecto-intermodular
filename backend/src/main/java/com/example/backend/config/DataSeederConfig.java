@@ -80,13 +80,17 @@ public class DataSeederConfig {
 
                             // Lógica de "Unicidad"
                             Ingrediente ingrediente = ingRepo.findByNombreIgnoreCase(nombreIngrediente)
-                                    .orElseGet(() -> ingRepo.save(
+                                    .orElseGet(() -> {
+                                        String slug = generarSlug(nombreIngrediente);
+                                        return ingRepo.save(
                                             Ingrediente.builder()
                                                     .nombre(nombreIngrediente)
                                                     .categoria(categoria)
-                                                    .unidadDefecto(unidad != null ? unidad : "unidades") // <-- ASIGNAMOS LA UNIDAD AQUÍ
+                                                    .unidadDefecto(unidad != null ? unidad : "unidades")
+                                                    .imagenUrl(slug)
                                                     .build()
-                                    ));
+                                        );
+                                    });
 
                             // Creamos la relación intermedia Receta-Ingrediente
                             recIngRepo.save(RecetaIngrediente.builder()
@@ -127,6 +131,26 @@ public class DataSeederConfig {
         if (cantidad instanceof Number) {
             return ((Number) cantidad).floatValue();
         }
-        return 0.0f;
+        return 0f;
+    }
+
+    /**
+     * Genera un slug a partir del nombre del ingrediente.
+     * Convierte "Arroz Bomba" a "arroz-bomba".
+     */
+    private String generarSlug(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            return "default";
+        }
+
+        String normalized = java.text.Normalizer.normalize(nombre, java.text.Normalizer.Form.NFD);
+        String sinAcentos = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        String slug = sinAcentos.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
+
+        return slug.isEmpty() ? "default" : slug;
     }
 }

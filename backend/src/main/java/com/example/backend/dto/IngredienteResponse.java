@@ -16,6 +16,9 @@ public class IngredienteResponse {
     private String categoria;
     private String unidadDefecto;
     private Integer caloriasPorUnidad;
-    private String imagenUrl;
+    private String imagenUrl;  // Slug base (ej: "tomate")
+    private String imagenUrlSmall;   // nombre_ingrediente-small.webp
+    private String imagenUrlMedium;  // nombre_ingrediente-medium.webp
+    private String imagenUrlLarge;   // nombre_ingrediente-large.webp
 }
 

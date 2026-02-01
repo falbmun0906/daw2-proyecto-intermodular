@@ -4,6 +4,8 @@
  * IMPORTANTE: Usa los nombres de campos del backend (Java/Spring Boot)
  */
 
+import { Ingrediente } from './ingrediente.model';
+
 /**
  * Respuesta paginada genérica de Spring Boot
  */
@@ -45,14 +47,7 @@ export interface RecetaCompleta extends Receta {
  */
 export interface RecetaIngrediente {
   id: number;
-  ingrediente: {
-    id: number;
-    nombre: string;
-    categoria: string;
-    unidadDefecto: string;
-    caloriasPorUnidad: number;
-    imagenUrl: string;
-  };
+  ingrediente: Ingrediente;
   cantidad: number;
   unidad: string;
   opcional: boolean;

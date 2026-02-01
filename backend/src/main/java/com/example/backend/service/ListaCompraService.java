@@ -123,7 +123,20 @@ public class ListaCompraService {
     private ListaCompraResponse mapToResponse(ListaCompra lista) {
         List<ListaItemResponse> items = lista.getItems()
                 .stream()
-                .map(item -> ListaItemResponse.builder()
+                .map(item -> {
+                    // Generar URLs de imágenes del ingrediente
+                    String ingSlug = item.getIngrediente().getImagenUrl();
+                    String ingImagenUrlSmall = null;
+                    String ingImagenUrlMedium = null;
+                    String ingImagenUrlLarge = null;
+
+                    if (ingSlug != null && !ingSlug.isEmpty()) {
+                        ingImagenUrlSmall = ingSlug + "-small.webp";
+                        ingImagenUrlMedium = ingSlug + "-medium.webp";
+                        ingImagenUrlLarge = ingSlug + "-large.webp";
+                    }
+
+                    return ListaItemResponse.builder()
                         .id(item.getId())
                         .cantidadNecesaria(item.getCantidadNecesaria())
                         .unidad(item.getUnidad())
@@ -134,8 +147,13 @@ public class ListaCompraService {
                                 .categoria(item.getIngrediente().getCategoria())
                                 .unidadDefecto(item.getIngrediente().getUnidadDefecto())
                                 .caloriasPorUnidad(item.getIngrediente().getCaloriasPorUnidad())
+                                .imagenUrl(item.getIngrediente().getImagenUrl())
+                                .imagenUrlSmall(ingImagenUrlSmall)
+                                .imagenUrlMedium(ingImagenUrlMedium)
+                                .imagenUrlLarge(ingImagenUrlLarge)
                                 .build())
-                        .build())
+                        .build();
+                })
                 .collect(Collectors.toList());
 
         return ListaCompraResponse.builder()

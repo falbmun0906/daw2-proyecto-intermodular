@@ -2,6 +2,8 @@
  * Modelos de Lista de Compra - Alineados con el backend Spring Boot
  */
 
+import { Ingrediente } from './ingrediente.model';
+
 export interface ListaCompra {
   id: number;
   nombre: string;
@@ -12,13 +14,7 @@ export interface ListaCompra {
 
 export interface ListaItem {
   id: number;
-  ingrediente: {
-    id: number;
-    nombre: string;
-    categoria: string;
-    unidadDefecto: string;
-    imagenUrl: string;
-  };
+  ingrediente: Ingrediente;
   cantidad: number;
   unidad: string;
   comprado: boolean;

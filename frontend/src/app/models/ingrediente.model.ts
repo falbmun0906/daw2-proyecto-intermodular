@@ -11,6 +11,10 @@ export interface Ingrediente {
   unidadDefecto: string;
   caloriasPorUnidad: number;
   imagenUrl: string;
+  // URLs de imágenes responsivas (generadas en el frontend)
+  imagenUrlSmall?: string;   // nombre_ingrediente-small.webp (200px)
+  imagenUrlMedium?: string;  // nombre_ingrediente-medium.webp (400px)
+  imagenUrlLarge?: string;   // nombre_ingrediente-large.webp (600px)
 }
 
 /**

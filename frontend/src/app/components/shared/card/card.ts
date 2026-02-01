@@ -152,19 +152,11 @@ export class Card {
 
   /**
    * Genera srcset para mobile (solo pequeña)
-   * Usa imagenUrlSmall si está disponible, sino fallback a imageUrl
+   * Usa imagenUrlSmall si está disponible
    */
   get computedSmallWebp(): string {
-    // Si tenemos la URL completa desde el backend, usarla directamente
-    if (this.imagenUrlSmall) {
-      return this.imagenUrlSmall;
-    }
-    // Fallback para compatibilidad con código antiguo
-    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
-      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-      return `assets/recipes/${fileName}-small.webp`;
-    }
-    return this.imageUrl || '';
+    // Solo usar URLs completas desde el backend
+    return this.imagenUrlSmall || '';
   }
 
   /**
@@ -172,21 +164,16 @@ export class Card {
    * Usa imagenUrlMedium e imagenUrlLarge si están disponibles
    */
   get computedLargeWebp(): string {
-    // Si tenemos las URLs completas desde el backend, usarlas directamente
+    // Solo usar URLs completas desde el backend
     if (this.imagenUrlMedium && this.imagenUrlLarge) {
       return `${this.imagenUrlMedium}, ${this.imagenUrlLarge} 1.5x`;
     }
-    // Fallback para compatibilidad con código antiguo
-    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
-      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-      return `assets/recipes/${fileName}-medium.webp, assets/recipes/${fileName}-large.webp 1.5x`;
-    }
-    return this.imageUrl || '';
+    return '';
   }
 
   /**
-   * Genera srcset automáticamente para imágenes de recetas
-   * Usa las nuevas propiedades imagenUrlSmall, imagenUrlMedium, imagenUrlLarge si están disponibles
+   * Genera srcset automáticamente para imágenes responsivas
+   * Usa las propiedades imagenUrlSmall, imagenUrlMedium, imagenUrlLarge
    */
   get computedSrcset(): string {
     if (this.imageSrcset) {
@@ -198,12 +185,6 @@ export class Card {
       return `${this.imagenUrlSmall} 400w, ${this.imagenUrlMedium} 600w, ${this.imagenUrlLarge} 800w`;
     }
 
-    // Fallback para compatibilidad con código antiguo
-    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
-      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-      return `assets/recipes/${fileName}-small.webp 400w, assets/recipes/${fileName}-medium.webp 600w, assets/recipes/${fileName}-large.webp 800w`;
-    }
-
     return '';
   }
 
@@ -212,18 +193,8 @@ export class Card {
    * Usa imagenUrlMedium como fallback (balance entre calidad y tamaño)
    */
   get computedSrc(): string {
-    // Si tenemos la URL mediana, usarla como fallback
-    if (this.imagenUrlMedium) {
-      return this.imagenUrlMedium;
-    }
-
-    // Fallback para compatibilidad con código antiguo
-    if (this.imageUrl && this.imageUrl.includes('/recipes/')) {
-      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-      return `assets/recipes/${fileName}-medium.webp`;
-    }
-
-    return this.imageUrl;
+    // Solo usar URLs completas desde el backend
+    return this.imagenUrlMedium || this.imagenUrlSmall || this.imageUrl || '';
   }
 
   /**
@@ -250,23 +221,19 @@ export class Card {
 
   /**
    * Genera background-image URL optimizado
-   * Usa imagenUrlMedium si está disponible, sino versión MEDIUM como fallback
+   * Usa imagenUrlMedium si está disponible
    */
   get computedBackgroundImage(): string {
-    // Si tenemos la URL mediana, usarla
+    // Solo usar URLs completas desde el backend
     if (this.imagenUrlMedium) {
       return `url(${this.imagenUrlMedium})`;
     }
 
-    if (!this.imageUrl) return 'none';
-
-    // Fallback para compatibilidad con código antiguo
-    if (this.imageUrl.includes('/recipes/')) {
-      const fileName = this.imageUrl.split('/').pop()?.replace(/\.[^/.]+$/, '') || '';
-      return `url(assets/recipes/${fileName}-medium.webp)`;
+    if (this.imageUrl && this.imageUrl.startsWith('http')) {
+      return `url(${this.imageUrl})`;
     }
 
-    return `url(${this.imageUrl})`;
+    return 'none';
   }
 
   /**
@@ -278,17 +245,24 @@ export class Card {
 
   /**
    * Maneja el error de carga de imagen
-   * Si la variante WebP no existe, carga el original PNG
+   * Si la variante WebP no existe, intenta cargar el fallback
    */
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
 
     // Si estamos intentando cargar una variante WebP y falló
     if (img.src.includes('-large.webp') || img.src.includes('-medium.webp') || img.src.includes('-small.webp')) {
-      // Fallback: cargar el PNG original
-      img.src = this.imageUrl;
-      img.srcset = ''; // Limpiar srcset para no intentar variantes que no existen
-      img.sizes = '';
+      // Si tenemos una URL alternativa desde el backend, intentar cargarla
+      if (this.imageUrl && this.imageUrl.startsWith('http')) {
+        img.src = this.imageUrl;
+        img.srcset = '';
+        img.sizes = '';
+      } else {
+        // Sino, solo limpiar srcset para no volver a intentar
+        img.srcset = '';
+        img.sizes = '';
+        // El navegador mantendrá src como está (que ha fallado)
+      }
     }
   }
 

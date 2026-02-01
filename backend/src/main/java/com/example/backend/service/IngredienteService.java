@@ -185,6 +185,18 @@ public class IngredienteService {
      * @return DTO Response
      */
     private IngredienteResponse mapToResponse(Ingrediente ingrediente) {
+        // Generar las 3 URLs de imágenes basándose en imagenUrl (slug)
+        String slug = ingrediente.getImagenUrl();
+        String imagenUrlSmall = null;
+        String imagenUrlMedium = null;
+        String imagenUrlLarge = null;
+
+        if (slug != null && !slug.isEmpty()) {
+            imagenUrlSmall = slug + "-small.webp";
+            imagenUrlMedium = slug + "-medium.webp";
+            imagenUrlLarge = slug + "-large.webp";
+        }
+
         return IngredienteResponse.builder()
                 .id(ingrediente.getId())
                 .nombre(ingrediente.getNombre())
@@ -192,6 +204,9 @@ public class IngredienteService {
                 .unidadDefecto(ingrediente.getUnidadDefecto())
                 .caloriasPorUnidad(ingrediente.getCaloriasPorUnidad())
                 .imagenUrl(ingrediente.getImagenUrl())
+                .imagenUrlSmall(imagenUrlSmall)
+                .imagenUrlMedium(imagenUrlMedium)
+                .imagenUrlLarge(imagenUrlLarge)
                 .build();
     }
 }

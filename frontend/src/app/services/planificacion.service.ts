@@ -53,6 +53,38 @@ export interface PlanificacionDiaCreateRequest {
 export class PlanificacionService {
   private api = inject(ApiService);
 
+  private readonly imageBaseUrl = 'http://localhost:8080/images';
+
+  private transformDiaImageUrls(dia: PlanificacionDia): PlanificacionDia {
+    if (!dia || !dia.receta) return dia;
+
+    const receta = dia.receta;
+    if (receta.imagenUrlSmall?.startsWith('http')) {
+      return dia;
+    }
+
+    let slug = receta.imagenUrlSmall || '';
+    if (slug.includes('-small.webp')) {
+      slug = slug.replace(/-small\.webp$/, '');
+    } else if (slug.includes('-medium.webp')) {
+      slug = slug.replace(/-medium\.webp$/, '');
+    } else if (slug.includes('-large.webp')) {
+      slug = slug.replace(/-large\.webp$/, '');
+    }
+
+    if (!slug) return dia;
+
+    return {
+      ...dia,
+      receta: {
+        ...receta,
+        imagenUrlSmall: `${this.imageBaseUrl}/recetas/${slug}-small.webp`,
+        imagenUrlMedium: `${this.imageBaseUrl}/recetas/${slug}-medium.webp`,
+        imagenUrlLarge: `${this.imageBaseUrl}/recetas/${slug}-large.webp`
+      }
+    };
+  }
+
   /**
    * GET /api/usuarios/:usuarioId/planificaciones - Obtener todas las planificaciones
    */
@@ -85,7 +117,10 @@ export class PlanificacionService {
    * GET /api/usuarios/:usuarioId/planificaciones/:planificacionId/dias - Obtener días de una planificación
    */
   getDiasDePlanificacion(usuarioId: number, planificacionId: number): Observable<PlanificacionDia[]> {
-    return this.api.get<PlanificacionDia[]>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias`).pipe(retry(2));
+    return this.api.get<PlanificacionDia[]>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias`).pipe(
+      map(dias => dias.map(d => this.transformDiaImageUrls(d))),
+      retry(2)
+    );
   }
 
   /**
@@ -93,21 +128,28 @@ export class PlanificacionService {
    * Obtener comidas de un día específico
    */
   getComidasDelDia(usuarioId: number, planificacionId: number, fecha: string): Observable<PlanificacionDia[]> {
-    return this.api.get<PlanificacionDia[]>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias/fecha?fecha=${fecha}`).pipe(retry(2));
+    return this.api.get<PlanificacionDia[]>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias/fecha?fecha=${fecha}`).pipe(
+      map(dias => dias.map(d => this.transformDiaImageUrls(d))),
+      retry(2)
+    );
   }
 
   /**
    * POST /api/usuarios/:usuarioId/planificaciones/:planificacionId/dias - Crear día planificado
    */
   crearDia(usuarioId: number, planificacionId: number, dto: PlanificacionDiaCreateRequest): Observable<PlanificacionDia> {
-    return this.api.post<PlanificacionDia>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias`, dto);
+    return this.api.post<PlanificacionDia>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias`, dto).pipe(
+      map(dia => this.transformDiaImageUrls(dia))
+    );
   }
 
   /**
    * PUT /api/usuarios/:usuarioId/planificaciones/:planificacionId/dias/:diaId - Actualizar día
    */
   actualizarDia(usuarioId: number, planificacionId: number, diaId: number, dto: PlanificacionDiaCreateRequest): Observable<PlanificacionDia> {
-    return this.api.put<PlanificacionDia>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias/${diaId}`, dto);
+    return this.api.put<PlanificacionDia>(`usuarios/${usuarioId}/planificaciones/${planificacionId}/dias/${diaId}`, dto).pipe(
+      map(dia => this.transformDiaImageUrls(dia))
+    );
   }
 
   /**
@@ -121,7 +163,7 @@ export class PlanificacionService {
    * Obtiene las comidas de hoy para el usuario
    */
   getComidasDeHoy(usuarioId: number, planificacionId: number): Observable<PlanificacionDia[]> {
-    const hoy = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const hoy = new Date().toISOString().split('T')[0];
     return this.getComidasDelDia(usuarioId, planificacionId, hoy);
   }
 }

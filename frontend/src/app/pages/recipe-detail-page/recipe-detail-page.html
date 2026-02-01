@@ -67,7 +67,10 @@
           <app-ingredient-card
             [name]="ingredienteReceta.ingrediente.nombre"
             [quantity]="ingredienteReceta.cantidad + ' ' + ingredienteReceta.unidad"
-            [imageUrl]="ingredienteReceta.ingrediente.imagenUrl"
+            [imageUrl]="ingredienteReceta.ingrediente.imagenUrl || ''"
+            [imagenUrlSmall]="ingredienteReceta.ingrediente.imagenUrlSmall || ''"
+            [imagenUrlMedium]="ingredienteReceta.ingrediente.imagenUrlMedium || ''"
+            [imagenUrlLarge]="ingredienteReceta.ingrediente.imagenUrlLarge || ''"
           />
         }
       </div>

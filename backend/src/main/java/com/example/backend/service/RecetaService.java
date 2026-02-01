@@ -285,7 +285,20 @@ public class RecetaService {
                 .fechaCreacion(receta.getFechaCreacion())
                 .ingredientes(receta.getIngredientes()
                         .stream()
-                        .map(ri -> RecetaIngredienteResponse.builder()
+                        .map(ri -> {
+                            // Generar URLs de imágenes del ingrediente
+                            String ingSlug = ri.getIngrediente().getImagenUrl();
+                            String ingImagenUrlSmall = null;
+                            String ingImagenUrlMedium = null;
+                            String ingImagenUrlLarge = null;
+
+                            if (ingSlug != null && !ingSlug.isEmpty()) {
+                                ingImagenUrlSmall = ingSlug + "-small.webp";
+                                ingImagenUrlMedium = ingSlug + "-medium.webp";
+                                ingImagenUrlLarge = ingSlug + "-large.webp";
+                            }
+
+                            return RecetaIngredienteResponse.builder()
                                 .id(ri.getId())
                                 .ingrediente(com.example.backend.dto.IngredienteResponse.builder()
                                         .id(ri.getIngrediente().getId())
@@ -293,11 +306,16 @@ public class RecetaService {
                                         .categoria(ri.getIngrediente().getCategoria())
                                         .unidadDefecto(ri.getIngrediente().getUnidadDefecto())
                                         .caloriasPorUnidad(ri.getIngrediente().getCaloriasPorUnidad())
+                                        .imagenUrl(ri.getIngrediente().getImagenUrl())
+                                        .imagenUrlSmall(ingImagenUrlSmall)
+                                        .imagenUrlMedium(ingImagenUrlMedium)
+                                        .imagenUrlLarge(ingImagenUrlLarge)
                                         .build())
                                 .cantidad(ri.getCantidad())
                                 .unidad(ri.getUnidad())
                                 .opcional(ri.getOpcional())
-                                .build())
+                                .build();
+                        })
                         .collect(Collectors.toList()))
                 .pasos(receta.getPasos()
                         .stream()

@@ -1,6 +1,8 @@
 <div class="ingredient-card">
   <img
-    [src]="imageUrl"
+    [src]="imageSrc"
+    [srcset]="imageSrcset"
+    sizes="(max-width: 768px) 150px, 200px"
     [alt]="name"
     class="ingredient-card__image"
     loading="lazy"
