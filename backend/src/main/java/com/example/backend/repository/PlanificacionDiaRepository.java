@@ -47,7 +47,7 @@ public interface PlanificacionDiaRepository extends JpaRepository<PlanificacionD
      * @param fecha fecha del día
      * @return lista de comidas planificadas ese día
      */
-    @Query("SELECT pd FROM PlanificacionDia pd WHERE pd.planificacionSemana.id = :planificacionSemanaId AND pd.fecha = :fecha ORDER BY FIELD(pd.tipoComida, 'DESAYUNO', 'ALMUERZO', 'COMIDA', 'MERIENDA', 'CENA')")
+    @Query("SELECT pd FROM PlanificacionDia pd LEFT JOIN FETCH pd.receta WHERE pd.planificacionSemana.id = :planificacionSemanaId AND pd.fecha = :fecha ORDER BY CASE pd.tipoComida WHEN 'DESAYUNO' THEN 1 WHEN 'ALMUERZO' THEN 2 WHEN 'COMIDA' THEN 3 WHEN 'MERIENDA' THEN 4 WHEN 'CENA' THEN 5 ELSE 6 END")
     List<PlanificacionDia> findByPlanificacionSemanaIdAndFecha(@Param("planificacionSemanaId") Long planificacionSemanaId, @Param("fecha") LocalDate fecha);
 
     /**

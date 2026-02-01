@@ -132,13 +132,22 @@ public class PlanificacionDiaService {
     private PlanificacionDiaResponse mapToResponse(PlanificacionDia dia) {
         RecetaResponse recetaResponse = null;
         if (dia.getReceta() != null) {
+            // Generar las 3 URLs de imágenes basándose en el nombre de la receta (slug)
+            String slug = generarSlug(dia.getReceta().getNombre());
+            String imagenUrlSmall = slug + "-small.webp";
+            String imagenUrlMedium = slug + "-medium.webp";
+            String imagenUrlLarge = slug + "-large.webp";
+
             recetaResponse = RecetaResponse.builder()
                     .id(dia.getReceta().getId())
                     .nombre(dia.getReceta().getNombre())
                     .descripcion(dia.getReceta().getDescripcion())
-                    .imagenUrl(dia.getReceta().getImagenUrl())
+                    .imagenUrlSmall(imagenUrlSmall)
+                    .imagenUrlMedium(imagenUrlMedium)
+                    .imagenUrlLarge(imagenUrlLarge)
                     .tiempoPreparacion(dia.getReceta().getTiempoPreparacion())
                     .porciones(dia.getReceta().getPorciones())
+                    .dificultad(dia.getReceta().getDificultad())
                     .fechaCreacion(dia.getReceta().getFechaCreacion())
                     .build();
         }
@@ -150,6 +159,25 @@ public class PlanificacionDiaService {
                 .receta(recetaResponse)
                 .notas(dia.getNotas())
                 .build();
+    }
+
+    /**
+     * Genera un slug a partir del nombre de la receta.
+     */
+    private String generarSlug(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            return "default";
+        }
+
+        String normalized = java.text.Normalizer.normalize(nombre, java.text.Normalizer.Form.NFD);
+        String sinAcentos = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        String slug = sinAcentos.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
+
+        return slug.isEmpty() ? "default" : slug;
     }
 }
 

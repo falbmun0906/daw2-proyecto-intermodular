@@ -53,6 +53,10 @@
     align-items: flex-start;
     gap: var(--spacing-3);
   }
+
+  &--center {
+    justify-content: center;
+  }
 }
 
 .dashboard__section-title {
@@ -64,6 +68,51 @@
 
   @include respond-to(md) {
     font-size: clamp(1.25rem, 3vw, var(--font-h4-size));
+  }
+
+  &--success {
+    color: var(--color-success-dark, #16a34a);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+}
+
+.dashboard__title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-success-light, #dcfce7);
+  color: var(--color-success-dark, #16a34a);
+  border-radius: 50%;
+  font-size: var(--font-sm-size);
+  font-weight: var(--font-weight-bold);
+}
+
+/* =========================
+ * LOADING & EMPTY STATES
+ * ========================= */
+
+.dashboard__loading,
+.dashboard__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12) var(--spacing-6);
+  background-color: var(--color-neutral-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  gap: var(--spacing-4);
+
+  p {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-body-size);
+    color: var(--color-text-muted);
+    margin: 0;
   }
 }
 
@@ -241,5 +290,132 @@
 @include respond-to(md) {
   .dashboard {
     grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+ * Modal de añadir producto
+ * ========================= */
+
+.add-product-modal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  padding: var(--spacing-6) 0;
+}
+
+.add-product-modal__search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.add-product-modal__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-12);
+}
+
+.add-product-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.add-product-modal__empty {
+  text-align: center;
+  padding: var(--spacing-8) var(--spacing-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-body-size);
+}
+
+.add-product-modal__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px solid var(--color-neutral-gray-light);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+
+  &:hover {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.add-product-modal__item-image {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-neutral-gray-light);
+}
+
+.add-product-modal__item-name {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.add-product-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  padding-top: var(--spacing-6);
+  border-top: 1px solid var(--color-neutral-gray-light);
+}
+
+.add-product-modal__form-title {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-h5-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.add-product-modal__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.add-product-modal__label {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.add-product-modal__input {
+  width: 100%;
+}
+
+.add-product-modal__actions {
+  display: flex;
+  gap: var(--spacing-3);
+  justify-content: flex-end;
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--color-neutral-gray-light);
+
+  @include respond-to(sm) {
+    flex-direction: column;
+    gap: var(--spacing-2);
+
+    app-button {
+      width: 100%;
+    }
   }
 }

@@ -81,6 +81,25 @@ public class RecetaController {
     }
 
     /**
+     * Búsqueda avanzada de recetas con filtros múltiples.
+     * GET /api/recetas/filtrar?dificultad=BAJA&tiempoMaximo=30&dieta=VEGETARIANA
+     *
+     * @param dificultad nivel de dificultad (BAJA, MEDIA, ALTA) - opcional
+     * @param tiempoMaximo tiempo máximo de preparación en minutos - opcional
+     * @param dieta etiqueta de dieta (VEGETARIANA, VEGANA, etc.) - opcional
+     * @return 200 OK con lista de recetas filtradas
+     */
+    @Operation(summary = "Filtrar recetas", description = "Búsqueda avanzada con múltiples criterios")
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<RecetaResponse>> filtrar(
+            @Parameter(description = "Dificultad de la receta") @RequestParam(required = false) String dificultad,
+            @Parameter(description = "Tiempo máximo de preparación") @RequestParam(required = false) Integer tiempoMaximo,
+            @Parameter(description = "Etiqueta de dieta") @RequestParam(required = false) String dieta) {
+        List<RecetaResponse> recetas = recetaService.filtrar(dificultad, tiempoMaximo, dieta);
+        return ResponseEntity.ok(recetas);
+    }
+
+    /**
      * Obtiene recetas por número de porciones.
      * GET /api/recetas/porciones/{porciones}
      *

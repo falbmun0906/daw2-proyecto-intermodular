@@ -40,7 +40,7 @@ class DespensaItemTest {
                 .ingrediente(ingrediente)
                 .cantidadActual(2.5f)
                 .unidad("kg")
-                .ubicacion(DespensaItem.UbicacionDespensa.NEVERA)
+                .ubicacion("Nevera")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .build();
 
@@ -51,7 +51,7 @@ class DespensaItemTest {
         assertTrue(violations.isEmpty(), "No debe haber violaciones de validación");
         assertEquals(2.5f, item.getCantidadActual());
         assertEquals("kg", item.getUnidad());
-        assertEquals(DespensaItem.UbicacionDespensa.NEVERA, item.getUbicacion());
+        assertEquals("Nevera", item.getUbicacion());
     }
 
     @Test
@@ -66,7 +66,7 @@ class DespensaItemTest {
                 .ingrediente(ingrediente)
                 .cantidadActual(-1.0f) // negativa
                 .unidad("kg")
-                .ubicacion(DespensaItem.UbicacionDespensa.DESPENSA)
+                .ubicacion("Despensa")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .build();
 
@@ -91,7 +91,7 @@ class DespensaItemTest {
                 .ingrediente(ingrediente)
                 .cantidadActual(2.0f)
                 .unidad(null)
-                .ubicacion(DespensaItem.UbicacionDespensa.DESPENSA)
+                .ubicacion("Despensa")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .build();
 
@@ -105,30 +105,30 @@ class DespensaItemTest {
     }
 
     @Test
-    @DisplayName("Debe permitir todas las ubicaciones de despensa")
+    @DisplayName("Debe permitir ubicaciones personalizadas")
     void testUbicacionesValidas() {
         // Given & When
         DespensaItem itemNevera = DespensaItem.builder()
-                .ubicacion(DespensaItem.UbicacionDespensa.NEVERA)
+                .ubicacion("Nevera")
                 .build();
 
         DespensaItem itemCongelador = DespensaItem.builder()
-                .ubicacion(DespensaItem.UbicacionDespensa.CONGELADOR)
+                .ubicacion("Congelador")
                 .build();
 
         DespensaItem itemDespensa = DespensaItem.builder()
-                .ubicacion(DespensaItem.UbicacionDespensa.DESPENSA)
+                .ubicacion("Despensa")
                 .build();
 
-        DespensaItem itemMostrador = DespensaItem.builder()
-                .ubicacion(DespensaItem.UbicacionDespensa.MOSTRADOR)
+        DespensaItem itemPersonalizado = DespensaItem.builder()
+                .ubicacion("Cajón de verduras")
                 .build();
 
         // Then
-        assertEquals(DespensaItem.UbicacionDespensa.NEVERA, itemNevera.getUbicacion());
-        assertEquals(DespensaItem.UbicacionDespensa.CONGELADOR, itemCongelador.getUbicacion());
-        assertEquals(DespensaItem.UbicacionDespensa.DESPENSA, itemDespensa.getUbicacion());
-        assertEquals(DespensaItem.UbicacionDespensa.MOSTRADOR, itemMostrador.getUbicacion());
+        assertEquals("Nevera", itemNevera.getUbicacion());
+        assertEquals("Congelador", itemCongelador.getUbicacion());
+        assertEquals("Despensa", itemDespensa.getUbicacion());
+        assertEquals("Cajón de verduras", itemPersonalizado.getUbicacion());
     }
 
     @Test
@@ -175,7 +175,7 @@ class DespensaItemTest {
                 .ingrediente(ingrediente)
                 .cantidadActual(1.0f)
                 .unidad("kg")
-                .ubicacion(DespensaItem.UbicacionDespensa.DESPENSA)
+                .ubicacion("Despensa")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .fechaCaducidad(null)
                 .build();
@@ -201,7 +201,7 @@ class DespensaItemTest {
                 .ingrediente(ingrediente)
                 .cantidadActual(1.0f)
                 .unidad("kg")
-                .ubicacion(DespensaItem.UbicacionDespensa.NEVERA)
+                .ubicacion("Nevera")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .fechaCaducidad(fechaCaducidad)
                 .build();
@@ -229,7 +229,7 @@ class DespensaItemTest {
                 .cantidadActual(3.5f)
                 .unidad("l")
                 .fechaCaducidad(LocalDate.now().plusDays(10))
-                .ubicacion(DespensaItem.UbicacionDespensa.NEVERA)
+                .ubicacion("Nevera")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .build();
 
@@ -238,7 +238,7 @@ class DespensaItemTest {
         assertEquals(1L, item.getId());
         assertEquals(3.5f, item.getCantidadActual());
         assertEquals("l", item.getUnidad());
-        assertEquals(DespensaItem.UbicacionDespensa.NEVERA, item.getUbicacion());
+        assertEquals("Nevera", item.getUbicacion());
         assertEquals(DespensaItem.EstadoDespensaItem.OK, item.getEstado());
     }
 
@@ -253,7 +253,7 @@ class DespensaItemTest {
                 .ingrediente(ingrediente)
                 .cantidadActual(1.0f)
                 .unidad("kg")
-                .ubicacion(DespensaItem.UbicacionDespensa.DESPENSA)
+                .ubicacion("Despensa")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .build();
 
@@ -277,7 +277,7 @@ class DespensaItemTest {
                 .ingrediente(null)
                 .cantidadActual(1.0f)
                 .unidad("kg")
-                .ubicacion(DespensaItem.UbicacionDespensa.DESPENSA)
+                .ubicacion("Despensa")
                 .estado(DespensaItem.EstadoDespensaItem.OK)
                 .build();
 

@@ -1,0 +1,78 @@
+/**
+ * Modelos de Receta - Alineados con el backend (RecetaResponse.java)
+ *
+ * IMPORTANTE: Usa los nombres de campos del backend (Java/Spring Boot)
+ */
+
+import { Ingrediente } from './ingrediente.model';
+
+/**
+ * Respuesta paginada genérica de Spring Boot
+ */
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number; // página actual (0-based)
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+}
+
+export interface Receta {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  imagenUrlSmall: string;   // nombre_receta-small.webp
+  imagenUrlMedium: string;  // nombre_receta-medium.webp
+  imagenUrlLarge: string;   // nombre_receta-large.webp
+  tiempoPreparacion: number; // en minutos
+  porciones: number;
+  dificultad: 'BAJA' | 'MEDIA' | 'ALTA';
+  fechaCreacion: string; // ISO-8601
+  etiquetas: string[];
+}
+
+/**
+ * Receta con ingredientes completa
+ */
+export interface RecetaCompleta extends Receta {
+  ingredientes: RecetaIngrediente[];
+  pasos?: PasoReceta[];
+}
+
+/**
+ * Ingrediente dentro de una receta - Alineado con RecetaIngredienteResponse.java
+ */
+export interface RecetaIngrediente {
+  id: number;
+  ingrediente: Ingrediente;
+  cantidad: number;
+  unidad: string;
+  opcional: boolean;
+}
+
+/**
+ * Paso de preparación de una receta - Alineado con RecetaPasoResponse.java
+ */
+export interface PasoReceta {
+  id: number;
+  orden: number;
+  descripcion: string;
+  tiempoMinutos?: number;
+}
+
+/**
+ * DTO para crear una receta
+ */
+export interface RecetaCreateRequest {
+  nombre: string;
+  descripcion: string;
+  imagenUrl?: string;
+  tiempoPreparacion: number;
+  porciones: number;
+  dificultad: 'BAJA' | 'MEDIA' | 'ALTA';
+  etiquetas?: string[];
+}
+

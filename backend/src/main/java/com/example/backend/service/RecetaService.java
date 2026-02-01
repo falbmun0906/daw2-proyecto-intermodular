@@ -162,6 +162,45 @@ public class RecetaService {
     }
 
     /**
+     * Búsqueda avanzada de recetas con filtros múltiples.
+     * Filtra por dificultad, tiempo máximo de preparación y/o etiqueta de dieta.
+     *
+     * @param dificultad nivel de dificultad (BAJA, MEDIA, ALTA) - opcional
+     * @param tiempoMaximo tiempo máximo de preparación en minutos - opcional
+     * @param dieta etiqueta de dieta (VEGETARIANA, VEGANA, etc.) - opcional
+     * @return lista de recetas que cumplen los criterios
+     */
+    public List<RecetaResponse> filtrar(String dificultad, Integer tiempoMaximo, String dieta) {
+        List<Receta> recetas = recetaRepository.findAllOrderByFechaCreacionDesc();
+
+        // Filtrar por dificultad si se especifica
+        if (dificultad != null && !dificultad.isEmpty()) {
+            recetas = recetas.stream()
+                    .filter(r -> r.getDificultad() != null && r.getDificultad().equalsIgnoreCase(dificultad))
+                    .collect(Collectors.toList());
+        }
+
+        // Filtrar por tiempo máximo de preparación si se especifica
+        if (tiempoMaximo != null) {
+            recetas = recetas.stream()
+                    .filter(r -> r.getTiempoPreparacion() != null && r.getTiempoPreparacion() <= tiempoMaximo)
+                    .collect(Collectors.toList());
+        }
+
+        // Filtrar por etiqueta de dieta si se especifica
+        if (dieta != null && !dieta.isEmpty()) {
+            recetas = recetas.stream()
+                    .filter(r -> r.getEtiquetas() != null && r.getEtiquetas().stream()
+                            .anyMatch(etiqueta -> etiqueta.name().equalsIgnoreCase(dieta)))
+                    .collect(Collectors.toList());
+        }
+
+        return recetas.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Cuenta el número total de recetas.
      *
      * @return total de recetas
@@ -194,13 +233,22 @@ public class RecetaService {
             receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
         }
 
+        // Generar las 3 URLs de imágenes basándose en el nombre de la receta (slug)
+        String slug = generarSlug(receta.getNombre());
+        String imagenUrlSmall = slug + "-small.webp";
+        String imagenUrlMedium = slug + "-medium.webp";
+        String imagenUrlLarge = slug + "-large.webp";
+
         return RecetaResponse.builder()
                 .id(receta.getId())
                 .nombre(receta.getNombre())
                 .descripcion(receta.getDescripcion())
-                .imagenUrl(receta.getImagenUrl())
+                .imagenUrlSmall(imagenUrlSmall)
+                .imagenUrlMedium(imagenUrlMedium)
+                .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
+                .dificultad(receta.getDificultad())
                 .fechaCreacion(receta.getFechaCreacion())
                 .etiquetas(etiquetasStr)
                 .build();
@@ -218,17 +266,39 @@ public class RecetaService {
             receta.getEtiquetas().forEach(e -> etiquetasStr.add(e.name()));
         }
 
+        // Generar las 3 URLs de imágenes basándose en el nombre de la receta (slug)
+        String slug = generarSlug(receta.getNombre());
+        String imagenUrlSmall = slug + "-small.webp";
+        String imagenUrlMedium = slug + "-medium.webp";
+        String imagenUrlLarge = slug + "-large.webp";
+
         return RecetaDetailedResponse.builder()
                 .id(receta.getId())
                 .nombre(receta.getNombre())
                 .descripcion(receta.getDescripcion())
-                .imagenUrl(receta.getImagenUrl())
+                .imagenUrlSmall(imagenUrlSmall)
+                .imagenUrlMedium(imagenUrlMedium)
+                .imagenUrlLarge(imagenUrlLarge)
                 .tiempoPreparacion(receta.getTiempoPreparacion())
                 .porciones(receta.getPorciones())
+                .dificultad(receta.getDificultad())
                 .fechaCreacion(receta.getFechaCreacion())
                 .ingredientes(receta.getIngredientes()
                         .stream()
-                        .map(ri -> RecetaIngredienteResponse.builder()
+                        .map(ri -> {
+                            // Generar URLs de imágenes del ingrediente
+                            String ingSlug = ri.getIngrediente().getImagenUrl();
+                            String ingImagenUrlSmall = null;
+                            String ingImagenUrlMedium = null;
+                            String ingImagenUrlLarge = null;
+
+                            if (ingSlug != null && !ingSlug.isEmpty()) {
+                                ingImagenUrlSmall = ingSlug + "-small.webp";
+                                ingImagenUrlMedium = ingSlug + "-medium.webp";
+                                ingImagenUrlLarge = ingSlug + "-large.webp";
+                            }
+
+                            return RecetaIngredienteResponse.builder()
                                 .id(ri.getId())
                                 .ingrediente(com.example.backend.dto.IngredienteResponse.builder()
                                         .id(ri.getIngrediente().getId())
@@ -236,11 +306,16 @@ public class RecetaService {
                                         .categoria(ri.getIngrediente().getCategoria())
                                         .unidadDefecto(ri.getIngrediente().getUnidadDefecto())
                                         .caloriasPorUnidad(ri.getIngrediente().getCaloriasPorUnidad())
+                                        .imagenUrl(ri.getIngrediente().getImagenUrl())
+                                        .imagenUrlSmall(ingImagenUrlSmall)
+                                        .imagenUrlMedium(ingImagenUrlMedium)
+                                        .imagenUrlLarge(ingImagenUrlLarge)
                                         .build())
                                 .cantidad(ri.getCantidad())
                                 .unidad(ri.getUnidad())
                                 .opcional(ri.getOpcional())
-                                .build())
+                                .build();
+                        })
                         .collect(Collectors.toList()))
                 .pasos(receta.getPasos()
                         .stream()
@@ -253,6 +328,33 @@ public class RecetaService {
                         .collect(Collectors.toList()))
                 .etiquetas(etiquetasStr)
                 .build();
+    }
+
+    /**
+     * Genera un slug a partir del nombre de la receta.
+     * Convierte "Paella Valenciana" a "paella-valenciana".
+     * Elimina acentos y caracteres especiales.
+     *
+     * @param nombre nombre de la receta
+     * @return slug para usar en URLs de imágenes
+     */
+    private String generarSlug(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            return "default";
+        }
+
+        // Normalizar para eliminar acentos
+        String normalized = java.text.Normalizer.normalize(nombre, java.text.Normalizer.Form.NFD);
+        // Eliminar caracteres diacríticos (acentos)
+        String sinAcentos = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        // Convertir a minúsculas y reemplazar espacios por guiones
+        String slug = sinAcentos.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "") // Solo letras, números, espacios y guiones
+                .replaceAll("\\s+", "-")          // Espacios a guiones
+                .replaceAll("-+", "-")            // Múltiples guiones a uno solo
+                .replaceAll("^-|-$", "");         // Eliminar guiones al inicio/final
+
+        return slug.isEmpty() ? "default" : slug;
     }
 }
 

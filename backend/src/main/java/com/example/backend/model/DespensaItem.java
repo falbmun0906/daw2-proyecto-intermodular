@@ -46,10 +46,9 @@ public class DespensaItem {
 
     private LocalDate fechaCaducidad;
 
-    @NotNull(message = "La ubicación es obligatoria")
-    @Enumerated(EnumType.STRING)
+    @NotBlank(message = "La ubicación es obligatoria")
     @Column(nullable = false)
-    private UbicacionDespensa ubicacion;
+    private String ubicacion;
 
     @NotNull(message = "El estado es obligatorio")
     @Enumerated(EnumType.STRING)
@@ -57,15 +56,6 @@ public class DespensaItem {
     @Builder.Default
     private EstadoDespensaItem estado = EstadoDespensaItem.OK;
 
-    /**
-     * Enumeración de ubicaciones en la despensa.
-     */
-    public enum UbicacionDespensa {
-        NEVERA,
-        CONGELADOR,
-        DESPENSA,
-        MOSTRADOR
-    }
 
     /**
      * Enumeración de estados del item.

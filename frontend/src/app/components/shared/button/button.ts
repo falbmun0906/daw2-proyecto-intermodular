@@ -123,7 +123,10 @@ export class Button {
       'chevron-right', 'home', 'user', 'menu', 'x', 'check',
       'alert-circle', 'info', 'trash2', 'edit', 'eye', 'plus',
       'mail', 'lock', 'google', 'facebook', 'x-icon', 'chef-hat',
-      'utensils', 'fire', 'schedule', 'chart-bar', 'cooking-pot'
+      'utensils', 'fire', 'schedule', 'chart-bar', 'cooking-pot',
+      'warehouse', 'house-line', 'lighthouse', 'clipboard-text',
+      'package', 'calendar', 'shopping-cart', 'snowflake',
+      'thermometer', 'archive'
     ];
     return validIcons.includes(iconName);
   }

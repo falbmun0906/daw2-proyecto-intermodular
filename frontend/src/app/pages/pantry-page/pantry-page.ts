@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Button } from '../../components/shared/button/button';
-import { Card } from '../../components/shared/card/card';
 import { FormInput } from '../../components/shared/form-input/form-input';
+import { FormSelect } from '../../components/shared/form-select/form-select';
+import { Icon } from '../../components/shared/icon/icon';
+import { Sidebar } from '../../components/layout/sidebar/sidebar';
+import { Modal } from '../../components/shared/modal/modal';
+import { DespensaService } from '../../services/despensa.service';
+import { IngredienteService } from '../../services/ingrediente.service';
+import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
+import { DespensaItem, DespensaItemCreateRequest } from '../../models/despensa.model';
+import { Ingrediente } from '../../models/ingrediente.model';
 
 interface PantryLocation {
   id: string;
@@ -12,39 +21,62 @@ interface PantryLocation {
   active: boolean;
 }
 
-interface PantryItem {
-  id: number;
-  name: string;
-  units: number;
-  initialQuantity: number;
-  dateAdded: string;
-  expirationDate: string;
-}
-
 interface SidebarNavItem {
   id: string;
   label: string;
   icon: string;
+  route: string;
   active: boolean;
 }
 
 @Component({
   selector: 'app-pantry-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, Button, Card, FormInput],
+  imports: [CommonModule, RouterModule, FormsModule, Button, FormInput, FormSelect, Icon, Sidebar, Modal],
   templateUrl: './pantry-page.html',
   styleUrl: './pantry-page.scss'
 })
-export class PantryPage {
-  searchQueryFridge: string = '';
-  searchQueryCupboard: string = '';
-  sidebarCollapsed: boolean = false;
+export class PantryPage implements OnInit {
+  private despensaService = inject(DespensaService);
+  private ingredienteService = inject(IngredienteService);
+  private authService = inject(AuthService);
+  private toastService = inject(ToastService);
+
+  searchQuery = signal<string>('');
+  sidebarCollapsed = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
+
+  // Items de la despensa por ubicación
+  fridgeItems = signal<DespensaItem[]>([]);
+  freezerItems = signal<DespensaItem[]>([]);
+  pantryItems = signal<DespensaItem[]>([]);
+  spicesItems = signal<DespensaItem[]>([]);
+
+  // Modal de añadir producto
+  isAddProductModalOpen = signal<boolean>(false);
+  ingredientes = signal<Ingrediente[]>([]);
+  selectedIngredienteId = signal<number | null>(null);
+  newProductCantidad = signal<number>(1);
+  newProductUnidad = signal<string>('unidad');
+  newProductFechaCaducidad = signal<string>('');
+  newProductUbicacion = signal<'NEVERA' | 'CONGELADOR' | 'DESPENSA' | 'ESPECIAS'>('NEVERA');
+
+  // Modal de crear despensa
+  isCreatePantryModalOpen = signal<boolean>(false);
+  newPantryName = signal<string>('');
+
+  ubicacionOptions = [
+    { value: 'NEVERA', label: 'Nevera' },
+    { value: 'CONGELADOR', label: 'Congelador' },
+    { value: 'DESPENSA', label: 'Alacena' },
+    { value: 'ESPECIAS', label: 'Especias' }
+  ];
 
   sidebarItems: SidebarNavItem[] = [
-    { id: 'resumen', label: 'Resumen', icon: '', active: false },
-    { id: 'despensa', label: 'Despensa', icon: '', active: true },
-    { id: 'planificador', label: 'Planificador', icon: '', active: false },
-    { id: 'lista', label: 'Lista', icon: '', active: false }
+    { id: 'resumen', label: 'Resumen', icon: 'lighthouse', route: '/dashboard', active: false },
+    { id: 'despensa', label: 'Despensa', icon: 'package', route: '/despensa', active: true },
+    { id: 'planificador', label: 'Planificador', icon: 'calendar', route: '/planificador', active: false },
+    { id: 'lista', label: 'Lista de la compra', icon: 'shopping-cart', route: '/dashboard', active: false }
   ];
 
   pantryLocations: PantryLocation[] = [
@@ -52,69 +84,181 @@ export class PantryPage {
     { id: 'lo-de-abuela', name: 'Lo de abuela', active: false }
   ];
 
-  fridgeItems: PantryItem[] = [
-    { id: 1, name: 'Leche', units: 2, initialQuantity: 2, dateAdded: '2026-01-10', expirationDate: '2026-01-20' },
-    { id: 2, name: 'Yogur', units: 6, initialQuantity: 8, dateAdded: '2026-01-09', expirationDate: '2026-01-25' },
-    { id: 3, name: 'Queso', units: 1, initialQuantity: 1, dateAdded: '2026-01-08', expirationDate: '2026-02-01' },
-    { id: 4, name: 'Jamón cocido', units: 200, initialQuantity: 300, dateAdded: '2026-01-07', expirationDate: '2026-01-22' },
-    { id: 5, name: 'Pollo fresco', units: 500, initialQuantity: 1000, dateAdded: '2026-01-12', expirationDate: '2026-01-15' },
-    { id: 6, name: 'Mantequilla', units: 1, initialQuantity: 1, dateAdded: '2026-01-05', expirationDate: '2026-02-05' }
-  ];
+  ngOnInit(): void {
+    this.loadDespensa();
+    this.loadIngredientes();
+  }
 
-  cupboardItems: PantryItem[] = [
-    { id: 7, name: 'Arroz', units: 1000, initialQuantity: 1000, dateAdded: '2026-01-01', expirationDate: '2027-01-01' },
-    { id: 8, name: 'Pasta', units: 500, initialQuantity: 1000, dateAdded: '2026-01-02', expirationDate: '2027-01-02' },
-    { id: 9, name: 'Harina', units: 800, initialQuantity: 1000, dateAdded: '2026-01-03', expirationDate: '2026-07-01' },
-    { id: 10, name: 'Azúcar', units: 500, initialQuantity: 1000, dateAdded: '2026-01-04', expirationDate: '2027-01-04' },
-    { id: 11, name: 'Sal', units: 1, initialQuantity: 1, dateAdded: '2025-12-01', expirationDate: '2028-01-01' },
-    { id: 12, name: 'Aceite de oliva', units: 1, initialQuantity: 1, dateAdded: '2026-01-05', expirationDate: '2027-01-05' },
-    { id: 13, name: 'Galletas', units: 2, initialQuantity: 3, dateAdded: '2026-01-06', expirationDate: '2026-03-01' },
-    { id: 14, name: 'Chocolate', units: 3, initialQuantity: 5, dateAdded: '2026-01-07', expirationDate: '2026-06-01' },
-    { id: 15, name: 'Café', units: 250, initialQuantity: 500, dateAdded: '2026-01-08', expirationDate: '2026-12-01' },
-    { id: 16, name: 'Lentejas', units: 500, initialQuantity: 1000, dateAdded: '2026-01-09', expirationDate: '2027-01-09' },
-    { id: 17, name: 'Frijoles', units: 400, initialQuantity: 500, dateAdded: '2026-01-10', expirationDate: '2027-01-10' },
-    { id: 18, name: 'Pan de molde', units: 1, initialQuantity: 1, dateAdded: '2026-01-11', expirationDate: '2026-01-18' },
-    { id: 19, name: 'Atún', units: 4, initialQuantity: 6, dateAdded: '2026-01-12', expirationDate: '2027-01-12' },
-    { id: 20, name: 'Tomate frito', units: 2, initialQuantity: 3, dateAdded: '2026-01-13', expirationDate: '2027-01-13' },
-    { id: 21, name: 'Maíz en lata', units: 3, initialQuantity: 4, dateAdded: '2026-01-14', expirationDate: '2027-01-14' }
-  ];
+  private loadDespensa(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) return;
+
+    this.isLoading.set(true);
+
+    this.despensaService.getPorUbicacion(userId, 'NEVERA').subscribe({
+      next: (items) => this.fridgeItems.set(items),
+      error: (err) => console.error('Error cargando nevera:', err)
+    });
+
+    this.despensaService.getPorUbicacion(userId, 'CONGELADOR').subscribe({
+      next: (items) => this.freezerItems.set(items),
+      error: (err) => console.error('Error cargando congelador:', err)
+    });
+
+    this.despensaService.getPorUbicacion(userId, 'DESPENSA').subscribe({
+      next: (items) => {
+        this.pantryItems.set(items);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Error cargando despensa:', err);
+        this.isLoading.set(false);
+      }
+    });
+
+    this.despensaService.getPorUbicacion(userId, 'ESPECIAS').subscribe({
+      next: (items) => this.spicesItems.set(items),
+      error: (err) => console.error('Error cargando especias:', err)
+    });
+  }
+
+  private loadIngredientes(): void {
+    this.ingredienteService.getAll().subscribe({
+      next: (ingredientes) => this.ingredientes.set(ingredientes),
+      error: (err) => console.error('Error cargando ingredientes:', err)
+    });
+  }
+
+  get ingredienteOptions() {
+    return this.ingredientes().map(ing => ({
+      value: ing.id.toString(),
+      label: `${ing.nombre} (${ing.categoria})`
+    }));
+  }
 
   toggleSidebar(): void {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
+    this.sidebarCollapsed.update(v => !v);
   }
 
   onNavItemClick(itemId: string): void {
     this.sidebarItems.forEach(item => item.active = item.id === itemId);
-    console.log('Navigate to:', itemId);
   }
 
   onLocationChange(locationId: string): void {
     this.pantryLocations.forEach(loc => loc.active = loc.id === locationId);
-    console.log('Switch to location:', locationId);
   }
 
+  // Abrir modal de añadir producto
   onAddProduct(): void {
-    console.log('Add product');
+    this.isAddProductModalOpen.set(true);
   }
 
+  onCloseAddProductModal(): void {
+    this.isAddProductModalOpen.set(false);
+    this.resetProductForm();
+  }
+
+  private resetProductForm(): void {
+    this.selectedIngredienteId.set(null);
+    this.newProductCantidad.set(1);
+    this.newProductUnidad.set('unidad');
+    this.newProductFechaCaducidad.set('');
+    this.newProductUbicacion.set('NEVERA');
+  }
+
+  onSaveProduct(): void {
+    const userId = this.authService.getCurrentUserId();
+    const ingredienteId = this.selectedIngredienteId();
+
+    if (!userId || !ingredienteId) {
+      this.toastService.error('Selecciona un ingrediente');
+      return;
+    }
+
+    const dto: DespensaItemCreateRequest = {
+      ingredienteId: ingredienteId,
+      cantidadActual: this.newProductCantidad(),
+      unidad: this.newProductUnidad(),
+      fechaCaducidad: this.newProductFechaCaducidad(),
+      ubicacion: this.newProductUbicacion()
+    };
+
+    this.despensaService.agregar(userId, dto).subscribe({
+      next: () => {
+        this.toastService.success('Producto añadido correctamente');
+        this.onCloseAddProductModal();
+        this.loadDespensa();
+      },
+      error: (err) => {
+        console.error('Error añadiendo producto:', err);
+        this.toastService.error('Error al añadir el producto');
+      }
+    });
+  }
+
+  // Modal de crear despensa
   onCreatePantry(): void {
-    console.log('Create new pantry');
+    this.isCreatePantryModalOpen.set(true);
   }
 
-  onSearchFridge(): void {
-    console.log('Search fridge:', this.searchQueryFridge);
+  onCloseCreatePantryModal(): void {
+    this.isCreatePantryModalOpen.set(false);
+    this.newPantryName.set('');
   }
 
-  onSearchCupboard(): void {
-    console.log('Search cupboard:', this.searchQueryCupboard);
+  onSaveNewPantry(): void {
+    const name = this.newPantryName();
+    if (!name.trim()) {
+      this.toastService.error('Ingresa un nombre para la despensa');
+      return;
+    }
+
+    // Añadir a la lista local de ubicaciones
+    this.pantryLocations.push({
+      id: name.toLowerCase().replace(/\s+/g, '-'),
+      name: name,
+      active: false
+    });
+
+    this.toastService.success(`Despensa "${name}" creada`);
+    this.onCloseCreatePantryModal();
   }
 
-  onFilterFridge(): void {
-    console.log('Filter fridge');
+  onSearch(): void {
+    const query = this.searchQuery();
+    if (!query) {
+      this.loadDespensa();
+      return;
+    }
+
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) return;
+
+    this.despensaService.buscarPorNombre(userId, query).subscribe({
+      next: (items) => {
+        this.fridgeItems.set(items.filter(i => i.ubicacion === 'NEVERA'));
+        this.freezerItems.set(items.filter(i => i.ubicacion === 'CONGELADOR'));
+        this.pantryItems.set(items.filter(i => i.ubicacion === 'DESPENSA'));
+        this.spicesItems.set(items.filter(i => i.ubicacion === 'ESPECIAS'));
+      },
+      error: (err) => console.error('Error buscando:', err)
+    });
   }
 
-  onFilterCupboard(): void {
-    console.log('Filter cupboard');
+  getStatusClass(estado: string): string {
+    switch (estado) {
+      case 'CADUCADO': return 'pantry-item--expired';
+      case 'PROXIMO_A_CADUCAR': return 'pantry-item--warning';
+      default: return 'pantry-item--ok';
+    }
+  }
+
+  getStatusLabel(estado: string): string {
+    switch (estado) {
+      case 'CADUCADO': return 'Caducado';
+      case 'PROXIMO_A_CADUCAR': return 'Próximo a caducar';
+      default: return 'OK';
+    }
   }
 }
 

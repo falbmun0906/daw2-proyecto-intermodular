@@ -181,16 +181,17 @@
   background-color: var(--color-secondary);
   color: var(--color-text-main);
   box-shadow: var(--shadow-lg);
-  transition: background-color var(--transition-base) var(--transition-easing),
-  color var(--transition-base) var(--transition-easing),
-  box-shadow var(--transition-base) var(--transition-easing),
-  opacity var(--transition-base) var(--transition-easing),
-  transform var(--transition-base) var(--transition-easing);
+  transition:
+    background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover:not(:disabled):not(.button--disabled) {
     background-color: var(--color-secondary-hover);
     box-shadow: var(--shadow-2xl);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 
   &:active:not(:disabled):not(.button--disabled) {

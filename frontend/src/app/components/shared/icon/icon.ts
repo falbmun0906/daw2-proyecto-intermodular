@@ -54,7 +54,10 @@ export class Icon {
       'arrow-right': 'arrow-right',
       'chevron-right': 'caret-right',
       'chevron-left': 'caret-left',
-      'home': 'house',
+      'home': 'lighthouse',
+      'house': 'lighthouse',
+      'house-line': 'storefront',
+      'warehouse': 'warehouse',
       'user': 'user',
       'menu': 'list',
       'x': 'x',
@@ -74,7 +77,21 @@ export class Icon {
       'fire': 'fire',
       'schedule': 'clock',
       'chart-bar': 'chart-bar',
-      'cooking-pot': 'cooking-pot'
+      'cooking-pot': 'cooking-pot',
+      'clipboard-text': 'clipboard-text',
+      'note': 'note',
+      'notepad': 'notepad',
+      'list-bullets': 'list-bullets',
+      'shopping-cart': 'shopping-cart',
+      'package': 'package',
+      'calendar': 'calendar',
+      'sign-out': 'sign-out',
+      'caret-left': 'caret-left',
+      'caret-right': 'caret-right',
+      'snowflake': 'snowflake',
+      'thermometer': 'thermometer-cold',
+      'archive': 'archive',
+      'thermometer-cold': 'thermometer-cold'
     };
     const phosphorName = phosphorMap[this.name] || this.name;
     return `assets/icons/phosphor/regular/${phosphorName}.svg`;
