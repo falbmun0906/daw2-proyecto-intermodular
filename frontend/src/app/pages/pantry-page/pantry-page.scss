@@ -1,0 +1,318 @@
+@use '../../../styles/01-tools/mixins' as *;
+
+.pantry {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--bg-primary);
+}
+
+.pantry__bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg-form-1.svg');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: bottom right;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pantry__content {
+  position: relative;
+  overflow-y: auto;
+  flex: 1;
+  z-index: 1;
+  padding: var(--spacing-6);
+
+  &--sidebar-collapsed {
+    // Ajustes cuando el sidebar está colapsado
+  }
+
+  @include respond-to(md) {
+    padding: var(--spacing-4);
+  }
+
+  @include respond-to(sm) {
+    padding: var(--spacing-3);
+  }
+}
+
+.pantry__section {
+  position: relative;
+  z-index: 1;
+  margin-bottom: var(--spacing-8);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include respond-to(md) {
+    margin-bottom: var(--spacing-6);
+  }
+
+  @include respond-to(sm) {
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+.pantry__header {
+  @include flex-layout(row, space-between, center);
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+
+  @include respond-to(sm) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.pantry__locations {
+  @include flex-layout(row, flex-start, center, var(--spacing-2));
+  flex-wrap: wrap;
+}
+
+.pantry__actions {
+  @include flex-layout(row, flex-end, center, var(--spacing-3));
+  flex-wrap: wrap;
+
+  @include respond-to(sm) {
+    justify-content: stretch;
+
+    app-button {
+      flex: 1;
+    }
+  }
+}
+
+.pantry__search-section {
+  margin-bottom: var(--spacing-6);
+}
+
+.pantry__search {
+  max-width: 500px;
+
+  @include respond-to(sm) {
+    max-width: 100%;
+  }
+}
+
+.pantry__search-input {
+  width: 100%;
+}
+
+.pantry__zone {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+
+  @include respond-to(sm) {
+    padding: var(--spacing-4);
+  }
+}
+
+.pantry__section-header {
+  @include flex-layout(row, space-between, center);
+  margin-bottom: var(--spacing-6);
+
+  @include respond-to(sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+.pantry__section-title {
+  @include flex-layout(row, flex-start, center, var(--spacing-3));
+  font-family: var(--font-family-primary);
+  font-size: var(--font-h4-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary, var(--color-text-main));
+  margin: 0;
+
+  @include respond-to(md) {
+    font-size: clamp(1.25rem, 3vw, var(--font-h4-size));
+  }
+}
+
+.pantry__section-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-secondary);
+}
+
+.pantry__item-count {
+  font-size: var(--font-small-size);
+  color: var(--text-secondary, var(--color-neutral-gray));
+  background: var(--color-primary-light);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+}
+
+.pantry__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-4);
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pantry__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--spacing-8);
+  color: var(--text-secondary, var(--color-neutral-gray));
+  font-style: italic;
+}
+
+// Estilos de los items de la despensa
+.pantry-item {
+  background: var(--bg-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  border-left: 4px solid var(--color-success);
+  transition: all var(--transition-base);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  &--ok {
+    border-left-color: var(--color-success);
+  }
+
+  &--warning {
+    border-left-color: var(--color-warning);
+    background: color-mix(in srgb, var(--color-warning) 5%, var(--bg-primary));
+  }
+
+  &--expired {
+    border-left-color: var(--color-error);
+    background: color-mix(in srgb, var(--color-error) 5%, var(--bg-primary));
+  }
+}
+
+.pantry-item__header {
+  @include flex-layout(row, space-between, flex-start);
+  margin-bottom: var(--spacing-3);
+  gap: var(--spacing-2);
+}
+
+.pantry-item__name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-body-size);
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.pantry-item__status {
+  font-size: var(--font-small-size);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  color: var(--text-secondary);
+  white-space: nowrap;
+
+  .pantry-item--warning & {
+    background: color-mix(in srgb, var(--color-warning) 20%, transparent);
+    color: var(--color-warning);
+  }
+
+  .pantry-item--expired & {
+    background: color-mix(in srgb, var(--color-error) 20%, transparent);
+    color: var(--color-error);
+  }
+}
+
+.pantry-item__details {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-2));
+}
+
+.pantry-item__detail {
+  @include flex-layout(row, flex-start, center, var(--spacing-2));
+  font-size: var(--font-small-size);
+  color: var(--text-secondary, var(--color-neutral-gray));
+  margin: 0;
+
+  app-icon {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+}
+
+.pantry-item__days {
+  font-weight: var(--font-weight-medium);
+
+  .pantry-item--warning & {
+    color: var(--color-warning);
+  }
+
+  .pantry-item--expired & {
+    color: var(--color-error);
+  }
+}
+
+// Modal form styles
+.modal-form {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-4));
+}
+
+.modal-form__field {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-2));
+}
+
+.modal-form__label {
+  font-size: var(--font-small-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.modal-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-form__actions {
+  @include flex-layout(row, flex-end, center, var(--spacing-3));
+  padding-top: var(--spacing-4);
+
+  @include respond-to(sm) {
+    flex-direction: column;
+    align-items: stretch;
+
+    app-button {
+      width: 100%;
+    }
+  }
+}
+
+// Responsive general
+@include respond-to(md) {
+  .pantry {
+    flex-direction: column;
+  }
+}

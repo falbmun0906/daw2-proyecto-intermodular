@@ -4,10 +4,19 @@
   display: flex;
   min-height: 100vh;
   position: relative;
-  background: linear-gradient(135deg,
-    var(--color-primary-light) 0%,
-    var(--color-tertiary-light) 50%,
-    var(--color-secondary-light) 100%);
+  background-color: var(--bg-primary);
+}
+
+.planner__bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg-form-1.svg');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: bottom right;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .planner__content {

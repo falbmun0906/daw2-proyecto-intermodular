@@ -2,58 +2,6 @@
 
 API REST desarrollada con Spring Boot para la gestión de despensas, recetas y planificación de comidas. Permite a los usuarios gestionar sus ingredientes, explorar recetas, planificar menús semanales y generar listas de compra automáticas.
 
-## 🆕 Nuevas Funcionalidades Implementadas
-
-**Fecha:** 28/01/2026
-
-Se han implementado 4 nuevas funcionalidades principales:
-
-### 1. ✉️ Sistema de Notificaciones
-- Verificación automática diaria de ingredientes próximos a caducar
-- Notificaciones en tiempo real sobre caducidad de productos
-- API completa para gestión de notificaciones
-- Tabla: `notificacion` (v2)
-
-### 2. 🍳 Recomendaciones Inteligentes
-- Algoritmo que recomienda recetas basadas en ingredientes disponibles
-- Cálculo de porcentaje de coincidencia
-- Listado de ingredientes disponibles vs faltantes
-- Generación automática de notificaciones de recomendaciones
-
-### 3. 📱 Compartir Listas
-- Generación de URLs para WhatsApp y Telegram
-- Formato de mensaje optimizado con emojis
-- Compartir listas de compra con un solo click
-- Endpoints: `POST /api/usuarios/{id}/listas/{listaId}/compartir/whatsapp|telegram`
-
-### 4. 📄 Exportación a PDF
-- Generación profesional de PDFs con iText7
-- Diseño personalizado con colores corporativos
-- Exportación individual o completa de planificaciones semanales
-- Endpoints: `GET /api/usuarios/{id}/planificaciones/{planId}/pdf`
-
-### 5. 🔐 Usuario Admin y Control de Acceso
-- Usuario admin creado: `fran@despiensa.es` (crear vía registro y cambiar rol a ADMIN)
-- DELETE protegido para operaciones sensibles (solo ADMIN):
-  - ❌ RecetaIngredienteController (no se pueden borrar ingredientes de recetas)
-  - ❌ AdminController.deleteAll() (no se puede borrar todo)
-- DELETE permitido para usuarios normales:
-  - ✅ Eliminar items propios de despensa
-  - ✅ Eliminar items de listas de compra
-  - ✅ Eliminar notificaciones propias
-  - ✅ Eliminar días planificados propios
-  - ✅ Dejar de guardar recetas
-
----
-
-## 📖 Documentación
-
-- [CREDENCIALES_ADMIN.md](./CREDENCIALES_ADMIN.md) - Acceso admin
-- [docs/NUEVAS_FUNCIONALIDADES.md](./docs/NUEVAS_FUNCIONALIDADES.md) - Documentación técnica
-- [docs/GUIA_FLYWAY_MIGRACIONES.md](./docs/GUIA_FLYWAY_MIGRACIONES.md) - Sistema de migraciones
-
----
-
 ## Índice
 
 1. [Descripción del Proyecto](#descripción-del-proyecto)

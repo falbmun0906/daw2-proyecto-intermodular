@@ -74,10 +74,7 @@ export class LoginForm implements OnInit {
       event.preventDefault();
     }
 
-    console.log('📝 LoginForm.onSubmit() called, form valid:', this.loginForm.valid);
-
     if (this.loginForm.invalid) {
-      console.log('❌ Formulario inválido, errores:', this.loginForm.errors);
       this.loginForm.markAllAsTouched();
       this.toastService.error('Por favor, corrige los errores del formulario');
       return;
@@ -86,9 +83,6 @@ export class LoginForm implements OnInit {
     this.isSubmitting = true;
     this.generalError = '';
 
-    console.log('✅ Emitiendo submitForm con datos:', this.loginForm.value);
-    // El delay será manejado por authService.loginWithCredentials en login-page
-    // que devuelve un Observable con delay(1000)
     this.submitForm.emit(this.loginForm.value);
   }
 

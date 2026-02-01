@@ -1,28 +1,31 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
-
-interface MockUser {
-  id: string;
-  email: string;
-  name: string;
-  token: string;
-}
+import { ApiService } from '../core/services/api.service';
+import { AuthResponse, LoginRequest, RegistroRequest, Usuario } from '../models/auth.model';
 
 /**
- * Servicio de autenticación simulado
- * En producción, esto se conectaría a un backend real
+ * Servicio de autenticación conectado al backend Spring Boot
  *
- * Usa sessionStorage (volátil) para mockear el login mientras se conecta el backend
+ * Endpoints:
+ * - POST /api/auth/login
+ * - POST /api/auth/registro
+ *
+ * Usa sessionStorage para almacenar el token JWT y los datos del usuario
  */
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private api = inject(ApiService);
+  private router = inject(Router);
+  private loadingService = inject(LoadingService);
+
   // Signal para estado reactivo de autenticación
   private _isLoggedIn = signal<boolean>(false);
+  private _currentUser = signal<Usuario | null>(null);
 
   // Getter público para acceder al signal de autenticación (readonly)
   get isLoggedIn$() {
@@ -34,11 +37,13 @@ export class AuthService {
     return this._isLoggedIn();
   }
 
-  constructor(
-    private router: Router,
-    private loadingService: LoadingService
-  ) {
-    // Restaurar estado de sesión desde sessionStorage (volátil)
+  // Getter para el usuario actual
+  get currentUser$() {
+    return this._currentUser.asReadonly();
+  }
+
+  constructor() {
+    // Restaurar estado de sesión desde sessionStorage
     this.restoreSessionState();
   }
 
@@ -46,94 +51,101 @@ export class AuthService {
    * Restaura el estado de sesión desde sessionStorage
    */
   private restoreSessionState(): void {
+    const token = sessionStorage.getItem('token');
     const savedUser = sessionStorage.getItem('currentUser');
-    if (savedUser) {
+
+    if (token && savedUser) {
       try {
         const user = JSON.parse(savedUser);
         this._isLoggedIn.set(true);
-        console.log('✅ Sesión restaurada para:', user.email);
+        this._currentUser.set(user);
       } catch (error) {
-        console.error('Error al restaurar sesión:', error);
-        sessionStorage.removeItem('currentUser');
-        this._isLoggedIn.set(false);
+        this.clearSession();
       }
     }
   }
 
   /**
-   * Simula un login exitoso (uso interno)
+   * Guarda el estado de login en sessionStorage
    */
-  private setLoginState(user: MockUser): void {
-    this._isLoggedIn.set(true);
-    sessionStorage.setItem('currentUser', JSON.stringify(user));
-    console.log('✅ Usuario autenticado:', user.email);
-  }
-
-  /**
-   * Simula login con credenciales (para formulario de login)
-   * Devuelve Observable que resuelve a true tras delay(1000)
-   * En producción, esto haría una llamada HTTP al backend
-   *
-   * @param email Email del usuario
-   * @param password Contraseña del usuario
-   * @returns Observable<boolean> que resuelve a true tras 1 segundo
-   */
-  loginWithCredentials(email: string, password: string) {
-    // Validación básica
-    if (!email || !password) {
-      return of(false);
-    }
-
-    // Crear usuario ficticio
-    const mockUser: MockUser = {
-      id: 'mock-user-' + Date.now(),
-      email: email,
-      name: email.split('@')[0], // Usa la parte antes del @ como nombre
-      token: 'mock-token-' + Math.random().toString(36).substring(7)
+  private setLoginState(authResponse: AuthResponse): void {
+    const usuario: Usuario = {
+      id: authResponse.id,
+      nombre: authResponse.email.split('@')[0],
+      email: authResponse.email,
+      rol: authResponse.rol
     };
 
-    // Devolver Observable con delay(1000) para simular latencia de red
-    return of(true).pipe(
-      delay(1000),
-      tap(() => {
-        this.setLoginState(mockUser);
-        this.loadingService.hide();
+    sessionStorage.setItem('token', authResponse.token);
+    sessionStorage.setItem('currentUser', JSON.stringify(usuario));
+
+    this._isLoggedIn.set(true);
+    this._currentUser.set(usuario);
+  }
+
+  private clearSession(): void {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('currentUser');
+    this._isLoggedIn.set(false);
+    this._currentUser.set(null);
+  }
+
+  loginWithCredentials(email: string, password: string): Observable<AuthResponse> {
+    const loginRequest: LoginRequest = { email, password };
+
+    return this.api.post<AuthResponse>('auth/login', loginRequest).pipe(
+      tap((authResponse) => {
+        this.setLoginState(authResponse);
       })
     );
   }
 
   /**
-   * Obtiene el usuario actual desde sessionStorage
-   * @returns Usuario actual o null si no hay sesión
+   * Registro de nuevo usuario
+   * POST /api/auth/registro
+   *
+   * @param nombre Nombre del usuario
+   * @param email Email del usuario
+   * @param password Contraseña del usuario
+   * @returns Observable<AuthResponse>
    */
-  getCurrentUser(): MockUser | null {
-    const savedUser = sessionStorage.getItem('currentUser');
-    if (savedUser) {
-      try {
-        return JSON.parse(savedUser);
-      } catch (error) {
-        console.error('Error al obtener usuario actual:', error);
-        return null;
-      }
-    }
-    return null;
+  register(nombre: string, email: string, password: string): Observable<AuthResponse> {
+    const registroRequest: RegistroRequest = { nombre, email, password };
+
+    return this.api.post<AuthResponse>('auth/registro', registroRequest).pipe(
+      tap((authResponse) => {
+        this.setLoginState(authResponse);
+      })
+    );
+  }
+
+  getCurrentUser(): Usuario | null {
+    return this._currentUser();
   }
 
   /**
-   * Simula un logout
+   * Obtiene el ID del usuario actual
+   * @returns ID del usuario o null si no hay sesión
+   */
+  getCurrentUserId(): number | null {
+    const user = this._currentUser();
+    return user?.id ?? null;
+  }
+
+  /**
+   * Obtiene el token JWT actual
+   * @returns Token JWT o null si no hay sesión
+   */
+  getToken(): string | null {
+    return sessionStorage.getItem('token');
+  }
+
+  /**
    * Limpia sessionStorage y redirige a /home
    */
-  logout() {
-    this._isLoggedIn.set(false);
-    sessionStorage.removeItem('currentUser');
-    console.log('🚪 Usuario ha cerrado sesión');
-
-    // Devolver Observable para permitir encadenamiento en componentes
-    return of(true).pipe(
-      tap(() => {
-        this.router.navigate(['/home']);
-      })
-    );
+  logout(): void {
+    this.clearSession();
+    this.router.navigate(['/home']);
   }
 }
 

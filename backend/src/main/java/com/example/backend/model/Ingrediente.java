@@ -43,6 +43,7 @@ public class Ingrediente {
     @Schema(description = "Calorías por unidad del ingrediente", example = "18")
     private Integer caloriasPorUnidad;
 
+
     @Size(max = 500, message = "La URL de la imagen no puede exceder 500 caracteres")
     @Schema(description = "URL de la imagen del ingrediente", example = "https://ejemplo.com/tomate.jpg")
     private String imagenUrl;

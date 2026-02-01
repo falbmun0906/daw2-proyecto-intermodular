@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, Renderer2, OnChanges, SimpleChanges, AfterViewInit, HostListener } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterViewInit, HostListener, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Icon } from '../../shared/icon/icon';
+import { AuthService } from '../../../services/auth.service';
 
 interface SidebarItem {
   id: string;
@@ -26,8 +27,7 @@ export class Sidebar implements OnChanges, AfterViewInit {
   @ViewChild('sidebarElement', { static: false }) sidebarElement!: ElementRef;
 
   isMobile: boolean = false;
-
-  constructor(private renderer: Renderer2) {}
+  private authService = inject(AuthService);
 
   ngAfterViewInit(): void {
     this.checkIfMobile();
@@ -61,5 +61,9 @@ export class Sidebar implements OnChanges, AfterViewInit {
       return;
     }
     this.toggle.emit();
+  }
+
+  onLogout(): void {
+    this.authService.logout();
   }
 }

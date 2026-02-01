@@ -51,7 +51,7 @@ public class DespensaItemService {
                 .cantidadActual(request.getCantidadActual())
                 .unidad(request.getUnidad())
                 .fechaCaducidad(request.getFechaCaducidad())
-                .ubicacion(DespensaItem.UbicacionDespensa.valueOf(request.getUbicacion()))
+                .ubicacion(request.getUbicacion())
                 .estado(determinarEstado(request.getFechaCaducidad()))
                 .build();
 
@@ -132,7 +132,7 @@ public class DespensaItemService {
      * Obtiene items por ubicación en la despensa.
      *
      * @param usuarioId id del usuario
-     * @param ubicacion la ubicación (NEVERA, CONGELADOR, etc.)
+     * @param ubicacion la ubicación (puede ser cualquier texto personalizado)
      * @return lista de items en esa ubicación
      */
     public List<DespensaItemResponse> obtenerPorUbicacion(Long usuarioId, String ubicacion) {
@@ -180,7 +180,7 @@ public class DespensaItemService {
             item.setEstado(determinarEstado(request.getFechaCaducidad()));
         }
         if (request.getUbicacion() != null) {
-            item.setUbicacion(DespensaItem.UbicacionDespensa.valueOf(request.getUbicacion()));
+            item.setUbicacion(request.getUbicacion());
         }
         if (request.getEstado() != null) {
             item.setEstado(DespensaItem.EstadoDespensaItem.valueOf(request.getEstado()));
@@ -246,13 +246,38 @@ public class DespensaItemService {
      * @return DTO Response
      */
     private DespensaItemResponse mapToResponse(DespensaItem item) {
+        // Generar URLs de imágenes del ingrediente
+        String ingSlug = item.getIngrediente().getImagenUrl();
+        String ingImagenUrlSmall = null;
+        String ingImagenUrlMedium = null;
+        String ingImagenUrlLarge = null;
+
+        if (ingSlug != null && !ingSlug.isEmpty()) {
+            ingImagenUrlSmall = ingSlug + "-small.webp";
+            ingImagenUrlMedium = ingSlug + "-medium.webp";
+            ingImagenUrlLarge = ingSlug + "-large.webp";
+        }
+
         var ingredienteResponse = com.example.backend.dto.IngredienteResponse.builder()
                 .id(item.getIngrediente().getId())
                 .nombre(item.getIngrediente().getNombre())
                 .categoria(item.getIngrediente().getCategoria())
                 .unidadDefecto(item.getIngrediente().getUnidadDefecto())
                 .caloriasPorUnidad(item.getIngrediente().getCaloriasPorUnidad())
+                .imagenUrl(item.getIngrediente().getImagenUrl())
+                .imagenUrlSmall(ingImagenUrlSmall)
+                .imagenUrlMedium(ingImagenUrlMedium)
+                .imagenUrlLarge(ingImagenUrlLarge)
                 .build();
+
+        // Calcular días restantes hasta caducidad
+        Long diasRestantes = null;
+        if (item.getFechaCaducidad() != null) {
+            diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(
+                LocalDate.now(),
+                item.getFechaCaducidad()
+            );
+        }
 
         return DespensaItemResponse.builder()
                 .id(item.getId())
@@ -260,7 +285,8 @@ public class DespensaItemService {
                 .cantidadActual(item.getCantidadActual())
                 .unidad(item.getUnidad())
                 .fechaCaducidad(item.getFechaCaducidad())
-                .ubicacion(item.getUbicacion().name())
+                .diasRestantes(diasRestantes)
+                .ubicacion(item.getUbicacion())
                 .estado(item.getEstado().name())
                 .build();
     }

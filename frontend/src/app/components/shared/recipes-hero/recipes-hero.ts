@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Breadcrumbs } from '../breadcrumbs/breadcrumbs';
@@ -19,7 +19,7 @@ interface HeroConfig {
   templateUrl: './recipes-hero.html',
   styleUrl: './recipes-hero.scss'
 })
-export class RecipesHero {
+export class RecipesHero implements OnChanges {
   @Input() config: HeroConfig = {
     breadcrumbItems: [],
     title: '',
@@ -28,6 +28,12 @@ export class RecipesHero {
   };
 
   searchQuery: string = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['config'] && this.config.searchValue !== undefined) {
+      this.searchQuery = this.config.searchValue;
+    }
+  }
 
   onSearchChange(): void {
     if (this.config.onSearch) {

@@ -86,7 +86,7 @@
       <!-- Logo blob sobre el grid -->
       <div class="hero__logo-container">
         <div class="hero__logo-blob"></div>
-        <h1 class="hero__logo-text">Desp[i]lensa</h1>
+        <h1 class="hero__logo-text">Desp[i]ensa</h1>
       </div>
     </div>
 
@@ -105,60 +105,74 @@
   <section class="trending">
     <h2 class="trending__title">Tendencias de esta semana</h2>
 
-    <div class="trending__carousel">
-      <app-carousel-nav-button
-        direction="prev"
-        class="trending__nav trending__nav--prev"
-        (navigate)="prevSlide()"
-      ></app-carousel-nav-button>
-
-      <div class="trending__track" #carouselTrack>
-        @for (recipe of trendingRecipes; track recipe.id) {
-          <app-card
-            variant="carousel"
-            [imageUrl]="recipe.imageUrl"
-            [imageAlt]="recipe.title"
-            [title]="recipe.title"
-            [rating]="recipe.rating"
-            [category]="recipe.category"
-            [time]="recipe.time"
-            [difficulty]="recipe.difficulty"
-            [actionText]="'Ver receta'"
-            (actionClick)="onRecipeClick(recipe.id)"
-          />
-        }
+    @if (isLoadingTrending()) {
+      <div class="trending__loading">
+        <p>Cargando recetas...</p>
       </div>
+    } @else {
+      <div class="trending__carousel">
+        <app-carousel-nav-button
+          direction="prev"
+          class="trending__nav trending__nav--prev"
+          (navigate)="prevSlide()"
+        ></app-carousel-nav-button>
 
-      <app-carousel-nav-button
-        direction="next"
-        class="trending__nav trending__nav--next"
-        (navigate)="nextSlide()"
-      ></app-carousel-nav-button>
-    </div>
+        <div class="trending__track" #carouselTrack>
+          @for (recipe of trendingRecipes(); track recipe.id) {
+            <app-card
+              variant="carousel"
+              [imagenUrlSmall]="recipe.imagenUrlSmall"
+              [imagenUrlMedium]="recipe.imagenUrlMedium"
+              [imagenUrlLarge]="recipe.imagenUrlLarge"
+              [imageAlt]="recipe.nombre"
+              [title]="recipe.nombre"
+              [tags]="recipe.etiquetas || []"
+              [time]="recipe.tiempoPreparacion + ' min'"
+              [difficulty]="recipe.dificultad"
+              [actionText]="'Ver receta'"
+              (actionClick)="onRecipeClick(recipe.id!)"
+            />
+          }
+        </div>
+
+        <app-carousel-nav-button
+          direction="next"
+          class="trending__nav trending__nav--next"
+          (navigate)="nextSlide()"
+        ></app-carousel-nav-button>
+      </div>
+    }
   </section>
 
   <section class="must-see">
     <h2 class="must-see__title">Recetas que no te puedes perder</h2>
 
-    <div class="must-see__grid">
-      @for (recipe of mustSeeRecipes; track recipe.id) {
-        <app-card
-          variant="vertical"
-          [imageUrl]="recipe.imageUrl"
-          [imageAlt]="recipe.title"
-          [title]="recipe.title"
-          [rating]="recipe.rating"
-          [category]="recipe.category"
-          [time]="recipe.time"
-          [difficulty]="recipe.difficulty"
-          [actionText]="'Ver receta'"
-          (actionClick)="onRecipeClick(recipe.id)"
-        />
-      }
-    </div>
+    @if (isLoadingMustSee()) {
+      <div class="must-see__loading">
+        <p>Cargando recetas...</p>
+      </div>
+    } @else {
+      <div class="must-see__grid">
+        @for (recipe of mustSeeRecipes(); track recipe.id) {
+          <app-card
+            variant="vertical"
+            [imagenUrlSmall]="recipe.imagenUrlSmall"
+            [imagenUrlMedium]="recipe.imagenUrlMedium"
+            [imagenUrlLarge]="recipe.imagenUrlLarge"
+            [imageAlt]="recipe.nombre"
+            [title]="recipe.nombre"
+            [tags]="recipe.etiquetas || []"
+            [time]="recipe.tiempoPreparacion + ' min'"
+            [difficulty]="recipe.dificultad"
+            [actionText]="'Ver receta'"
+            (actionClick)="onRecipeClick(recipe.id!)"
+          />
+        }
+      </div>
+    }
   </section>
 
-  <section class="kitchen-control">
+  <section class="kitchen-control" id="kitchen-control">
     <div class="kitchen-control__content">
       <h2 class="kitchen-control__title">Tu cocina, siempre bajo control.</h2>
       <p class="kitchen-control__subtitle">

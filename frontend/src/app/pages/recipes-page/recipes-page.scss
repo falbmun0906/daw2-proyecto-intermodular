@@ -47,6 +47,18 @@
   padding: var(--spacing-8);
   max-width: 1400px;
   margin: 0 auto;
+
+  @include respond-to(lg) {
+    grid-template-columns: 240px 1fr;
+    gap: var(--spacing-6);
+    padding: var(--spacing-6);
+  }
+
+  @include respond-to(md) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+  }
 }
 
 /* =========================
@@ -61,6 +73,25 @@
   border-radius: var(--radius-sm);
   padding: var(--spacing-6);
   height: fit-content;
+
+  @include respond-to(lg) {
+    padding: var(--spacing-4);
+    top: var(--spacing-6);
+  }
+
+  @include respond-to(md) {
+    position: relative;
+    top: 0;
+    padding: var(--spacing-4);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+  }
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
+  }
 }
 
 /* =========================
@@ -72,6 +103,10 @@
   &:last-child {
     margin-bottom: 0;
   }
+
+  @include respond-to(md) {
+    margin-bottom: 0;
+  }
 }
 
 .filter-group__title {
@@ -79,10 +114,19 @@
   font-size: var(--font-h5-size);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-3);
+
+  @include respond-to(sm) {
+    font-size: var(--font-body-size);
+    margin-bottom: var(--spacing-2);
+  }
 }
 
 .filter-group__options {
   @include flex-layout(column, flex-start, flex-start, var(--spacing-2));
+
+  @include respond-to(md) {
+    gap: var(--spacing-1);
+  }
 }
 
 /* =========================
@@ -91,6 +135,10 @@
 .recipes-page__content {
   min-width: 0; // evita desbordes en grid
   @include flex-layout(column, flex-start, stretch, var(--spacing-6));
+
+  @include respond-to(md) {
+    gap: var(--spacing-4);
+  }
 }
 
 /* =========================
@@ -102,16 +150,31 @@
   padding: var(--spacing-5) var(--spacing-6);
 
   @include flex-layout(row, space-between, center, var(--spacing-6));
+
+  @include respond-to(md) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+  }
 }
 
 .recipes-page__title {
   font-family: var(--font-family-secondary);
   font-size: var(--font-h3-size);
   margin: 0;
+
+  @include respond-to(sm) {
+    font-size: var(--font-h4-size);
+  }
 }
 
 .recipes-page__search {
   width: 300px;
+
+  @include respond-to(md) {
+    width: 100%;
+  }
 }
 
 /* =========================
@@ -119,4 +182,23 @@
    ========================= */
 .recipes-page__list {
   @include flex-layout(column, flex-start, stretch, var(--spacing-4));
+
+  @include respond-to(sm) {
+    gap: var(--spacing-3);
+  }
 }
+
+.recipes-page__loading,
+.recipes-page__empty {
+  text-align: center;
+  padding: var(--spacing-12) var(--spacing-6);
+  color: var(--text-secondary, var(--color-neutral-gray));
+  font-size: var(--font-body-size);
+  background: var(--surface-base);
+  border-radius: var(--radius-md);
+
+  @include respond-to(sm) {
+    padding: var(--spacing-8) var(--spacing-4);
+  }
+}
+

@@ -78,7 +78,7 @@ public interface DespensaItemRepository extends JpaRepository<DespensaItem, Long
      * Obtiene items de una ubicación específica en la despensa.
      *
      * @param usuarioId id del usuario
-     * @param ubicacion la ubicación (NEVERA, CONGELADOR, etc.)
+     * @param ubicacion la ubicación (ej: "Nevera", "Congelador", etc.)
      * @return lista de items en esa ubicación
      */
     @Query("SELECT di FROM DespensaItem di WHERE di.usuario.id = :usuarioId AND di.ubicacion = :ubicacion ORDER BY di.ingrediente.nombre ASC")

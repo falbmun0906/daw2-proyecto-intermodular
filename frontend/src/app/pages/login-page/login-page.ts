@@ -3,6 +3,7 @@ import { LoginForm } from '../../components/shared/login-form/login-form';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoadingService } from '../../services/loading.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login-page',
@@ -17,50 +18,43 @@ export class LoginPage implements OnInit {
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
   private loadingService = inject(LoadingService);
+  private toastService = inject(ToastService);
 
   private returnUrl: string = '/dashboard';
 
   ngOnInit(): void {
-    // Leer la URL de retorno desde queryParams
     this.route.queryParamMap.subscribe(params => {
       this.returnUrl = params.get('returnUrl') || '/dashboard';
-      console.log('📍 LoginPage: returnUrl =', this.returnUrl);
     });
   }
 
   onSubmit(formData: any): void {
-    console.log('Login form submitted:', formData);
-
-    // Mostrar loading
     this.loadingService.show();
 
-    // Intentar autenticación con el servicio
-    // loginWithCredentials retorna un Observable con delay(1000)
     this.authService.loginWithCredentials(
       formData.email,
       formData.password
     ).subscribe({
-      next: (success) => {
-        if (success) {
-          console.log('✅ Login exitoso, redirigiendo a:', this.returnUrl);
-          // Redirigir al dashboard o a la URL original
-          this.router.navigateByUrl(this.returnUrl);
-        } else {
-          console.error('❌ Login fallido: credenciales inválidas');
-          this.loadingService.hide();
-          // Resetear estado del formulario
-          if (this.loginFormComponent) {
-            this.loginFormComponent.resetFormState();
-          }
-          // Aquí podrías mostrar un mensaje de error
-        }
-      },
-      error: (err) => {
-        console.error('❌ Error en login:', err);
+      next: (authResponse) => {
         this.loadingService.hide();
-        // Resetear estado del formulario
+        this.toastService.success(`¡Bienvenido de nuevo!`);
+        this.router.navigateByUrl(this.returnUrl);
+      },
+      error: (error) => {
+        this.loadingService.hide();
+
         if (this.loginFormComponent) {
           this.loginFormComponent.resetFormState();
+        }
+
+        if (error.status === 401) {
+          this.toastService.error('Email o contraseña incorrectos');
+        } else if (error.status === 0) {
+          this.toastService.error('No se puede conectar con el servidor');
+        } else if (error.status === 400) {
+          this.toastService.error('Datos de inicio de sesión inválidos');
+        } else {
+          this.toastService.error('Error al iniciar sesión');
         }
       }
     });

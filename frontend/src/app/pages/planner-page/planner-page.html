@@ -7,6 +7,8 @@
   </app-sidebar>
 
   <main class="planner__content" [class.planner__content--sidebar-collapsed]="sidebarCollapsed">
+    <div class="planner__bg-pattern"></div>
+
     <section class="planner__calendar-section">
       <h1 class="planner__calendar-title">Mi calendario de comidas</h1>
 
@@ -62,7 +64,7 @@
           class="planner__search form-input--search"
         />
 
-        <app-button variant="ghost" size="sm" (buttonClick)="onFilter()">
+        <app-button variant="secondary" size="sm" icon="filter" (buttonClick)="onFilter()">
           Filtrar
         </app-button>
       </div>

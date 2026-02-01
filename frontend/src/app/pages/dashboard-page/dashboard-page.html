@@ -11,41 +11,65 @@
     <div class="dashboard__bg-pattern"></div>
 
     <section class="dashboard__section dashboard__meals">
-      @for (meal of todayMeals; track meal.id; let isFirst = $first) {
-        <app-meal-card
-          [time]="meal.time"
-          [title]="meal.title"
-          [imageUrl]="meal.imageUrl"
-          [rating]="meal.rating"
-          [tags]="meal.tags"
-          [isPrimary]="isFirst"
-          (viewRecipe)="onViewRecipe(meal.id)"
-        />
+      @if (isLoading()) {
+        <div class="dashboard__loading">
+          <p>Cargando tus comidas de hoy...</p>
+        </div>
+      } @else if (todayMeals().length === 0) {
+        <div class="dashboard__empty">
+          <p>No tienes comidas planificadas para hoy.</p>
+          <app-button variant="secondary" size="sm" (buttonClick)="navigateToPlanificador()">
+            Planificar comidas
+          </app-button>
+        </div>
+      } @else {
+        @for (meal of todayMeals(); track meal.id; let isFirst = $first) {
+          <app-meal-card
+            [time]="meal.time"
+            [title]="meal.title"
+            [imagenUrlSmall]="meal.imagenUrlSmall || ''"
+            [imagenUrlMedium]="meal.imagenUrlMedium || ''"
+            [imagenUrlLarge]="meal.imagenUrlLarge || ''"
+            [rating]="meal.rating"
+            [tags]="meal.tags"
+            [isPrimary]="isFirst"
+            (viewRecipe)="onViewRecipe(meal.id)"
+          />
+        }
       }
     </section>
 
     <section class="dashboard__section dashboard__pending">
-      <div class="dashboard__section-header">
-        <h2 class="dashboard__section-title">¡Tienes acciones pendientes!</h2>
+      <div class="dashboard__section-header dashboard__section-header--center">
+        @if (allPendingCompleted() || visiblePendingProducts.length === 0) {
+          <h2 class="dashboard__section-title">
+            <span class="dashboard__title-icon">✓</span>
+            Todo está en orden en la despensa
+          </h2>
+        } @else {
+          <h2 class="dashboard__section-title">¡Tienes acciones pendientes!</h2>
+        }
       </div>
 
-      <div class="dashboard__carousel">
-        <div
-          class="dashboard__carousel-track"
-          [style.transform]="getCarouselTransform()">
-          @for (product of visiblePendingProducts; track product.id) {
-            <div class="dashboard__carousel-slide">
-              <app-pending-product
-                [name]="product.name"
-                [urgency]="product.urgency"
-                [daysRemaining]="product.daysRemaining"
-                [color]="product.color"
-                (markDone)="onMarkProductDone(product.id)">
-              </app-pending-product>
-            </div>
-          }
+      @if (!allPendingCompleted() && visiblePendingProducts.length > 0) {
+        <div class="dashboard__carousel">
+          <div
+            class="dashboard__carousel-track"
+            [style.transform]="getCarouselTransform()">
+            @for (product of visiblePendingProducts; track product.id) {
+              <div class="dashboard__carousel-slide">
+                <app-pending-product
+                  [name]="product.name"
+                  [urgency]="product.urgency"
+                  [daysRemaining]="product.daysRemaining"
+                  [color]="product.color"
+                  (markDone)="onMarkProductDone(product.id)">
+                </app-pending-product>
+              </div>
+            }
+          </div>
         </div>
-      </div>
+      }
     </section>
 
     <section class="dashboard__section dashboard__shopping">
@@ -86,4 +110,111 @@
       </div>
     </section>
   </main>
+
+  <!-- Modal para añadir producto -->
+  <app-modal
+    [isOpen]="isAddProductModalOpen"
+    [title]="'Añadir producto a la compra'"
+    [size]="'md'"
+    (closed)="onCloseAddProductModal()">
+
+    <div class="add-product-modal">
+      <div class="add-product-modal__search">
+        <app-form-input
+          type="text"
+          placeholder="Buscar ingrediente..."
+          icon="search"
+          [(ngModel)]="ingredientSearchQuery"
+          (inputChange)="onSearchIngredients()"
+          class="form-input--search"
+        />
+      </div>
+
+      @if (searchingIngredients()) {
+        <div class="add-product-modal__loading">
+          <app-spinner />
+        </div>
+      } @else {
+        <div class="add-product-modal__list">
+          @if (filteredIngredients().length === 0) {
+            <p class="add-product-modal__empty">No se encontraron ingredientes</p>
+          } @else {
+            @for (ingredient of filteredIngredients(); track ingredient.id) {
+              <button
+                type="button"
+                class="add-product-modal__item"
+                (click)="onSelectIngredient(ingredient)">
+                <img
+                  [src]="ingredient.imagenUrl"
+                  [alt]="ingredient.nombre"
+                  class="add-product-modal__item-image">
+                <span class="add-product-modal__item-name">{{ ingredient.nombre }}</span>
+              </button>
+            }
+          }
+        </div>
+      }
+
+      @if (selectedIngredient()) {
+        <div class="add-product-modal__form">
+          <h3 class="add-product-modal__form-title">Detalles del producto</h3>
+
+          <div class="add-product-modal__form-group">
+            <label class="add-product-modal__label">Cantidad</label>
+            <app-form-input
+              type="number"
+              placeholder="1"
+              [(ngModel)]="productQuantity"
+              class="add-product-modal__input"
+            />
+          </div>
+
+          <div class="add-product-modal__form-group">
+            <label class="add-product-modal__label">Unidad</label>
+            <app-form-select
+              [(ngModel)]="productUnit"
+              [options]="getUnitOptions()"
+              placeholder="Seleccionar unidad"
+              class="add-product-modal__input"
+            />
+          </div>
+
+          <div class="add-product-modal__form-group">
+            <label class="add-product-modal__label">Fecha de caducidad (opcional)</label>
+            <app-form-input
+              type="date"
+              [(ngModel)]="productExpireDate"
+              class="add-product-modal__input"
+            />
+          </div>
+
+          <div class="add-product-modal__form-group">
+            <label class="add-product-modal__label">Ubicación (opcional)</label>
+            <app-form-input
+              type="text"
+              placeholder="Ej: Nevera, Despensa..."
+              [(ngModel)]="productLocation"
+              class="add-product-modal__input"
+            />
+          </div>
+
+          <div class="add-product-modal__actions">
+            <app-button
+              variant="secondary"
+              size="md"
+              (buttonClick)="onCancelProductForm()">
+              Cancelar
+            </app-button>
+            <app-button
+              variant="primary"
+              size="md"
+              (buttonClick)="onConfirmAddProduct()"
+              [disabled]="isSavingProduct()">
+              Añadir
+            </app-button>
+          </div>
+        </div>
+      }
+    </div>
+  </app-modal>
 </div>

@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { RecipeService, Recipe } from '../services/recipe.service';
+import { RecipeService } from '../services/recipe.service';
+import { RecetaCompleta } from '../models/receta.model';
 import { catchError, of } from 'rxjs';
 
 /**
@@ -17,7 +18,7 @@ import { catchError, of } from 'rxjs';
  *   resolve: { recipe: recipeResolver }
  * }
  */
-export const recipeResolver: ResolveFn<Recipe | null> = (
+export const recipeResolver: ResolveFn<RecetaCompleta | null> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
@@ -25,20 +26,14 @@ export const recipeResolver: ResolveFn<Recipe | null> = (
   const router = inject(Router);
   const id = route.paramMap.get('id')!;
 
-  console.log(`📥 recipeResolver: Cargando receta con ID ${id}`);
-
-  return recipeService.getRecipeById(id).pipe(
+  return recipeService.getRecipeComplete(+id).pipe(
     catchError(error => {
-      console.error(`❌ recipeResolver: Error cargando receta ${id}:`, error);
-
-      // Redirigir a listado de recetas con mensaje de error
       router.navigate(['/recetas'], {
         state: {
           error: `No se pudo cargar la receta con ID ${id}. La receta no existe o ha ocurrido un error.`
         }
       });
 
-      // Retornar null para que la navegación no falle completamente
       return of(null);
     })
   );

@@ -10,7 +10,7 @@
       [attr.aria-describedby]="ariaDescribedBy"
       [attr.aria-invalid]="hasError"
       [attr.aria-required]="required"
-      [(ngModel)]="value"
+      [checked]="value"
       (change)="onCheck($event)"
       class="form-checkbox__input"
     />
