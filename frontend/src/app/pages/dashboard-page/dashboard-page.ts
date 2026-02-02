@@ -90,8 +90,27 @@ export class DashboardPage implements OnInit {
   // Formulario de producto
   productQuantity: number = 1;
   productUnit: string = '';
-  productExpireDate: string = '';
-  productLocation: string = '';
+
+  // Confirm delete modal state
+  isConfirmDeleteOpen: boolean = false;
+  pendingDeleteItemId: number | null = null;
+
+  // Mark as comprado modal state
+  isMarkModalOpen: boolean = false;
+  markItemId: number | null = null;
+  pantryInstances: { id: string; name: string }[] = [
+    { id: 'mi-casa', name: 'Mi casa' },
+    { id: 'lo-de-abuela', name: 'Lo de abuela' }
+  ];
+  selectedPantryId: string | null = 'mi-casa';
+  locationOptions = [
+    { value: 'NEVERA', label: 'Nevera' },
+    { value: 'CONGELADOR', label: 'Congelador' },
+    { value: 'DESPENSA', label: 'Alacena' },
+    { value: 'ESPECIAS', label: 'Especias' }
+  ];
+  selectedLocation: string = 'NEVERA';
+  markExpiryDate: string = '';
 
   // Signals para datos reales
   todayMeals = signal<Meal[]>([]);
@@ -256,17 +275,13 @@ export class DashboardPage implements OnInit {
     return items
       .filter(item => !item.comprado)
       .map(item => {
-        const cantidad = item.cantidad ?? 0;
+        const cantidad = item.cantidadNecesaria ?? 0;
         const unidad = item.unidad || 'unidades';
 
-        // Usar imagenUrlSmall si está disponible (ya transformada por el servicio)
-        // Si no, usar imagenUrl y generar la URL completa
-        let imageUrl = 'assets/icons/ingredient-default.svg';
-        if (item.ingrediente?.imagenUrlSmall) {
-          imageUrl = item.ingrediente.imagenUrlSmall;
-        } else if (item.ingrediente?.imagenUrl) {
-          imageUrl = this.ingredienteService.getImageUrl(item.ingrediente.imagenUrl, 'small');
-        }
+        // Usar imagenUrlSmall que ya fue transformado por el servicio
+        // o fallback a imagenUrl si es necesario
+        const imageUrl = item.ingrediente?.imagenUrlSmall || item.ingrediente?.imagenUrl || '';
+
 
         return {
           id: item.id,
@@ -389,11 +404,11 @@ export class DashboardPage implements OnInit {
 
   private loadAllIngredients(): void {
     this.ingredienteService.getAll().subscribe({
-      next: (ingredientes) => {
+      next: (ingredientes: Ingrediente[]) => {
         this.allIngredients.set(ingredientes);
         this.filteredIngredients.set(ingredientes);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error cargando ingredientes:', err);
       }
     });
@@ -406,11 +421,11 @@ export class DashboardPage implements OnInit {
     } else {
       this.searchingIngredients.set(true);
       this.ingredienteService.buscarPorNombre(query).subscribe({
-        next: (ingredientes) => {
+        next: (ingredientes: Ingrediente[]) => {
           this.filteredIngredients.set(ingredientes);
           this.searchingIngredients.set(false);
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error buscando ingredientes:', err);
           this.searchingIngredients.set(false);
         }
@@ -422,8 +437,6 @@ export class DashboardPage implements OnInit {
     this.selectedIngredient.set(ingrediente);
     this.productUnit = ingrediente.unidadDefecto || 'unidades';
     this.productQuantity = 1;
-    this.productExpireDate = '';
-    this.productLocation = '';
   }
 
   onCancelProductForm(): void {
@@ -443,7 +456,7 @@ export class DashboardPage implements OnInit {
 
     const itemDto: any = {
       ingredienteId: ingredient.id,
-      cantidad: this.productQuantity,
+      cantidadNecesaria: this.productQuantity,
       unidad: this.productUnit || ingredient.unidadDefecto,
       comprado: false
     };
@@ -472,15 +485,23 @@ export class DashboardPage implements OnInit {
         } else {
           // Crear nueva lista
           const listDto: any = {
-            nombre: 'Mi lista de compra',
-            items: [itemDto]
+            origen: 'MANUAL'
           };
           this.listaCompraService.crearLista(userId, listDto).subscribe({
-            next: () => {
-              this.isSavingProduct.set(false);
-              this.isAddProductModalOpen = false;
-              this.selectedIngredient.set(null);
-              this.loadDashboardData();
+            next: (nuevaLista) => {
+              // Agregar item a la lista recién creada
+              this.listaCompraService.agregarItem(userId, nuevaLista.id, itemDto).subscribe({
+                next: () => {
+                  this.isSavingProduct.set(false);
+                  this.isAddProductModalOpen = false;
+                  this.selectedIngredient.set(null);
+                  this.loadDashboardData();
+                },
+                error: (err) => {
+                  console.error('Error agregando item a nueva lista:', err);
+                  this.isSavingProduct.set(false);
+                }
+              });
             },
             error: (err) => {
               console.error('Error creando lista:', err);
@@ -506,8 +527,138 @@ export class DashboardPage implements OnInit {
     return units.map(u => ({ label: u, value: u }));
   }
 
+  get pantryOptions(): { label: string; value: string }[] {
+    return this.pantryInstances.map(p => ({ label: p.name, value: p.id }));
+  }
+
+  get locationOptionsForDisplay(): { label: string; value: string }[] {
+    return this.locationOptions.map(o => ({ label: o.label, value: o.value }));
+  }
+
+  getIngredientImageUrl(ingrediente: Ingrediente): string {
+    const imageBaseUrl = 'http://localhost:8080/images';
+
+    // Si ya es una URL completa (http), usarla directamente
+    if (ingrediente.imagenUrlSmall && ingrediente.imagenUrlSmall.startsWith('http')) {
+      return ingrediente.imagenUrlSmall;
+    }
+
+    if (ingrediente.imagenUrl && ingrediente.imagenUrl.startsWith('http')) {
+      return ingrediente.imagenUrl;
+    }
+
+    // Generar slug desde el nombre o usar imagenUrl
+    let slug = ingrediente.imagenUrl;
+    if (!slug && ingrediente.nombre) {
+      slug = ingrediente.nombre
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]/g, '');
+    }
+
+    if (!slug) {
+      return 'assets/icons/ingredient-default.svg';
+    }
+
+    return `${imageBaseUrl}/ingredientes/${slug}-small.webp`;
+  }
+
   navigateToPlanificador(): void {
     this.router.navigate(['/planificador']);
+  }
+
+  onDeleteShoppingItem(itemId: number): void {
+    // Abrir modal de confirmación para eliminar
+    this.pendingDeleteItemId = itemId;
+    this.isConfirmDeleteOpen = true;
+  }
+
+  confirmDeleteShoppingItem(): void {
+    const itemId = this.pendingDeleteItemId;
+    const userId = this.authService.currentUser$()?.id;
+    if (!userId || !itemId) return;
+
+    this.isConfirmDeleteOpen = false;
+    this.pendingDeleteItemId = null;
+
+    this.listaCompraService.getListasPendientes(userId).subscribe({
+      next: (listas) => {
+        if (listas.length > 0) {
+          const listaId = listas[0].id;
+          this.listaCompraService.eliminarItem(userId, listaId, itemId).subscribe({
+            next: () => this.loadDashboardData(),
+            error: (err) => console.error('Error eliminando item:', err)
+          });
+        }
+      },
+      error: (err) => console.error('Error obteniendo listas:', err)
+    });
+  }
+
+  cancelDeleteShoppingItem(): void {
+    this.isConfirmDeleteOpen = false;
+    this.pendingDeleteItemId = null;
+  }
+
+  onMarkAsComprado(itemId: number): void {
+    // Abrir modal para elegir despensa, ubicación y fecha
+    this.markItemId = itemId;
+    this.isMarkModalOpen = true;
+    this.selectedPantryId = this.pantryInstances.length > 0 ? this.pantryInstances[0].id : null;
+    this.selectedLocation = this.locationOptions[0].value;
+    this.markExpiryDate = '';
+  }
+
+  async confirmMarkAsComprado(): Promise<void> {
+    const itemId = this.markItemId;
+    const userId = this.authService.currentUser$()?.id;
+    if (!userId || !itemId) return;
+
+    // Encontrar detalles del item en la lista pendiente para obtener ingredienteId y unidad, cantidad
+    this.isMarkModalOpen = false;
+
+    this.listaCompraService.getListasPendientes(userId).subscribe({
+      next: (listas) => {
+        if (listas.length === 0) return;
+        const lista = listas[0];
+        const found = lista.items?.find(i => i.id === itemId);
+        if (!found) return;
+
+        const listaId = lista.id;
+
+        // Marcar como comprado en backend
+        this.listaCompraService.marcarComoComprado(userId, listaId, itemId).subscribe({
+          next: () => {
+            // Agregar a despensa
+            const dto: any = {
+              ingredienteId: found.ingrediente?.id,
+              cantidadActual: found.cantidadNecesaria || 1,
+              unidad: found.unidad || 'unidades',
+              fechaCaducidad: this.markExpiryDate || undefined,
+              ubicacion: this.selectedLocation
+            };
+
+            this.despensaService.agregar(userId, dto).subscribe({
+              next: () => this.loadDashboardData(),
+              error: (err) => {
+                console.error('Error agregando a la despensa:', err);
+                this.loadDashboardData();
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Error marcando como comprado:', err);
+          }
+        });
+      },
+      error: (err) => console.error('Error obteniendo listas:', err)
+    });
+  }
+
+  cancelMarkAsComprado(): void {
+    this.isMarkModalOpen = false;
+    this.markItemId = null;
   }
 
   onSearch(): void {

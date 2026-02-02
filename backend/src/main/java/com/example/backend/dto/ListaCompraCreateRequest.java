@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @Builder
 public class ListaCompraCreateRequest {
 
+    private String nombre;
+
     private String origen;
 
     private String textoWhatsappGenerado;

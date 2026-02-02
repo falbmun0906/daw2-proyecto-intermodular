@@ -15,7 +15,7 @@ export interface ListaCompra {
 export interface ListaItem {
   id: number;
   ingrediente: Ingrediente;
-  cantidad: number;
+  cantidadNecesaria: number;
   unidad: string;
   comprado: boolean;
 }
