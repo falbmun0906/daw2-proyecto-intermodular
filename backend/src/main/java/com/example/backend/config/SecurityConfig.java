@@ -126,6 +126,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/recetas/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/ingredientes/**").hasAnyRole("USER", "ADMIN")
 
+                        .requestMatchers(HttpMethod.POST, "/api/sugerencias/**").hasAnyRole("USER", "ADMIN")
+
                         // Todas las demás rutas requieren autenticación
                         .anyRequest().authenticated()
                 )

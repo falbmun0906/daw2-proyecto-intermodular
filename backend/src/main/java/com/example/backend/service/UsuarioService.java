@@ -136,6 +136,11 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + id));
     }
 
+    public Usuario obtenerUsuarioCompletoPorEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con email: " + email));
+    }
+
     /**
      * Mapea una entidad Usuario a un DTO Response (sin exponer password).
      *
