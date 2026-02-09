@@ -16,6 +16,7 @@ import { PlannerPage } from './pages/planner-page/planner-page';
 import { ProductListComponent } from './features/products/components/product-list';
 import { ProductDetailComponent } from './features/products/components/product-detail';
 import { ProductFormComponent } from './features/products/components/product-form';
+import {FeedbackPage} from './pages/feedback-page/feedback-page';
 
 /**
  * Configuración de rutas de la aplicación
@@ -176,6 +177,11 @@ export const routes: Routes = [
     path: 'contacto',
     component: ContactPage,
     data: { breadcrumb: 'Contacto' }
+  },
+
+  { path: 'feedback',
+    component: FeedbackPage,
+    data: { breadcrumb: 'Feedback' }
   },
 
   // ========== RUTA WILDCARD 404 (šLTIMA) ==========

@@ -1,0 +1,79 @@
+<section class="feedback-page">
+  <div class="feedback-page__header">
+    <article class="feedback-page__header__item">
+      <img class="feedback-page__header__item-img" src="https://petslovers.es/img/cms/0027503_chocolate-labrador-id-dog-tag.png" alt="Imagen de feedback" />
+      <h2 class="feedback-page__header__item-caption">¡Queremos escuchar tu opinión!</h2>
+    </article>
+    <article class="feedback-page__header__item">
+      <img class="feedback-page__header__item-img" src="https://petslovers.es/img/cms/0027503_chocolate-labrador-id-dog-tag.png" alt="Imagen de feedback" />
+      <h2 class="feedback-page__header__item-caption">¡Queremos escuchar tu opinión!</h2>
+    </article>
+    <article class="feedback-page__header__item">
+      <img class="feedback-page__header__item-img" src="https://petslovers.es/img/cms/0027503_chocolate-labrador-id-dog-tag.png" alt="Imagen de feedback" />
+      <h2 class="feedback-page__header__item-caption">¡Queremos escuchar tu opinión!</h2>
+    </article>
+    <article class="feedback-page__header__item">
+      <img class="feedback-page__header__item-img" src="https://petslovers.es/img/cms/0027503_chocolate-labrador-id-dog-tag.png" alt="Imagen de feedback" />
+      <h2 class="feedback-page__header__item-caption">¡Queremos escuchar tu opinión!</h2>
+    </article>
+    <article class="feedback-page__header__item">
+      <img class="feedback-page__header__item-img" src="https://petslovers.es/img/cms/0027503_chocolate-labrador-id-dog-tag.png" alt="Imagen de feedback" />
+      <h2 class="feedback-page__header__item-caption">¡Queremos escuchar tu opinión!</h2>
+    </article>
+    <article class="feedback-page__header__item">
+      <img class="feedback-page__header__item-img" src="https://petslovers.es/img/cms/0027503_chocolate-labrador-id-dog-tag.png" alt="Imagen de feedback" />
+      <h2 class="feedback-page__header__item-caption">¡Queremos escuchar tu opinión!</h2>
+    </article>
+  </div>
+  <div class="feedback-page__form-container">
+    <form (ngSubmit)="onSubmit()" #feedbackForm="ngForm">
+      <app-form-input
+        label="Asunto"
+        name="asunto"
+        placeholder="Asunto de tu feedback"
+        icon="user"
+        [required]="true"
+        [hasError]="hasError('asunto')"
+        [errorMessage]="getErrorMessage('asunto')"
+        [(ngModel)]="formData.asunto">
+      </app-form-input>
+      <app-form-input
+        label="Descripcion"
+        name="descripcion"
+        placeholder="Descripcion de tu feedback"
+        icon="user"
+        [required]="true"
+        [hasError]="hasError('descripcion')"
+        [errorMessage]="getErrorMessage('descripcion')"
+        [(ngModel)]="formData.descripcion">
+      </app-form-input>
+
+      @if (submitSuccess) {
+        <div class="feedback-page__success-message">
+          ¡Gracias por tu feedback! Tu sugerencia ha sido enviada correctamente.
+        </div>
+      }
+
+      @if (submitError) {
+        <div class="feedback-page__error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <div class="feedback-page__form-actions">
+        <app-button
+          type="submit"
+          variant="primary"
+          [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Enviando...' : 'Enviar mensaje' }}
+        </app-button>
+        <app-button
+          type="button"
+          variant="secondary"
+          routerLink="/">
+          Volver al inicio
+        </app-button>
+      </div>
+    </form>
+  </div>
+</section>

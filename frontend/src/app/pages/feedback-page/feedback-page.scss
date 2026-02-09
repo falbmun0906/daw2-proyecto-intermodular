@@ -1,0 +1,39 @@
+@use '../../../styles/01-tools/mixins' as *;
+
+.feedback-page {
+  padding: 2rem;
+  @include flex-layout(column, center, inherit, var(--spacing-16));
+}
+
+.feedback-page__header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: var(--spacing-16);
+  width: 100%;
+}
+
+.feedback-page__header__item {
+  @include flex-layout(column, center, center, 2rem);
+}
+
+.feedback-page__header__item-caption {
+  font-size: 24px;
+  margin: 0;
+}
+
+.feedback-page__header__item-img {
+  width: 240px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.feedback-page__header__item-img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.feedback-page__header__item-caption {
+  font-size: 18px;
+  color: var(--color-text);
+}
+
