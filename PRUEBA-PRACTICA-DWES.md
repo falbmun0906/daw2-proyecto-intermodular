@@ -110,4 +110,15 @@ Para realizar las pruebas solicitadas, se ha utilizado la UI ya implementada en 
 
 **Evidencias**: A continuación, se muestran las evidencias de las pruebas realizadas.
 
-[PENDIENTE INSERTAR DESDE GITHUB: ]
+En primer logar me logeo con un usuario con rol USER, es decir, con permisos para crear sugerencias, obteniendo así su token de usuario e iniciando sesión con `Swagger`.
+
+<img width="1920" height="1080" alt="swagger-login-1" src="https://github.com/user-attachments/assets/c2788426-7148-499a-a957-95ed0ab38b04" />
+
+<img width="1920" height="1080" alt="swagger-login-2" src="https://github.com/user-attachments/assets/832ff7c2-4993-4112-b100-65f0f43227eb" />
+
+<img width="1920" height="1080" alt="swagger-login-3-ADMIN" src="https://github.com/user-attachments/assets/d54797d2-e53f-436f-adaa-fab8f7fb5a2d" />
+
+Una vez hecho esto, creo algunas sugerencias de prueba (POST, ya implementado anteriormente).
+
+<img width="1920" height="1080" alt="swagger-sugerencia-creación" src="https://github.com/user-attachments/assets/387e4005-5d17-46f8-8ac0-5e127ad268b6" />
+
