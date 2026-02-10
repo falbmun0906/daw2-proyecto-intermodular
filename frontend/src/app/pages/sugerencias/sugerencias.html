@@ -16,10 +16,12 @@
   </header>
 
   <div class="sugerencias-page__sugerencias">
-    <!--@for sugerencia in sugerencias
-      <app-sugerencia-card [sugerencia]="sugerencia">
-
-      </app-sugerencia-card>-->
-    Aquí se pintarán las cards.
+    @for (sugerencia of mockSugerencias; track sugerencia) {
+      <app-sugerencia-card
+        [id]="sugerencia.id"
+        [asunto]="sugerencia.asunto"
+        [descripcion]="sugerencia.descripcion">
+      </app-sugerencia-card>
+    }
   </div>
 </section>

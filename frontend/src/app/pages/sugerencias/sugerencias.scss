@@ -1,6 +1,9 @@
 @use "../../../styles/01-tools/mixins" as *;
 
 .sugerencias-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
   padding: var(--spacing-20);
   min-height: 500px;
 }
@@ -20,8 +23,8 @@
 }
 
 .sugerencias-page__sugerencias {
+  @include flex-layout(row, center, center, inherit);
   min-height: 500px;
   border: 1px solid var(--color-border);
   background-color: gray;
-  margin: 0 auto;
 }
