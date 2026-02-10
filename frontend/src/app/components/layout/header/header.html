@@ -49,6 +49,7 @@
             <li><a class="site-header__nav-link" [routerLink]="link.routerLink" (click)="closeMenu()">{{ link.label }}</a></li>
           }
         } @else {
+          <li><a class="site-header__nav-link" routerLink="/sugerencias" (click)="closeMenu()">Sugerencias</a></li>
           <li><a class="site-header__nav-link" routerLink="/" (click)="closeMenu()">Inicio</a></li>
           <li><a class="site-header__nav-link" routerLink="/style-guide" (click)="closeMenu()">Style Guide</a></li>
           <li><a class="site-header__nav-link" routerLink="/recetas" (click)="closeMenu()">Recetas</a></li>

@@ -17,6 +17,7 @@ import { ProductListComponent } from './features/products/components/product-lis
 import { ProductDetailComponent } from './features/products/components/product-detail';
 import { ProductFormComponent } from './features/products/components/product-form';
 import {FeedbackPage} from './pages/feedback-page/feedback-page';
+import {Sugerencias} from './pages/sugerencias/sugerencias';
 
 /**
  * Configuración de rutas de la aplicación
@@ -58,6 +59,12 @@ export const routes: Routes = [
     path: 'planificador',
     component: PlannerPage,
     data: { breadcrumb: 'Planificador de Comidas' }
+  },
+
+  {
+    path: 'sugerencias',
+    component: Sugerencias,
+    data: { breadcrumb: 'Panel de Sugerencias' }
   },
 
   // 2. Productos - CRUD completo
