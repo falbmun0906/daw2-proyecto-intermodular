@@ -62,6 +62,7 @@ export const routes: Routes = [
   },
 
   {
+    loadComponent : () => import('./pages/sugerencias/sugerencias').then(m => m.Sugerencias),
     path: 'sugerencias',
     component: Sugerencias,
     data: { breadcrumb: 'Panel de Sugerencias' }

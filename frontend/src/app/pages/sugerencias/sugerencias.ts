@@ -6,6 +6,7 @@ import {SugerenciaCard} from '../../components/shared/sugerencia-card/sugerencia
 import {Product} from '../../features/products/models/product';
 
 @Component({
+  standalone: true,
   selector: 'app-sugerencias',
   imports: [
     SugerenciaCard
