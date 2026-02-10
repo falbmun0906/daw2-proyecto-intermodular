@@ -12,5 +12,4 @@ import java.util.List;
 
 @Repository
 public interface SugerenciaRepository extends JpaRepository<Sugerencia, Long> {
-    Arrays findAllOrderByNombre();
 }

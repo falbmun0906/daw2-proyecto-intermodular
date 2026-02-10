@@ -49,6 +49,7 @@ public class SugerenciaController {
      * @return 200 OK con página de sugerencias o lista completa
      */
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> obtenerTodos(
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
