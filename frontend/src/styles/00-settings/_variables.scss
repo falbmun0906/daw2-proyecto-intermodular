@@ -1,5 +1,17 @@
 :root {
   /* =========================
+   * Colores – Paleta base - PRUEBA PRÁCTICA
+   * ========================= */
+
+  /* Color prueba práctica */
+  --color-prueba-light: #caf157;
+  --color-prueba: #86a51f;
+
+  /* Color prueba práctica acento */
+  --color-prueba-acento-light: #f9e79f;
+  --color-prueba-acento: #f4d03f;
+
+  /* =========================
    * Colores – Paleta base
    * ========================= */
 
@@ -38,10 +50,6 @@
   --color-tertiary-dark-hover: #6B8283;
   --color-tertiary-dark-active: #516262;
   --color-tertiary-darker: #3F4C4C;
-
-  /* Colores de prueba práctica */
-  --color-prueba-light: #F7FBFB;
-  --color-tertiary-light: #F7FBFB;
 
   /* Neutros / texto / fondo */
   --color-text-main: #292C2C;

@@ -1,0 +1,61 @@
+.sugerencia-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-6);
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-base);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Container Queries: adaptar tarjeta según ancho del contenedor */
+  container-type: inline-size;
+
+  &:hover {
+    box-shadow: var(--shadow-lg);
+
+    .card__image {
+      transform: scale(1.08);
+    }
+
+    .card__decorative-bg {
+      opacity: 0.95;
+    }
+  }
+
+  &__id {
+    font-size: var(--font-h4-size);
+    color: var(--color-prueba);
+    margin-bottom: var(--spacing-4);
+  }
+
+  &__asunto {
+    font-size: var(--font-body-size);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
+  }
+
+  &__descripcion {
+    font-size: var(--font-body-size);
+    font-weight: var(--font-regular);
+    color: var(--color-text-primary);
+  }
+
+  &__image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+span {
+  font-size: var(--font-h5-size);
+  font-weight: var(--font-bold);
+  color: var(--color-text-secondary);
+}

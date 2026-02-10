@@ -24,6 +24,7 @@ Importante: Este orden es crítico. Las variables primero, luego mixins, luego r
 /* 05 - Components: Componentes de UI (se importan automáticamente desde Angular) */
 @use './05-components/animations';
 @use './05-components/component-animations';
+@use './05-components/sugerencia-card';
 
 /* 06 - Utilities: Clases de utilidad */
 /* @use '06-utilities/utilities'; */

@@ -18,6 +18,7 @@
   <div class="sugerencias-page__sugerencias">
     @for (sugerencia of mockSugerencias; track sugerencia) {
       <app-sugerencia-card
+        class="sugerencias-page__sugerencia-card"
         [id]="sugerencia.id"
         [asunto]="sugerencia.asunto"
         [descripcion]="sugerencia.descripcion">
