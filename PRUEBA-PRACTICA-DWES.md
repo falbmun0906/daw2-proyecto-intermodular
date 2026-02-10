@@ -116,9 +116,22 @@ En primer logar me logeo con un usuario con rol USER, es decir, con permisos par
 
 <img width="1920" height="1080" alt="swagger-login-2" src="https://github.com/user-attachments/assets/832ff7c2-4993-4112-b100-65f0f43227eb" />
 
-<img width="1920" height="1080" alt="swagger-login-3-ADMIN" src="https://github.com/user-attachments/assets/d54797d2-e53f-436f-adaa-fab8f7fb5a2d" />
+<img width="1920" height="1080" alt="swagger-login-3-USER" src="https://github.com/user-attachments/assets/b139e26b-1b8d-4b8f-ab15-13c714e25a12" />
 
 Una vez hecho esto, creo algunas sugerencias de prueba (POST, ya implementado anteriormente).
 
 <img width="1920" height="1080" alt="swagger-sugerencia-creación" src="https://github.com/user-attachments/assets/387e4005-5d17-46f8-8ac0-5e127ad268b6" />
 
+Una vez alimentada la base de datos con sugerencias, procedo a probar el nuevo endpoint. Para ello es necesario logearme con un usuario con rol ADMIN (en este caso ya configurado así previamente, 'fran@despiensa.es').
+
+<img width="1920" height="1080" alt="swagger-login-1-ADMIN" src="https://github.com/user-attachments/assets/267cec33-cba6-4553-b782-ccd9d2203fbc" />
+
+<img width="1920" height="1080" alt="swagger-login-2-ADMIN" src="https://github.com/user-attachments/assets/e8cffd05-39bd-4f85-b2a4-9af566893bf2" />
+
+<img width="1920" height="1080" alt="swagger-login-3-ADMIN" src="https://github.com/user-attachments/assets/48030bac-f614-4142-bfd4-47a5432a8b4b" />
+
+Procedo de igual forma que antes para logearme, pero en este caso, el token obtenido me da permisos de administrador, que son los necesarios para poder hacer uso de este nuevo endpoint. Con esta nueva sesión (de administrador), proceso a recuperar todas las sugerencias cargadas en la base de datos haciendo una petición GET a `/api/sugerencias/`. Aunque se ha configurado la paginación (existen dos métodos, uno de ellos sobrecargado, para poder hacer uso del servicio con y sin paginación, a elección del administrador), hago una petición sencilla, sin solicitar la paginación, obteniendo un listado completo de todas las sugerencias.
+
+<img width="1920" height="1080" alt="swagger-GET-sugerencias-ADMIN" src="https://github.com/user-attachments/assets/a3624203-d38f-4877-b51d-d99665e0241d" />
+
+<img width="1920" height="1080" alt="swagger-GET-sugerencias-resultados-ADMIN" src="https://github.com/user-attachments/assets/bb7a6ae6-c0dc-43c1-95e2-3f52b6d946cb" />
