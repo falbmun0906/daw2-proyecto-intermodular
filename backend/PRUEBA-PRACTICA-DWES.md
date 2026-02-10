@@ -1,6 +1,6 @@
 ## PRUEBA PRÁCTICA DWES
 
-### CREACIÓN DE UN NUEVO ENDPOINT:
+### Creación de un nuevo endpoint :
 
 Para el desarrollo de este nuevo endpoint, he creado un nuevo DTO para la respuesta de las sugerencias, llamado `SugerenciaResponse`. Este DTO contiene los campos necesarios para representar la información de una sugerencia.
 
@@ -92,4 +92,22 @@ public List<SugerenciaResponse> obtenerTodas() {
 
 Es aquí donde dejo reflejado la implemetación de la seguridad. Como he indicado antes, el nuevo endpoint para obtener todas las sugerencias se ha protegido utilizando la anotación `@PreAuthorize("hasRole('ADMIN')")`. Esto asegura que SOLO los usuarios con el rol ADMIN puedan acceder a esta información, lo que es crucial para mantener la seguridad y privacidad de los datos de los usuarios.
 
-Además, 
+Además, ha sido necesario realizar modificaciones en el fichero de configuración de seguridad (`SecurityConfig`) para asegurar que los roles y permisos estén correctamente definidos y aplicados en toda la aplicación. Se ha añadido de forma explícita la siguiente configuración a la SecurityFilterChain para proteger el nuevo endpoint:
+
+```java
+.requestMatchers(HttpMethod.GET, "/api/sugerencias/**").hasRole("ADMIN")
+```
+
+Esto asegura que los métodos GET en el endpoint `/api/sugerencias/**`, es decir, el nuevo endpoint que permite obtener todas las sugerencias creadas por los usuasrios, quede solo accesible a usuarios autenticados y que además tengan el rol ADMIN, garantizando así la seguridad de la aplicación y la protección de los datos de los usuarios.
+
+**Autenticación con JTW**: El peso de la autenticación queda relegado al paquete de seguridad de Spring Security, que implementa Json Web Token. De esta forma, el flujo sería el siguiente:
+
+El usuario se logea -> JWT (``JwtUtils``) genera un token -> El token se envía al cliente -> En cada 'intercambio' cliiente/servidor, ese token se enviará en el header de la petición. Es el servidor, gracias a ``JwtAuthenticationFilter``, el encargado de validar el token y, si procede, permitir el acceso a los recursos protegidos que se ajusten al rol concreto. ``UserDetailsServiceImpl`` es el encargado de cargar los detalles del usuario desde la base de datos.
+
+### Pruebas
+
+Para realizar las pruebas solicitadas, se ha utilizado la UI ya implementada en el proyecto, Swagger UI, que permite interactuar con los endpoints de la API de forma sencilla sin necesidad de implementar de antemano una interfaz gráfica específica en la aplicación. Con esto, consigo logear a un usuario con el rol de ADMIN de forma sencilla, obtener el token que se genera y que otorga los permisos necesarios para hacer uso de este nuevo endpoint, y luego realizar una petición GET a este, obteniendo el listado completo de las sugerencias creadas por los usuarios.
+
+**Evidencias**: A continuación, se muestran las evidencias de las pruebas realizadas.
+
+[PENDIENTE INSERTAR DESDE GITHUB: ]
