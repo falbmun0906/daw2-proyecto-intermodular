@@ -15,6 +15,7 @@ import java.util.List;
 public class ListaCompraResponse {
 
     private Long id;
+    private String nombre;
     private LocalDateTime fechaGenerada;
     private String origen;
     private String estado;

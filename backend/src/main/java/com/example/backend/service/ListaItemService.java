@@ -134,12 +134,28 @@ public class ListaItemService {
      * Mapea a Response.
      */
     private ListaItemResponse mapToResponse(ListaItem item) {
+        // Generar URLs de imágenes del ingrediente
+        String ingSlug = item.getIngrediente().getImagenUrl();
+        String ingImagenUrlSmall = null;
+        String ingImagenUrlMedium = null;
+        String ingImagenUrlLarge = null;
+
+        if (ingSlug != null && !ingSlug.isEmpty()) {
+            ingImagenUrlSmall = ingSlug + "-small.webp";
+            ingImagenUrlMedium = ingSlug + "-medium.webp";
+            ingImagenUrlLarge = ingSlug + "-large.webp";
+        }
+
         IngredienteResponse ingredienteResponse = IngredienteResponse.builder()
                 .id(item.getIngrediente().getId())
                 .nombre(item.getIngrediente().getNombre())
                 .categoria(item.getIngrediente().getCategoria())
                 .unidadDefecto(item.getIngrediente().getUnidadDefecto())
                 .caloriasPorUnidad(item.getIngrediente().getCaloriasPorUnidad())
+                .imagenUrl(item.getIngrediente().getImagenUrl())
+                .imagenUrlSmall(ingImagenUrlSmall)
+                .imagenUrlMedium(ingImagenUrlMedium)
+                .imagenUrlLarge(ingImagenUrlLarge)
                 .build();
 
         return ListaItemResponse.builder()
