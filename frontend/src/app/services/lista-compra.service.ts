@@ -17,6 +17,7 @@ export class ListaCompraService {
    */
   private readonly imageBaseUrl = 'http://localhost:8080/images';
 
+
   /**
    * Transforma las URLs de imágenes de ingredientes en una lista
    */
@@ -37,40 +38,54 @@ export class ListaCompraService {
 
     const ingrediente = item.ingrediente;
 
-    // Si ya están transformadas, no hacer nada
-    if (ingrediente.imagenUrlSmall?.startsWith('http')) {
+    // Si ya están transformadas (imagenUrlSmall existe y es completa), no hacer nada
+    if (ingrediente.imagenUrlSmall && ingrediente.imagenUrlSmall.startsWith('http')) {
       return item;
     }
 
-    // Si no hay imagenUrl base, retornar sin modificar
-    if (!ingrediente.imagenUrl) {
+    // Obtener el slug: usar imagenUrl si existe, sino generar desde el nombre
+    let slug = ingrediente.imagenUrl;
+
+    // Si no hay imagenUrl, generar slug desde el nombre
+    if (!slug && ingrediente.nombre) {
+      slug = this.generateSlug(ingrediente.nombre);
+    }
+
+    if (!slug) {
       return item;
     }
 
-    // Si imagenUrl ya es una URL completa, usarla directamente
-    if (ingrediente.imagenUrl.startsWith('http')) {
-      return {
-        ...item,
-        ingrediente: {
-          ...ingrediente,
-          imagenUrlSmall: ingrediente.imagenUrl,
-          imagenUrlMedium: ingrediente.imagenUrl,
-          imagenUrlLarge: ingrediente.imagenUrl
-        }
-      };
+    // Limpiar slug de sufijos si es necesario
+    if (slug.includes('-small.webp') || slug.includes('-medium.webp') || slug.includes('-large.webp')) {
+      slug = slug.replace(/-small\.webp$/, '').replace(/-medium\.webp$/, '').replace(/-large\.webp$/, '');
     }
 
-    // Construir URLs completas basadas en el slug del ingrediente
-    const slug = ingrediente.imagenUrl;
     return {
       ...item,
       ingrediente: {
         ...ingrediente,
+        imagenUrl: slug,
         imagenUrlSmall: `${this.imageBaseUrl}/ingredientes/${slug}-small.webp`,
         imagenUrlMedium: `${this.imageBaseUrl}/ingredientes/${slug}-medium.webp`,
         imagenUrlLarge: `${this.imageBaseUrl}/ingredientes/${slug}-large.webp`
       }
     };
+  }
+
+  /**
+   * Genera un slug desde un nombre (convierte a minúsculas y reemplaza espacios con guiones)
+   * Escalable sin hardcoding
+   */
+  private generateSlug(nombre: string): string {
+    if (!nombre) return '';
+
+    const slug = nombre
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]/g, '');
+
+    return slug;
   }
 
   /**
@@ -145,12 +160,29 @@ export class ListaCompraService {
   }
 
   /**
+   * PUT /api/usuarios/:usuarioId/listas/:listaId/items/:itemId/comprado - Marcar como comprado
+   */
+  marcarComoComprado(usuarioId: number, listaId: number, itemId: number): Observable<ListaItem> {
+    return this.api.put<ListaItem>(`usuarios/${usuarioId}/listas/${listaId}/items/${itemId}/comprado`, {}).pipe(
+      map(item => this.transformItemImageUrls(item))
+    );
+  }
+
+  /**
+   * PUT /api/usuarios/:usuarioId/listas/:listaId/items/:itemId/no-comprado - Desmarcar como comprado
+   */
+  desmarcarComoComprado(usuarioId: number, listaId: number, itemId: number): Observable<ListaItem> {
+    return this.api.put<ListaItem>(`usuarios/${usuarioId}/listas/${listaId}/items/${itemId}/no-comprado`, {}).pipe(
+      map(item => this.transformItemImageUrls(item))
+    );
+  }
+
+  /**
    * POST /api/usuarios/:usuarioId/listas/:listaId/items/:itemId/toggle - Marcar como comprado
    */
   toggleComprado(usuarioId: number, listaId: number, itemId: number): Observable<ListaItem> {
-    return this.api.post<ListaItem>(`usuarios/${usuarioId}/listas/${listaId}/items/${itemId}/toggle`, {}).pipe(
-      map(item => this.transformItemImageUrls(item))
-    );
+    // Legacy: kept for compatibility but implemented via marcarComoComprado
+    return this.marcarComoComprado(usuarioId, listaId, itemId);
   }
 
   /**

@@ -92,9 +92,12 @@
       <div class="dashboard__shopping-grid">
         @for (item of filteredShoppingList; track item.id) {
           <app-shopping-item
+            [id]="item.id"
             [name]="item.name"
             [quantity]="item.quantity"
             [imageUrl]="item.imageUrl"
+            (delete)="onDeleteShoppingItem($event)"
+            (markAsComprado)="onMarkAsComprado($event)"
           />
         }
       </div>
@@ -144,10 +147,6 @@
                 type="button"
                 class="add-product-modal__item"
                 (click)="onSelectIngredient(ingredient)">
-                <img
-                  [src]="ingredient.imagenUrl"
-                  [alt]="ingredient.nombre"
-                  class="add-product-modal__item-image">
                 <span class="add-product-modal__item-name">{{ ingredient.nombre }}</span>
               </button>
             }
@@ -157,7 +156,7 @@
 
       @if (selectedIngredient()) {
         <div class="add-product-modal__form">
-          <h3 class="add-product-modal__form-title">Detalles del producto</h3>
+          <h3 class="add-product-modal__form-title">{{ selectedIngredient()!.nombre }}</h3>
 
           <div class="add-product-modal__form-group">
             <label class="add-product-modal__label">Cantidad</label>
@@ -179,25 +178,6 @@
             />
           </div>
 
-          <div class="add-product-modal__form-group">
-            <label class="add-product-modal__label">Fecha de caducidad (opcional)</label>
-            <app-form-input
-              type="date"
-              [(ngModel)]="productExpireDate"
-              class="add-product-modal__input"
-            />
-          </div>
-
-          <div class="add-product-modal__form-group">
-            <label class="add-product-modal__label">Ubicación (opcional)</label>
-            <app-form-input
-              type="text"
-              placeholder="Ej: Nevera, Despensa..."
-              [(ngModel)]="productLocation"
-              class="add-product-modal__input"
-            />
-          </div>
-
           <div class="add-product-modal__actions">
             <app-button
               variant="secondary"
@@ -215,6 +195,71 @@
           </div>
         </div>
       }
+    </div>
+  </app-modal>
+
+  <!-- Modal confirm eliminar -->
+  <app-modal
+    [isOpen]="isConfirmDeleteOpen"
+    [title]="'Eliminar artículo'"
+    [size]="'sm'"
+    (closed)="cancelDeleteShoppingItem()">
+    <div class="confirm-delete-modal">
+      <p>¿Quieres eliminar este artículo de la lista de la compra?</p>
+      <div class="confirm-delete-modal__actions">
+        <app-button variant="secondary" size="md" (buttonClick)="cancelDeleteShoppingItem()">Cancelar</app-button>
+        <app-button variant="danger" size="md" (buttonClick)="confirmDeleteShoppingItem()">Eliminar</app-button>
+      </div>
+    </div>
+  </app-modal>
+
+  <!-- Modal marcar como comprado -->
+  <app-modal
+    [isOpen]="isMarkModalOpen"
+    [title]="'Marcar como comprado'"
+    [size]="'md'"
+    (closed)="cancelMarkAsComprado()">
+    <div class="mark-modal">
+      <div class="mark-modal__group">
+        <label class="mark-modal__label">Selecciona la despensa</label>
+        <app-form-select
+          [(ngModel)]="selectedPantryId"
+          [options]="pantryOptions"
+          placeholder="Selecciona despensa">
+        </app-form-select>
+      </div>
+
+      <div class="mark-modal__group">
+        <label class="mark-modal__label">Selecciona ubicación</label>
+        <app-form-select
+          [(ngModel)]="selectedLocation"
+          [options]="locationOptionsForDisplay"
+          placeholder="Selecciona ubicación">
+        </app-form-select>
+      </div>
+
+      <div class="mark-modal__group mark-modal__group--last">
+        <label class="mark-modal__label">Fecha de caducidad (opcional)</label>
+        <app-form-input
+          type="date"
+          [(ngModel)]="markExpiryDate">
+        </app-form-input>
+      </div>
+
+      <div class="mark-modal__actions">
+        <app-button
+          variant="secondary"
+          size="md"
+          (buttonClick)="cancelMarkAsComprado()">
+          Cancelar
+        </app-button>
+        <app-button
+          variant="primary"
+          size="md"
+          (buttonClick)="confirmMarkAsComprado()">
+          Confirmar
+        </app-button>
+      </div>
     </div>
   </app-modal>
 </div>

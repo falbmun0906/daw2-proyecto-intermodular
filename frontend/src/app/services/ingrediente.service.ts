@@ -26,17 +26,17 @@ export class IngredienteService {
   private transformImageUrls(ingrediente: Ingrediente): Ingrediente {
     if (!ingrediente) return ingrediente;
 
-    // Si las URLs ya son completas (empiezan con http), no hacer nada
-    if (ingrediente.imagenUrlSmall?.startsWith('http')) {
-      return ingrediente;
-    }
-
     // Si no hay imagenUrl base, retornar sin modificar
     if (!ingrediente.imagenUrl) {
       return ingrediente;
     }
 
-    // Si imagenUrl ya es una URL completa, usarla directamente
+    // Si ya están transformadas (imagenUrlSmall existe y es completa), no hacer nada
+    if (ingrediente.imagenUrlSmall && ingrediente.imagenUrlSmall.startsWith('http')) {
+      return ingrediente;
+    }
+
+    // Si imagenUrl es una URL completa, usarla directamente
     if (ingrediente.imagenUrl.startsWith('http')) {
       return {
         ...ingrediente,

@@ -36,7 +36,7 @@ public class ListaCompraService {
         ListaCompra lista = ListaCompra.builder()
                 .usuario(usuario)
                 .fechaGenerada(LocalDateTime.now())
-                .origen(request.getOrigen())
+                .origen(request.getOrigen() != null ? request.getOrigen() : "MANUAL")
                 .estado(ListaCompra.EstadoListaCompra.PENDIENTE)
                 .textoWhatsappGenerado(request.getTextoWhatsappGenerado())
                 .build();
@@ -158,6 +158,7 @@ public class ListaCompraService {
 
         return ListaCompraResponse.builder()
                 .id(lista.getId())
+                .nombre("Mi lista de compra")
                 .fechaGenerada(lista.getFechaGenerada())
                 .origen(lista.getOrigen())
                 .estado(lista.getEstado().name())
