@@ -189,6 +189,116 @@
     </div>
   </section>
 
+  <section class="video-tutorial" id="video-tutorial">
+    <div class="video-tutorial__container">
+      <h2 class="video-tutorial__title">Aprende con nosotros: Gazpacho rápido</h2>
+      <p class="video-tutorial__description">
+        Descubre cómo preparar un auténtico gazpacho clásico en versión superrápida.
+        Un plato fresco y delicioso listo en minutos.
+      </p>
+
+      <div class="video-tutorial__player">
+        <video
+          controls
+          preload="metadata"
+          class="video-tutorial__video"
+          aria-describedby="video-description">
+          <source src="assets/videos/tutorial-cocina.webm" type="video/webm">
+          <source src="assets/videos/tutorial-cocina.mp4" type="video/mp4">
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-es.vtt"
+            srclang="es"
+            label="Español"
+            default>
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-en.vtt"
+            srclang="en"
+            label="English">
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-fr.vtt"
+            srclang="fr"
+            label="Français">
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-de.vtt"
+            srclang="de"
+            label="Deutsch">
+          <p>
+            Tu navegador no soporta la reproducción de vídeo HTML5.
+            Puedes <a href="assets/videos/tutorial-cocina.mp4" download>descargar el vídeo aquí</a>.
+          </p>
+        </video>
+      </div>
+
+      <div class="video-tutorial__info" id="video-description">
+        <p class="video-tutorial__duration">
+          <strong>Duración:</strong> 1 minuto 27 segundos
+        </p>
+        <p class="video-tutorial__languages">
+          <strong>Subtítulos disponibles:</strong> Español, English, Français, Deutsch
+        </p>
+      </div>
+
+      <details class="video-tutorial__transcript">
+        <summary class="video-tutorial__transcript-title">
+          Ver transcripción completa del vídeo
+        </summary>
+        <div class="video-tutorial__transcript-content">
+          <div class="video-tutorial__language-selector">
+            <span class="video-tutorial__language-label">Idioma de transcripción:</span>
+            <div class="video-tutorial__language-buttons">
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'es' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Cambiar transcripción a español'"
+                [attr.aria-pressed]="transcriptLanguage() === 'es'"
+                (buttonClick)="setTranscriptLanguage('es')">
+                Español
+              </app-button>
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'en' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Change transcript to English'"
+                [attr.aria-pressed]="transcriptLanguage() === 'en'"
+                (buttonClick)="setTranscriptLanguage('en')">
+                English
+              </app-button>
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'fr' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Changer la transcription en français'"
+                [attr.aria-pressed]="transcriptLanguage() === 'fr'"
+                (buttonClick)="setTranscriptLanguage('fr')">
+                Français
+              </app-button>
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'de' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Transkription auf Deutsch umschalten'"
+                [attr.aria-pressed]="transcriptLanguage() === 'de'"
+                (buttonClick)="setTranscriptLanguage('de')">
+                Deutsch
+              </app-button>
+            </div>
+          </div>
+
+          <h3>{{ getCurrentTranscript().title }}</h3>
+
+          @for (item of getCurrentTranscript().content; track $index) {
+            <p><strong>{{ item.time }}</strong> {{ item.text }}</p>
+          }
+        </div>
+      </details>
+    </div>
+  </section>
+
   <section class="newsletter">
     <div class="newsletter__illustration">
       <div class="newsletter__blob">
