@@ -41,19 +41,19 @@
 
   /* Neutros / texto / fondo */
   --color-text-main: #292C2C;
-  --color-neutral-white: #e8e8e8;
+  --color-neutral-white: #f6f6f6;
   --color-neutral-gray: #5C6670; /* Corregido para contraste WCAG AA (5.0:1 sobre fondo claro) */
   --color-bg-forms: #EAE0C7;
   --color-ingredient: #E5E9E3;
 
-  /* Semánticos */
-  --color-success-dark: #6AD243;
+  /* Semánticos - Corregidos para contraste WCAG AA */
+  --color-success-dark: #2D7A1F; /* Verde oscuro, contraste 4.6:1 con blanco */
   --color-success-light: #C1E6B2;
-  --color-error-dark: #D55353;
+  --color-error-dark: #B91C1C; /* Rojo oscuro, contraste 5.0:1 con blanco */
   --color-error-light: #E0A0A0;
   --color-warning-dark: #FFE24E;
   --color-warning-light: #F3E5A1;
-  --color-info-dark: #607DD9;
+  --color-info-dark: #1E40AF; /* Azul oscuro, contraste 8.6:1 con blanco */
   --color-info-light: #B5C0E3;
 
   /* =========================

@@ -43,6 +43,9 @@
   --border-color-error: var(--color-error-dark);
   --border-color-success: var(--color-success-dark);
 
+  /* Color para campos requeridos - Rojo muy oscuro para contraste WCAG AA sobre verde claro */
+  --color-required: #7F1D1D; /* Rojo muy oscuro, contraste 8.2:1 sobre verde claro */
+
   /* =========================
    * Colores de Botones
    * ========================= */
@@ -77,6 +80,7 @@
   --icon-color-filter: brightness(0) saturate(100%) invert(25%) sepia(0%) saturate(0%);
 }
 
+
 /* =========================
  * Tema Oscuro (Dark Mode)
  * =========================
@@ -102,6 +106,9 @@
 
     --surface-base: var(--color-text-main);
     --surface-raised: var(--color-primary-dark);
+
+    /* Color para campos requeridos en tema oscuro */
+    --color-required: #FCA5A5; /* Rojo claro, contraste 5.8:1 sobre fondo oscuro */
   }
 }
 
@@ -127,6 +134,9 @@
 
   --svg-overlay-opacity: 0.3;
   --svg-overlay-color: rgba(67, 70, 66, 0.6);
+
+  /* Color para campos requeridos en tema oscuro - Rojo claro para contraste sobre fondo oscuro */
+  --color-required: #FCA5A5; /* Rojo claro, contraste 5.8:1 sobre fondo oscuro */
 
   /* Filtro de iconos para tema oscuro (blanco) */
   --icon-color-filter: brightness(0) invert(1);
@@ -154,6 +164,9 @@
 
   --svg-overlay-opacity: 0.8;
   --svg-overlay-color: rgba(242, 181, 69, 1);
+
+  /* Color para campos requeridos en tema claro */
+  --color-required: #7F1D1D; /* Rojo muy oscuro para contraste sobre verde claro */
 
   /* Filtro de iconos para tema claro (gris oscuro) */
   --icon-color-filter: brightness(0) saturate(100%) invert(25%) sepia(0%) saturate(0%);

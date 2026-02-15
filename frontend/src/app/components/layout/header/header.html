@@ -14,12 +14,12 @@
   <section class="site-header__right">
     <!-- Theme switch -->
     <div class="site-header__theme-toggle">
-      <label class="site-header__theme-switch">
+      <label class="site-header__theme-switch" aria-label="Cambiar tema">
         <input
           type="checkbox"
           [checked]="isDarkTheme()"
           (change)="onThemeChange($event)"
-          aria-label="Cambiar tema"
+          aria-label="Alternar tema claro y oscuro"
         />
         <span class="site-header__slider"></span>
       </label>
@@ -49,9 +49,9 @@
             <li><a class="site-header__nav-link" [routerLink]="link.routerLink" (click)="closeMenu()">{{ link.label }}</a></li>
           }
         } @else {
-          <li><a class="site-header__nav-link" routerLink="/" (click)="closeMenu()">Inicio</a></li>
-          <li><a class="site-header__nav-link" routerLink="/style-guide" (click)="closeMenu()">Style Guide</a></li>
-          <li><a class="site-header__nav-link" routerLink="/recetas" (click)="closeMenu()">Recetas</a></li>
+          <li><a class="site-header__nav-link" routerLink="/">Inicio</a></li>
+          <li><a class="site-header__nav-link" routerLink="/style-guide">Style Guide</a></li>
+          <li><a class="site-header__nav-link" routerLink="/recetas">Recetas</a></li>
           <li><button class="site-header__nav-link" (click)="onMiDespensaClick()">Mi despensa</button></li>
         }
       </ul>

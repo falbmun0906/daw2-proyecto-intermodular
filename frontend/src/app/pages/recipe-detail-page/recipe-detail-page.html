@@ -25,7 +25,7 @@
         <!-- Fallback: medium como src -->
         <img
           [src]="recipe()!.imagenUrlMedium"
-          [alt]="recipe()!.nombre"
+          [alt]="''"
           class="recipe-hero__image"
           loading="eager" />
       </picture>
@@ -53,7 +53,7 @@
         <h2 class="recipe-ingredients__title">Ingredientes</h2>
 
         <div class="servings-selector">
-          <p class="servings-selector__label">¿Cuántos comensales?</p>
+          <h3 class="servings-selector__label">¿Cuántos comensales?</h3>
           <div class="servings-selector__control">
             <app-button variant="secondary" size="sm" (buttonClick)="decreaseServings()">−</app-button>
             <span class="servings-selector__value">{{ servings }}</span>
