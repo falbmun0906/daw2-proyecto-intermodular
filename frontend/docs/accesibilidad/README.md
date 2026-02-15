@@ -111,3 +111,72 @@ El componente incluye el elemento `<video>` nativo con controles estándar del n
 - **Múltiples formatos de vídeo:** El reproductor ofrece dos formatos de vídeo (WebM y MP4) para garantizar la compatibilidad con diferentes navegadores. Si el navegador no soporta ninguno de los formatos, se proporciona un enlace de descarga alternativo.
 
 - **Integración visual coherente:** La sección del vídeo utiliza las mismas variables de diseño (colores, tipografías, espaciados) que el resto de la aplicación, asegurando contraste adecuado y legibilidad. Los botones de idioma utilizan el componente Button del sistema de diseño, con estados visuales claros (variante 'primary' para activo, 'ghost' para inactivo).
+
+---
+
+## 3. Auditoría automatizada inicial
+
+Para evaluar el estado de accesibilidad del proyecto antes de aplicar correcciones, he utilizado tres herramientas de análisis automatizado. Cada una ofrece una perspectiva diferente: Lighthouse se centra en métricas generales y buenas prácticas, WAVE detecta errores específicos en el HTML y TAW evalúa el cumplimiento de las pautas WCAG 2.1.
+
+### Resultados de las herramientas
+
+| Herramienta | Puntuación/Errores | Captura |
+|-------------|-------------------|---------|
+| Lighthouse | 98/100 | ![Lighthouse inicial](./capturas/lighthouse-test.png) |
+| WAVE | 1 error, 95 errores de contraste, 25 alertas | ![WAVE inicial](./capturas/wave-test.png) |
+| TAW | 9 problemas en 4 criterios de éxito | ![TAW inicial](./capturas/taw-test.png) |
+
+### Detalle de los análisis
+
+#### Lighthouse (Chrome DevTools)
+
+La auditoría de Lighthouse arrojó una puntuación de accesibilidad de 98 sobre 100, lo cual es un resultado bastante positivo. Sin embargo, esta puntuación alta no significa que el sitio esté libre de problemas, ya que Lighthouse no detecta todos los tipos de errores de accesibilidad.
+
+En cuanto al rendimiento, la puntuación fue de 58 sobre 100, con métricas de carga que necesitan mejora:
+- First Contentful Paint (FCP): 3.5 segundos
+- Largest Contentful Paint (LCP): 5.7 segundos (valor crítico)
+- Total Blocking Time (TBT): 0 ms (excelente)
+- Cumulative Layout Shift (CLS): 0.003 (excelente, sin saltos de contenido)
+
+#### WAVE (Web Accessibility Evaluation Tool)
+
+WAVE proporcionó un análisis mucho más detallado y reveló problemas que Lighthouse no detectó:
+
+- **1 error crítico:** Etiqueta de formulario vacía (Empty form label). Este error impide que los lectores de pantalla identifiquen el propósito de un campo de entrada.
+- **95 errores de contraste:** Este es el problema más grave detectado. Hay deficiencias significativas de contraste entre el color del texto y el fondo en múltiples elementos de la página, especialmente en el menú de navegación y en las tarjetas de contenido.
+- **25 alertas:** Incluyen 20 textos alternativos redundantes, 2 saltos de nivel en encabezados, 1 enlace redundante y alertas relacionadas con el elemento de vídeo.
+- **38 características positivas:** Elementos de accesibilidad bien implementados, como textos alternativos en imágenes.
+- **38 elementos estructurales:** Landmarks correctamente definidos (header, nav, main, footer) y jerarquía de encabezados presente.
+- **261 atributos ARIA:** Uso extensivo de atributos ARIA para mejorar la accesibilidad.
+
+La puntuación AIM (Accessibility Impact Metric) fue de 2 sobre 10, indicando que hay trabajo importante por hacer.
+
+#### TAW (Test de Accesibilidad Web)
+
+TAW evaluó el sitio según las pautas WCAG 2.1 en nivel AA y encontró:
+
+- **9 problemas directos** distribuidos en 4 criterios de éxito:
+  - Perceptible: 5 problemas
+  - Comprensible: 2 problemas
+  - Robusto: 2 problemas
+
+- **35 advertencias** que requieren revisión manual, distribuidas en 9 criterios de éxito.
+
+- **17 elementos no verificados** que necesitan comprobación manual.
+
+Los criterios que fallaron específicamente fueron:
+- 1.1.1 - Contenido no textual (2 problemas)
+- 1.3.1 - Información y relaciones (3 problemas)
+- 3.3.2 - Etiquetas o instrucciones (2 problemas)
+- 4.1.2 - Nombre, función, valor (2 problemas)
+
+### Problemas más graves detectados
+
+Tras analizar los resultados de las tres herramientas, los tres problemas más graves que requieren atención inmediata son:
+
+1. **Errores de contraste de color (95 incidencias):** Este es sin duda el problema más crítico. WAVE detectó 95 elementos con contraste insuficiente entre el texto y el fondo. Esto afecta directamente a usuarios con baja visión, daltonismo o que utilizan la web en condiciones de iluminación adversas. Según WCAG 2.1, el contraste mínimo debe ser de 4.5:1 para texto normal y 3:1 para texto grande. Este problema incumple el criterio 1.4.3 (Contraste mínimo) de nivel AA.
+
+2. **Etiquetas de formulario vacías o ausentes (3 incidencias):** Tanto WAVE como TAW detectaron problemas con las etiquetas de formulario. Hay al menos un campo de entrada sin etiqueta asociada y otros campos donde la relación entre etiqueta y campo no está correctamente establecida. Esto impide que los usuarios de lectores de pantalla comprendan qué información deben introducir en cada campo. Este problema incumple los criterios 1.3.1 (Información y relaciones) y 3.3.2 (Etiquetas o instrucciones).
+
+3. **Saltos en la jerarquía de encabezados (2 incidencias):** WAVE detectó dos saltos de nivel en los encabezados, lo que significa que hay lugares donde se pasa de un H2 a un H4 sin incluir un H3 intermedio, por ejemplo. Esto dificulta la navegación para usuarios de lectores de pantalla que utilizan los encabezados como método principal de navegación por la página. Este problema incumple el criterio 2.4.6 (Encabezados y etiquetas) e impacta la comprensión de la estructura del documento.
+
