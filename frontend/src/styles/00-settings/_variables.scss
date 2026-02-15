@@ -42,7 +42,7 @@
   /* Neutros / texto / fondo */
   --color-text-main: #292C2C;
   --color-neutral-white: #e8e8e8;
-  --color-neutral-gray: #AEB9C7;
+  --color-neutral-gray: #5C6670; /* Corregido para contraste WCAG AA (5.0:1 sobre fondo claro) */
   --color-bg-forms: #EAE0C7;
   --color-ingredient: #E5E9E3;
 
