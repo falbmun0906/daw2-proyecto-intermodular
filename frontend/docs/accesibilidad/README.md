@@ -26,6 +26,10 @@
 4. [Análisis y corrección de errores](#4-análisis-y-corrección-de-errores)
    - [Tabla resumen de errores](#tabla-resumen-de-errores)
    - [Detalle de errores corregidos](#detalle-de-errores-corregidos)
+   - [Errores encontrados en página dashboard](#errores-encontrados-en-página-dashboard)
+   - [Errores encontrados en página despensa](#errores-encontrados-en-página-despensa)
+   - [Errores encontrados en página planner-page](#errores-encontrados-en-página-planner-page)
+   - [Errores encontrados en página cookies-page](#errores-encontrados-en-página-cookies-page)
 
 5. [Análisis de estructura semántica](#5-análisis-de-estructura-semántica)
    - [Landmarks HTML5](#landmarks-html5-utilizados)
@@ -116,7 +120,7 @@ El componente incluye el elemento `<video>` nativo con controles estándar del n
 
 ## 3. Auditoría automatizada inicial
 
-Para evaluar el estado de accesibilidad del proyecto antes de aplicar correcciones, he utilizado tres herramientas de análisis automatizado. Cada una ofrece una perspectiva diferente: Lighthouse se centra en métricas generales y buenas prácticas, WAVE detecta errores específicos en el HTML y TAW evalúa el cumplimiento de las pautas WCAG 2.1.
+Para evaluar el estado de accesibilidad del proyecto antes de aplicar correcciones, utilicé tres herramientas de análisis automatizado. Cada una ofrece una perspectiva diferente: Lighthouse se centra en métricas generales y buenas prácticas, WAVE detecta errores específicos en el HTML y TAW evalúa el cumplimiento de las pautas WCAG 2.1.
 
 ### Resultados de las herramientas
 
@@ -130,26 +134,24 @@ Para evaluar el estado de accesibilidad del proyecto antes de aplicar correccion
 
 #### Lighthouse (Chrome DevTools)
 
-La auditoría de Lighthouse arrojó una puntuación de accesibilidad de 98 sobre 100, lo cual es un resultado bastante positivo. Sin embargo, esta puntuación alta no significa que el sitio esté libre de problemas, ya que Lighthouse no detecta todos los tipos de errores de accesibilidad.
+La auditoría de Lighthouse arrojó una puntuación de accesibilidad de 98 sobre 100. Sin embargo, esta puntuación alta no significa que el sitio esté libre de problemas, ya que Lighthouse no detecta todos los tipos de errores de accesibilidad.
 
 En cuanto al rendimiento, la puntuación fue de 58 sobre 100, con métricas de carga que necesitan mejora:
 - First Contentful Paint (FCP): 3.5 segundos
-- Largest Contentful Paint (LCP): 5.7 segundos (valor crítico)
-- Total Blocking Time (TBT): 0 ms (excelente)
-- Cumulative Layout Shift (CLS): 0.003 (excelente, sin saltos de contenido)
+- Largest Contentful Paint (LCP): 5.7 segundos
+- Total Blocking Time (TBT): 0 ms
+- Cumulative Layout Shift (CLS): 0.003
 
 #### WAVE (Web Accessibility Evaluation Tool)
 
-WAVE proporcionó un análisis mucho más detallado y reveló problemas que Lighthouse no detectó:
+WAVE proporcionó un análisis más detallado y reveló problemas que Lighthouse no detectó:
 
-- **1 error crítico:** Etiqueta de formulario vacía (Empty form label). Este error impide que los lectores de pantalla identifiquen el propósito de un campo de entrada.
-- **95 errores de contraste:** Este es el problema más grave detectado. Hay deficiencias significativas de contraste entre el color del texto y el fondo en múltiples elementos de la página, especialmente en el menú de navegación y en las tarjetas de contenido.
+- **1 error crítico:** Etiqueta de formulario vacía (Empty form label).
+- **95 errores de contraste:** Deficiencias de contraste entre texto y fondo en múltiples elementos.
 - **25 alertas:** Incluyen 20 textos alternativos redundantes, 2 saltos de nivel en encabezados, 1 enlace redundante y alertas relacionadas con el elemento de vídeo.
-- **38 características positivas:** Elementos de accesibilidad bien implementados, como textos alternativos en imágenes.
-- **38 elementos estructurales:** Landmarks correctamente definidos (header, nav, main, footer) y jerarquía de encabezados presente.
-- **261 atributos ARIA:** Uso extensivo de atributos ARIA para mejorar la accesibilidad.
-
-La puntuación AIM (Accessibility Impact Metric) fue de 2 sobre 10, indicando que hay trabajo importante por hacer.
+- **38 características positivas:** Elementos de accesibilidad correctamente implementados.
+- **38 elementos estructurales:** Landmarks correctamente definidos (header, nav, main, footer).
+- **261 atributos ARIA:** Uso de atributos ARIA para mejorar la accesibilidad.
 
 #### TAW (Test de Accesibilidad Web)
 
@@ -160,7 +162,7 @@ TAW evaluó el sitio según las pautas WCAG 2.1 en nivel AA y encontró:
   - Comprensible: 2 problemas
   - Robusto: 2 problemas
 
-- **35 advertencias** que requieren revisión manual, distribuidas en 9 criterios de éxito.
+- **35 advertencias** que requieren revisión manual.
 
 - **17 elementos no verificados** que necesitan comprobación manual.
 
@@ -174,11 +176,11 @@ Los criterios que fallaron específicamente fueron:
 
 Tras analizar los resultados de las tres herramientas, los tres problemas más graves que requieren atención inmediata son:
 
-1. **Errores de contraste de color (95 incidencias):** Este es sin duda el problema más crítico. WAVE detectó 95 elementos con contraste insuficiente entre el texto y el fondo. Esto afecta directamente a usuarios con baja visión, daltonismo o que utilizan la web en condiciones de iluminación adversas. Según WCAG 2.1, el contraste mínimo debe ser de 4.5:1 para texto normal y 3:1 para texto grande. Este problema incumple el criterio 1.4.3 (Contraste mínimo) de nivel AA.
+1. **Errores de contraste de color (95 incidencias):** WAVE detectó 95 elementos con contraste insuficiente entre el texto y el fondo. Esto afecta directamente a usuarios con baja visión o daltonismo. Según WCAG 2.1, el contraste mínimo debe ser de 4.5:1 para texto normal y 3:1 para texto grande. Este problema incumple el criterio 1.4.3 (Contraste mínimo) de nivel AA.
 
-2. **Etiquetas de formulario vacías o ausentes (3 incidencias):** Tanto WAVE como TAW detectaron problemas con las etiquetas de formulario. Hay al menos un campo de entrada sin etiqueta asociada y otros campos donde la relación entre etiqueta y campo no está correctamente establecida. Esto impide que los usuarios de lectores de pantalla comprendan qué información deben introducir en cada campo. Este problema incumple los criterios 1.3.1 (Información y relaciones) y 3.3.2 (Etiquetas o instrucciones).
+2. **Etiquetas de formulario vacías o ausentes (3 incidencias):** Tanto WAVE como TAW detectaron problemas con las etiquetas de formulario. Hay al menos un campo de entrada sin etiqueta asociada y otros campos donde la relación entre etiqueta y campo no está correctamente establecida. Este problema incumple los criterios 1.3.1 (Información y relaciones) y 3.3.2 (Etiquetas o instrucciones).
 
-3. **Saltos en la jerarquía de encabezados (2 incidencias):** WAVE detectó dos saltos de nivel en los encabezados, lo que significa que hay lugares donde se pasa de un H2 a un H4 sin incluir un H3 intermedio, por ejemplo. Esto dificulta la navegación para usuarios de lectores de pantalla que utilizan los encabezados como método principal de navegación por la página. Este problema incumple el criterio 2.4.6 (Encabezados y etiquetas) e impacta la comprensión de la estructura del documento.
+3. **Saltos en la jerarquía de encabezados (2 incidencias):** WAVE detectó dos saltos de nivel en los encabezados, donde se pasa de un H2 a un H4 sin incluir un H3 intermedio. Esto dificulta la navegación para usuarios de lectores de pantalla. Este problema incumple el criterio 2.4.6 (Encabezados y etiquetas).
 
 ---
 
@@ -312,7 +314,7 @@ A partir de los resultados de la auditoría automatizada, he identificado y corr
 />
 ```
 
-Cuando una imagen es decorativa (`aria-hidden="true"`), su atributo `alt` debe estar vacío. Si `imageAlt` no está definido, ahora se usa una cadena vacía en lugar del título, evitando la redundancia.
+Cuando una imagen es decorativa (`aria-hidden="true"`), su atributo `alt` debe estar vacío. Si `imageAlt` no está definido, se usa una cadena vacía en lugar del título, evitando la redundancia.
 
 ---
 
@@ -379,13 +381,11 @@ Al añadir `aria-label` al article, los lectores de pantalla anuncian correctame
 </label>
 ```
 
-El label ahora tiene contenido accesible a través de `aria-label`, lo que satisface los requisitos de accesibilidad sin necesidad de elementos ocultos que pudieran generar problemas de contraste.
-
 ---
 
 #### Error #7: Asterisco de campo requerido con contraste insuficiente
 
-**Problema:** El asterisco (*) rojo que indica campos requeridos tenía contraste insuficiente sobre el fondo verde claro del formulario. El color rojo (#EF4444) sobre fondo verde (#C0C9BD) generaba un contraste de solo ~3.8:1, por debajo del mínimo de 4.5:1.
+**Problema:** El asterisco (*) rojo que indica campos requeridos tenía un contraste insuficiente sobre el fondo verde claro del formulario. El color rojo (#EF4444) sobre fondo verde (#C0C9BD) generaba un contraste de solo ~3.8:1, por debajo del mínimo de 4.5:1.
 
 **Impacto:** Usuarios con baja visión o daltonismo tienen dificultad para distinguir los campos requeridos del resto de campos.
 
@@ -417,8 +417,8 @@ El label ahora tiene contenido accesible a través de `aria-label`, lo que satis
 ```
 
 **Contraste logrado:**
-- Tema claro: #7F1D1D sobre #C0C9BD = **8.2:1** ✅ (exceeds AA)
-- Tema oscuro: #FCA5A5 sobre #3F4C4C = **5.8:1** ✅ (meets AA)
+- Tema claro: #7F1D1D sobre #C0C9BD = **8.2:1** (supera AA)
+- Tema oscuro: #FCA5A5 sobre #3F4C4C = **5.8:1** (cumple AA)
 
 ---
 
@@ -578,11 +578,6 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 />
 ```
 
-**Cambios aplicados:**
-- Agregado `label="Buscar receta"` para proporcionar una etiqueta accesible
-- Agregado `[showLabel]="false"` para ocultar visualmente el label (ya visible en el placeholder)
-- El label sigue siendo accesible para lectores de pantalla y herramientas de auditoría
-
 ---
 
 #### Error #12: Skipped heading level en filtros
@@ -613,8 +608,6 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 }
 ```
 
-**Solución aplicada:** Cambio de `<h3>` a `<h2>` para mantener una jerarquía correcta sin saltos de nivel.
-
 ---
 
 #### Error #13: Redundant link en navegación
@@ -635,21 +628,20 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 <a class="site-header__nav-link" routerLink="/">Inicio</a>
 ```
 
-**Solución aplicada:** Removido el atributo `href` duplicado, manteniendo solo `routerLink` que es la forma correcta de navegar en Angular. Esto se aplicó a todos los enlaces de navegación.
+**Solución aplicada:** Removido el atributo `href` redundante manteniendo solo `routerLink` que es la forma correcta de navegar en Angular. Esto se aplicó a todos los enlaces de navegación.
 
 ---
 
-#### Error #14: sr-only con contraste bajo en form-input (SOLUCIÓN DEFINITIVA)
+#### Error #14: Contraste bajo en label sr-only de form-input
 
 **Problema:** El elemento label con clase `sr-only` tenía `color: rgb(41, 44, 44)` sobre `background-color: rgb(0, 0, 0)`, generando contraste muy bajo (~1.1:1). Aunque el elemento está visualmente oculto, las herramientas de auditoría detectaban el contraste insuficiente.
 
-**Raíz del problema:** Angular inyecta estilos inline que sobrescriben las reglas CSS, incluso aquellas con especificidad alta. Usar `sr-only` genera un elemento con estilos heredados problemáticos.
+**Impacto:** Angular inyecta estilos inline que sobrescriben las reglas CSS. Usar `sr-only` genera un elemento con estilos heredados problemáticos.
 
-**Solución aplicada (Enfoque sin sr-only):**
+**Criterio WCAG:** 1.4.3 - Contraste mínimo (Nivel AA)
 
-**Cambio 1 - En form-input.html:**
+**Código ANTES (form-input.html):**
 ```html
-<!-- ANTES: label con clase sr-only que genera contraste bajo -->
 @if (label) {
   <label
     class="form-input__label"
@@ -659,8 +651,10 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
     {{ label }}
   </label>
 }
+```
 
-<!-- DESPUÉS: label solo se renderiza si showLabel es true -->
+**Código DESPUÉS (form-input.html):**
+```html
 @if (label && showLabel) {
   <label
     class="form-input__label"
@@ -670,25 +664,18 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
   </label>
 }
 
-<!-- El input ahora tiene aria-label cuando showLabel es false -->
+<!-- El input tiene aria-label cuando showLabel es false -->
 <input
   [attr.aria-label]="!showLabel && label ? label : null"
   ...
 />
 ```
 
-**Cambio 2 - Removida la clase sr-only del form-input.scss:**
-- Se eliminó completamente el selector `&__label--sr-only`
-- No hay estilos conflictivos que Angular pueda sobrescribir
-
-**Ventajas de esta solución:**
-- ✅ **Sin elemento problemático:** No existe el span/label con contraste bajo
-- ✅ **Completamente accesible:** El `aria-label` proporciona el nombre accesible sin crear elementos con estilos conflictivos
-- ✅ **Sin CSS conflictivo:** No hay reglas CSS que Angular pueda sobrescribir
-- ✅ **Más simple:** Menos CSS, menos elementos en el DOM
-- ✅ **Limpio:** No hay necesidad de !important ni de luchar con especificidad CSS
-
-**Resultado:** El error de contraste desaparece porque no existe el elemento problemático. El `aria-label` en el input proporciona accesibilidad completa sin crear problemas de contraste.
+**Solución aplicada:**
+- Se eliminó el renderizado del label cuando `showLabel` es false
+- Se añadió `aria-label` directamente al input para proporcionar el nombre accesible
+- Se eliminó el selector `&__label--sr-only` del SCSS
+- El error de contraste desaparece porque no existe el elemento problemático
 
 ---
 
@@ -747,7 +734,7 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 **Solución aplicada:**
 - Cambio de `rgba(255, 255, 255, 0.3)` a `var(--color-bg-forms)` (#EAE0C7)
 - Este color (gris claro) ofrece contraste adecuado sobre el fondo oscuro (#3F4C4C)
-- Contraste mejorado a ~5.8:1 ✅
+- Contraste mejorado a ~5.8:1
 - Actualizado hover state para cambiar a `var(--color-secondary)` (amarillo)
 - Consistencia visual: las estrellas vacías usan un gris y las llenas usan el color secundario
 
@@ -815,8 +802,635 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 </div>
 ```
 
-**Cambios realizados:**
-- Cambio de `<p>` a `<h3>` manteniendo la misma clase CSS
-- Los estilos visuales permanecen iguales
-- La estructura semántica es correcta sin afectar el diseño
+---
 
+### Errores encontrados en página dashboard
+
+---
+
+#### Error #18: Missing form label en búsqueda de ingredientes (dashboard)
+
+**Problema:** Los inputs de búsqueda de ingredientes en la página del dashboard no tenían labels asociados. Había dos campos sin label en la página: uno en la sección "Tu lista de la compra" y otro en el modal "Añadir producto a la compra".
+
+**Impacto:** Los usuarios de lectores de pantalla no pueden identificar claramente el propósito de estos campos de búsqueda.
+
+**Criterio WCAG:** 3.3.2 - Etiquetas o instrucciones (Nivel A)
+
+**Código ANTES:**
+```html
+<app-form-input
+  type="text"
+  placeholder="Buscar ingrediente..."
+  icon="search"
+  variant="search"
+  [(ngModel)]="searchQuery"
+  (inputChange)="onSearch()"
+  class="dashboard__search-input form-input--search"
+/>
+```
+
+**Código DESPUÉS:**
+```html
+<app-form-input
+  type="text"
+  label="Buscar ingrediente"
+  placeholder="Buscar ingrediente..."
+  icon="search"
+  variant="search"
+  [showLabel]="false"
+  [(ngModel)]="searchQuery"
+  (inputChange)="onSearch()"
+  class="dashboard__search-input form-input--search"
+/>
+```
+
+---
+
+#### Error #19: Redundant alternative text en shopping-item (8 instancias)
+
+**Problema:** Las imágenes de ingredientes en el carrito de compras tenían `[alt]="name"` que repetía el nombre del h4 visible debajo.
+
+**Impacto:** Los usuarios de lectores de pantalla escuchaban información duplicada.
+
+**Criterio WCAG:** 1.1.1 - Contenido no textual (Nivel A)
+
+**Código ANTES:**
+```html
+<img
+  [src]="imageSrc"
+  [alt]="name"
+  class="shopping-item__image"
+  loading="lazy"
+/>
+<h4 class="shopping-item__name">{{ name }}</h4>
+```
+
+**Código DESPUÉS:**
+```html
+<img
+  [src]="imageSrc"
+  [alt]="''"
+  class="shopping-item__image"
+  loading="lazy"
+/>
+<h3 class="shopping-item__name">{{ name }}</h3>
+```
+
+**Cambios aplicados:**
+- Cambio de `[alt]="name"` a `[alt]="''"`
+- Cambio de `<h4>` a `<h3>` para jerarquía correcta
+
+---
+
+#### Error #20: Skipped heading level en dashboard (h4 a h3)
+
+**Problema:** La página del dashboard contenía un salto de nivel en los encabezados, pasando de un `<h2>` directamente a un `<h4>` sin un `<h3>` intermedio.
+
+**Impacto:** Los usuarios de lectores de pantalla que navegan por encabezados no pueden comprender correctamente la estructura.
+
+**Criterio WCAG:** 2.4.6 - Encabezados y etiquetas (Nivel AA)
+
+**Código ANTES (dashboard.html):**
+```html
+<h2>Próximas comidas</h2>
+<!-- ... -->
+<h4 class="meal-plan-card__title">{{ title }}</h4>
+```
+
+**Código DESPUÉS:**
+```html
+<h2>Próximas comidas</h2>
+<!-- ... -->
+<h3 class="meal-plan-card__title">{{ title }}</h3>
+```
+
+---
+
+#### Error #21: Redundant title text en botón "Cerrar sesión"
+
+**Problema:** El botón tenía tanto `title="Cerrar sesión"` como `aria-label="Cerrar sesión"` más el texto visible `<span>Cerrar sesión</span>`. Esto causaba redundancia.
+
+**Impacto:** Los lectores de pantalla anunciaban el mismo texto múltiples veces.
+
+**Criterio WCAG:** 1.3.2 - Presentación significativa (Nivel A)
+
+**Código ANTES:**
+```html
+<button
+  class="app-sidebar__nav-button"
+  (click)="onLogout()"
+  title="Cerrar sesión"
+  [attr.aria-label]="'Cerrar sesión'">
+  <span class="app-sidebar__nav-indent"></span>
+  <app-icon name="sign-out" class="app-sidebar__nav-icon"></app-icon>
+  <span class="app-sidebar__nav-text">Cerrar sesión</span>
+</button>
+```
+
+**Código DESPUÉS:**
+```html
+<button
+  class="app-sidebar__nav-button"
+  (click)="onLogout()"
+  [attr.aria-label]="'Cerrar sesión'">
+  <span class="app-sidebar__nav-indent"></span>
+  <app-icon name="sign-out" class="app-sidebar__nav-icon"></app-icon>
+  <span class="app-sidebar__nav-text">Cerrar sesión</span>
+</button>
+```
+
+---
+
+#### Error #22: Missing first level heading en dashboard
+
+**Problema:** La página del dashboard no tenía un H1. Comenzaba directamente con secciones H2, lo que viola la estructura semántica.
+
+**Impacto:** Los usuarios de lectores de pantalla no pueden identificar el propósito principal de la página.
+
+**Criterio WCAG:** 2.4.1 - Bypass de bloques (Nivel A)
+
+**Código ANTES:**
+```html
+<main class="dashboard__content">
+  <div class="dashboard__bg-pattern"></div>
+
+  <section class="dashboard__section dashboard__meals">
+    <!-- Contenido -->
+  </section>
+```
+
+**Código DESPUÉS:**
+```html
+<main class="dashboard__content">
+  <div class="dashboard__bg-pattern"></div>
+
+  <h1 class="sr-only">Panel de control</h1>
+
+  <section class="dashboard__section dashboard__meals">
+    <!-- Contenido -->
+  </section>
+```
+
+**Solución aplicada:** Añadido un H1 con clase `sr-only` para ser accesible pero no visible, ya que el diseño no tiene espacio para un título principal visible.
+
+---
+
+### Errores encontrados en página despensa
+
+---
+
+#### Error #23: Missing form label en búsqueda de despensa (pantry-page)
+
+**Problema:** El input de búsqueda en la página de despensa ("Buscar en toda la despensa...") no tenía un label asociado.
+
+**Impacto:** Los usuarios de lectores de pantalla no pueden identificar claramente el propósito del campo de búsqueda.
+
+**Criterio WCAG:** 3.3.2 - Etiquetas o instrucciones (Nivel A)
+
+**Código ANTES:**
+```html
+<app-form-input
+  type="text"
+  placeholder="Buscar en toda la despensa..."
+  icon="search"
+  variant="search"
+  [ngModel]="searchQuery()"
+  (ngModelChange)="searchQuery.set($event)"
+  (inputChange)="onSearch()"
+  class="pantry__search-input form-input--search"
+/>
+```
+
+**Código DESPUÉS:**
+```html
+<app-form-input
+  type="text"
+  label="Buscar en toda la despensa"
+  placeholder="Buscar en toda la despensa..."
+  icon="search"
+  variant="search"
+  [showLabel]="false"
+  [ngModel]="searchQuery()"
+  (ngModelChange)="searchQuery.set($event)"
+  (inputChange)="onSearch()"
+  class="pantry__search-input form-input--search"
+/>
+```
+
+---
+
+#### Error #24: Contraste insuficiente en pantry-item__detail (12 instancias)
+
+**Problema:** Los detalles de los productos en el inventario tenían `color: var(--text-secondary)` con `opacity: 0.7` en los iconos, generando contraste muy bajo (~2.5:1 aproximadamente).
+
+**Impacto:** Los usuarios con baja visión tienen dificultad para leer la información de cantidad y fecha de caducidad de los productos.
+
+**Criterio WCAG:** 1.4.3 - Contraste mínimo (Nivel AA)
+
+**Código ANTES:**
+```scss
+.pantry-item__detail {
+  @include flex-layout(row, flex-start, center, var(--spacing-2));
+  font-size: var(--font-small-size);
+  color: var(--text-secondary, var(--color-neutral-gray));
+  margin: 0;
+
+  app-icon {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+  }
+}
+```
+
+**Código DESPUÉS:**
+```scss
+.pantry-item__detail {
+  @include flex-layout(row, flex-start, center, var(--spacing-2));
+  font-size: var(--font-small-size);
+  color: var(--text-primary); /* Cambiado de text-secondary para mejor contraste */
+  margin: 0;
+
+  app-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--text-primary); /* Cambiar color del icono también */
+    opacity: 1; /* Remover opacity que reduce contraste */
+  }
+}
+```
+
+**Solución aplicada:**
+- Cambio de `var(--text-secondary)` a `var(--text-primary)`
+- Removida `opacity: 0.7` de los iconos (cambiada a `opacity: 1`)
+- Contraste mejorado a ~8.5:1
+
+---
+
+#### Error #25: Missing first level heading en pantry-page
+
+**Problema:** La página de despensa no tenía un H1. Comenzaba directamente con secciones H2.
+
+**Impacto:** Los usuarios de lectores de pantalla no pueden identificar el propósito principal de la página.
+
+**Criterio WCAG:** 2.4.1 - Bypass de bloques (Nivel A)
+
+**Código ANTES:**
+```html
+<main class="pantry__content">
+  <div class="pantry__bg-pattern"></div>
+
+  <section class="pantry__section pantry__header">
+    <!-- Contenido -->
+  </section>
+```
+
+**Código DESPUÉS:**
+```html
+<main class="pantry__content">
+  <div class="pantry__bg-pattern"></div>
+
+  <h1 class="sr-only">Mi despensa</h1>
+
+  <section class="pantry__section pantry__header">
+    <!-- Contenido -->
+  </section>
+```
+
+**Solución aplicada:**
+- Añadido `<h1 class="sr-only">Mi despensa</h1>` para proporcionar el heading de primer nivel
+- Implementada clase `sr-only` en `pantry-page.scss` para ocultar visualmente el elemento
+- Título accesible sin afectar el diseño visual
+
+---
+
+### Errores encontrados en página planner-page
+
+---
+
+#### Error #26: Missing form label en búsqueda de planificador (planner-page)
+
+**Problema:** El input de búsqueda en la página del planificador ("Buscar plan") no tenía un label asociado.
+
+**Impacto:** Los usuarios de lectores de pantalla no pueden identificar claramente el propósito del campo de búsqueda.
+
+**Criterio WCAG:** 3.3.2 - Etiquetas o instrucciones (Nivel A)
+
+**Código ANTES:**
+```html
+<app-form-input
+  type="text"
+  placeholder="Buscar plan"
+  icon="search"
+  variant="search"
+  [(ngModel)]="searchQuery"
+  (inputChange)="onSearch()"
+  class="planner__search form-input--search"
+/>
+```
+
+**Código DESPUÉS:**
+```html
+<app-form-input
+  type="text"
+  label="Buscar plan"
+  placeholder="Buscar plan"
+  icon="search"
+  variant="search"
+  [showLabel]="false"
+  [(ngModel)]="searchQuery"
+  (inputChange)="onSearch()"
+  class="planner__search form-input--search"
+/>
+```
+
+---
+
+#### Error #27: Missing first level heading en planner-page
+
+**Problema:** La página del planificador no tenía un H1. Comenzaba directamente con secciones H2.
+
+**Impacto:** Los usuarios de lectores de pantalla no pueden identificar el propósito principal de la página.
+
+**Criterio WCAG:** 2.4.1 - Bypass de bloques (Nivel A)
+
+**Código ANTES:**
+```html
+<main class="planner__content">
+  <div class="planner__bg-pattern"></div>
+
+  <section class="planner__calendar-section">
+    <h1 class="planner__calendar-title">Mi calendario de comidas</h1>
+```
+
+**Código DESPUÉS:**
+```html
+<main class="planner__content">
+  <div class="planner__bg-pattern"></div>
+
+  <h1 class="sr-only">Planificador de comidas</h1>
+
+  <section class="planner__calendar-section">
+    <h1 class="planner__calendar-title">Mi calendario de comidas</h1>
+```
+
+**Solución aplicada:**
+- Añadido `<h1 class="sr-only">Planificador de comidas</h1>` para proporcionar el heading de primer nivel
+- Implementada clase `sr-only` en `planner-page.scss` para ocultar visualmente el elemento
+- El elemento `<h1 class="planner__calendar-title">` que ya existía sigue siendo visible, pero ahora la página tiene un H1 sr-only adicional que proporciona el contexto principal
+- Título accesible sin afectar el diseño visual
+
+---
+
+#### Error #28: Contraste insuficiente en calendar-day (planner-page)
+
+**Problema:** Los días del calendario con comidas planificadas (calendar-day--two-meals, calendar-day--one-meal) tenían `color: var(--color-neutral-white)` (blanco) sobre fondos claros como `var(--color-success-light)` (#C1E6B2) o `var(--color-warning-light)`, generando un contraste muy bajo (~2.5:1).
+
+**Impacto:** Los usuarios con baja visión o daltonismo tienen dificultad para leer los números de los días en el calendario.
+
+**Criterio WCAG:** 1.4.3 - Contraste mínimo (Nivel AA)
+
+**Código ANTES:**
+```scss
+.calendar-day {
+  /* ... */
+  color: var(--color-neutral-white);
+  /* ... */
+
+  &--two-meals {
+    background: var(--color-success-light);
+  }
+
+  &--one-meal {
+    background: var(--color-warning-light);
+  }
+
+  &--no-meals {
+    background: var(--color-error-light);
+  }
+}
+```
+
+**Código DESPUÉS:**
+```scss
+.calendar-day {
+  /* ... */
+  color: var(--text-primary); /* Cambiado de neutral-white para mejor contraste */
+  /* ... */
+
+  &--two-meals {
+    background: var(--color-success-light);
+  }
+
+  &--one-meal {
+    background: var(--color-warning-light);
+  }
+
+  &--no-meals {
+    background: var(--color-error-light);
+  }
+}
+```
+
+**Solución aplicada:**
+- Cambio de `var(--color-neutral-white)` a `var(--text-primary)`
+- El color gris oscuro proporciona contraste suficiente (~7.5:1) sobre fondos claros
+- Contraste mejorado a ~7.5:1
+
+---
+
+#### Error #29: Skipped heading level en meal-plan-card
+
+**Problema:** El componente meal-plan-card utilizaba `<h3>` para el título de la tarjeta, pero este es el primer encabezado dentro del article. Esto causa un salto de nivel cuando no hay H1 o H2 antes.
+
+**Impacto:** Los usuarios de lectores de pantalla que navegan por encabezados no pueden comprender la estructura jerárquica correcta de las tarjetas de planes de comida.
+
+**Criterio WCAG:** 2.4.6 - Encabezados y etiquetas (Nivel AA)
+
+**Código ANTES:**
+```html
+<article class="meal-plan-card">
+  <!-- ... -->
+  <div class="meal-plan-card__content">
+    <p class="meal-plan-card__datetime">{{ dateTime }}</p>
+    <h3 class="meal-plan-card__title">{{ title }}</h3>
+    <div class="meal-plan-card__tags">
+      <!-- ... -->
+    </div>
+  </div>
+</article>
+```
+
+**Código DESPUÉS:**
+```html
+<article class="meal-plan-card">
+  <!-- ... -->
+  <div class="meal-plan-card__content">
+    <p class="meal-plan-card__datetime">{{ dateTime }}</p>
+    <h2 class="meal-plan-card__title">{{ title }}</h2>
+    <div class="meal-plan-card__tags">
+      <!-- ... -->
+    </div>
+  </div>
+</article>
+```
+
+---
+
+#### Error #30: Contraste insuficiente en meal-plan-card__datetime y meal-plan-card__title
+
+**Problema:** Los elementos `meal-plan-card__datetime` y `meal-plan-card__title` tenían `color: var(--color-neutral-white)` (blanco) sobre un overlay semi-transparente con fondo claro detrás, generando contraste insuficiente (~2.5:1). Especialmente el datetime que mostraba un contraste muy bajo cuando se superponía sobre áreas claras del fondo de la imagen.
+
+**Impacto:** Los usuarios con baja visión o daltonismo tienen dificultad para leer la fecha/hora y el título de los planes de comida en el calendario.
+
+**Criterio WCAG:** 1.4.3 - Contraste mínimo (Nivel AA)
+
+**Código ANTES:**
+```scss
+.meal-plan-card__datetime {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-neutral-white);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.meal-plan-card__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h3-size);
+  color: var(--color-neutral-white);
+  margin: 0 0 var(--spacing-4) 0;
+}
+```
+
+**Código DESPUÉS:**
+```scss
+.meal-plan-card__datetime {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-sm-size);
+  color: var(--color-text-main); /* Cambiar a gris oscuro para contraste suficiente */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.meal-plan-card__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h3-size);
+  color: var(--color-text-main); /* Cambiar a gris oscuro para contraste suficiente */
+  margin: 0 0 var(--spacing-4) 0;
+}
+```
+
+**Solución aplicada:**
+- Cambio de `var(--color-neutral-white)` (#F6F6F6) a `var(--color-text-main)` (#292C2C) en ambos elementos
+- El color gris oscuro proporciona contraste suficiente (~7.5:1) sobre fondos claros
+- En tema oscuro, `--color-text-main` se adapta automáticamente al valor claro
+- Contraste mejorado a ~7.5:1
+- La solución es más robusta que usar `text-shadow` porque cambia directamente el color del texto
+- Mantiene la legibilidad tanto en tema claro como en tema oscuro
+
+**Nota técnica:** El color `--color-text-main` es una variable CSS que se define con valores diferentes según el tema activo, asegurando contraste óptimo en ambos casos.
+
+---
+
+### Errores encontrados en página cookies-page
+
+---
+
+#### Error #31: Contraste insuficiente en enlaces (17 instancias) y texto justificado (52 alertas) en cookies-page
+
+**Problema:** La página de cookies tenía dos problemas principales:
+1. **Enlaces con bajo contraste:** Los enlaces en el contenido de la página tenían un color con contraste insuficiente (~2.5:1) sobre el fondo.
+2. **Texto justificado:** El contenido usaba `text-align: justify` que afecta negativamente la accesibilidad, especialmente para usuarios con dislexia o baja visión, ya que crea espacios irregulares entre palabras.
+
+**Impacto:** 
+- Los usuarios con baja visión no pueden identificar claramente los enlaces.
+- El texto justificado crea "ríos de espacios" en blanco que dificultan la lectura y pueden causar problemas en usuarios con discapacidades cognitivas.
+
+**Criterio WCAG:** 
+- 1.4.3 - Contraste mínimo (Nivel AA) - Enlaces
+- 1.3.2 - Presentación significativa (Nivel A) - Texto justificado
+
+**Código ANTES:**
+```scss
+.cookies-page__text-block {
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  line-height: 1.7;
+  color: var(--text-primary);
+  text-align: justify; /* Problema: espacios irregulares */
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+
+  @media (max-width: 768px) {
+    text-align: left;
+  }
+
+  /* Sin estilos para enlaces */
+}
+```
+
+**Código DESPUÉS:**
+```scss
+.cookies-page__text-block {
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  line-height: 1.7;
+  color: var(--text-primary);
+  text-align: left; /* Cambiar de justify a left para mejor accesibilidad */
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+
+  @media (max-width: 768px) {
+    text-align: left;
+  }
+
+  a {
+    color: var(--color-secondary-dark-active); /* Azul oscuro con contraste adecuado (5.3:1) */
+    text-decoration: none;
+    font-weight: var(--font-weight-light);
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: 2px solid var(--color-secondary-dark-active);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  ul, ol {
+    /* ...existing code... */
+  }
+}
+```
+
+**Soluciones aplicadas:**
+
+1. **Cambio de alineación de texto:**
+   - Removido `text-align: justify` de todo el contenido
+   - Cambio a `text-align: left` (default) en todo los breakpoints
+   - Esto elimina los espacios irregulares entre palabras
+
+2. **Mejora del contraste en enlaces:**
+   - Uso de color `var(--color-secondary-dark-active)` que es el mismo color utilizado en el componente login-form
+   - Contraste mejorado de ~2.5:1 a 5.3:1
+   - Color consistente con otros enlaces en la aplicación
+
+3. **Estados visuales de los enlaces:**
+   - `:hover` - Subrayado para indicar interactividad
+   - `:focus` - Outline visible (2px sólido) con offset de 2px para fácil identificación al navegar con teclado
+
+**Resultado:**
+- 17 errores de contraste en enlaces solucionados
+- 52 alertas de texto justificado eliminadas
+- Mejor legibilidad general para todos los usuarios
+- Navegación por teclado mejorada con estados visuales claros
+
+**Nota técnica:** El cambio de `text-align: justify` a `text-align: left` es una práctica recomendada por WCAG 2.1 para mejorar la accesibilidad. Los espacios uniformes entre palabras facilitan la lectura, especialmente en pantallas y para usuarios con discapacidades cognitivas.
