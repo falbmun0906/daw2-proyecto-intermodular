@@ -14,9 +14,11 @@
   <section class="site-header__right">
     <!-- Theme switch -->
     <div class="site-header__theme-toggle">
-      <label class="site-header__theme-switch" aria-label="Cambiar tema">
+      <label class="site-header__theme-switch" for="theme-toggle-checkbox">
+        <span class="sr-only">Cambiar tema</span>
         <input
           type="checkbox"
+          id="theme-toggle-checkbox"
           [checked]="isDarkTheme()"
           (change)="onThemeChange($event)"
           aria-label="Alternar tema claro y oscuro"

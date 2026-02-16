@@ -3,7 +3,7 @@
     [src]="iconPath"
     [attr.width]="size"
     [attr.height]="size"
-    [attr.alt]="''"
+    alt=""
     aria-hidden="true"
     class="icon icon--social"
   />
@@ -12,7 +12,8 @@
     [src]="iconPath"
     [attr.width]="size"
     [attr.height]="size"
-    [attr.alt]="name"
+    alt=""
+    aria-hidden="true"
     [ngClass]="{
       'icon': true,
       'icon--solid-white': hasSolidWhite,

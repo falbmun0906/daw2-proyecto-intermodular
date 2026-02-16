@@ -30,6 +30,7 @@
    - [Errores encontrados en página despensa](#errores-encontrados-en-página-despensa)
    - [Errores encontrados en página planner-page](#errores-encontrados-en-página-planner-page)
    - [Errores encontrados en página cookies-page](#errores-encontrados-en-página-cookies-page)
+   - [Correcciones aplicadas según informe TAW](#correcciones-aplicadas-según-informe-taw)
 
 5. [Análisis de estructura semántica](#5-análisis-de-estructura-semántica)
    - [Landmarks HTML5](#landmarks-html5-utilizados)
@@ -1434,3 +1435,322 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 - Navegación por teclado mejorada con estados visuales claros
 
 **Nota técnica:** El cambio de `text-align: justify` a `text-align: left` es una práctica recomendada por WCAG 2.1 para mejorar la accesibilidad. Los espacios uniformes entre palabras facilitan la lectura, especialmente en pantallas y para usuarios con discapacidades cognitivas.
+
+---
+
+### Correcciones aplicadas según informe TAW
+
+Se realizó un análisis exhaustivo utilizando la herramienta TAW (Test de Accesibilidad Web), que detectó 44 errores y advertencias distribuidos en 4 criterios WCAG principales. A continuación se detallan las correcciones aplicadas según las técnicas WCAG correspondientes.
+
+#### Resumen de errores TAW corregidos
+
+| Criterio WCAG | Técnica | Errores | Solución aplicada |
+|---------------|---------|---------|-------------------|
+| 1.1.1 / 1.3.1 / 4.1.2 | H44, H65 | 2 | Asociación explícita de etiquetas con controles de formulario |
+| 1.1.1 | H45 | 16 | Revisión de imágenes decorativas vs informativas |
+| 1.3.1 / 2.4.1 | H42, H69 | 1 | Corrección de jerarquía de encabezados |
+| 2.4.2 | G88 | 1 | Título de página descriptivo |
+| 2.4.6 | G130, G131 | 9 | Encabezados y etiquetas descriptivas |
+| 3.3.2 | H44, H65 | 2 | Etiquetado de controles de formulario |
+
+#### Corrección H44/H65: Etiquetado de controles de formulario
+
+**Problema detectado:** El control del selector de tema (checkbox) no tenía una etiqueta correctamente asociada. TAW reportaba "Controles de formulario sin etiquetar" en el elemento label del theme switch.
+
+**Técnica aplicada:** H44 (Explicitly associating text labels with form controls)
+
+**Código ANTES:**
+```html
+<label class="site-header__theme-switch" aria-label="Cambiar tema">
+  <input
+    type="checkbox"
+    [checked]="isDarkTheme()"
+    (change)="onThemeChange($event)"
+    aria-label="Alternar tema claro y oscuro"
+  />
+  <span class="site-header__slider"></span>
+</label>
+```
+
+**Código DESPUÉS:**
+```html
+<label class="site-header__theme-switch" for="theme-toggle-checkbox">
+  <span class="sr-only">Cambiar tema</span>
+  <input
+    type="checkbox"
+    id="theme-toggle-checkbox"
+    [checked]="isDarkTheme()"
+    (change)="onThemeChange($event)"
+    aria-label="Alternar tema claro y oscuro"
+  />
+  <span class="site-header__slider"></span>
+</label>
+```
+
+**Cambios realizados:**
+- Añadido atributo `for="theme-toggle-checkbox"` al label para asociación explícita
+- Añadido `id="theme-toggle-checkbox"` al input para la asociación
+- Añadido texto dentro del label con clase `sr-only` para proporcionar contenido textual al label
+- Implementada clase `.sr-only` en header.scss para ocultar visualmente el texto pero mantenerlo accesible
+
+#### Corrección G88: Título de página descriptivo
+
+**Problema detectado:** El título de la página era "Frontend", lo cual no es descriptivo y no identifica el contenido de la página.
+
+**Técnica aplicada:** G88 (Providing descriptive titles for Web pages)
+
+**Código ANTES:**
+```html
+<title>Frontend</title>
+```
+
+**Código DESPUÉS:**
+```html
+<title>Desp[i]ensa - Tu cocina, siempre bajo control</title>
+```
+
+**Justificación:** El nuevo título identifica claramente el nombre de la aplicación y su propósito, permitiendo a los usuarios comprender inmediatamente el contenido de la página.
+
+#### Corrección H42/H69: Jerarquía de encabezados
+
+**Problema detectado:** En el footer había dos secciones paralelas donde una usaba H2 ("Desp[i]ensa") y otra H3 ("Soporte"), creando un salto de nivel incorrecto para secciones que son jerárquicamente equivalentes.
+
+**Técnica aplicada:** H42 (Using h1-h6 to identify headings)
+
+**Código ANTES:**
+```html
+<section class="site-footer__section" aria-labelledby="brand-heading">
+  <h2 id="brand-heading" class="site-footer__title">Desp[i]ensa</h2>
+  <!-- contenido -->
+</section>
+
+<section class="site-footer__section" aria-labelledby="support-heading">
+  <h3 id="support-heading" class="site-footer__title">Soporte</h3>
+  <!-- contenido -->
+</section>
+```
+
+**Código DESPUÉS:**
+```html
+<section class="site-footer__section" aria-labelledby="brand-heading">
+  <h2 id="brand-heading" class="site-footer__title">Desp[i]ensa</h2>
+  <!-- contenido -->
+</section>
+
+<section class="site-footer__section" aria-labelledby="support-heading">
+  <h2 id="support-heading" class="site-footer__title">Soporte</h2>
+  <!-- contenido -->
+</section>
+```
+
+**Justificación:** Ambas secciones son paralelas y del mismo nivel jerárquico, por lo que deben usar el mismo nivel de encabezado (H2).
+
+#### Corrección de imágenes decorativas (H45)
+
+**Problema detectado:** TAW reportaba 16 imágenes que podrían requerir descripción larga. Tras análisis, se determinó que todas eran iconos decorativos de interfaz.
+
+**Técnica aplicada:** Marcado de imágenes decorativas con `alt=""` y `aria-hidden="true"`
+
+**Código ANTES:**
+```html
+<img
+  [src]="iconPath"
+  [attr.width]="size"
+  [attr.height]="size"
+  [attr.alt]="name"
+  class="icon icon--phosphor"
+/>
+```
+
+**Código DESPUÉS:**
+```html
+<img
+  [src]="iconPath"
+  [attr.width]="size"
+  [attr.height]="size"
+  alt=""
+  aria-hidden="true"
+  class="icon icon--phosphor"
+/>
+```
+
+**Justificación:** Los iconos de interfaz son puramente decorativos y su significado ya está proporcionado por el texto adyacente o por atributos `aria-label` en los elementos padre. El uso de `alt=""` junto con `aria-hidden="true"` indica correctamente a las tecnologías de asistencia que deben ignorar estas imágenes.
+
+#### Técnicas WCAG utilizadas
+
+Las siguientes técnicas WCAG fueron aplicadas para resolver los errores detectados por TAW:
+
+- **H44:** Asociación explícita de etiquetas de texto con controles de formulario mediante el uso de `for` e `id`
+- **H65:** Uso del atributo `title` o `aria-label` para identificar controles de formulario cuando el elemento label no puede usarse visualmente
+- **H42:** Uso de encabezados H1-H6 para identificar correctamente la estructura del contenido
+- **H69:** Proporcionar encabezados que delineen el contenido de la página
+- **G88:** Proporcionar títulos descriptivos para las páginas web
+- **G130:** Proporcionar encabezados descriptivos
+- **G131:** Proporcionar etiquetas descriptivas
+
+---
+
+## 5. Análisis de estructura semántica
+
+La estructura semántica correcta es fundamental para que las tecnologías de asistencia puedan interpretar y navegar por el contenido de forma adecuada. Esta sección analiza los elementos estructurales HTML5, la jerarquía de encabezados y el tratamiento de las imágenes en el proyecto.
+
+### Landmarks HTML5 utilizados
+
+Los landmarks HTML5 proporcionan puntos de referencia que permiten a los usuarios de lectores de pantalla navegar rápidamente entre las secciones principales del sitio:
+
+- **`<header>`** - Cabecera principal del sitio
+  - Ubicación: Componente layout/header
+  - Contenido: Logo, navegación principal y selector de tema
+  - Atributo ARIA: `aria-label="Cabecera principal"`
+
+- **`<nav>`** - Navegación principal
+  - Ubicación: Dentro del header
+  - Contenido: Enlaces a las secciones principales (Inicio, Recetas, Despensa, Planificador)
+  - Atributo ARIA: `aria-label="Navegación principal"`
+
+- **`<main>`** - Contenido principal de cada página
+  - Ubicación: Componente raíz app.html
+  - Contenido: Todo el contenido específico de cada página (router-outlet)
+  - Clase: `app-main`
+
+- **`<section>`** - Secciones temáticas del contenido
+  - Ubicación: Múltiples secciones en todas las páginas
+  - Ejemplos en home-page:
+    - Hero (sección de bienvenida)
+    - Trending (tendencias de la semana)
+    - Must-see (recetas destacadas)
+    - Kitchen-control (llamada a la acción)
+    - Video-tutorial (tutorial multimedia)
+    - Newsletter (formulario de suscripción)
+  - Cada sección agrupa contenido relacionado con un encabezado H2
+
+- **`<article>`** - Contenido independiente y reutilizable
+  - Ubicación: Componentes de tarjetas (card, meal-plan-card)
+  - Uso: Cada receta o plan de comida se encapsula en un article
+  - Semántica: Representa contenido que podría distribuirse de forma independiente
+
+- **`<aside>`** - No utilizado
+  - Justificación: El proyecto no tiene barras laterales ni contenido complementario que requiera este landmark
+
+- **`<footer>`** - Pie de página del sitio
+  - Ubicación: Componente layout/footer
+  - Contenido: Redes sociales, enlaces legales y copyright
+  - Atributo ARIA: `aria-label="Pie de página"`
+
+Todos los landmarks principales incluyen atributos `aria-label` descriptivos para mejorar la experiencia de los usuarios de lectores de pantalla.
+
+### Jerarquía de encabezados
+
+La estructura de encabezados sigue una jerarquía lógica y secuencial sin saltos de nivel. A continuación se muestra la estructura de la página principal:
+
+```
+H1: Desp[i]ensa (título principal en hero)
+  H2: Tendencias de esta semana
+    H3: [Títulos individuales de recetas en tarjetas]
+  H2: Recetas que no te puedes perder
+    H3: [Títulos individuales de recetas en tarjetas]
+  H2: Tu cocina, siempre bajo control
+  H2: Aprende con nosotros: Gazpacho rápido
+  H2: Mantente al día con nuestras novedades
+```
+
+Estructura en otras páginas:
+
+**Página de recetas:**
+```
+H1: [Título sr-only: "Recetas"]
+  H2: Filtros (Dificultad, Categoría, Tiempo)
+  H2: [Títulos de secciones de recetas]
+    H3: [Títulos individuales de recetas]
+```
+
+**Página de despensa:**
+```
+H1: Mi despensa (sr-only)
+  H2: Categorías del inventario
+    H3: [Nombres de productos]
+```
+
+**Página de planificador:**
+```
+H1: Planificador de comidas (sr-only)
+  H2: Mi calendario de comidas
+    H2: [Títulos de planes de comida en tarjetas]
+```
+
+**Página de dashboard:**
+```
+H1: Panel de control (sr-only)
+  H2: Próximas comidas
+    H3: [Nombres de recetas planificadas]
+  H2: Tu lista de la compra
+    H3: [Nombres de productos]
+```
+
+**Estado de la jerarquía:** Correcta. No existen saltos de nivel en ninguna página. Todas las páginas tienen un H1 (visible o con clase sr-only para páginas de aplicación) y los niveles subsiguientes siguen un orden lógico H2 → H3 sin omitir niveles intermedios.
+
+Las correcciones aplicadas durante la auditoría incluyeron:
+- Cambio de H4 a H3 en componentes de tarjetas para eliminar saltos de nivel
+- Adición de H1 con clase sr-only en páginas que no tenían título visible
+- Cambio de párrafos a H3 cuando introducían secciones de contenido
+
+### Análisis de imágenes
+
+El proyecto hace un uso extensivo de imágenes, tanto decorativas como informativas. A continuación se detalla el análisis completo:
+
+**Distribución de imágenes:**
+- **Total de imágenes en el sitio:** Aproximadamente 150-200 imágenes
+- **Con texto alternativo descriptivo:** Todas las imágenes informativas (hero, newsletter)
+- **Decorativas (alt=""):** Todas las imágenes de tarjetas de recetas e ingredientes
+- **Sin alt:** 0 (todas corregidas durante la auditoría)
+
+**Categorías de imágenes:**
+
+1. **Imágenes del hero (home-page):**
+   - Cantidad: 4 imágenes
+   - Alt text: Descriptivo ("Ensalada", "Tomate", "Cuchara con especias", "Huevos")
+   - Formato: `<picture>` con múltiples fuentes (AVIF, WebP) y art direction responsivo
+   - Loading: `eager` (primera pantalla)
+
+2. **Imágenes en tarjetas de recetas:**
+   - Cantidad: Variable según datos cargados (aproximadamente 50-80)
+   - Alt text: `alt=""` (decorativas)
+   - Atributo ARIA: `aria-hidden="true"`
+   - Justificación: El título de la receta ya proporciona la información necesaria en un H3 adyacente
+   - Formatos: WebP con srcset responsivo (small, medium, large)
+   - Loading: `lazy` (optimización de rendimiento)
+
+3. **Imágenes de ingredientes:**
+   - Cantidad: Variable según datos (aproximadamente 50-100)
+   - Alt text: `alt=""` (decorativas)
+   - Justificación: El nombre del ingrediente está visible en texto adyacente
+   - Formatos: WebP con srcset responsivo
+   - Loading: `lazy`
+
+4. **Iconos SVG:**
+   - Cantidad: Múltiples (navegación, acciones, redes sociales)
+   - Implementación: Componente `<app-icon>` que carga SVG
+   - Alt text: Proporcionado mediante atributo `alt` en el componente
+   - ARIA: Labels descriptivos en los elementos padre cuando es necesario
+
+5. **Imagen del newsletter:**
+   - Cantidad: 1 imagen
+   - Alt text: Descriptivo ("Ilustración de newsletter")
+   - Formato: PNG optimizado
+   - Loading: `lazy`
+
+**Técnicas de optimización implementadas:**
+
+- **Formatos modernos:** Uso de AVIF y WebP con fallback a PNG
+- **Art direction:** Imágenes diferentes para móvil y escritorio mediante `<picture>`
+- **Lazy loading:** Aplicado a todas las imágenes excepto las del hero
+- **Responsive images:** Múltiples tamaños (small, medium, large) servidos según el viewport
+- **Srcset y sizes:** Implementado para que el navegador elija la imagen óptima
+
+**Correcciones aplicadas durante la auditoría:**
+
+- Eliminación de 20+ textos alternativos redundantes en imágenes de tarjetas
+- Adición de `aria-hidden="true"` a imágenes puramente decorativas
+- Cambio de `alt` con contenido a `alt=""` en imágenes donde el texto adyacente ya proporciona la información
+- Adición de `aria-label` a los contenedores de tarjetas para proporcionar contexto cuando la imagen está oculta
+
