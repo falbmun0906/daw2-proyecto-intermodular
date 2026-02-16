@@ -2591,11 +2591,28 @@ Todas las herramientas fueron ejecutadas nuevamente después de implementar las 
 **Capturas de pantalla de los resultados:**
 
 - **Lighthouse antes:** `./capturas/lighthouse-antes.png`
+
+<img width="1961" height="991" alt="lighthouse-antes" src="https://github.com/user-attachments/assets/3b2f0a16-d7b6-4aec-a2a1-771df3eac4ae" />
+
 - **Lighthouse después:** `./capturas/lighthouse-despues.png`
+
+<img width="2107" height="1000" alt="lighthouse-despues" src="https://github.com/user-attachments/assets/e5fec11a-1430-44df-a5b6-29b19e922d9a" />
+
 - **WAVE antes:** `./capturas/wave-antes.png`
+
+<img width="2536" height="1266" alt="wave-antes" src="https://github.com/user-attachments/assets/6afda542-0bfc-4c7b-85cb-0bedd99b16df" />
+
 - **WAVE después:** `./capturas/wave-despues.png`
+
+<img width="2536" height="1267" alt="wave-despues" src="https://github.com/user-attachments/assets/fa374645-4091-423c-af66-ec3b4d9a3b4a" />
+
 - **TAW antes:** `./capturas/taw-antes.png`
+
+<img width="2416" height="942" alt="taw-antes" src="https://github.com/user-attachments/assets/9c2fa4ab-5c48-4d12-94a9-c66be15f54f7" />
+
 - **TAW después:** `./capturas/taw-despues.png`
+
+<img width="2422" height="952" alt="taw-despues" src="https://github.com/user-attachments/assets/b6e9f4de-d6ab-44f4-815f-9f59b398ad75" />
 
 ---
 
