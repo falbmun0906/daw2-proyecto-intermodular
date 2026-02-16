@@ -6,9 +6,10 @@
   [class.form-input--search]="variant === 'search'"
 >
 
-  @if (label && showLabel) {
+  @if (label) {
     <label
       class="form-input__label"
+      [class.sr-only]="!showLabel"
       [for]="inputId"
     >
       {{ label }}
@@ -46,7 +47,6 @@
         [placeholder]="placeholder"
         [required]="required"
         [disabled]="disabled"
-        [attr.aria-label]="!showLabel && label ? label : null"
         [attr.aria-describedby]="ariaDescribedBy"
         [attr.aria-invalid]="hasError"
         [(ngModel)]="value"

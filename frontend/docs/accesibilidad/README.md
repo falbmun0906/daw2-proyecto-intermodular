@@ -1438,155 +1438,190 @@ Las 13 alertas de "Redundant alternative text" deberían desaparecer, ya que tod
 
 ---
 
-### Correcciones aplicadas según informe TAW
+### Correcciones aplicadas según informe TAW (Segunda Revisión)
 
-Se realizó un análisis exhaustivo utilizando la herramienta TAW (Test de Accesibilidad Web), que detectó 44 errores y advertencias distribuidos en 4 criterios WCAG principales. A continuación se detallan las correcciones aplicadas según las técnicas WCAG correspondientes.
+Tras el primer despliegue con correcciones, TAW detectó un **aumento de errores de 9 a 16**. Este incremento se debió a que las correcciones iniciales introdujeron nuevos problemas:
 
-#### Resumen de errores TAW corregidos
+#### Análisis del aumento de errores
 
-| Criterio WCAG | Técnica | Errores | Solución aplicada |
-|---------------|---------|---------|-------------------|
-| 1.1.1 / 1.3.1 / 4.1.2 | H44, H65 | 2 | Asociación explícita de etiquetas con controles de formulario |
-| 1.1.1 | H45 | 16 | Revisión de imágenes decorativas vs informativas |
-| 1.3.1 / 2.4.1 | H42, H69 | 1 | Corrección de jerarquía de encabezados |
-| 2.4.2 | G88 | 1 | Título de página descriptivo |
-| 2.4.6 | G130, G131 | 9 | Encabezados y etiquetas descriptivas |
-| 3.3.2 | H44, H65 | 2 | Etiquetado de controles de formulario |
+| Problema | Causa del aumento | Errores |
+|----------|-------------------|---------|
+| Control de formulario sin etiquetar | El label se ocultaba con `@if (label && showLabel)`, eliminándolo del DOM en lugar de ocultarlo visualmente | 4 (1.1.1, 1.3.1, 3.3.2, 4.1.2) |
+| Enlaces sin contenido | Los iconos de redes sociales usaban `aria-hidden="true"` y `alt=""` pero sin texto alternativo visible dentro del enlace | 6 (2.4.4) |
+| Dos encabezados H2 consecutivos sin contenido | La sección de redes sociales no tenía H2 propio, causando salto estructural | 1 (1.3.1) |
+| Enlaces consecutivos imagen-texto | Los iconos decorativos causaban que TAW no pudiera identificar el contenido del enlace | 5 (1.1.1) |
 
-#### Corrección H44/H65: Etiquetado de controles de formulario
+#### Corrección definitiva 1: Etiquetado de controles de formulario (H44)
 
-**Problema detectado:** El control del selector de tema (checkbox) no tenía una etiqueta correctamente asociada. TAW reportaba "Controles de formulario sin etiquetar" en el elemento label del theme switch.
+**Técnica WCAG:** H44 - Asociación explícita de etiquetas de texto con controles de formulario
 
-**Técnica aplicada:** H44 (Explicitly associating text labels with form controls)
+**Problema:** Cuando `showLabel=false`, el `<label>` se eliminaba del DOM completamente, violando el criterio de etiquetado obligatorio.
 
 **Código ANTES:**
 ```html
-<label class="site-header__theme-switch" aria-label="Cambiar tema">
-  <input
-    type="checkbox"
-    [checked]="isDarkTheme()"
-    (change)="onThemeChange($event)"
-    aria-label="Alternar tema claro y oscuro"
-  />
-  <span class="site-header__slider"></span>
-</label>
+@if (label && showLabel) {
+  <label class="form-input__label" [for]="inputId">
+    {{ label }}
+  </label>
+}
+<input [attr.aria-label]="!showLabel && label ? label : null" ... />
 ```
 
 **Código DESPUÉS:**
 ```html
-<label class="site-header__theme-switch" for="theme-toggle-checkbox">
-  <span class="sr-only">Cambiar tema</span>
-  <input
-    type="checkbox"
-    id="theme-toggle-checkbox"
-    [checked]="isDarkTheme()"
-    (change)="onThemeChange($event)"
-    aria-label="Alternar tema claro y oscuro"
-  />
-  <span class="site-header__slider"></span>
-</label>
+@if (label) {
+  <label
+    class="form-input__label"
+    [class.sr-only]="!showLabel"
+    [for]="inputId"
+  >
+    {{ label }}
+  </label>
+}
+<input ... />
 ```
 
-**Cambios realizados:**
-- Añadido atributo `for="theme-toggle-checkbox"` al label para asociación explícita
-- Añadido `id="theme-toggle-checkbox"` al input para la asociación
-- Añadido texto dentro del label con clase `sr-only` para proporcionar contenido textual al label
-- Implementada clase `.sr-only` en header.scss para ocultar visualmente el texto pero mantenerlo accesible
+**Solución aplicada:**
+- El `<label>` **siempre está presente en el DOM** cuando hay un label definido
+- Cuando `showLabel=false`, se aplica la clase `sr-only` que oculta visualmente pero mantiene accesible
+- Se eliminó el `aria-label` del input porque el label proporciona la asociación programática mediante `for`/`id`
+- La clase `.sr-only` se agregó globalmente en `_reset.scss`
 
-#### Corrección G88: Título de página descriptivo
+**Resultado:** Cumple con H44 - el control siempre tiene una etiqueta asociada visible para lectores de pantalla.
 
-**Problema detectado:** El título de la página era "Frontend", lo cual no es descriptivo y no identifica el contenido de la página.
+---
 
-**Técnica aplicada:** G88 (Providing descriptive titles for Web pages)
+#### Corrección definitiva 2: Enlaces de redes sociales con contenido (F89)
+
+**Técnica WCAG:** Evitar F89 - Enlaces sin contenido textual accesible
+
+**Problema:** Los enlaces de redes sociales solo contenían un icono con `aria-hidden="true"`. Aunque el `<a>` tenía `aria-label`, TAW no podía identificar contenido dentro del enlace.
 
 **Código ANTES:**
 ```html
-<title>Frontend</title>
+<a href="#" aria-label="YouTube" rel="noopener noreferrer">
+  <app-icon name="youtube-logo" [size]="32"></app-icon>
+</a>
 ```
 
 **Código DESPUÉS:**
 ```html
-<title>Desp[i]ensa - Tu cocina, siempre bajo control</title>
+<a href="#" rel="noopener noreferrer" title="YouTube">
+  <app-icon name="youtube-logo" [size]="32"></app-icon>
+  <span class="sr-only">YouTube</span>
+</a>
 ```
 
-**Justificación:** El nuevo título identifica claramente el nombre de la aplicación y su propósito, permitiendo a los usuarios comprender inmediatamente el contenido de la página.
+**Solución aplicada:**
+- Añadido `<span class="sr-only">` con el nombre de cada red social
+- El texto está oculto visualmente pero presente en el DOM para lectores de pantalla y herramientas de auditoría
+- El atributo `title` proporciona tooltip visual
+- Removido `aria-label` redundante del enlace
 
-#### Corrección H42/H69: Jerarquía de encabezados
+**Resultado:** Los enlaces ahora tienen contenido textual accesible que TAW y lectores de pantalla pueden identificar.
 
-**Problema detectado:** En el footer había dos secciones paralelas donde una usaba H2 ("Desp[i]ensa") y otra H3 ("Soporte"), creando un salto de nivel incorrecto para secciones que son jerárquicamente equivalentes.
+---
 
-**Técnica aplicada:** H42 (Using h1-h6 to identify headings)
+#### Corrección definitiva 3: Jerarquía de encabezados en footer (H42)
+
+**Técnica WCAG:** H42 - Uso de h1-h6 para identificar encabezados
+
+**Problema:** La sección de redes sociales no tenía un H2, causando que las tres secciones del footer tuvieran estructura inconsistente.
 
 **Código ANTES:**
 ```html
+<section class="site-footer__section" aria-label="Redes sociales">
+  <ul class="site-footer__social-list">
+    <!-- solo iconos -->
+  </ul>
+</section>
+
 <section class="site-footer__section" aria-labelledby="brand-heading">
-  <h2 id="brand-heading" class="site-footer__title">Desp[i]ensa</h2>
-  <!-- contenido -->
-</section>
-
-<section class="site-footer__section" aria-labelledby="support-heading">
-  <h3 id="support-heading" class="site-footer__title">Soporte</h3>
+  <h2 id="brand-heading">Desp[i]ensa</h2>
   <!-- contenido -->
 </section>
 ```
 
 **Código DESPUÉS:**
 ```html
-<section class="site-footer__section" aria-labelledby="brand-heading">
-  <h2 id="brand-heading" class="site-footer__title">Desp[i]ensa</h2>
-  <!-- contenido -->
+<section class="site-footer__section" aria-labelledby="social-heading">
+  <h2 id="social-heading" class="site-footer__title sr-only">Redes Sociales</h2>
+  <ul class="site-footer__social-list">
+    <!-- iconos con span.sr-only -->
+  </ul>
 </section>
 
-<section class="site-footer__section" aria-labelledby="support-heading">
-  <h2 id="support-heading" class="site-footer__title">Soporte</h2>
+<section class="site-footer__section" aria-labelledby="brand-heading">
+  <h2 id="brand-heading">Desp[i]ensa</h2>
   <!-- contenido -->
 </section>
 ```
 
-**Justificación:** Ambas secciones son paralelas y del mismo nivel jerárquico, por lo que deben usar el mismo nivel de encabezado (H2).
+**Solución aplicada:**
+- Añadido H2 oculto visualmente (`sr-only`) para la sección de redes sociales
+- Todas las secciones del footer ahora tienen un H2 que las identifica
+- Uso de `aria-labelledby` para vincular la sección con su encabezado
 
-#### Corrección de imágenes decorativas (H45)
+**Resultado:** Jerarquía de encabezados consistente y correcta.
 
-**Problema detectado:** TAW reportaba 16 imágenes que podrían requerir descripción larga. Tras análisis, se determinó que todas eran iconos decorativos de interfaz.
+---
 
-**Técnica aplicada:** Marcado de imágenes decorativas con `alt=""` y `aria-hidden="true"`
+#### Corrección definitiva 4: Imágenes decorativas correctamente marcadas (H67)
+
+**Técnica WCAG:** H67 - Uso de alt vacío y no de title para imágenes decorativas
+
+**Problema:** La imagen del newsletter tenía `alt="Newsletter illustration"` que era redundante.
 
 **Código ANTES:**
+```html
+<img src="assets/newsletter-image-optimized.png" alt="Newsletter illustration" />
+```
+
+**Código DESPUÉS:**
 ```html
 <img
-  [src]="iconPath"
-  [attr.width]="size"
-  [attr.height]="size"
-  [attr.alt]="name"
-  class="icon icon--phosphor"
-/>
-```
-
-**Código DESPUÉS:**
-```html
-<img
-  [src]="iconPath"
-  [attr.width]="size"
-  [attr.height]="size"
+  src="assets/newsletter-image-optimized.png"
   alt=""
   aria-hidden="true"
-  class="icon icon--phosphor"
 />
 ```
 
-**Justificación:** Los iconos de interfaz son puramente decorativos y su significado ya está proporcionado por el texto adyacente o por atributos `aria-label` en los elementos padre. El uso de `alt=""` junto con `aria-hidden="true"` indica correctamente a las tecnologías de asistencia que deben ignorar estas imágenes.
+**Solución aplicada:**
+- Alt vacío para indicar que es decorativa
+- `aria-hidden="true"` para que tecnologías asistivas la ignoren completamente
 
-#### Técnicas WCAG utilizadas
+---
 
-Las siguientes técnicas WCAG fueron aplicadas para resolver los errores detectados por TAW:
+#### Clase sr-only global implementada
 
-- **H44:** Asociación explícita de etiquetas de texto con controles de formulario mediante el uso de `for` e `id`
-- **H65:** Uso del atributo `title` o `aria-label` para identificar controles de formulario cuando el elemento label no puede usarse visualmente
-- **H42:** Uso de encabezados H1-H6 para identificar correctamente la estructura del contenido
-- **H69:** Proporcionar encabezados que delineen el contenido de la página
-- **G88:** Proporcionar títulos descriptivos para las páginas web
-- **G130:** Proporcionar encabezados descriptivos
-- **G131:** Proporcionar etiquetas descriptivas
+Para asegurar consistencia en todas las correcciones, se implementó la clase `.sr-only` de forma global en `_reset.scss`:
+
+```scss
+/* Screen Reader Only - Oculta visualmente pero accesible para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+```
+
+#### Resumen de correcciones aplicadas
+
+| Error TAW | Criterio | Técnica | Estado |
+|-----------|----------|---------|--------|
+| Controles de formulario sin etiquetar | 1.1.1, 1.3.1, 3.3.2, 4.1.2 | H44 | ✅ Corregido |
+| Enlaces sin contenido | 2.4.4 | F89 (evitar) | ✅ Corregido |
+| Encabezados consecutivos sin contenido | 1.3.1, 2.4.1 | H42, H69 | ✅ Corregido |
+| Enlaces imagen-texto consecutivos | 1.1.1 | H2 | ✅ Corregido |
+| Imágenes decorativas con alt redundante | 1.1.1 | H67 | ✅ Corregido |
+
+**Total errores corregidos en esta revisión: 16**
 
 ---
 
