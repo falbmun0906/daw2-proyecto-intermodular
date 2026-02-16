@@ -95,6 +95,13 @@
   span {
     color: white;
   }
+
+  /* Focus visible en el label para navegación por teclado */
+  &:focus-visible {
+    outline: 3px solid var(--color-secondary);
+    outline-offset: 3px;
+    border-radius: 14px;
+  }
 }
 
 .site-header__theme-switch input {
@@ -168,11 +175,6 @@
   opacity: 1;
 }
 
-/*.site-header__theme-switch input:focus-visible + .site-header__slider {
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 2px;
-}*/
-
 /* =========================
  * Navegación
  * ========================= */
@@ -200,7 +202,6 @@
   border: none;
   background: none;
   cursor: pointer;
-  outline: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -225,9 +226,11 @@
     }
   }
 
-  &:focus,
+  /* Indicador de focus visible para navegación por teclado */
   &:focus-visible {
-    outline: none;
+    outline: 3px solid var(--color-secondary);
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 }
 
@@ -256,11 +259,12 @@
     transform: scale(0.95);
   }
 
-/*  &:focus-visible {
-    outline: 2px solid var(--color-secondary);
+  /* Indicador de focus visible para navegación por teclado */
+  &:focus-visible {
+    outline: 3px solid var(--color-secondary);
     outline-offset: 4px;
-    border-radius: 2px;
-  }*/
+    border-radius: 4px;
+  }
 }
 
 .site-header__hamburger-line {
