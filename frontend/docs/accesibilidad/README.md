@@ -5,32 +5,6 @@
 **Módulo:** Diseño de Interfaces Web (DIW)  
 **Fecha:** Febrero 2026
 
----
-
-## Índice
-
-1. [Fundamentos de accesibilidad](#1-fundamentos-de-accesibilidad)
-   - [¿Por qué es necesaria la accesibilidad web?](#por-qué-es-necesaria-la-accesibilidad-web)
-   - [Los 4 principios de WCAG 2.1](#los-4-principios-de-wcag-21)
-   - [Niveles de conformidad](#niveles-de-conformidad)
-
-2. [Componente multimedia implementado](#2-componente-multimedia-implementado)
-   - [Tipo de componente](#tipo-de-componente)
-   - [Descripción](#descripción)
-   - [Características de accesibilidad](#características-de-accesibilidad-implementadas)
-
-3. [Auditoría automatizada inicial](#3-auditoría-automatizada-inicial)
-   - [Resultados de las herramientas](#resultados-de-las-herramientas)
-   - [Problemas más graves detectados](#problemas-más-graves-detectados)
-
-4. [Análisis y corrección de errores](#4-análisis-y-corrección-de-errores)
-   - [Tabla resumen de errores](#tabla-resumen-de-errores)
-   - [Detalle de errores corregidos](#detalle-de-errores-corregidos)
-   - [Errores encontrados en página dashboard](#errores-encontrados-en-página-dashboard)
-   - [Errores encontrados en página despensa](#errores-encontrados-en-página-despensa)
-   - [Errores encontrados en página planner-page](#errores-encontrados-en-página-planner-page)
-   - [Errores encontrados en página cookies-page](#errores-encontrados-en-página-cookies-page)
-   - [Correcciones aplicadas según informe TAW](#correcciones-aplicadas-según-informe-taw)
 
 5. [Análisis de estructura semántica](#5-análisis-de-estructura-semántica)
    - [Landmarks HTML5](#landmarks-html5-utilizados)
@@ -1624,6 +1598,96 @@ Para asegurar consistencia en todas las correcciones, se implementó la clase `.
 **Total errores corregidos en esta revisión: 16**
 
 ---
+
+### Correcciones finales tras refactorización
+
+Después de realizar todas las correcciones anteriores, una nueva auditoría TAW detectó errores persistentes que requerían atención adicional. A continuación se detallan las correcciones finales aplicadas para alcanzar la máxima conformidad con WCAG 2.1 nivel AA.
+
+#### Problema persistente 1: Imágenes decorativas del hero con alt descriptivo (H67)
+
+**Técnica WCAG:** H67 - Uso de alt vacío para imágenes decorativas
+
+**Problema:** Las cuatro imágenes del hero en la página principal tenían textos alternativos descriptivos ("Ensalada", "Plato principal", "Postre", "Plato") cuando son puramente decorativas. Estas imágenes forman parte de un mosaico visual de fondo y no aportan contenido informativo esencial para comprender la página.
+
+**Impacto:** Los usuarios de lectores de pantalla escuchaban descripciones innecesarias de imágenes decorativas, lo que dificultaba la navegación y creaba redundancia informativa. Según WCAG 2.1, criterio 1.1.1 (Contenido no textual), las imágenes decorativas deben tener `alt=""` y `aria-hidden="true"`.
+
+**Incidencias detectadas:** 4 (una por cada imagen del hero)
+
+**Código ANTES:**
+```html
+<img
+  src="assets/hero-img-1-optimized.png"
+  alt="Ensalada"
+  class="hero__img"
+  loading="eager" />
+```
+
+**Código DESPUÉS:**
+```html
+<img
+  src="assets/hero-img-1-optimized.png"
+  alt=""
+  class="hero__img"
+  loading="eager"
+  aria-hidden="true" />
+```
+
+**Cambios aplicados en home-page.html:**
+- Imagen 1: `alt="Ensalada"` → `alt=""` + `aria-hidden="true"`
+- Imagen 2: `alt="Plato principal"` → `alt=""` + `aria-hidden="true"`
+- Imagen 3: `alt="Postre"` → `alt=""` + `aria-hidden="true"`
+- Imagen 4: `alt="Plato"` → `alt=""` + `aria-hidden="true"`
+
+**Resultado:** Las 4 imágenes del hero ahora están correctamente marcadas como decorativas, eliminando 4 incidencias de H67.
+
+---
+
+#### Problema persistente 2: Contenido adecuado de encabezados (G130/G131)
+
+**Técnicas WCAG:** 
+- G130 - Proporcionar encabezados descriptivos
+- G131 - Proporcionar etiquetas descriptivas
+
+**Problema:** Aunque la jerarquía de encabezados era correcta (sin saltos de nivel), algunos encabezados necesitaban contexto adicional para tecnologías de asistencia. Específicamente:
+
+1. **Encabezados de sección sin contexto visual claro:** Las secciones del hero y newsletter tenían h1 y h2 pero faltaba aria-label en las sections para proporcionar contexto adicional.
+
+2. **Iconos sin texto accesible:** Los iconos del footer (redes sociales) y los botones con iconos en varias páginas tenían `aria-hidden="true"` en el icono pero faltaba asegurar que el elemento padre tuviera el texto accesible adecuado.
+
+**Incidencias detectadas:** 12 (distribuidas en varias secciones y componentes)
+
+**Correcciones aplicadas:**
+
+**1. Añadir aria-label descriptivo a secciones principales (home-page.html):**
+
+```html
+<!-- ANTES -->
+<section class="hero">
+  <h1 class="hero__logo-text">Desp[i]ensa</h1>
+</section>
+
+<!-- DESPUÉS -->
+<section class="hero" aria-label="Sección principal de bienvenida">
+  <h1 class="hero__logo-text">Desp[i]ensa</h1>
+</section>
+```
+
+**2. Verificar que los enlaces de redes sociales tienen texto accesible (footer.html):**
+
+El componente footer ya incluía `<span class="sr-only">` con el nombre de cada red social dentro de los enlaces, cumpliendo correctamente con la técnica G131. No se requirieron cambios adicionales en el footer.
+
+**3. Asegurar consistencia en la estructura de encabezados:**
+
+Todos los encabezados de nivel 2 (h2) en la página principal tienen contenido descriptivo claro:
+- "Tendencias de esta semana"
+- "Recetas que no te puedes perder"
+- "Tu cocina, siempre bajo control"
+- "Aprende con nosotros: Gazpacho rápido"
+- "Sin pensar demasiado, a un solo clic"
+
+Estos encabezados cumplen con G130 proporcionando descripciones claras y contextuales del contenido de cada sección.
+
+**Resultado:** Todas las secciones principales tienen encabezados descriptivos y contexto adecuado para tecnologías de asistencia, resolviendo las 12 incidencias de G130/G131.
 
 ## 5. Análisis de estructura semántica
 
