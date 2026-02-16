@@ -16,7 +16,6 @@
 .meal-plan-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 .meal-plan-card__content {
@@ -28,7 +27,7 @@
 .meal-plan-card__datetime {
   font-family: var(--font-family-primary);
   font-size: var(--font-sm-size);
-  color: var(--color-neutral-white);
+  color: var(--text-primary); /* Cambiar a gris oscuro para contraste suficiente */
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 var(--spacing-2) 0;
@@ -37,7 +36,7 @@
 .meal-plan-card__title {
   font-family: var(--font-family-secondary);
   font-size: var(--font-h3-size);
-  color: var(--color-neutral-white);
+  color: var(--text-primary); /* Cambiar a gris oscuro para contraste suficiente */
   margin: 0 0 var(--spacing-4) 0;
 }
 

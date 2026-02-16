@@ -23,9 +23,11 @@
             type="image/webp" />
           <img
             src="assets/hero-img-1-optimized.png"
-            alt="Ensalada"
+            alt=""
             class="hero__img"
-            loading="eager" />
+            loading="eager"
+            role="presentation"
+            aria-hidden="true" />
         </picture>
       </div>
       <div class="hero__grid-item hero__grid-item--2">
@@ -49,9 +51,11 @@
             type="image/webp" />
           <img
             src="assets/hero-img-2-optimized.png"
-            alt="Plato principal"
+            alt=""
             class="hero__img"
-            loading="eager" />
+            loading="eager"
+            role="presentation"
+            aria-hidden="true" />
         </picture>
       </div>
       <div class="hero__grid-item hero__grid-item--3">
@@ -64,9 +68,11 @@
             assets/hero-img-3-large.webp 1200w
           "
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          alt="Postre"
+          alt=""
           class="hero__img"
-          loading="eager" />
+          loading="eager"
+          role="presentation"
+          aria-hidden="true" />
       </div>
       <div class="hero__grid-item hero__grid-item--4">
         <!-- Image 4: Srcset + sizes para responsive -->
@@ -78,9 +84,11 @@
             assets/hero-img-4-large.webp 1200w
           "
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          alt="Plato"
+          alt=""
           class="hero__img"
-          loading="eager" />
+          loading="eager"
+          role="presentation"
+          aria-hidden="true" />
       </div>
 
       <!-- Logo blob sobre el grid -->
@@ -104,6 +112,7 @@
 
   <section class="trending">
     <h2 class="trending__title">Tendencias de esta semana</h2>
+    <p class="trending__intro">Descubre las recetas más populares que están conquistando los paladares esta semana.</p>
 
     @if (isLoadingTrending()) {
       <div class="trending__loading">
@@ -124,7 +133,6 @@
               [imagenUrlSmall]="recipe.imagenUrlSmall"
               [imagenUrlMedium]="recipe.imagenUrlMedium"
               [imagenUrlLarge]="recipe.imagenUrlLarge"
-              [imageAlt]="recipe.nombre"
               [title]="recipe.nombre"
               [tags]="recipe.etiquetas || []"
               [time]="recipe.tiempoPreparacion + ' min'"
@@ -146,6 +154,7 @@
 
   <section class="must-see">
     <h2 class="must-see__title">Recetas que no te puedes perder</h2>
+    <p class="must-see__intro">Selección de recetas imprescindibles que harán las delicias de cualquier amante de la buena cocina.</p>
 
     @if (isLoadingMustSee()) {
       <div class="must-see__loading">
@@ -159,7 +168,6 @@
             [imagenUrlSmall]="recipe.imagenUrlSmall"
             [imagenUrlMedium]="recipe.imagenUrlMedium"
             [imagenUrlLarge]="recipe.imagenUrlLarge"
-            [imageAlt]="recipe.nombre"
             [title]="recipe.nombre"
             [tags]="recipe.etiquetas || []"
             [time]="recipe.tiempoPreparacion + ' min'"
@@ -189,6 +197,116 @@
     </div>
   </section>
 
+  <section class="video-tutorial" id="video-tutorial">
+    <div class="video-tutorial__container">
+      <h2 class="video-tutorial__title">Aprende con nosotros: Gazpacho rápido</h2>
+      <p class="video-tutorial__description">
+        Descubre cómo preparar un auténtico gazpacho clásico en versión superrápida.
+        Un plato fresco y delicioso listo en minutos.
+      </p>
+
+      <div class="video-tutorial__player">
+        <video
+          controls
+          preload="metadata"
+          class="video-tutorial__video"
+          aria-describedby="video-description">
+          <source src="assets/videos/tutorial-cocina.webm" type="video/webm">
+          <source src="assets/videos/tutorial-cocina.mp4" type="video/mp4">
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-es.vtt"
+            srclang="es"
+            label="Español"
+            default>
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-en.vtt"
+            srclang="en"
+            label="English">
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-fr.vtt"
+            srclang="fr"
+            label="Français">
+          <track
+            kind="subtitles"
+            src="assets/subtitles/tutorial-cocina-de.vtt"
+            srclang="de"
+            label="Deutsch">
+          <p>
+            Tu navegador no soporta la reproducción de vídeo HTML5.
+            Puedes <a href="assets/videos/tutorial-cocina.mp4" download>descargar el vídeo aquí</a>.
+          </p>
+        </video>
+      </div>
+
+      <div class="video-tutorial__info" id="video-description">
+        <p class="video-tutorial__duration">
+          <strong>Duración:</strong> 1 minuto 27 segundos
+        </p>
+        <p class="video-tutorial__languages">
+          <strong>Subtítulos disponibles:</strong> Español, English, Français, Deutsch
+        </p>
+      </div>
+
+      <details class="video-tutorial__transcript">
+        <summary class="video-tutorial__transcript-title">
+          Ver transcripción completa del vídeo
+        </summary>
+        <div class="video-tutorial__transcript-content">
+          <div class="video-tutorial__language-selector">
+            <span class="video-tutorial__language-label">Idioma de transcripción:</span>
+            <div class="video-tutorial__language-buttons">
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'es' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Cambiar transcripción a español'"
+                [attr.aria-pressed]="transcriptLanguage() === 'es'"
+                (buttonClick)="setTranscriptLanguage('es')">
+                Español
+              </app-button>
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'en' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Change transcript to English'"
+                [attr.aria-pressed]="transcriptLanguage() === 'en'"
+                (buttonClick)="setTranscriptLanguage('en')">
+                English
+              </app-button>
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'fr' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Changer la transcription en français'"
+                [attr.aria-pressed]="transcriptLanguage() === 'fr'"
+                (buttonClick)="setTranscriptLanguage('fr')">
+                Français
+              </app-button>
+              <app-button
+                type="button"
+                [variant]="transcriptLanguage() === 'de' ? 'primary' : 'secondary'"
+                size="sm"
+                [attr.aria-label]="'Transkription auf Deutsch umschalten'"
+                [attr.aria-pressed]="transcriptLanguage() === 'de'"
+                (buttonClick)="setTranscriptLanguage('de')">
+                Deutsch
+              </app-button>
+            </div>
+          </div>
+
+          <h3>{{ getCurrentTranscript().title }}</h3>
+
+          @for (item of getCurrentTranscript().content; track $index) {
+            <p><strong>{{ item.time }}</strong> {{ item.text }}</p>
+          }
+        </div>
+      </details>
+    </div>
+  </section>
+
   <section class="newsletter">
     <div class="newsletter__illustration">
       <div class="newsletter__blob">
@@ -200,12 +318,14 @@
           />
         </svg>
 
-        <!-- Imagen superpuesta -->
+        <!-- Imagen superpuesta decorativa -->
         <img
           src="assets/newsletter-image-optimized.png"
-          alt="Newsletter illustration"
+          alt=""
           class="newsletter__image"
           loading="lazy"
+          role="presentation"
+          aria-hidden="true"
         />
       </div>
     </div>

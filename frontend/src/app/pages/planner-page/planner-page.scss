@@ -1,5 +1,18 @@
 @use '../../../styles/01-tools/mixins' as *;
 
+/* Clase para ocultar visualmente pero mantener accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .planner {
   display: flex;
   min-height: 100vh;
@@ -125,7 +138,7 @@
   font-family: var(--font-family-primary);
   font-size: var(--font-body-size);
   font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-white);
+  color: black;
   cursor: pointer;
   transition: transform var(--transition-base);
 

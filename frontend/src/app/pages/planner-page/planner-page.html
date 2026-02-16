@@ -9,6 +9,8 @@
   <main class="planner__content" [class.planner__content--sidebar-collapsed]="sidebarCollapsed">
     <div class="planner__bg-pattern"></div>
 
+    <h1 class="sr-only">Planificador de comidas</h1>
+
     <section class="planner__calendar-section">
       <h1 class="planner__calendar-title">Mi calendario de comidas</h1>
 
@@ -56,9 +58,11 @@
       <div class="planner__search-wrapper">
         <app-form-input
           type="text"
+          label="Buscar plan"
           placeholder="Buscar plan"
           icon="search"
           variant="search"
+          [showLabel]="false"
           [(ngModel)]="searchQuery"
           (inputChange)="onSearch()"
           class="planner__search form-input--search"

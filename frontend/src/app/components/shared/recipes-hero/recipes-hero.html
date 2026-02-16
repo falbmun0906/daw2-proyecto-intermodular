@@ -13,9 +13,11 @@
 
       <app-form-input
         type="text"
+        label="Buscar receta"
         [placeholder]="config.searchPlaceholder || 'Buscar receta'"
         [icon]="'search'"
         [variant]="'search'"
+        [showLabel]="false"
         [(ngModel)]="searchQuery"
         (inputChange)="onSearchChange()"
         class="recipes-hero__search form-input--search"

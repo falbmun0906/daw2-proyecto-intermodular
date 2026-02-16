@@ -3,6 +3,7 @@
   (click)="onCardClick()"
   [attr.role]="cardClick.observers.length > 0 ? 'button' : null"
   [attr.tabindex]="cardClick.observers.length > 0 ? 0 : null"
+  [attr.aria-label]="title ? 'Tarjeta de receta: ' + title : 'Tarjeta de receta'"
   class="card__image-bg"
 >
   <!-- Imagen de fondo (oculta, solo para lazy loading) -->
@@ -24,9 +25,10 @@
       <img
         class="card__image"
         [src]="computedSrc"
-        [alt]="imageAlt || title"
+        [alt]="imageAlt || ''"
         (error)="onImageError($event)"
         loading="lazy"
+        role="presentation"
         aria-hidden="true"
       />
     </picture>
@@ -53,7 +55,7 @@
     <div class="card__info">
       <!-- 1. Título -->
       @if (title) {
-        <h4 class="card__title">{{ title }}</h4>
+        <h3 class="card__title">{{ title }}</h3>
       }
 
       <!-- 2. Valoración con estrellas -->

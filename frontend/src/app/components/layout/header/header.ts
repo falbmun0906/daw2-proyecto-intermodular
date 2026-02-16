@@ -113,6 +113,17 @@ export class Header implements AfterViewInit {
     this.toggleTheme();
   }
 
+  /**
+   * CRITERIO 2.4: Manejo de eventos de teclado - Activación del theme switch con Enter
+   * Mejora la accesibilidad permitiendo cambiar el tema con teclado (Enter)
+   * El evento se captura en el label porque los checkboxes no responden bien a Enter directamente
+   */
+  onThemeLabelKeyPress(event: KeyboardEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.toggleTheme();
+  }
+
   onMiDespensaClick(): void {
     if (this.authService.isLoggedIn) {
       this.router.navigate(['/dashboard']);

@@ -9,6 +9,8 @@
   <main class="pantry__content" [class.pantry__content--sidebar-collapsed]="sidebarCollapsed()">
     <div class="pantry__bg-pattern"></div>
 
+    <h1 class="sr-only">Mi despensa</h1>
+
     <section class="pantry__section pantry__header">
       <div class="pantry__locations">
         @for (location of pantryLocations; track location.id) {
@@ -35,9 +37,11 @@
       <div class="pantry__search">
         <app-form-input
           type="text"
+          label="Buscar en toda la despensa"
           placeholder="Buscar en toda la despensa..."
           icon="search"
           variant="search"
+          [showLabel]="false"
           [ngModel]="searchQuery()"
           (ngModelChange)="searchQuery.set($event)"
           (inputChange)="onSearch()"
