@@ -1,53 +1,58 @@
 # Documentación de Accesibilidad - Proyecto Desp[i]ensa
 
 **Autor:** Francisco Alba Muñoz
-**Curso:** 2º DAW - Desarrollo de Aplicaciones Web  
-**Módulo:** Diseño de Interfaces Web (DIW)  
+
+**Curso:** 2º DAW - Desarrollo de Aplicaciones Web
+
+**Módulo:** Diseño de Interfaces Web (DIW)
+
 **Fecha:** Febrero 2026
 
+---
+
 1. [Fundamentos de accesibilidad](#1-fundamentos-de-accesibilidad)
-  - [¿Por qué es necesaria la accesibilidad web?](#por-qué-es-necesaria-la-accesibilidad-web)
-  - [Los 4 principios de WCAG 2.1](#los-4-principios-de-wcag-21)
-  - [Niveles de conformidad](#niveles-de-conformidad)
+    - [¿Por qué es necesaria la accesibilidad web?](#por-qué-es-necesaria-la-accesibilidad-web)
+    - [Los 4 principios de WCAG 2.1](#los-4-principios-de-wcag-21)
+    - [Niveles de conformidad](#niveles-de-conformidad)
 
 2. [Componente multimedia implementado](#2-componente-multimedia-implementado)
-  - [Tipo de componente](#tipo-de-componente)
-  - [Descripción](#descripción)
-  - [Características de accesibilidad](#características-de-accesibilidad-implementadas)
+    - [Tipo de componente](#tipo-de-componente)
+    - [Descripción](#descripción)
+    - [Características de accesibilidad](#características-de-accesibilidad-implementadas)
 
 3. [Auditoría automatizada inicial](#3-auditoría-automatizada-inicial)
-  - [Resultados de las herramientas](#resultados-de-las-herramientas)
-  - [Problemas más graves detectados](#problemas-más-graves-detectados)
+    - [Resultados de las herramientas](#resultados-de-las-herramientas)
+    - [Problemas más graves detectados](#problemas-más-graves-detectados)
 
 4. [Análisis y corrección de errores](#4-análisis-y-corrección-de-errores)
-  - [Tabla resumen de errores](#tabla-resumen-de-errores)
-  - [Detalle de errores corregidos](#detalle-de-errores-corregidos)
-  - [Errores encontrados en página dashboard](#errores-encontrados-en-página-dashboard)
-  - [Errores encontrados en página despensa](#errores-encontrados-en-página-despensa)
-  - [Errores encontrados en página planner-page](#errores-encontrados-en-página-planner-page)
-  - [Errores encontrados en página cookies-page](#errores-encontrados-en-página-cookies-page)
-  - [Correcciones aplicadas según informe TAW](#correcciones-aplicadas-según-informe-taw)
+    - [Tabla resumen de errores](#tabla-resumen-de-errores)
+    - [Detalle de errores corregidos](#detalle-de-errores-corregidos)
+    - [Errores encontrados en página dashboard](#errores-encontrados-en-página-dashboard)
+    - [Errores encontrados en página despensa](#errores-encontrados-en-página-despensa)
+    - [Errores encontrados en página planner-page](#errores-encontrados-en-página-planner-page)
+    - [Errores encontrados en página cookies-page](#errores-encontrados-en-página-cookies-page)
+    - [Correcciones aplicadas según informe TAW](#correcciones-aplicadas-según-informe-taw)
 
 5. [Análisis de estructura semántica](#5-análisis-de-estructura-semántica)
-   - [Landmarks HTML5](#landmarks-html5-utilizados)
-   - [Jerarquía de encabezados](#jerarquía-de-encabezados)
-   - [Análisis de imágenes](#análisis-de-imágenes)
+     - [Landmarks HTML5](#landmarks-html5-utilizados)
+     - [Jerarquía de encabezados](#jerarquía-de-encabezados)
+     - [Análisis de imágenes](#análisis-de-imágenes)
 
 6. [Verificación manual](#6-verificación-manual)
-   - [Test de navegación por teclado](#61-test-de-navegación-por-teclado)
-   - [Test con lector de pantalla](#62-test-con-lector-de-pantalla)
-   - [Verificación cross-browser](#63-verificación-cross-browser)
+     - [Test de navegación por teclado](#61-test-de-navegación-por-teclado)
+     - [Test con lector de pantalla](#62-test-con-lector-de-pantalla)
+     - [Verificación cross-browser](#63-verificación-cross-browser)
 
 7. [Resultados finales después de correcciones](#7-resultados-finales-después-de-correcciones)
-   - [Comparativa de mejoras](#comparativa-de-mejoras)
-   - [Checklist WCAG 2.1 Nivel AA](#checklist-de-conformidad-wcag-21-nivel-aa)
-   - [Nivel de conformidad alcanzado](#nivel-de-conformidad-alcanzado)
+     - [Comparativa de mejoras](#comparativa-de-mejoras)
+     - [Checklist WCAG 2.1 Nivel AA](#checklist-de-conformidad-wcag-21-nivel-aa)
+     - [Nivel de conformidad alcanzado](#nivel-de-conformidad-alcanzado)
 
 8. [Conclusiones y reflexión](#8-conclusiones-y-reflexión)
-   - [¿Es accesible mi proyecto?](#es-accesible-mi-proyecto)
-   - [Principales mejoras aplicadas](#principales-mejoras-aplicadas)
-   - [Mejoras futuras](#mejoras-futuras)
-   - [Aprendizaje clave](#aprendizaje-clave)
+     - [¿Es accesible mi proyecto?](#es-accesible-mi-proyecto)
+     - [Principales mejoras aplicadas](#principales-mejoras-aplicadas)
+     - [Mejoras futuras](#mejoras-futuras)
+     - [Aprendizaje clave](#aprendizaje-clave)
 
 ---
 
@@ -2454,8 +2459,16 @@ El menú móvil hamburguesa se puede cerrar con Esc (funcionalidad nativa de Ang
 **Capturas de pantalla:**
 
 - **Chrome:** `./capturas/chrome.png`
+
+<img width="2558" height="1378" alt="chrome" src="https://github.com/user-attachments/assets/78a45f77-c3a6-4779-b164-94fecadcb5c3" />
+  
 - **Firefox:** `./capturas/firefox.png`
+
+<img width="2558" height="1378" alt="firefox" src="https://github.com/user-attachments/assets/3c1408e4-a6ac-400b-822c-b1a03aae4869" />
+
 - **Edge:** `./capturas/edge.png`
+
+<img width="2558" height="1375" alt="edge" src="https://github.com/user-attachments/assets/4bfcc736-f638-4eef-bc52-a362e10068b3" />
 
 **Detalles de la verificación:**
 
