@@ -14,7 +14,7 @@
     <aside class="recipes-page__filters">
       @for (filterGroup of filters; track filterGroup.title; let groupIdx = $index) {
         <div class="filter-group">
-          <h3 class="filter-group__title">{{ filterGroup.title }}</h3>
+          <h2 class="filter-group__title">{{ filterGroup.title }}</h2>
           <div class="filter-group__options">
             @for (option of filterGroup.options; track option.id; let optIdx = $index) {
               <app-form-checkbox

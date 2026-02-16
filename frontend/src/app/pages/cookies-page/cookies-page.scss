@@ -169,14 +169,14 @@
   font-size: clamp(0.9375rem, 1.5vw, 1rem);
   line-height: 1.7;
   color: var(--text-primary);
-  text-align: justify;
+  text-align: left; /* Cambiar de justify a left para mejor accesibilidad */
   margin: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
 
   @media (max-width: 768px) {
-    text-align: left; // Mejor legibilidad en móviles
+    text-align: left;
   }
 
   ul, ol {
@@ -189,7 +189,7 @@
       overflow-wrap: break-word;
     }
 
-    // Listas anidadas
+    /* Listas anidadas */
     ul, ol {
       margin-top: var(--spacing-2);
       margin-bottom: var(--spacing-2);
@@ -201,7 +201,7 @@
   }
 
   a {
-    color: var(--color-secondary);
+    color: var(--text-primary);
     text-decoration: underline;
     word-wrap: break-word;
     overflow-wrap: break-word;

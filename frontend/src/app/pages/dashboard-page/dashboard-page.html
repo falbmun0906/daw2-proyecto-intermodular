@@ -10,6 +10,8 @@
   <main class="dashboard__content" [class.dashboard__content--sidebar-collapsed]="sidebarCollapsed">
     <div class="dashboard__bg-pattern"></div>
 
+    <h1 class="sr-only">Panel de control</h1>
+
     <section class="dashboard__section dashboard__meals">
       @if (isLoading()) {
         <div class="dashboard__loading">
@@ -80,9 +82,11 @@
       <div class="dashboard__search">
         <app-form-input
           type="text"
+          label="Buscar ingrediente"
           placeholder="Buscar ingrediente..."
           icon="search"
           variant="search"
+          [showLabel]="false"
           [(ngModel)]="searchQuery"
           (inputChange)="onSearch()"
           class="dashboard__search-input form-input--search"
@@ -125,8 +129,10 @@
       <div class="add-product-modal__search">
         <app-form-input
           type="text"
+          label="Buscar ingrediente"
           placeholder="Buscar ingrediente..."
           icon="search"
+          [showLabel]="false"
           [(ngModel)]="ingredientSearchQuery"
           (inputChange)="onSearchIngredients()"
           class="form-input--search"

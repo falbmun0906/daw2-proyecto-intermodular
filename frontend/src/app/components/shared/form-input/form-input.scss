@@ -16,23 +16,12 @@
     font-weight: var(--font-weight-medium);
     color: var(--text-primary);
     margin-bottom: var(--spacing-1);
-
-    &--sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
   }
 
   &__required {
-    color: var(--color-error-dark);
+    color: var(--color-required); /* Se adapta automáticamente al tema */
     margin-left: var(--spacing-1);
+    font-weight: var(--font-weight-bold); /* Hacer el asterisco más visible */
   }
 
   &__wrapper {

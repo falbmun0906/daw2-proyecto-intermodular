@@ -48,6 +48,7 @@
 .card__image-bg {
   background-size: cover;
   background-position: center;
+  background-color: black;
 
   &::after {
     content: '';
@@ -115,7 +116,6 @@
   right: 0;
   z-index: 3;
   padding: var(--spacing-8) var(--spacing-5);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
   height: 100%;
 
   /* Container Queries: ajustar padding en tarjetas pequeñas */

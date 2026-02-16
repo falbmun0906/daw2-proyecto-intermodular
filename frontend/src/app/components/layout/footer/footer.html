@@ -4,36 +4,43 @@
     <div class="site-footer__grid">
 
       <!-- Columna 1: Redes Sociales -->
-      <section class="site-footer__section" aria-label="Redes sociales">
+      <section class="site-footer__section" aria-labelledby="social-heading">
+        <h2 id="social-heading" class="site-footer__title sr-only">Redes Sociales</h2>
         <ul class="site-footer__social-list">
           <li class="site-footer__social-item">
-            <a class="site-footer__social-link" href="#" aria-label="YouTube" rel="noopener noreferrer" title="YouTube">
+            <a class="site-footer__social-link" href="#" rel="noopener noreferrer" title="YouTube">
               <app-icon name="youtube-logo" [size]="32"></app-icon>
+              <span class="sr-only">YouTube</span>
             </a>
           </li>
           <li class="site-footer__social-item">
-            <a class="site-footer__social-link" href="#" aria-label="Pinterest" rel="noopener noreferrer" title="Pinterest">
+            <a class="site-footer__social-link" href="#" rel="noopener noreferrer" title="Pinterest">
               <app-icon name="pinterest-logo" [size]="32"></app-icon>
+              <span class="sr-only">Pinterest</span>
             </a>
           </li>
           <li class="site-footer__social-item">
-            <a class="site-footer__social-link" href="#" aria-label="X (Twitter)" rel="noopener noreferrer" title="X">
+            <a class="site-footer__social-link" href="#" rel="noopener noreferrer" title="X">
               <app-icon name="x-logo" [size]="32"></app-icon>
+              <span class="sr-only">X (Twitter)</span>
             </a>
           </li>
           <li class="site-footer__social-item">
-            <a class="site-footer__social-link" href="#" aria-label="TikTok" rel="noopener noreferrer" title="TikTok">
+            <a class="site-footer__social-link" href="#" rel="noopener noreferrer" title="TikTok">
               <app-icon name="tiktok-logo" [size]="32"></app-icon>
+              <span class="sr-only">TikTok</span>
             </a>
           </li>
           <li class="site-footer__social-item">
-            <a class="site-footer__social-link" href="#" aria-label="Facebook" rel="noopener noreferrer" title="Facebook">
+            <a class="site-footer__social-link" href="#" rel="noopener noreferrer" title="Facebook">
               <app-icon name="facebook-logo" [size]="32"></app-icon>
+              <span class="sr-only">Facebook</span>
             </a>
           </li>
           <li class="site-footer__social-item">
-            <a class="site-footer__social-link" href="#" aria-label="Instagram" rel="noopener noreferrer" title="Instagram">
+            <a class="site-footer__social-link" href="#" rel="noopener noreferrer" title="Instagram">
               <app-icon name="instagram-logo" [size]="32"></app-icon>
+              <span class="sr-only">Instagram</span>
             </a>
           </li>
         </ul>
@@ -51,7 +58,7 @@
 
       <!-- Columna 3: Soporte + Enlaces -->
       <section class="site-footer__section" aria-labelledby="support-heading">
-        <h3 id="support-heading" class="site-footer__title">Soporte</h3>
+        <h2 id="support-heading" class="site-footer__title">Soporte</h2>
         <nav class="site-footer__nav">
           <a class="site-footer__link" routerLink="/politica-cookies">Política de Cookies</a>
           <a class="site-footer__link" routerLink="/faq">Preguntas Frecuentes (FAQ)</a>

@@ -58,6 +58,7 @@
   gap: 0;
   width: 100%;
   margin: 0 auto;
+  background-color: black;
 
   @media (max-width: 1023px) {
     grid-template-columns: repeat(3, 1fr);
@@ -217,6 +218,7 @@
 
   @media (max-width: 767px) {
     font-size: clamp(3.4rem, 6vw, 2.5rem);
+    padding: var(--spacing-3) var(--spacing-5);
   }
 }
 
@@ -309,8 +311,19 @@
   font-family: var(--font-family-secondary);
   font-size: var(--font-h1-size);
   color: var(--text-primary);
-  margin-bottom: var(--spacing-10);
+  margin-bottom: var(--spacing-4);
   text-align: left;
+}
+
+.trending__intro,
+.must-see__intro {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-8);
+  text-align: left;
+  max-width: 600px;
+  line-height: var(--font-body-line-height);
 }
 
 .trending__carousel {
@@ -430,6 +443,7 @@
   min-height: 600px;
   position: relative;
   background: url("../../../assets/cta-image.png") center/cover;
+  background-color: black;
   @include flex-layout(row, flex-start, center, 0);
   padding: var(--spacing-16);
   z-index: 1;
@@ -469,6 +483,303 @@
 
   @media (max-width: 767px) {
     font-size: var(--font-h5-size);
+  }
+}
+
+/* =========================
+ * VIDEO TUTORIAL - Sección de vídeo educativo
+ * ========================= */
+
+.video-tutorial {
+  position: relative;
+  z-index: 1;
+  padding: var(--spacing-24) var(--spacing-20);
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media (max-width: 1023px) {
+    padding: var(--spacing-20) var(--spacing-16);
+  }
+
+  @media (max-width: 767px) {
+    padding: var(--spacing-16) var(--spacing-8);
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--spacing-12) var(--spacing-4);
+  }
+}
+
+.video-tutorial__container {
+  @include flex-layout(column, flex-start, stretch, var(--spacing-8));
+  width: 100%;
+}
+
+.video-tutorial__title {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-h2-size);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  line-height: 1.2;
+  text-align: center;
+
+  @media (max-width: 1023px) {
+    font-size: var(--font-h3-size);
+  }
+
+  @media (max-width: 767px) {
+    font-size: var(--font-h4-size);
+  }
+
+  @media (max-width: 480px) {
+    font-size: var(--font-h5-size);
+  }
+}
+
+.video-tutorial__description {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-lg-size);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 1023px) {
+    font-size: var(--font-body-size);
+  }
+
+  @media (max-width: 767px) {
+    font-size: var(--font-body-size);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 480px) {
+    font-size: var(--font-sm-size);
+  }
+}
+
+.video-tutorial__player {
+  width: 100%;
+  max-width: 900px;
+  margin: var(--spacing-8) auto;
+  border-radius: var(--radius-l-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  background-color: var(--color-text-main);
+
+  @media (max-width: 767px) {
+    margin: var(--spacing-6) auto;
+  }
+}
+
+.video-tutorial__video {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+
+  /* Asegurar contraste en controles del vídeo */
+  &:focus {
+    outline: 3px solid var(--border-color-focus);
+    outline-offset: 4px;
+  }
+
+  /* Prevenir overflow en móviles */
+  @media (max-width: 480px) {
+    border-radius: 0;
+  }
+}
+
+.video-tutorial__info {
+  @include flex-layout(row, center, center, var(--spacing-8));
+  flex-wrap: wrap;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  color: var(--text-primary);
+  text-align: center;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: var(--spacing-3);
+    font-size: var(--font-sm-size);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+  }
+}
+
+.video-tutorial__duration,
+.video-tutorial__languages {
+  margin: 0;
+}
+
+/* Transcripción expandible */
+.video-tutorial__transcript {
+  margin-top: var(--spacing-8);
+  border: 2px solid var(--border-color-primary);
+  border-radius: var(--radius-l-sm);
+  padding: var(--spacing-6);
+  background-color: var(--surface-base);
+  box-shadow: var(--shadow-sm);
+
+  @media (max-width: 767px) {
+    padding: var(--spacing-4);
+    margin-top: var(--spacing-6);
+  }
+}
+
+.video-tutorial__transcript-title {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-lg-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+  padding: var(--spacing-3);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  /* Remover el triángulo por defecto y agregar uno personalizado */
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: var(--spacing-3);
+    transition: transform 0.3s ease;
+    color: var(--color-secondary);
+  }
+
+  &:hover {
+    background-color: var(--bg-primary);
+  }
+
+  &:focus {
+    outline: 3px solid var(--border-color-focus);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: var(--font-body-size);
+    padding: var(--spacing-2);
+  }
+
+  @media (max-width: 480px) {
+    font-size: var(--font-sm-size);
+  }
+}
+
+/* Rotar el icono cuando está abierto */
+.video-tutorial__transcript[open] .video-tutorial__transcript-title::before {
+  transform: rotate(90deg);
+}
+
+/* Selector de idioma */
+.video-tutorial__language-selector {
+  @include flex-layout(row, flex-start, center, var(--spacing-4));
+  margin-bottom: var(--spacing-6);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--border-color-primary);
+  flex-wrap: wrap;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+  }
+}
+
+.video-tutorial__language-label {
+  font-size: var(--font-body-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+
+  @media (max-width: 767px) {
+    font-size: var(--font-sm-size);
+  }
+}
+
+.video-tutorial__language-buttons {
+  @include flex-layout(row, flex-start, center, var(--spacing-3));
+  flex-wrap: wrap;
+}
+
+
+/* Contenido de la transcripción */
+.video-tutorial__transcript-content {
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-6);
+  border-top: 1px solid var(--border-color-primary);
+  font-family: var(--font-family-primary);
+  color: var(--text-primary);
+
+  h3 {
+    font-size: var(--font-h5-size);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-6) 0;
+
+    @media (max-width: 767px) {
+      font-size: var(--font-lg-size);
+    }
+  }
+
+  p {
+    font-size: var(--font-body-size);
+    line-height: 1.8;
+    margin: 0 0 var(--spacing-4) 0;
+    color: var(--text-primary);
+
+    @media (max-width: 767px) {
+      font-size: var(--font-sm-size);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+      font-size: var(--font-xs-size);
+      margin-bottom: var(--spacing-3);
+    }
+
+    strong {
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-primary); /* Se adapta automáticamente: oscuro en tema claro, claro en tema oscuro */
+    }
+  }
+
+  @media (max-width: 767px) {
+    margin-top: var(--spacing-4);
+    padding-top: var(--spacing-4);
+  }
+}
+
+/* Accesibilidad para modo de reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .video-tutorial__transcript-title::before {
+    transition: none;
+  }
+}
+
+/* Modo de alto contraste */
+@media (prefers-contrast: more) {
+  .video-tutorial__transcript {
+    border-width: 3px;
+    border-color: var(--text-primary);
+  }
+
+  .video-tutorial__video:focus {
+    outline-width: 4px;
   }
 }
 
