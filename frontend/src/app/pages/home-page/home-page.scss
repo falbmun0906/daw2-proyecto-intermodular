@@ -311,8 +311,19 @@
   font-family: var(--font-family-secondary);
   font-size: var(--font-h1-size);
   color: var(--text-primary);
-  margin-bottom: var(--spacing-10);
+  margin-bottom: var(--spacing-4);
   text-align: left;
+}
+
+.trending__intro,
+.must-see__intro {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-8);
+  text-align: left;
+  max-width: 600px;
+  line-height: var(--font-body-line-height);
 }
 
 .trending__carousel {

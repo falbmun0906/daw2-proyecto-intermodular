@@ -5,6 +5,28 @@
 **Módulo:** Diseño de Interfaces Web (DIW)  
 **Fecha:** Febrero 2026
 
+1. [Fundamentos de accesibilidad](#1-fundamentos-de-accesibilidad)
+  - [¿Por qué es necesaria la accesibilidad web?](#por-qué-es-necesaria-la-accesibilidad-web)
+  - [Los 4 principios de WCAG 2.1](#los-4-principios-de-wcag-21)
+  - [Niveles de conformidad](#niveles-de-conformidad)
+
+2. [Componente multimedia implementado](#2-componente-multimedia-implementado)
+  - [Tipo de componente](#tipo-de-componente)
+  - [Descripción](#descripción)
+  - [Características de accesibilidad](#características-de-accesibilidad-implementadas)
+
+3. [Auditoría automatizada inicial](#3-auditoría-automatizada-inicial)
+  - [Resultados de las herramientas](#resultados-de-las-herramientas)
+  - [Problemas más graves detectados](#problemas-más-graves-detectados)
+
+4. [Análisis y corrección de errores](#4-análisis-y-corrección-de-errores)
+  - [Tabla resumen de errores](#tabla-resumen-de-errores)
+  - [Detalle de errores corregidos](#detalle-de-errores-corregidos)
+  - [Errores encontrados en página dashboard](#errores-encontrados-en-página-dashboard)
+  - [Errores encontrados en página despensa](#errores-encontrados-en-página-despensa)
+  - [Errores encontrados en página planner-page](#errores-encontrados-en-página-planner-page)
+  - [Errores encontrados en página cookies-page](#errores-encontrados-en-página-cookies-page)
+  - [Correcciones aplicadas según informe TAW](#correcciones-aplicadas-según-informe-taw)
 
 5. [Análisis de estructura semántica](#5-análisis-de-estructura-semántica)
    - [Landmarks HTML5](#landmarks-html5-utilizados)
@@ -1688,6 +1710,138 @@ Todos los encabezados de nivel 2 (h2) en la página principal tienen contenido d
 Estos encabezados cumplen con G130 proporcionando descripciones claras y contextuales del contenido de cada sección.
 
 **Resultado:** Todas las secciones principales tienen encabezados descriptivos y contexto adecuado para tecnologías de asistencia, resolviendo las 12 incidencias de G130/G131.
+
+---
+
+### Correcciones adicionales - Tercera revisión
+
+Tras las correcciones anteriores, TAW continuaba detectando el error H42 "Dos encabezados del mismo nivel seguidos sin contenido entre ellos". Esta sección documenta las correcciones definitivas aplicadas con un enfoque diferente.
+
+#### Error H42: Dos encabezados del mismo nivel sin contenido entre ellos
+
+**Técnica WCAG:** H42 - Uso de h1-h6 para identificar encabezados
+
+**Problema original:** Las secciones "Tendencias de esta semana" y "Recetas que no te puedes perder" tenían encabezados H2 que, cuando el contenido dinámico estaba cargando o vacío, quedaban consecutivos sin contenido real entre ellos. TAWDIS detectaba esto como un error de estructura semántica.
+
+**Análisis del problema:**
+- El `<h2>` de "trending" iba seguido inmediatamente del contenido condicional `@if (isLoadingTrending())`
+- Si el contenido estaba vacío, el siguiente `<h2>` de "must-see" aparecía sin contenido sustancial entre ambos
+- TAWDIS interpreta esto como una violación de H42
+
+**Intentos previos fallidos:**
+1. Uso de `aria-label` en las secciones - TAW seguía detectando el error
+2. Añadir comentarios HTML entre encabezados - No resolvía el problema
+3. Ocultar secciones completas cuando no hay datos - Afectaba la UX
+
+**Solución definitiva implementada:**
+
+La solución consiste en añadir un **párrafo introductorio** después de cada `<h2>` que proporcione contenido textual real entre el encabezado y el contenido dinámico. Este párrafo siempre está presente en el DOM, garantizando que nunca haya dos H2 consecutivos sin contenido.
+
+**Código ANTES:**
+```html
+<section class="trending">
+  <h2 class="trending__title">Tendencias de esta semana</h2>
+
+  @if (isLoadingTrending()) {
+    <div class="trending__loading">
+      <p>Cargando recetas...</p>
+    </div>
+  } @else {
+    <!-- carrusel de recetas -->
+  }
+</section>
+
+<section class="must-see">
+  <h2 class="must-see__title">Recetas que no te puedes perder</h2>
+
+  @if (isLoadingMustSee()) {
+    <!-- contenido dinámico -->
+  }
+</section>
+```
+
+**Código DESPUÉS:**
+```html
+<section class="trending">
+  <h2 class="trending__title">Tendencias de esta semana</h2>
+  <p class="trending__intro">Descubre las recetas más populares que están conquistando los paladares esta semana.</p>
+
+  @if (isLoadingTrending()) {
+    <div class="trending__loading">
+      <p>Cargando recetas...</p>
+    </div>
+  } @else {
+    <!-- carrusel de recetas -->
+  }
+</section>
+
+<section class="must-see">
+  <h2 class="must-see__title">Recetas que no te puedes perder</h2>
+  <p class="must-see__intro">Selección de recetas imprescindibles que harán las delicias de cualquier amante de la buena cocina.</p>
+
+  @if (isLoadingMustSee()) {
+    <!-- contenido dinámico -->
+  }
+</section>
+```
+
+**Estilos añadidos (home-page.scss):**
+```scss
+.trending__intro,
+.must-see__intro {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-body-size);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-8);
+  text-align: left;
+  max-width: 600px;
+  line-height: var(--font-body-line-height);
+}
+```
+
+**Beneficios de esta solución:**
+1. **Cumple con H42:** Siempre hay contenido textual (el párrafo introductorio) entre el H2 y cualquier contenido condicional
+2. **Mejora la UX:** Los párrafos introductorios proporcionan contexto adicional a los usuarios
+3. **Semánticamente correcto:** Un párrafo es el elemento apropiado para texto introductorio
+4. **No afecta el diseño:** Los estilos mantienen la coherencia visual con el resto de la página
+5. **Accesible:** Los lectores de pantalla anuncian el párrafo proporcionando contexto
+
+**Resultado:** El error H42 "Dos encabezados del mismo nivel seguidos sin contenido entre ellos" queda definitivamente resuelto.
+
+---
+
+#### Mejora adicional: role="presentation" en imágenes decorativas
+
+**Técnica WCAG:** H67 - Uso de alt vacío y atributos ARIA para imágenes decorativas
+
+**Problema:** Aunque las imágenes ya tenían `alt=""` y `aria-hidden="true"`, TAWDIS las marcaba como "Desconocido" requiriendo verificación manual.
+
+**Solución:** Añadir `role="presentation"` a todas las imágenes decorativas para hacer más explícito que son puramente presentacionales. Este atributo indica a las tecnologías de asistencia que el elemento no tiene significado semántico.
+
+**Archivos modificados:**
+1. **home-page.html:** Imágenes del hero (4) e imagen del newsletter (1)
+2. **icon.html:** Componente de iconos (todas las instancias)
+3. **card.html:** Imagen de fondo de las tarjetas
+
+**Código ejemplo:**
+```html
+<img
+  src="assets/hero-img-1-optimized.png"
+  alt=""
+  class="hero__img"
+  loading="eager"
+  role="presentation"
+  aria-hidden="true" />
+```
+
+**Resultado:** Las imágenes decorativas ahora tienen la combinación triple de:
+- `alt=""` - Sin texto alternativo
+- `aria-hidden="true"` - Oculto para tecnologías de asistencia
+- `role="presentation"` - Explícitamente declarado como decorativo
+
+Esta combinación es la forma más robusta de marcar imágenes decorativas según las mejores prácticas de accesibilidad.
+
+---
 
 ## 5. Análisis de estructura semántica
 
