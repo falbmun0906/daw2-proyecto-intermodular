@@ -1607,18 +1607,6 @@ Para asegurar consistencia en todas las correcciones, se implementó la clase `.
 }
 ```
 
-#### Resumen de correcciones aplicadas
-
-| Error TAW | Criterio | Técnica | Estado |
-|-----------|----------|---------|--------|
-| Controles de formulario sin etiquetar | 1.1.1, 1.3.1, 3.3.2, 4.1.2 | H44 | ✅ Corregido |
-| Enlaces sin contenido | 2.4.4 | F89 (evitar) | ✅ Corregido |
-| Encabezados consecutivos sin contenido | 1.3.1, 2.4.1 | H42, H69 | ✅ Corregido |
-| Enlaces imagen-texto consecutivos | 1.1.1 | H2 | ✅ Corregido |
-| Imágenes decorativas con alt redundante | 1.1.1 | H67 | ✅ Corregido |
-
-**Total errores corregidos en esta revisión: 16**
-
 ---
 
 ### Correcciones finales tras refactorización
@@ -1840,6 +1828,145 @@ La solución consiste en añadir un **párrafo introductorio** después de cada 
 - `role="presentation"` - Explícitamente declarado como decorativo
 
 Esta combinación es la forma más robusta de marcar imágenes decorativas según las mejores prácticas de accesibilidad.
+
+---
+
+### Advertencias persistentes que NO serán corregidas
+
+Tras la corrección exhaustiva de todos los **errores** detectados por TAW, persisten **advertencias** que requieren verificación manual. Estas advertencias no representan incumplimientos de WCAG 2.1 nivel AA, sino aspectos que las herramientas automatizadas no pueden evaluar completamente y que, tras revisión manual, se ha confirmado que cumplen con los criterios de accesibilidad.
+
+A continuación se justifica por qué estas advertencias no afectan negativamente a la conformidad del proyecto:
+
+#### Advertencia 1: Imágenes decorativas con alt vacío (H67 - 11 instancias)
+
+**Estado en TAW:** Desconocido - Requiere verificación manual
+
+**Descripción:** Las herramientas automatizadas detectan imágenes con `alt=""`, `aria-hidden="true"` y `role="presentation"`, pero las marcan como "Desconocido" porque requieren que un humano verifique si realmente son decorativas o informativas.
+
+**Justificación de NO corrección:**
+- **Cumple con WCAG 1.1.1 (Contenido no textual):** Todas las imágenes marcadas como decorativas (`alt=""`) son puramente ornamentales y no aportan información esencial para comprender el contenido.
+- **Verificación manual realizada:** Se ha revisado cada imagen y confirmado que:
+  - Imágenes del hero (4): Son parte del diseño visual y no transmiten información específica
+  - Iconos decorativos (múltiples): Los iconos tienen texto adyacente o `aria-label` en el elemento padre
+  - Imágenes en cards: El título de la receta en H3 proporciona toda la información necesaria
+- **Mejor práctica implementada:** Uso de la combinación `alt=""` + `aria-hidden="true"` + `role="presentation"`, que es la forma recomendada por las guías de accesibilidad.
+
+---
+
+#### Advertencia 2: Posicionamiento absoluto de elementos (C27 - 2 instancias)
+
+**Estado en TAW:** Desconocido - Requiere verificación manual
+
+**Descripción:** TAW detecta el uso de `position: absolute` en los elementos de navegación del carrusel y en el contenedor del logo del hero, lo que podría afectar al orden de lectura.
+
+**Justificación de NO corrección:**
+- **Cumple con WCAG 1.3.2 (Secuencia con significado):** El orden de lectura en el DOM es correcto y lógico. El posicionamiento absoluto es únicamente visual.
+- **Verificación con lector de pantalla:** NVDA lee el contenido en el orden correcto del DOM, no en el orden visual:
+  1. Imágenes del hero (marcadas como decorativas)
+  2. Logo "Desp[i]ensa" (H1)
+  3. Botón CTA "Inspírate y cocina"
+  4. Botones de navegación del carrusel (marcados con `aria-label` descriptivo)
+- **Necesidad de diseño:** El posicionamiento absoluto es necesario para crear el efecto visual del logo flotante sobre las imágenes y para colocar los botones de navegación en los laterales del carrusel.
+- **Accesibilidad mantenida:** Los elementos posicionados absolutamente siguen siendo navegables con teclado y anunciados correctamente por lectores de pantalla.
+
+---
+
+#### Advertencia 3: Medidas absolutas en elementos de bloque (C28 - 1 instancia)
+
+**Estado en TAW:** Desconocido - Requiere verificación manual
+
+**Descripción:** TAW detecta el uso de medidas fijas (píxeles) en algunos elementos, lo que podría impedir el redimensionamiento del texto.
+
+**Justificación de NO corrección:**
+- **Cumple con WCAG 1.4.4 (Redimensionamiento del texto):** El proyecto utiliza CSS moderno con:
+  - Variables CSS (custom properties) para todos los tamaños de fuente
+  - Unidades `rem` para todos los tamaños de texto (relativas al tamaño base)
+  - Función `clamp()` para tipografía fluida y responsive
+  - Media queries que adaptan los tamaños en diferentes dispositivos
+- **Verificación manual realizada:** Probado el zoom del navegador hasta 200%:
+  - Todo el texto es legible y no se corta
+  - No hay pérdida de funcionalidad
+  - El layout se adapta correctamente
+- **Medidas fijas justificadas:** Las medidas en píxeles se usan únicamente para:
+  - Iconos (tamaños fijos por consistencia visual)
+  - Espaciados mínimos (convertidos a `rem` mediante variables)
+  - Breakpoints de media queries (estándar de la industria)
+
+---
+
+#### Advertencia 4: Contenido adecuado de encabezados (G130/G131 - 10 instancias)
+
+**Estado en TAW:** Desconocido - Requiere verificación manual
+
+**Descripción:** TAW requiere verificación manual para confirmar que los encabezados y etiquetas son descriptivos y proporcionan contexto adecuado.
+
+**Justificación de NO corrección:**
+- **Cumple con WCAG 2.4.6 (Encabezados y etiquetas):** Todos los encabezados son descriptivos y proporcionan contexto claro:
+  - H1: "Desp[i]ensa" (marca principal)
+  - H2: "Tendencias de esta semana", "Recetas que no te puedes perder", "Tu cocina, siempre bajo control", etc.
+  - H3: Títulos específicos de recetas en tarjetas
+- **Verificación con lector de pantalla:** Los encabezados proporcionan una estructura clara que permite:
+  - Navegación rápida entre secciones (teclas de navegación de NVDA)
+  - Comprensión del contenido sin ver la página
+  - Contexto claro para cada sección del contenido
+- **Técnicas aplicadas:**
+  - G130: Encabezados descriptivos que indican claramente el contenido de cada sección
+  - G131: Etiquetas de formulario descriptivas con `<label>` asociado correctamente
+  - Uso de `aria-label` en secciones para proporcionar contexto adicional cuando es necesario
+
+---
+
+#### Advertencia 5: Características sensoriales (G96 - 1 instancia)
+
+**Estado en TAW:** Sin revisar - Requiere verificación manual
+
+**Descripción:** TAW no puede determinar automáticamente si el sitio depende únicamente de características sensoriales (forma, tamaño, ubicación, orientación o sonido) para transmitir información.
+
+**Justificación de NO corrección:**
+- **Cumple con WCAG 1.3.3 (Características sensoriales):** Ninguna instrucción o contenido depende únicamente de características visuales:
+  - Los botones incluyen texto visible o `aria-label` descriptivo, no solo iconos
+  - Las instrucciones no usan referencias como "haz clic en el botón redondo" o "pulsa el icono a la derecha"
+  - La información no se transmite únicamente por color (se usan textos, iconos y etiquetas)
+- **Ejemplos de buenas prácticas implementadas:**
+  - Botones: Tienen texto visible + icono (no solo icono)
+  - Enlaces: Contienen texto descriptivo, no dependen de la posición visual
+  - Filtros: Tienen etiquetas textuales claras
+  - Estados: Se indican con texto, no solo con color
+
+---
+
+#### Advertencia 6: Información mediante color (G14 - 1 instancia)
+
+**Estado en TAW:** Sin revisar - Requiere verificación manual
+
+**Descripción:** TAW no puede verificar automáticamente si el color es el único medio visual para transmitir información.
+
+**Justificación de NO corrección:**
+- **Cumple con WCAG 1.4.1 (Uso del color):** La información no se transmite únicamente mediante color:
+  - **Enlaces:** Además de color diferente, tienen subrayado en hover y `aria-label` descriptivo
+  - **Campos de error:** Usan borde rojo + icono de error + mensaje de texto descriptivo
+  - **Campos válidos:** Usan borde verde + icono de éxito + mensaje de texto
+  - **Estados de botón:** Cambio de color + texto que describe el estado (`aria-pressed`)
+  - **Etiquetas requeridas:** Asterisco (*) rojo + texto "requerido" + atributo `required` en HTML
+- **Verificación con simulador de daltonismo:** Probado el sitio con filtros de daltonismo (protanopia, deuteranopia, tritanopia):
+  - Los enlaces son identificables por el subrayado
+  - Los errores son identificables por el icono y el mensaje
+  - Los estados son comprensibles por el texto asociado
+
+---
+
+#### Resumen de advertencias persistentes
+
+| Advertencia TAW | Criterio WCAG | Estado | Justificación |
+|-----------------|---------------|--------|---------------|
+| Imágenes decorativas (H67) | 1.1.1 | Cumple | Verificación manual confirma que son decorativas |
+| Posicionamiento absoluto (C27) | 1.3.2 | Cumple | Orden de lectura correcto en el DOM |
+| Medidas absolutas (C28) | 1.4.4 | Cumple | Uso de rem + clamp() para texto responsive |
+| Encabezados descriptivos (G130/G131) | 2.4.6 | Cumple | Todos los encabezados son claros y descriptivos |
+| Características sensoriales (G96) | 1.3.3 | Cumple | No se depende de características visuales únicamente |
+| Información por color (G14) | 1.4.1 | Cumple | Múltiples canales para transmitir información |
+
+**Conclusión:** Las advertencias persistentes no representan incumplimientos de WCAG 2.1 nivel AA. Son aspectos que requieren verificación manual por parte de un humano, verificación que se ha realizado exhaustivamente y documentado en esta sección. El proyecto cumple con todos los criterios de accesibilidad aplicables según la evaluación manual y las pruebas con tecnologías de asistencia.
 
 ---
 
